@@ -9,4 +9,4 @@ Score aims to become the Cornell community’s go-to for all sports events infor
 
 3. Personalized game attendance planning
 
-- Taken from Notion, please update when finalized
+(Taken from Notion, please update when finalized)

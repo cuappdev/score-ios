@@ -1,6 +1,6 @@
 Make constants file
 
-Normal models
+Normal model
 
 pushpolling much later
 
@@ -8,3 +8,4 @@ File structure setup:
 -Specific flows should have their own folders
 -Look at Uplift Swift-UI for ideal setup
 
+Start with the Home - Scrolled mid-fidelity screen to begin with. Might wnat to add an All tab.

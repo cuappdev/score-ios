@@ -1,0 +1,10 @@
+Make constants file
+
+Normal models
+
+pushpolling much later
+
+File structure setup:
+-Specific flows should have their own folders
+-Look at Uplift Swift-UI for ideal setup
+

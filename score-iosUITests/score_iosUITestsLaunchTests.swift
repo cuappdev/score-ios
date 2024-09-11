@@ -2,7 +2,7 @@
 //  score_iosUITestsLaunchTests.swift
 //  score-iosUITests
 //
-//  Created by Mac User on 9/4/24.
+//  Created by Daniel Chuang on 9/4/24.
 //
 
 import XCTest

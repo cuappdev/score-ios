@@ -7,8 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CE725D3C2C89120200386943 /* score_iosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE725D3B2C89120200386943 /* score_iosApp.swift */; };
-		CE725D3E2C89120200386943 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE725D3D2C89120200386943 /* ContentView.swift */; };
+		CE335CD32C922E8D0037F572 /* PrimaryColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE335CD22C922E8D0037F572 /* PrimaryColors.swift */; };
+		CE335CD52C922ECB0037F572 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE335CD42C922ECB0037F572 /* Constants.swift */; };
+		CE335CD72C922F390037F572 /* Dates.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE335CD62C922F390037F572 /* Dates.swift */; };
+		CE335CD92C9244230037F572 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE335CD82C9244230037F572 /* Game.swift */; };
+		CE725D3C2C89120200386943 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE725D3B2C89120200386943 /* Home.swift */; };
+		CE725D3E2C89120200386943 /* ScoreApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE725D3D2C89120200386943 /* ScoreApp.swift */; };
 		CE725D402C89120400386943 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE725D3F2C89120400386943 /* Assets.xcassets */; };
 		CE725D432C89120400386943 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE725D422C89120400386943 /* Preview Assets.xcassets */; };
 		CE725D4D2C89120500386943 /* score_iosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE725D4C2C89120500386943 /* score_iosTests.swift */; };
@@ -34,9 +38,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CE335CD22C922E8D0037F572 /* PrimaryColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryColors.swift; sourceTree = "<group>"; };
+		CE335CD42C922ECB0037F572 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		CE335CD62C922F390037F572 /* Dates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dates.swift; sourceTree = "<group>"; };
+		CE335CD82C9244230037F572 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		CE725D382C89120200386943 /* score-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "score-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CE725D3B2C89120200386943 /* score_iosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = score_iosApp.swift; sourceTree = "<group>"; };
-		CE725D3D2C89120200386943 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		CE725D3B2C89120200386943 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
+		CE725D3D2C89120200386943 /* ScoreApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreApp.swift; sourceTree = "<group>"; };
 		CE725D3F2C89120400386943 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CE725D422C89120400386943 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		CE725D482C89120500386943 /* score-iosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "score-iosTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -71,6 +79,70 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CE335CCA2C9226EB0037F572 /* Configs */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Configs;
+			sourceTree = "<group>";
+		};
+		CE335CCB2C9226F60037F572 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				CE725D3D2C89120200386943 /* ScoreApp.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		CE335CCC2C9226F90037F572 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				CE335CD82C9244230037F572 /* Game.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		CE335CCD2C9227000037F572 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				CE725D412C89120400386943 /* Preview Content */,
+				CE725D3F2C89120400386943 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		CE335CCE2C9227050037F572 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				CE335CD22C922E8D0037F572 /* PrimaryColors.swift */,
+				CE335CD42C922ECB0037F572 /* Constants.swift */,
+				CE335CD62C922F390037F572 /* Dates.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		CE335CCF2C92270C0037F572 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		CE335CD02C9227120037F572 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		CE335CD12C9227170037F572 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				CE725D3B2C89120200386943 /* Home.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		CE725D2F2C89120100386943 = {
 			isa = PBXGroup;
 			children = (
@@ -94,10 +166,14 @@
 		CE725D3A2C89120200386943 /* score-ios */ = {
 			isa = PBXGroup;
 			children = (
-				CE725D3B2C89120200386943 /* score_iosApp.swift */,
-				CE725D3D2C89120200386943 /* ContentView.swift */,
-				CE725D3F2C89120400386943 /* Assets.xcassets */,
-				CE725D412C89120400386943 /* Preview Content */,
+				CE335CD12C9227170037F572 /* Views */,
+				CE335CD02C9227120037F572 /* ViewModels */,
+				CE335CCF2C92270C0037F572 /* Services */,
+				CE335CCE2C9227050037F572 /* Utils */,
+				CE335CCD2C9227000037F572 /* Resources */,
+				CE335CCC2C9226F90037F572 /* Models */,
+				CE335CCB2C9226F60037F572 /* Core */,
+				CE335CCA2C9226EB0037F572 /* Configs */,
 			);
 			path = "score-ios";
 			sourceTree = "<group>";
@@ -257,8 +333,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE725D3E2C89120200386943 /* ContentView.swift in Sources */,
-				CE725D3C2C89120200386943 /* score_iosApp.swift in Sources */,
+				CE725D3E2C89120200386943 /* ScoreApp.swift in Sources */,
+				CE335CD92C9244230037F572 /* Game.swift in Sources */,
+				CE335CD72C922F390037F572 /* Dates.swift in Sources */,
+				CE335CD32C922E8D0037F572 /* PrimaryColors.swift in Sources */,
+				CE725D3C2C89120200386943 /* Home.swift in Sources */,
+				CE335CD52C922ECB0037F572 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

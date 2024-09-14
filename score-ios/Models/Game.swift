@@ -14,6 +14,7 @@ protocol GameType {
     var state: String { get }
     var date: Date { get }
     var sport: Sport { get }
+    var sex: Sex { get }
     
     // On Details
     // TODO add more, maybe longitude and latitude for Transit integration? Idk
@@ -27,10 +28,11 @@ struct Game : GameType {
     var date: Date
     var sport: Sport
     var address: String
+    var sex: Sex
 }
 
 // Enums for various types
-enum Opponent {
+enum Opponent : String {
     case Penn
     case Princeton
     case Harvard
@@ -40,7 +42,7 @@ enum Opponent {
     case Columbia
 }
 
-enum Sport {
+enum Sport : CaseIterable, CustomStringConvertible {
     
     // https://health.cornell.edu/services/sports-medicine/sports-clearance/ncaa-teams
     
@@ -74,21 +76,103 @@ enum Sport {
     case RowingLightweight
     case SprintFootball
     case Wrestling
+    
+    // Make a to string function
+    var description: String {
+        switch self {
+        case .Basketball:
+            return "Basketball"
+        case .CrossCountry:
+            return "Cross Country"
+        case .IceHockey:
+            return "Ice Hockey"
+        case .Lacrosse:
+            return "Lacrosse"
+        case .Polo:
+            return "Polo"
+        case .Soccer:
+            return "Soccer"
+        case .Squash:
+            return "Squash"
+        case .SwimmingDiving:
+            return "Swimming and Diving"
+        case .Tennis:
+            return "Tennis"
+        case .TrackField:
+            return "Track and Field"
+        case .Equestrian:
+            return "Equestrian"
+        case .Fencing:
+            return "Fencing"
+        case .FieldHockey:
+            return "Field Hockey"
+        case .Gymnastics:
+            return "Gymnastics"
+        case .Rowing:
+            return "Rowing"
+        case .Sailing:
+            return "Sailing"
+        case .Softball:
+            return "Softball"
+        case .Volleyball:
+            return "Volleyball"
+        case .Baseball:
+            return "Baseball"
+        case .Football:
+            return "Football"
+        case .Golf:
+            return "Golf"
+        case .RowingHeavyweight:
+            return "Rowing Heavyweight"
+        case .RowingLightweight:
+            return "Rowing Lightweight"
+        case .SprintFootball:
+            return "Sprint Football"
+        case .Wrestling:
+            return "Wrestling"
+        }
+    }
 }
 
-enum Sex {
-    case Male
-    case Female
+enum Sex : Identifiable, CaseIterable, CustomStringConvertible {
+    var id: Self { self }
+    
+    case Both
+    case Men
+    case Women
+    
+    var description: String {
+        switch self {
+        case .Both:
+            return "Both"
+        case .Men:
+            return "Men's"
+        case .Women:
+            return "Women's"
+        }
+        
+    }
+    // This is strictly for filtering purposes, all datum should have one of Men or Women
+    static func index(of sex: Sex) -> Int? {
+        return allCases.firstIndex(of: sex)
+    }
 }
 
 // TEMP Dummy data
 extension Game {
     static let dummyData: [Game] = [
-        Game(opponent: .Princeton, city: "Princeton", state: "NJ", date: Date.stringToDate(string: "2024-5-20 10:00:00"), sport: .Basketball, address: "1 Fake St"),
-        Game(opponent: .Harvard, city: "Cambridge", state: "MA", date: Date.stringToDate(string: "2024-5-21 10:00:00"), sport: .Football, address: "2 Fake St"),
-        Game(opponent: .Yale, city: "New Haven", state: "CT", date: Date.stringToDate(string: "2024-5-22 10:00:00"), sport: .Soccer, address: "3 Fake St"),
-        Game(opponent: .Brown, city: "Providence", state: "RI", date: Date.stringToDate(string: "2024-5-23 10:00:00"), sport: .CrossCountry, address: "4 Fake St"),
-        Game(opponent: .Dartmouth, city: "Hanover", state: "NH", date: Date.stringToDate(string: "2024-5-24 10:00:00"), sport: .IceHockey, address: "5 Fake St"),
-        Game(opponent: .Columbia, city: "New York", state: "NY", date: Date.stringToDate(string: "2024-5-25 10:00:00"), sport: .Lacrosse, address: "6 Fake St")
+        Game(opponent: .Princeton, city: "Princeton", state: "NJ", date: Date.dateComponents(year: 2024, month: 5, day: 20, hour: 10, minute: 0), sport: .Basketball, address: "1 Fake St", sex: .Women),
+        Game(opponent: .Harvard, city: "Cambridge", state: "MA", date: Date.dateComponents(year: 2024, month: 5, day: 21, hour: 10, minute: 0), sport: .Football, address: "2 Fake St", sex: .Women),
+        Game(opponent: .Yale, city: "New Haven", state: "CT", date: Date.dateComponents(year: 2024, month: 5, day: 22, hour: 10, minute: 0), sport: .Soccer, address: "3 Fake St", sex: .Women),
+        Game(opponent: .Brown, city: "Providence", state: "RI", date: Date.dateComponents(year: 2024, month: 5, day: 23, hour: 10, minute: 0), sport: .CrossCountry, address: "4 Fake St", sex: .Women),
+        Game(opponent: .Dartmouth, city: "Hanover", state: "NH", date: Date.dateComponents(year: 2024, month: 5, day: 24, hour: 10, minute: 0), sport: .IceHockey, address: "5 Fake St", sex: .Women),
+        Game(opponent: .Columbia, city: "New York", state: "NY", date: Date.dateComponents(year: 2024, month: 5, day: 25, hour: 10, minute: 0), sport: .Lacrosse, address: "6 Fake St", sex: .Women),
+        Game(opponent: .Princeton, city: "Princeton", state: "NJ", date: Date.dateComponents(year: 2024, month: 5, day: 20, hour: 10, minute: 0), sport: .Basketball, address: "1 Fake St", sex: .Men),
+        Game(opponent: .Harvard, city: "Cambridge", state: "MA", date: Date.dateComponents(year: 2024, month: 5, day: 21, hour: 10, minute: 0), sport: .Football, address: "2 Fake St", sex: .Men),
+        Game(opponent: .Yale, city: "New Haven", state: "CT", date: Date.dateComponents(year: 2024, month: 5, day: 22, hour: 10, minute: 0), sport: .Soccer, address: "3 Fake St", sex: .Men),
+        Game(opponent: .Brown, city: "Providence", state: "RI", date: Date.dateComponents(year: 2024, month: 5, day: 23, hour: 10, minute: 0), sport: .CrossCountry, address: "4 Fake St", sex: .Men),
+        Game(opponent: .Dartmouth, city: "Hanover", state: "NH", date: Date.dateComponents(year: 2024, month: 5, day: 24, hour: 10, minute: 0), sport: .IceHockey, address: "5 Fake St", sex: .Men),
+        Game(opponent: .Columbia, city: "New York", state: "NY", date: Date.dateComponents(year: 2024, month: 5, day: 25, hour: 10, minute: 0), sport: .Lacrosse, address: "6 Fake St", sex: .Men)
     ]
 }
+

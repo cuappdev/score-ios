@@ -8,17 +8,22 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var selectedSex : Sex = .Both
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            // Sex selector
+            PickerView()
+            
+            // Sport selector
+            
+            // List of games
         }
         .padding()
     }
 }
 
 #Preview {
-    ContentView()
+    PickerView()
 }

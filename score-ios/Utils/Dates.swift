@@ -15,9 +15,15 @@ extension Date {
     
     static let currentDate = Date()
     
-    static let dateFormatter = ISO8601DateFormatter() // eg 2016-04-14T10:44:00+0000
+    static let fullDateFormatter = ISO8601DateFormatter() // eg 2016-04-14T10:44:00+0000
+    
+    static func dateToStringFull(date: Date) -> String {
+        return fullDateFormatter.string(from: date)
+    }
     
     static func dateToString(date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "M/d/yyyy"
         return dateFormatter.string(from: date)
     }
     

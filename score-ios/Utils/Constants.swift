@@ -9,13 +9,18 @@ import SwiftUI
 
 struct Constants {
 
+    enum Icons {
+        static let locationIcon = "LocationIcon"
+    }
+    
     enum Colors {
         
         // Greys
         static let black = Color(hex: 0x000000)
         static let white = Color(hex: 0xFFFFFF)
-        static let grey_text = Color(hex: 0x777777)
+        static let grey_text = Color(hex: 0x616161)
         static let grey_liner = Color(hex: 0xC2C2C2)
+        static let grey_icons = Color(hex: 0x777777)
 //        static let greybg = Color(hex: 0xF0F1F2)
 //        static let grey00 = Color(hex: 0xF7F7F7)
 //        static let grey01 = Color(hex: 0xEFF1F4)
@@ -35,10 +40,16 @@ struct Constants {
         static let selectedText = white
         static let unselected = grey_liner
         static let unselectedText = grey_text
+        static let iconGrey = grey_icons
         
     }
 
     enum Fonts {
+        // Make it poppins
+        static let gameTitle = Font.custom("Poppins Medium", size: 18)
+        static let gameText = Font.custom("Poppins Regular", size: 14)
+        static let gameDate = Font.custom("Poppins Regular", size: 12)
+        static let sportLabel = Font.custom("Poppins Regular", size: 12)
         static let title = Font.system(size: 36, weight: .bold, design: .default)
         static let header = Font.system(size: 24, weight: .bold, design: .default)
         static let subheader = Font.system(size: 18, weight: .bold, design: .default)

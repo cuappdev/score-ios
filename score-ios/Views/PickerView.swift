@@ -13,8 +13,8 @@ private var buttonWidth : CGFloat = 100
 private var buttonHeight : CGFloat = 37
 
 struct PickerView: View {
-    @State private var selectedSex: Sex = .Both
-    @State private var selectedIndex: Int = 0
+    @Binding var selectedSex: Sex
+    @State var selectedIndex: Int = 0
     
     var body: some View {
         ZStack (alignment: .leading) {
@@ -65,9 +65,4 @@ struct PickerSegmentView: View {
             .foregroundColor(selected ? Constants.Colors.selectedText : Constants.Colors.unselectedText)
             .frame(width: buttonWidth, height: buttonHeight)
     }
-}
-
-// Preview
-#Preview {
-    PickerView()
 }

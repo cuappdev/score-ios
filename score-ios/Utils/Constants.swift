@@ -20,6 +20,7 @@ struct Constants {
         static let white = Color(hex: 0xFFFFFF)
         static let grey_text = Color(hex: 0x616161)
         static let grey_liner = Color(hex: 0xC2C2C2)
+        static let grey_border = Color(hex: 0xEAEAEA)
         static let grey_icons = Color(hex: 0x777777)
 //        static let greybg = Color(hex: 0xF0F1F2)
 //        static let grey00 = Color(hex: 0xF7F7F7)
@@ -27,16 +28,11 @@ struct Constants {
 //        static let grey02 = Color(hex: 0xDED9D9)
 //        static let grey03 = Color(hex: 0x606060)
 
-        // Others
-        static let red = Color(hex: 0xFF4F4F)
-//        static let brown = Color(hex: 0xCE9D9D)
-//        static let blue = Color(hex: 0x4387CB)
-//        static let green = Color(hex: 0x378C27)
-//        static let purple = Color(hex: 0x8643CB)
-//        static let yellow = Color(hex: 0xE9B140)
+        // Design system
+        static let primary_red = Color(hex: 0xA5210D)
         
         // Customs
-        static let selected = red
+        static let selected = primary_red
         static let selectedText = white
         static let unselected = grey_liner
         static let unselectedText = grey_text

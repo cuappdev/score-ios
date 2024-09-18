@@ -44,7 +44,7 @@ struct GameTile: View {
             
             // Location Icon, City, State | Date
             HStack {
-                HStack (spacing: 8) {
+                HStack (spacing: 4) {
                     Image(Constants.Icons.locationIcon)
                         .resizable()
                         .renderingMode(/*@START_MENU_TOKEN@*/.template/*@END_MENU_TOKEN@*/)
@@ -65,11 +65,12 @@ struct GameTile: View {
                 }
             }
         }   .frame(width: 345, height: 96)
-            .cornerRadius(12)
             .background(Constants.Colors.white)
-            .overlay(
+//            .cornerRadius(12)
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .background(
                 RoundedRectangle(cornerRadius: 12)
-                    .stroke(Constants.Colors.grey_liner, lineWidth: 1)
+                    .stroke(Constants.Colors.grey_border, lineWidth: 1)
                     .shadow(radius: 5)
             )
 

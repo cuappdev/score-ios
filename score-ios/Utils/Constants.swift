@@ -15,18 +15,18 @@ struct Constants {
     
     enum Colors {
         
-        // Greys
+        // grays
         static let black = Color(hex: 0x000000)
         static let white = Color(hex: 0xFFFFFF)
-        static let grey_text = Color(hex: 0x616161)
-        static let grey_liner = Color(hex: 0xC2C2C2)
-        static let grey_border = Color(hex: 0xEAEAEA)
-        static let grey_icons = Color(hex: 0x777777)
-//        static let greybg = Color(hex: 0xF0F1F2)
-//        static let grey00 = Color(hex: 0xF7F7F7)
-//        static let grey01 = Color(hex: 0xEFF1F4)
-//        static let grey02 = Color(hex: 0xDED9D9)
-//        static let grey03 = Color(hex: 0x606060)
+        static let gray_text = Color(hex: 0x616161)
+        static let gray_liner = Color(hex: 0xC2C2C2)
+        static let gray_border = Color(hex: 0xEAEAEA)
+        static let gray_icons = Color(hex: 0x777777)
+//        static let graybg = Color(hex: 0xF0F1F2)
+//        static let gray00 = Color(hex: 0xF7F7F7)
+//        static let gray01 = Color(hex: 0xEFF1F4)
+//        static let gray02 = Color(hex: 0xDED9D9)
+//        static let gray03 = Color(hex: 0x606060)
 
         // Design system
         static let primary_red = Color(hex: 0xA5210D)
@@ -34,9 +34,9 @@ struct Constants {
         // Customs
         static let selected = primary_red
         static let selectedText = white
-        static let unselected = grey_liner
-        static let unselectedText = grey_text
-        static let iconGrey = grey_icons
+        static let unselected = gray_liner
+        static let unselectedText = gray_text
+        static let iconGray = gray_icons
         
     }
 

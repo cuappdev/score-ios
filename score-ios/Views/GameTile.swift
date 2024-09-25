@@ -19,7 +19,7 @@ struct GameTile: View {
                     Image(game.opponent.rawValue)
                     Text(game.opponent.rawValue)
                         .font(Constants.Fonts.gameTitle)
-                }   .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
+                }   .padding(.leading, 20)
                 
                 Spacer()
                 
@@ -28,18 +28,18 @@ struct GameTile: View {
                         .resizable()
                         .renderingMode(.template)
                         .frame(width: 19, height: 19)
-                        .foregroundColor(Constants.Colors.iconGrey)
+                        .foregroundStyle(Constants.Colors.iconGray)
                     ZStack {
                         Circle()
                             .frame(width: 19, height: 19)
-                            .foregroundColor(.gray)
+                            .foregroundStyle(.gray)
                         Image(game.sex.description)
                             .resizable()
                             .renderingMode(.template)
                             .frame(width: 19, height: 19)
-                            .foregroundColor(Constants.Colors.white)
+                            .foregroundStyle(Constants.Colors.white)
                     }
-                }   .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 20))
+                }   .padding(.trailing, 20)
             }
             
             // Location Icon, City, State | Date
@@ -49,28 +49,27 @@ struct GameTile: View {
                         .resizable()
                         .renderingMode(/*@START_MENU_TOKEN@*/.template/*@END_MENU_TOKEN@*/)
                         .frame(width: 20, height: 20)
-                        .foregroundColor(Constants.Colors.iconGrey)
+                        .foregroundStyle(Constants.Colors.iconGray)
                     Text("\(game.city), \(game.state)")
                         .font(Constants.Fonts.gameText)
-                        .foregroundColor(Constants.Colors.grey_text)
-                }   .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
+                        .foregroundStyle(Constants.Colors.gray_text)
+                }   .padding(.leading, 20)
                 
                 Spacer()
                 
                 HStack {
                     Text(Date.dateToString(date: game.date))
                         .font(Constants.Fonts.gameDate)
-                        .foregroundColor(Constants.Colors.grey_text)
-                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 20))
+                        .foregroundStyle(Constants.Colors.gray_text)
+                        .padding(.trailing, 20)
                 }
             }
         }   .frame(width: 345, height: 96)
             .background(Constants.Colors.white)
-//            .cornerRadius(12)
             .clipShape(RoundedRectangle(cornerRadius: 12))
             .background(
                 RoundedRectangle(cornerRadius: 12)
-                    .stroke(Constants.Colors.grey_border, lineWidth: 1)
+                    .stroke(Constants.Colors.gray_border, lineWidth: 1)
                     .shadow(radius: 5)
             )
 

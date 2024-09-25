@@ -18,9 +18,9 @@ struct FilterTile : View {
                 .resizable()
                 .renderingMode(.template)
                 .frame(width: 32, height: 32)
-                .foregroundColor(selected ? Constants.Colors.selected : Constants.Colors.iconGrey)
+                .foregroundStyle(selected ? Constants.Colors.selected : Constants.Colors.icongray)
             Text(sport.description)
-                .foregroundColor(selected ? Constants.Colors.selected : Constants.Colors.iconGrey)
+                .foregroundStyle(selected ? Constants.Colors.selected : Constants.Colors.icongray)
                 .font(Constants.Fonts.sportLabel)
         }
     }

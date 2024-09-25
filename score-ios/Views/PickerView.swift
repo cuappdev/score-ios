@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-// Custom PickerView code heavily inspired from https://www.reddit.com/r/SwiftUI/comments/qonfey/how_do_i_get_a_picker_that_looks_like_this_very/
+/// Custom PickerView code heavily inspired from https://www.reddit.com/r/SwiftUI/comments/qonfey/how_do_i_get_a_picker_that_looks_like_this_very/
 
 private var buttonWidth : CGFloat = 100
 private var buttonHeight : CGFloat = 37
@@ -24,7 +24,6 @@ struct PickerView: View {
                 .frame(width: buttonWidth, height: buttonHeight)
                 .offset(x: 6 + CGFloat(selectedIndex) * 99)
                 .animation(.spring(), value: selectedSex)
-            
             
             // Options
             HStack (spacing: 0) {
@@ -47,22 +46,23 @@ struct PickerView: View {
                     }
                 }
             }
-            .padding(EdgeInsets(top: 6, leading: 6, bottom: 6, trailing: 6))
+            .padding(6)
             .clipShape(Capsule())
             .overlay(
                 Capsule()
-                    .stroke(Constants.Colors.grey_liner, lineWidth: 2)
+                    .stroke(Constants.Colors.gray_liner, lineWidth: 2)
             )
         }
     }
 }
+
 struct PickerSegmentView: View {
     var sex : Sex
     var selected : Bool
     
     var body: some View {
         Text(sex.description)
-            .foregroundColor(selected ? Constants.Colors.selectedText : Constants.Colors.unselectedText)
+            .foregroundStyle(selected ? Constants.Colors.selectedText : Constants.Colors.unselectedText)
             .frame(width: buttonWidth, height: buttonHeight)
     }
 }

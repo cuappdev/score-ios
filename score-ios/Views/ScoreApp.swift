@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-// Main View of the app
+/// Main View of the app
 struct ContentView: View {
 
     // State variables
@@ -21,7 +21,7 @@ struct ContentView: View {
             VStack(spacing: 0) {
                 // Sex selector
                 PickerView(selectedSex: $selectedSex, selectedIndex: 0)
-                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 12, trailing: 0))
+                    .padding(.bottom, 12)
                 
                 // Sport selector
                 ScrollView (.horizontal, showsIndicators: false) {
@@ -34,7 +34,7 @@ struct ContentView: View {
                             }
                         }
                     }
-                }   .padding(EdgeInsets(top: 0, leading: 0, bottom: 16, trailing: 0))
+                }   .padding(.bottom, 16)
                 
                 // Seperator line
                 Divider()
@@ -52,10 +52,11 @@ struct ContentView: View {
                                 GameTile(game: game)
                             }   .buttonStyle(PlainButtonStyle())
                         }
-                    }.padding(EdgeInsets(top: paddingMain, leading: 0, bottom: 0, trailing: 0))
+                    }.padding(.top, paddingMain)
                     
                 }
-            }   .padding(EdgeInsets(top: 0, leading: paddingMain, bottom: 0, trailing: paddingMain))
+            }   .padding(.leading, paddingMain)
+                .padding(.trailing, paddingMain)
                 .edgesIgnoringSafeArea(.bottom)
         }
     }

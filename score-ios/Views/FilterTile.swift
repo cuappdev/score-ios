@@ -19,6 +19,7 @@ struct FilterTile : View {
                 .renderingMode(.template)
                 .frame(width: 32, height: 32)
                 .foregroundColor(selected ? Constants.Colors.selected : Constants.Colors.iconGrey)
+            
             Text(sport.description)
                 .foregroundColor(selected ? Constants.Colors.selected : Constants.Colors.iconGrey)
                 .font(Constants.Fonts.sportLabel)

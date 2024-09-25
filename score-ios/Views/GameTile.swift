@@ -17,6 +17,7 @@ struct GameTile: View {
             HStack(spacing: 8) {
                 HStack(spacing: 8) {
                     Image(game.opponent.rawValue)
+
                     Text(game.opponent.rawValue)
                         .font(Constants.Fonts.gameTitle)
                 }   .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
@@ -29,10 +30,12 @@ struct GameTile: View {
                         .renderingMode(.template)
                         .frame(width: 19, height: 19)
                         .foregroundColor(Constants.Colors.iconGrey)
+                    
                     ZStack {
                         Circle()
                             .frame(width: 19, height: 19)
                             .foregroundColor(.gray)
+
                         Image(game.sex.description)
                             .resizable()
                             .renderingMode(.template)
@@ -50,6 +53,7 @@ struct GameTile: View {
                         .renderingMode(/*@START_MENU_TOKEN@*/.template/*@END_MENU_TOKEN@*/)
                         .frame(width: 20, height: 20)
                         .foregroundColor(Constants.Colors.iconGrey)
+                    
                     Text("\(game.city), \(game.state)")
                         .font(Constants.Fonts.gameText)
                         .foregroundColor(Constants.Colors.grey_text)

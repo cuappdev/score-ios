@@ -25,7 +25,6 @@ struct PickerView: View {
                 .offset(x: 6 + CGFloat(selectedIndex) * 99)
                 .animation(.spring(), value: selectedSex)
             
-            
             // Options
             HStack (spacing: 0) {
                 ForEach(

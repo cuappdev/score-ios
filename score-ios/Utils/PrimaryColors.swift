@@ -5,7 +5,6 @@
 //  Created by Daniel Chuang on 9/11/24.
 //
 
-// TODO Do we need this
 
 import SwiftUI
 

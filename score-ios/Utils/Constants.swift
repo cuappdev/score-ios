@@ -1,0 +1,58 @@
+//
+//  Constants.swift
+//  score-ios
+//
+//  Created by Daniel Chuang on 9/11/24.
+//
+
+import SwiftUI
+
+struct Constants {
+
+    enum Icons {
+        static let locationIcon = "LocationIcon"
+    }
+    
+    enum Colors {
+        
+        // grays
+        static let black = Color(hex: 0x000000)
+        static let white = Color(hex: 0xFFFFFF)
+        static let gray_text = Color(hex: 0x616161)
+        static let gray_liner = Color(hex: 0xC2C2C2)
+        static let gray_border = Color(hex: 0xEAEAEA)
+        static let gray_icons = Color(hex: 0x777777)
+//        static let graybg = Color(hex: 0xF0F1F2)
+//        static let gray00 = Color(hex: 0xF7F7F7)
+//        static let gray01 = Color(hex: 0xEFF1F4)
+//        static let gray02 = Color(hex: 0xDED9D9)
+//        static let gray03 = Color(hex: 0x606060)
+
+        // Design system
+        static let primary_red = Color(hex: 0xA5210D)
+        
+        // Customs
+        static let selected = primary_red
+        static let selectedText = white
+        static let unselected = gray_liner
+        static let unselectedText = gray_text
+        static let iconGray = gray_icons
+        
+    }
+
+    enum Fonts {
+        // Make it poppins
+        static let gameTitle = Font.custom("Poppins Medium", size: 18)
+        static let gameText = Font.custom("Poppins Regular", size: 14)
+        static let gameDate = Font.custom("Poppins Regular", size: 12)
+        static let sportLabel = Font.custom("Poppins Regular", size: 12)
+        static let title = Font.system(size: 36, weight: .bold, design: .default)
+        static let header = Font.system(size: 24, weight: .bold, design: .default)
+        static let subheader = Font.system(size: 18, weight: .bold, design: .default)
+        static let bodyBold = Font.system(size: 16, weight: .semibold, design: .default)
+        static let body = Font.system(size: 16, weight: .regular, design: .default)
+        static let caption = Font.system(size: 12, weight: .regular, design: .default)
+    }
+
+}
+

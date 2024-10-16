@@ -52,6 +52,7 @@ struct Constants {
         static let bodyBold = Font.system(size: 16, weight: .semibold, design: .default)
         static let body = Font.system(size: 16, weight: .regular, design: .default)
         static let caption = Font.system(size: 12, weight: .regular, design: .default)
+        static let navBarTitle = Font.system(size: 24, weight: .regular, design: .default)
     }
 
 }

@@ -43,6 +43,8 @@ enum Opponent : String {
     case Columbia
 }
 
+// polo, rowing, equestrian, sprint football
+
 enum Sport : String, Identifiable, CaseIterable, CustomStringConvertible {
     // https://health.cornell.edu/services/sports-medicine/sports-clearance/ncaa-teams
     var id: Self { self }
@@ -54,7 +56,6 @@ enum Sport : String, Identifiable, CaseIterable, CustomStringConvertible {
     case CrossCountry
     case IceHockey
     case Lacrosse
-    case Polo
     case Soccer
     case Squash
     case SwimmingDiving
@@ -62,7 +63,6 @@ enum Sport : String, Identifiable, CaseIterable, CustomStringConvertible {
     case TrackField
     
     // Women
-    case Equestrian
     case Fencing
     case FieldHockey
     case Gymnastics
@@ -93,20 +93,16 @@ enum Sport : String, Identifiable, CaseIterable, CustomStringConvertible {
             return "Ice Hockey"
         case .Lacrosse:
             return "Lacrosse"
-        case .Polo:
-            return "Polo"
         case .Soccer:
             return "Soccer"
         case .Squash:
             return "Squash"
         case .SwimmingDiving:
-            return "Swimming and Diving"
+            return "Swimming"
         case .Tennis:
             return "Tennis"
         case .TrackField:
             return "Track and Field"
-        case .Equestrian:
-            return "Equestrian"
         case .Fencing:
             return "Fencing"
         case .FieldHockey:
@@ -128,9 +124,9 @@ enum Sport : String, Identifiable, CaseIterable, CustomStringConvertible {
         case .Golf:
             return "Golf"
         case .RowingHeavyweight:
-            return "Rowing Heavyweight"
+            return "HW Rowing"
         case .RowingLightweight:
-            return "Rowing Lightweight"
+            return "LW Rowing"
         case .SprintFootball:
             return "Sprint Football"
         case .Wrestling:

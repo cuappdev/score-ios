@@ -145,7 +145,7 @@ enum Sex : Identifiable, CaseIterable, CustomStringConvertible {
     var description: String {
         switch self {
         case .Both:
-            return "Both"
+            return "All"
         case .Men:
             return "Men's"
         case .Women:

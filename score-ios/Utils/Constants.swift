@@ -10,7 +10,7 @@ import SwiftUI
 struct Constants {
 
     enum Icons {
-        static let locationIcon = "LocationIcon"
+        static let locationIcon = "Location-g"
     }
     
     enum Colors {
@@ -42,10 +42,14 @@ struct Constants {
 
     enum Fonts {
         // Make it poppins
+        static let h1 = Font.custom("Poppins Bold", size: 24)
+        static let gameScore = Font.custom("Poppins Semibold", size: 18)
         static let gameTitle = Font.custom("Poppins Medium", size: 18)
         static let gameText = Font.custom("Poppins Regular", size: 14)
+        static let buttonLabel = Font.custom("Poppins Medium", size: 14)
         static let gameDate = Font.custom("Poppins Regular", size: 12)
         static let sportLabel = Font.custom("Poppins Regular", size: 12)
+        static let filterLabel = Font.custom("Poppins Regular", size: 24)
         static let title = Font.system(size: 36, weight: .bold, design: .default)
         static let header = Font.system(size: 24, weight: .bold, design: .default)
         static let subheader = Font.system(size: 18, weight: .bold, design: .default)

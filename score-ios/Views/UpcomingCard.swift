@@ -80,7 +80,7 @@ struct UpcomingCard: View {
                 .stroke(Constants.Colors.gray_border, lineWidth: 1)
                 .shadow(radius: 5)
         )
-        .padding()
+        .padding(.vertical, 10)
     }
 }
 

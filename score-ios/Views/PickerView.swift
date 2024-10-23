@@ -62,7 +62,12 @@ struct PickerSegmentView: View {
     
     var body: some View {
         Text(sex.description)
+            .font(Constants.Fonts.gameTitle)
             .foregroundStyle(selected ? Constants.Colors.selectedText : Constants.Colors.unselectedText)
             .frame(width: buttonWidth, height: buttonHeight)
     }
 }
+
+//#Preview {
+//    PickerView(selectedSex: Sex.Both)
+//}

@@ -12,6 +12,9 @@ struct GameTile: View {
     var game: Game
     
     var body: some View {
+        
+        let liveNow: Bool = game.date == Date.currentDate
+        
         VStack {
             // Opponent Logo, Opponent Name | Sport Icon, Sex Icon
             HStack(spacing: 8) {
@@ -25,11 +28,15 @@ struct GameTile: View {
                 Spacer()
                 
                 HStack(spacing: 8) {
-                    Image(game.sport.rawValue)
+                    // Sport icon
+                    // TODO: frame 24*24
+                    Image(game.sport.rawValue+"-g")
                         .resizable()
                         .renderingMode(.template)
                         .frame(width: 19, height: 19)
                         .foregroundStyle(Constants.Colors.iconGray)
+                    
+                    // Sex icon
                     ZStack {
                         Circle()
                             .frame(width: 19, height: 19)
@@ -39,6 +46,7 @@ struct GameTile: View {
                             .renderingMode(.template)
                             .frame(width: 19, height: 19)
                             .foregroundStyle(Constants.Colors.white)
+                        // TODO: location icon ratio
                     }
                 }   .padding(.trailing, 20)
             }
@@ -58,11 +66,16 @@ struct GameTile: View {
                 
                 Spacer()
                 
-                HStack {
-                    Text(Date.dateToString(date: game.date))
-                        .font(Constants.Fonts.gameDate)
-                        .foregroundStyle(Constants.Colors.gray_text)
-                        .padding(.trailing, 20)
+                // Live Status / Date
+                if (liveNow) {
+                    
+                } else {
+                    HStack {
+                        Text(Date.dateToString(date: game.date))
+                            .font(Constants.Fonts.gameDate)
+                            .foregroundStyle(Constants.Colors.gray_text)
+                            .padding(.trailing, 20)
+                    }
                 }
             }
         }   .frame(width: 345, height: 96)

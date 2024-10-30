@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct ScoreSummaryTile: View {
+    
     var winner: String
     var time: String
     var round: String
     var point: String
     var score: String
+    
     var body: some View {
         HStack {
             // Team logo

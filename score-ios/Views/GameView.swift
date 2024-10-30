@@ -87,7 +87,7 @@ struct GameView : View {
                     
                     // Add to Calendar Button
                     Button(action: {
-                        // action
+                        // TODO: action
                     }) {
                         HStack {
                             Image("Calendar")
@@ -122,7 +122,7 @@ struct GameView : View {
                 }
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(action: {
-                        // Add action for back button
+                        // TODO: Add action for back button
                     }) {
                         Image(systemName: "chevron.left")
                             .foregroundColor(.primary)

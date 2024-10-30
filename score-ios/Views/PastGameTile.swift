@@ -1,16 +1,16 @@
 //
-//  GameTile.swift
+//  PastGameTile.swift
 //  score-ios
 //
-//  Created by Daniel Chuang on 9/14/24.
+//  Created by Hsia Lu wu on 10/30/24.
 //
 
 import SwiftUI
 
-struct GameTile: View {
-    
+struct PastGameTile: View {
     var game: Game
     
+        
     var body: some View {
         let liveNow: Bool = game.date == Date.currentDate
         
@@ -28,10 +28,11 @@ struct GameTile: View {
                 
                 HStack(spacing: 8) {
                     // Sport icon
+                    // TODO: frame 24*24
                     Image(game.sport.rawValue+"-g")
                         .resizable()
                         .renderingMode(.template)
-                        .frame(width: 24, height: 24)
+                        .frame(width: 19, height: 19)
                         .foregroundStyle(Constants.Colors.iconGray)
                     
                     // Sex icon
@@ -44,8 +45,9 @@ struct GameTile: View {
                             .renderingMode(.template)
                             .frame(width: 19, height: 19)
                             .foregroundStyle(Constants.Colors.white)
+                        // TODO: location icon ratio
                     }
-                }   
+                }
                 .padding(.trailing, 20)
             }
             
@@ -55,8 +57,7 @@ struct GameTile: View {
                     Image(Constants.Icons.locationIcon)
                         .resizable()
                         .renderingMode(/*@START_MENU_TOKEN@*/.template/*@END_MENU_TOKEN@*/)
-                        .frame(width: 13.7, height: 20)
-                    //TODO: ratio of location icon (actual dim: 10.83*15.83)
+                        .frame(width: 20, height: 20)
                         .foregroundStyle(Constants.Colors.iconGray)
                     Text("\(game.city), \(game.state)")
                         .font(Constants.Fonts.gameText)
@@ -77,19 +78,18 @@ struct GameTile: View {
                     }
                 }
             }
-        }   .frame(width: 345, height: 96)
-            .background(Constants.Colors.white)
-            .clipShape(RoundedRectangle(cornerRadius: 12))
-            .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .stroke(Constants.Colors.gray_border, lineWidth: 1)
-                    .shadow(radius: 5)
-            )
-
+        }   
+        .frame(width: 345, height: 96)
+        .background(Constants.Colors.white)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(Constants.Colors.gray_border, lineWidth: 1)
+                .shadow(radius: 5)
+        )
     }
 }
 
-// Preview
 #Preview {
-    GameTile(game: Game.dummyData[7])
+    PastGameTile(game: Game.dummyData[7])
 }

@@ -12,7 +12,6 @@ struct FilterTile : View {
     var sport: Sport
     var selected: Bool
     
-    
     var body : some View {
         let imageName: String = selected ? sport.rawValue+"-r": sport.rawValue+"-g"
         

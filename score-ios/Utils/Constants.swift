@@ -30,6 +30,8 @@ struct Constants {
 
         // Design system
         static let primary_red = Color(hex: 0xA5210D)
+        static let gradient_red = Color(red: 179 / 255, green: 27 / 255, blue: 27 / 255, opacity: 0.4)
+        static let gradient_blue = Color(red: 1 / 255, green: 31 / 255, blue: 91 / 255, opacity: 0.4)
         
         // Customs
         static let selected = primary_red
@@ -37,12 +39,13 @@ struct Constants {
         static let unselected = gray_liner
         static let unselectedText = gray_text
         static let iconGray = gray_icons
+    
         
     }
 
     enum Fonts {
         // Make it poppins
-        static let h1 = Font.custom("Poppins Bold", size: 24)
+        static let h1 = Font.custom("Poppins", size: 24)
         static let gameScore = Font.custom("Poppins Semibold", size: 18)
         static let gameTitle = Font.custom("Poppins Medium", size: 18)
         static let gameText = Font.custom("Poppins Regular", size: 14)

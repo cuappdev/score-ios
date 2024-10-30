@@ -19,6 +19,9 @@ protocol GameType : Identifiable where ID == UUID {
     // On Details
     // TODO add more, maybe longitude and latitude for Transit integration? Idk
     var address: String { get }
+    
+    // TODO: game score details
+    
 }
 
 struct Game : GameType {
@@ -42,8 +45,6 @@ enum Opponent : String {
     case Dartmouth
     case Columbia
 }
-
-// polo, rowing, equestrian, sprint football
 
 enum Sport : String, Identifiable, CaseIterable, CustomStringConvertible {
     // https://health.cornell.edu/services/sports-medicine/sports-clearance/ncaa-teams

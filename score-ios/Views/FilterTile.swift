@@ -13,8 +13,10 @@ struct FilterTile : View {
     var selected: Bool
     
     var body : some View {
+        let imageName: String = selected ? sport.rawValue+"-r": sport.rawValue+"-g"
+        
         VStack(spacing: 6) {
-            Image(sport.rawValue)
+            Image(imageName)
                 .resizable()
                 .renderingMode(.template)
                 .frame(width: 32, height: 32)
@@ -23,6 +25,7 @@ struct FilterTile : View {
                 .foregroundStyle(selected ? Constants.Colors.selected : Constants.Colors.iconGray)
                 .font(Constants.Fonts.sportLabel)
         }
+        .frame(minWidth: 56)
     }
 }
 

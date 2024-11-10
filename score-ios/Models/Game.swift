@@ -19,6 +19,9 @@ protocol GameType : Identifiable where ID == UUID {
     // On Details
     // TODO add more, maybe longitude and latitude for Transit integration? Idk
     var address: String { get }
+    
+    // TODO: game score details
+    
 }
 
 struct Game : GameType {
@@ -54,7 +57,6 @@ enum Sport : String, Identifiable, CaseIterable, CustomStringConvertible {
     case CrossCountry
     case IceHockey
     case Lacrosse
-    case Polo
     case Soccer
     case Squash
     case SwimmingDiving
@@ -62,7 +64,6 @@ enum Sport : String, Identifiable, CaseIterable, CustomStringConvertible {
     case TrackField
     
     // Women
-    case Equestrian
     case Fencing
     case FieldHockey
     case Gymnastics
@@ -93,20 +94,16 @@ enum Sport : String, Identifiable, CaseIterable, CustomStringConvertible {
             return "Ice Hockey"
         case .Lacrosse:
             return "Lacrosse"
-        case .Polo:
-            return "Polo"
         case .Soccer:
             return "Soccer"
         case .Squash:
             return "Squash"
         case .SwimmingDiving:
-            return "Swimming and Diving"
+            return "Swimming"
         case .Tennis:
             return "Tennis"
         case .TrackField:
             return "Track and Field"
-        case .Equestrian:
-            return "Equestrian"
         case .Fencing:
             return "Fencing"
         case .FieldHockey:
@@ -128,9 +125,9 @@ enum Sport : String, Identifiable, CaseIterable, CustomStringConvertible {
         case .Golf:
             return "Golf"
         case .RowingHeavyweight:
-            return "Rowing Heavyweight"
+            return "HW Rowing"
         case .RowingLightweight:
-            return "Rowing Lightweight"
+            return "LW Rowing"
         case .SprintFootball:
             return "Sprint Football"
         case .Wrestling:
@@ -149,7 +146,7 @@ enum Sex : Identifiable, CaseIterable, CustomStringConvertible {
     var description: String {
         switch self {
         case .Both:
-            return "Both"
+            return "All"
         case .Men:
             return "Men's"
         case .Women:

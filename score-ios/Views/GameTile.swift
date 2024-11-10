@@ -12,6 +12,8 @@ struct GameTile: View {
     var game: Game
     
     var body: some View {
+        let liveNow: Bool = game.date == Date.currentDate
+        
         VStack {
             // Opponent Logo, Opponent Name | Sport Icon, Sex Icon
             HStack(spacing: 8) {
@@ -25,11 +27,14 @@ struct GameTile: View {
                 Spacer()
                 
                 HStack(spacing: 8) {
-                    Image(game.sport.rawValue)
+                    // Sport icon
+                    Image(game.sport.rawValue+"-g")
                         .resizable()
                         .renderingMode(.template)
-                        .frame(width: 19, height: 19)
+                        .frame(width: 24, height: 24)
                         .foregroundStyle(Constants.Colors.iconGray)
+                    
+                    // Sex icon
                     ZStack {
                         Circle()
                             .frame(width: 19, height: 19)
@@ -40,7 +45,8 @@ struct GameTile: View {
                             .frame(width: 19, height: 19)
                             .foregroundStyle(Constants.Colors.white)
                     }
-                }   .padding(.trailing, 20)
+                }   
+                .padding(.trailing, 20)
             }
             
             // Location Icon, City, State | Date
@@ -49,7 +55,8 @@ struct GameTile: View {
                     Image(Constants.Icons.locationIcon)
                         .resizable()
                         .renderingMode(/*@START_MENU_TOKEN@*/.template/*@END_MENU_TOKEN@*/)
-                        .frame(width: 20, height: 20)
+                        .frame(width: 13.7, height: 20)
+                    //TODO: ratio of location icon (actual dim: 10.83*15.83)
                         .foregroundStyle(Constants.Colors.iconGray)
                     Text("\(game.city), \(game.state)")
                         .font(Constants.Fonts.gameText)
@@ -58,11 +65,16 @@ struct GameTile: View {
                 
                 Spacer()
                 
-                HStack {
-                    Text(Date.dateToString(date: game.date))
-                        .font(Constants.Fonts.gameDate)
-                        .foregroundStyle(Constants.Colors.gray_text)
-                        .padding(.trailing, 20)
+                // TODO: Live Status / Date
+                if (liveNow) {
+                    
+                } else {
+                    HStack {
+                        Text(Date.dateToString(date: game.date))
+                            .font(Constants.Fonts.gameDate)
+                            .foregroundStyle(Constants.Colors.gray_text)
+                            .padding(.trailing, 20)
+                    }
                 }
             }
         }   .frame(width: 345, height: 96)

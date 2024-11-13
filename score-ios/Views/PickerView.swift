@@ -7,6 +7,16 @@
 
 import SwiftUI
 
+// MARK: - Constants
+
+// MARK: - Segment Config
+
+// MARK: - Custom Picker Style
+
+// MARK: - Custom Picker View
+
+// MARK: - Segment View
+
 /// Custom PickerView code heavily inspired from https://www.reddit.com/r/SwiftUI/comments/qonfey/how_do_i_get_a_picker_that_looks_like_this_very/
 
 private var buttonWidth : CGFloat = 100

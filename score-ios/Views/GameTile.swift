@@ -8,7 +8,6 @@
 import SwiftUI
 
 // MARK: - Layout
-
 private struct TileLayout {
     static let containerWidth: CGFloat = 345
     static let containerHeight: CGFloat = 96

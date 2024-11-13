@@ -7,6 +7,18 @@
 
 import SwiftUI
 
+// MARK: - Layout
+private struct TileLayout {
+    static let iconSize: CGFloat = 32
+    
+    struct Padding {
+        static let locationTextPadding: CGFloat = 6
+    }
+}
+
+private typealias TL = TileLayout
+
+// MARK: - FilterTile UI
 struct FilterTile : View {
     
     var sport: Sport
@@ -15,17 +27,19 @@ struct FilterTile : View {
     var body : some View {
         let imageName: String = selected ? sport.rawValue+"-r": sport.rawValue+"-g"
         
-        VStack(spacing: 6) {
+        VStack(spacing: TL.Padding.locationTextPadding) {
+            // Icon
             Image(imageName)
                 .resizable()
                 .renderingMode(.template)
-                .frame(width: 32, height: 32)
+                .frame(width: TL.iconSize, height: TL.iconSize)
                 .foregroundStyle(selected ? Constants.Colors.selected : Constants.Colors.iconGray)
+            
+            // Text
             Text(sport.description)
                 .foregroundStyle(selected ? Constants.Colors.selected : Constants.Colors.iconGray)
                 .font(Constants.Fonts.sportLabel)
         }
-        .frame(minWidth: 56)
     }
 }
 

@@ -2,7 +2,7 @@
 //  GameView.swift
 //  score-ios
 //
-//  Created by Mac User on 9/15/24.
+//  Created by Daniel Chuang on 9/15/24.
 //
 
 import SwiftUI

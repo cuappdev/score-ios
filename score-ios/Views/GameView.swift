@@ -42,7 +42,7 @@ struct GameView : View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Men's Football")
                         .font(Constants.Fonts.subheader)
-                    Text("Cornell vs. " + game.opponent.rawValue)
+                    Text("Cornell vs. " + game.opponent)
                         .font(Constants.Fonts.header)
                     
                     HStack(spacing: 10) {
@@ -67,23 +67,24 @@ struct GameView : View {
                 // Countdown
                 VStack {
                     Image("Hourglass")
+                        .resizable()
+                        .frame(width: 93, height: 118)
                     
                     Text("Time Until Start")
-                        .font(Constants.Fonts.bodyBold)
+                        .font(Constants.Fonts.h2)
+                        .padding(.top, 24)
                     
                     HStack {
                         Text("2")
-                            .font(Constants.Fonts.header)
-                        
+                            .font(Constants.Fonts.countdownNum)
                         Text("days")
                             .font(Constants.Fonts.gameText)
                         Text("0")
-                            .font(Constants.Fonts.header)
-                        
+                            .font(Constants.Fonts.countdownNum)
                         Text("hours")
                             .font(Constants.Fonts.gameText)
                     }
-                    .padding(.top, 5)
+                    .padding(.top, 8)
                     
                     // Add to Calendar Button
                     Button(action: {

@@ -51,6 +51,7 @@ struct PickerView: View {
             .overlay(
                 Capsule()
                     .stroke(Constants.Colors.gray_liner, lineWidth: 2)
+                    .frame(width: 345, height: 49)
             )
         }
     }

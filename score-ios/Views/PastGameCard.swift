@@ -1,44 +1,37 @@
 //
-//  UpcomingCard.swift
+//  PastGameCard.swift
 //  score-ios
 //
-//  Created by Hsia Lu wu on 10/15/24.
+//  Created by Hsia Lu wu on 11/6/24.
 //
 
 import SwiftUI
 
-struct UpcomingCard: View {
-    
+struct PastGameCard: View {
     var game: Game
-    
     var body: some View {
         VStack {
-            // banner
             banner
-            
             Spacer()
-            
-            // information
             information
-        }
-        .frame(width: 345, height: 192)
-        .background(Constants.Colors.white)
-        .clipShape(RoundedRectangle(cornerRadius: 19))
-        .background(
-            RoundedRectangle(cornerRadius: 12)
-                .stroke(Constants.Colors.gray_border, lineWidth: 1)
-                .shadow(radius: 5)
-        )
-        .padding(.vertical, 10)
+        }.frame(width: 345, height: 192)
+            .background(Constants.Colors.white)
+            .clipShape(RoundedRectangle(cornerRadius: 19))
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(Constants.Colors.gray_border, lineWidth: 1)
+                    .shadow(radius: 5)
+            )
+            .padding(.vertical, 10)
     }
 }
 
 #Preview {
-    UpcomingCard(game: Game.dummyData[7])
+    PastGameCard(game: Game.dummyData[7])
 }
 
 // MARK: Components
-extension UpcomingCard {
+extension PastGameCard {
     private var banner: some View {
         HStack {
             Spacer()
@@ -46,10 +39,26 @@ extension UpcomingCard {
                 .resizable()
                 .frame(width: 50, height: 52)
             Spacer()
-            Text("VS")
-                .font(Constants.Fonts.title)
-                .italic()
-                .foregroundStyle(.white)
+            
+            HStack {
+                Text("47")
+                    .font(Constants.Fonts.title)
+                    .italic()
+                    .foregroundStyle(.white)
+                
+                Text(" - ")
+                    .font(Constants.Fonts.title)
+                    .italic()
+                    .foregroundStyle(.white)
+                
+                // TODO: Change the blur
+                Text("23")
+                    .font(Constants.Fonts.title)
+                    .blur(radius: 0.5)
+                    .italic()
+                    .foregroundStyle(.white)
+            }
+            
             Spacer()
             Image("penn_logo")
                 .resizable()

@@ -13,19 +13,56 @@ struct PastGameTile: View {
         
     var body: some View {
         let liveNow: Bool = game.date == Date.currentDate
+        let cornellScore: Int = game.timeUpdates[0].cornellScore
+        let opponentScore: Int = game.timeUpdates[0].opponentScore
         
-        VStack {
-            // Opponent Logo, Opponent Name | Sport Icon, Sex Icon
-            HStack(spacing: 8) {
-                HStack(spacing: 8) {
-                    Image(game.opponent.rawValue)
+        HStack {
+            // VStack of school names and logos and score
+            ZStack {
+                HStack {
+                    Spacer() // Pushes the rectangle to the right side
+                    Spacer()
+                    Rectangle()
+                        .frame(width: 2, height: 70) // Adjust the thickness of the right border here
+                        .foregroundColor(Constants.Colors.gray_liner) // Color of the right border
+                }
+                
+                VStack {
+                    HStack {
+                        Image(game.opponent)
+                            .resizable()
+                            .frame(width: 20, height: 27)
 
-                    Text(game.opponent.rawValue)
-                        .font(Constants.Fonts.gameTitle)
-                }   .padding(.leading, 20)
-                
-                Spacer()
-                
+                        Text(game.opponent)
+                            .font(Constants.Fonts.gameTitle)
+                        
+                        Spacer()
+                        
+                        Text("0")
+                    }
+                    HStack {
+                        Image("Cornell")
+                            .resizable()
+                            .frame(width: 20, height: 27)
+
+                        Text("Cornell")
+                            .font(Constants.Fonts.gameTitle)
+                        
+                        Spacer()
+                        
+                        Text("3")
+                    }
+                }
+                .padding(.leading, 16)
+                .padding(.trailing, 24)
+                .frame(maxWidth: .infinity)
+            }
+            
+            // arrow
+            
+            
+            // game info: sport, sex, time
+            VStack {
                 HStack(spacing: 8) {
                     // Sport icon
                     // TODO: frame 24*24
@@ -49,36 +86,17 @@ struct PastGameTile: View {
                     }
                 }
                 .padding(.trailing, 20)
-            }
-            
-            // Location Icon, City, State | Date
-            HStack {
-                HStack (spacing: 4) {
-                    Image(Constants.Icons.locationIcon)
-                        .resizable()
-                        .renderingMode(/*@START_MENU_TOKEN@*/.template/*@END_MENU_TOKEN@*/)
-                        .frame(width: 20, height: 20)
-                        .foregroundStyle(Constants.Colors.iconGray)
-                    Text("\(game.city), \(game.state)")
-                        .font(Constants.Fonts.gameText)
+                .padding(.bottom, 22)
+                
+                HStack {
+                    Text(Date.dateToString(date: game.date))
+                        .font(Constants.Fonts.gameDate)
                         .foregroundStyle(Constants.Colors.gray_text)
-                }   .padding(.leading, 20)
-                
-                Spacer()
-                
-                // TODO: Live Status / Date
-                if (liveNow) {
-                    
-                } else {
-                    HStack {
-                        Text(Date.dateToString(date: game.date))
-                            .font(Constants.Fonts.gameDate)
-                            .foregroundStyle(Constants.Colors.gray_text)
-                            .padding(.trailing, 20)
-                    }
+                        .padding(.trailing, 20)
                 }
             }
-        }   
+            .padding(.leading, 24)
+        }
         .frame(width: 345, height: 96)
         .background(Constants.Colors.white)
         .clipShape(RoundedRectangle(cornerRadius: 12))

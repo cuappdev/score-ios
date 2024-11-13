@@ -18,9 +18,9 @@ struct GameTile: View {
             // Opponent Logo, Opponent Name | Sport Icon, Sex Icon
             HStack(spacing: 8) {
                 HStack(spacing: 8) {
-                    Image(game.opponent.rawValue)
+                    Image(game.opponent)
 
-                    Text(game.opponent.rawValue)
+                    Text(game.opponent)
                         .font(Constants.Fonts.gameTitle)
                 }   .padding(.leading, 20)
                 

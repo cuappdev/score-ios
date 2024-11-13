@@ -1,28 +1,29 @@
 //
-//  PastGameView.swift
+//  HomeView.swift
 //  score-ios
 //
-//  Created by Hsia Lu wu on 10/30/24.
+//  Created by Hsia Lu wu on 11/6/24.
 //
 
 import SwiftUI
 
-struct PastGameView: View {
+struct HomeView: View {
     // State variables
     @State private var selectedSex : Sex = .Both
     @State private var selectedSport : Sport = .All
     var paddingMain : CGFloat = 20
     @State private var selectedCardIndex: Int = 0
     @State private var games: [Game] = []
-    @State private var pastGames: [Game] = Array(Game.dummyData.prefix(3))
+    @State private var upcomingGames: [Game] = Array(Game.dummyData.prefix(3))
     
+    // Main view
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
                 carousel
                 
                 VStack {
-                    Text("All Scores")
+                    Text("Game Schedule")
                         .font(Constants.Fonts.h1)
                         .frame(maxWidth: .infinity, alignment: .leading) // Align to the left
                     
@@ -44,9 +45,13 @@ struct PastGameView: View {
                     gameList
                 }
             }
+            .safeAreaInset(edge: .bottom, content: {
+                Color.clear.frame(height: 20)
+            })
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.leading, paddingMain)
             .padding(.trailing, paddingMain)
+            
         }
         .onChange(of: selectedSport) {
             filterGames()
@@ -62,14 +67,14 @@ struct PastGameView: View {
 }
 
 #Preview {
-    PastGameView()
+    HomeView()
 }
 
 // MARK: Components
-extension PastGameView {
+extension HomeView {
     private var carousel: some View {
         VStack {
-            Text("Latest")
+            Text("Upcoming")
                 .font(Constants.Fonts.h1)
                 .frame(maxWidth: .infinity, alignment: .leading) // Align to the left
                 .padding(.leading, 20)
@@ -77,8 +82,8 @@ extension PastGameView {
             
             // Carousel
             TabView(selection: $selectedCardIndex) {
-                ForEach(pastGames.indices, id: \.self) { index in
-                    PastGameCard(game: pastGames[index])
+                ForEach(upcomingGames.indices, id: \.self) { index in
+                    UpcomingCard(game: upcomingGames[index])
                         .tag(index)
                 }
             }
@@ -108,7 +113,7 @@ extension PastGameView {
                     Button {
                         selectedSport = sport
                     } label: {
-                    FilterTile(sport: sport, selected: sport == selectedSport)
+                        FilterTile(sport: sport, selected: sport == selectedSport)
                     }
                 }
             }
@@ -147,13 +152,12 @@ extension PastGameView {
                     NavigationLink {
                         GameView(game: game)
                     } label: {
-                        PastGameTile(game: game)
+                        GameTile(game: game)
                     }
                     .buttonStyle(PlainButtonStyle())
                 }
-            }.padding(.top, paddingMain)
+            }
+            .padding(.top, paddingMain)
         }
     }
-    
-    
 }

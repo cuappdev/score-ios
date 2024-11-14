@@ -1,0 +1,3 @@
+${PODS_ROOT}/Target Support Files/Pods-score-ios/Pods-score-ios-resources.sh
+${PODS_CONFIGURATION_BUILD_DIR}/Alamofire/Alamofire.bundle
+${PODS_CONFIGURATION_BUILD_DIR}/CocoaLumberjack/CocoaLumberjackPrivacy.bundle

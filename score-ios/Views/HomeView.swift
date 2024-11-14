@@ -19,39 +19,40 @@ struct HomeView: View {
     // Main view
     var body: some View {
         NavigationView {
-            VStack(spacing: 0) {
-                carousel
-                
-                VStack {
-                    Text("Game Schedule")
-                        .font(Constants.Fonts.h1)
-                        .frame(maxWidth: .infinity, alignment: .leading) // Align to the left
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack(spacing: 0) {
+                    carousel
                     
-                    genderSelector
-                        .frame(maxWidth: .infinity, alignment: .center)
-                    sportSelector
+                    VStack {
+                        Text("Game Schedule")
+                            .font(Constants.Fonts.h1)
+                            .frame(maxWidth: .infinity, alignment: .leading) // Align to the left
+                        
+                        genderSelector
+                            .frame(maxWidth: .infinity, alignment: .center)
+                        sportSelector
+                    }
+                    .padding(.bottom, 16)
+                    
+                    // Seperator line
+                    Divider()
+                        .background(.clear)
+                    
+                    // List of games
+                    if (games.isEmpty) {
+                        // make this a separate view
+                        NoGameView()
+                    } else {
+                        gameList
+                    }
                 }
-                .padding(.bottom, 16)
-                
-                // Seperator line
-                Divider()
-                    .background(.clear)
-                
-                // List of games
-                if (games.isEmpty) {
-                    // make this a separate view
-                    NoGameView()
-                } else {
-                    gameList
-                }
-            }
-            .safeAreaInset(edge: .bottom, content: {
-                Color.clear.frame(height: 20)
-            })
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding(.leading, paddingMain)
-            .padding(.trailing, paddingMain)
-            
+                .safeAreaInset(edge: .bottom, content: {
+                    Color.clear.frame(height: 20)
+                })
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .padding(.leading, paddingMain)
+                .padding(.trailing, paddingMain)
+            }.scrollClipDisabled()
         }
         .onChange(of: selectedSport) {
             filterGames()
@@ -144,20 +145,15 @@ extension HomeView {
     }
     
     private var gameList: some View {
-        ScrollView (.vertical, showsIndicators: false) {
-            LazyVStack(spacing: 16) {
-                ForEach(
-                    games
-                ) { game in
-                    NavigationLink {
-                        GameView(game: game)
-                    } label: {
-                        GameTile(game: game)
-                    }
-                    .buttonStyle(PlainButtonStyle())
-                }
+        LazyVStack(spacing: 16) {
+            ForEach(games) { game in
+                NavigationLink {
+                    GameView(game: game)
+                } label: {
+                    GameTile(game: game)
+                }.buttonStyle(PlainButtonStyle())
             }
-            .padding(.top, paddingMain)
-        }
+        }.padding(.top, paddingMain)
     }
 }
+    

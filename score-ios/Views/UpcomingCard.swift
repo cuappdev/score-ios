@@ -13,12 +13,8 @@ struct UpcomingCard: View {
     
     var body: some View {
         VStack {
-            // banner
             banner
-            
             Spacer()
-            
-            // information
             information
         }
         .frame(width: 345, height: 192)

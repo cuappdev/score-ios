@@ -79,6 +79,6 @@ struct PickerSegmentView: View {
     }
 }
 
-//#Preview {
-//    PickerView(selectedSex: Sex.Both)
-//}
+#Preview {
+    ContentView()
+}

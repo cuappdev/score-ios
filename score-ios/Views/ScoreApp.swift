@@ -10,32 +10,22 @@ import SwiftUI
 /// Main View of the app
 struct ContentView: View {
     
+    @State private var selectedTab: Int = 0
+    
     var body: some View {
-        TabView {
-            HomeView()
-            .tabItem {
-                VStack {
-                    Image("schedule") // Replace with your custom image name
-                        .renderingMode(.template)
-                    Text("Schedule")
-                }
-            }
-            
-            // PastGameView as the secondary tab
-            PastGameView()
-                .tabItem {
-                    VStack {
-                        Image("scoreboard") // Replace with your custom image name
-                            .renderingMode(.template)
-                        Text("Scores")
-                }
-            }
-        }
-        .background(Color.white) 
-        .accentColor(Constants.Colors.primary_red)
+        
+        MainTabView(selection: $selectedTab)
     }
 }
 
 #Preview {
-    ContentView()
+    StateWrapper()
+}
+
+struct StateWrapper: View {
+    @State private var selectedTab: Int = 0
+    
+    var body: some View {
+        MainTabView(selection: $selectedTab)
+    }
 }

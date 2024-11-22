@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -49,6 +49,12 @@
 		D86347DF2CE98B3C003DD8F6 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86347DE2CE98B3C003DD8F6 /* MainTabView.swift */; };
 		D86347E12CE98D37003DD8F6 /* TabViewIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86347E02CE98D37003DD8F6 /* TabViewIcon.swift */; };
 		D87882282CC060FC00421F67 /* GameDetailedScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87882272CC060FC00421F67 /* GameDetailedScoreView.swift */; };
+		D89102042CED69EF004CE226 /* Apollo in Frameworks */ = {isa = PBXBuildFile; productRef = D89102032CED69EF004CE226 /* Apollo */; };
+		D89102072CED6A39004CE226 /* schema.graphqls in Resources */ = {isa = PBXBuildFile; fileRef = D89102062CED6A28004CE226 /* schema.graphqls */; };
+		D891020B2CED6A8E004CE226 /* Game.graphql in Resources */ = {isa = PBXBuildFile; fileRef = D891020A2CED6A86004CE226 /* Game.graphql */; };
+		D89102102CF0EBA4004CE226 /* DataCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D891020F2CF0EBA0004CE226 /* DataCoordinator.swift */; };
+		D89102132CF10CA9004CE226 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89102122CF10CA5004CE226 /* NetworkManager.swift */; };
+		D89102152CF10F0E004CE226 /* GameAPI in Frameworks */ = {isa = PBXBuildFile; productRef = D89102142CF10F0E004CE226 /* GameAPI */; };
 		D89461192CBF393B0010C532 /* UpcomingCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89461182CBF393B0010C532 /* UpcomingCard.swift */; };
 		D8B1C9D12CD2CE3D0095E563 /* PastGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B1C9D02CD2CE3C0095E563 /* PastGameView.swift */; };
 		D8B1C9D32CD2D20A0095E563 /* PastGameTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B1C9D22CD2D20A0095E563 /* PastGameTile.swift */; };
@@ -118,6 +124,10 @@
 		D86347DE2CE98B3C003DD8F6 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		D86347E02CE98D37003DD8F6 /* TabViewIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewIcon.swift; sourceTree = "<group>"; };
 		D87882272CC060FC00421F67 /* GameDetailedScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetailedScoreView.swift; sourceTree = "<group>"; };
+		D89102062CED6A28004CE226 /* schema.graphqls */ = {isa = PBXFileReference; lastKnownFileType = text; path = schema.graphqls; sourceTree = "<group>"; };
+		D891020A2CED6A86004CE226 /* Game.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Game.graphql; sourceTree = "<group>"; };
+		D891020F2CF0EBA0004CE226 /* DataCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataCoordinator.swift; sourceTree = "<group>"; };
+		D89102122CF10CA5004CE226 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		D89461182CBF393B0010C532 /* UpcomingCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingCard.swift; sourceTree = "<group>"; };
 		D8B1C9D02CD2CE3C0095E563 /* PastGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastGameView.swift; sourceTree = "<group>"; };
 		D8B1C9D22CD2D20A0095E563 /* PastGameTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastGameTile.swift; sourceTree = "<group>"; };
@@ -128,6 +138,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D89102042CED69EF004CE226 /* Apollo in Frameworks */,
+				D89102152CF10F0E004CE226 /* GameAPI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,6 +178,7 @@
 		CE335CCC2C9226F90037F572 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				D89102052CED6A1E004CE226 /* GraphQL */,
 				CE335CD82C9244230037F572 /* Game.swift */,
 			);
 			path = Models;
@@ -252,6 +265,7 @@
 				CE725D3A2C89120200386943 /* score-ios */,
 				CE725D4B2C89120500386943 /* score-iosTests */,
 				CE725D552C89120500386943 /* score-iosUITests */,
+				D89102022CED69EF004CE226 /* Frameworks */,
 				CE725D392C89120200386943 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -269,6 +283,7 @@
 		CE725D3A2C89120200386943 /* score-ios */ = {
 			isa = PBXGroup;
 			children = (
+				D891020D2CF0EB88004CE226 /* Data */,
 				CE528FF32C96A50F00C238B5 /* Info.plist */,
 				CE725D412C89120400386943 /* Preview Content */,
 				CE335CD12C9227170037F572 /* Views */,
@@ -307,6 +322,31 @@
 			path = "score-iosUITests";
 			sourceTree = "<group>";
 		};
+		D89102022CED69EF004CE226 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D89102052CED6A1E004CE226 /* GraphQL */ = {
+			isa = PBXGroup;
+			children = (
+				D891020A2CED6A86004CE226 /* Game.graphql */,
+				D89102062CED6A28004CE226 /* schema.graphqls */,
+			);
+			path = GraphQL;
+			sourceTree = "<group>";
+		};
+		D891020D2CF0EB88004CE226 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				D89102122CF10CA5004CE226 /* NetworkManager.swift */,
+				D891020F2CF0EBA0004CE226 /* DataCoordinator.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -314,6 +354,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CE725D5C2C89120500386943 /* Build configuration list for PBXNativeTarget "score-ios" */;
 			buildPhases = (
+				D89102112CF0EDDF004CE226 /* Generate Apollo GraphQL API */,
 				CE725D342C89120200386943 /* Sources */,
 				CE725D352C89120200386943 /* Frameworks */,
 				CE725D362C89120200386943 /* Resources */,
@@ -395,6 +436,10 @@
 				Base,
 			);
 			mainGroup = CE725D2F2C89120100386943;
+			packageReferences = (
+				D89102012CED68D9004CE226 /* XCRemoteSwiftPackageReference "apollo-ios" */,
+				D891020C2CEF98EE004CE226 /* XCLocalSwiftPackageReference "gameAPI" */,
+			);
 			productRefGroup = CE725D392C89120200386943 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -411,6 +456,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D891020B2CED6A8E004CE226 /* Game.graphql in Resources */,
 				CE528FE42C96A27500C238B5 /* Poppins-Light.ttf in Resources */,
 				CE528FEE2C96A27500C238B5 /* Poppins-Black.ttf in Resources */,
 				CE528FEC2C96A27500C238B5 /* Poppins-LightItalic.ttf in Resources */,
@@ -421,6 +467,7 @@
 				CE528FE12C96A27500C238B5 /* Poppins-ThinItalic.ttf in Resources */,
 				CE528FE22C96A27500C238B5 /* Poppins-ExtraLightItalic.ttf in Resources */,
 				CE528FE92C96A27500C238B5 /* Poppins-BlackItalic.ttf in Resources */,
+				D89102072CED6A39004CE226 /* schema.graphqls in Resources */,
 				CE528FE72C96A27500C238B5 /* Poppins-ExtraBoldItalic.ttf in Resources */,
 				CE528FE32C96A27500C238B5 /* Poppins-BoldItalic.ttf in Resources */,
 				CE528FE62C96A27500C238B5 /* Poppins-SemiBoldItalic.ttf in Resources */,
@@ -451,17 +498,40 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		D89102112CF0EDDF004CE226 /* Generate Apollo GraphQL API */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Generate Apollo GraphQL API";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		CE725D342C89120200386943 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D89102132CF10CA9004CE226 /* NetworkManager.swift in Sources */,
 				CE725D3E2C89120200386943 /* ScoreApp.swift in Sources */,
 				D836AD922CB62C8800BD1545 /* NoGameView.swift in Sources */,
 				CE528FF52C9798AC00C238B5 /* FilterTile.swift in Sources */,
 				D8B1C9D32CD2D20A0095E563 /* PastGameTile.swift in Sources */,
 				CE528FA22C9651C800C238B5 /* GameTile.swift in Sources */,
 				CE335CD92C9244230037F572 /* Game.swift in Sources */,
+				D89102102CF0EBA4004CE226 /* DataCoordinator.swift in Sources */,
 				CE335CD72C922F390037F572 /* Dates.swift in Sources */,
 				D86347AF2CDBD2F4003DD8F6 /* PastGameCard.swift in Sources */,
 				CE528FF72C979DA000C238B5 /* GameView.swift in Sources */,
@@ -808,6 +878,37 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		D891020C2CEF98EE004CE226 /* XCLocalSwiftPackageReference "gameAPI" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = gameAPI;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D89102012CED68D9004CE226 /* XCRemoteSwiftPackageReference "apollo-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apollographql/apollo-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.15.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D89102032CED69EF004CE226 /* Apollo */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D89102012CED68D9004CE226 /* XCRemoteSwiftPackageReference "apollo-ios" */;
+			productName = Apollo;
+		};
+		D89102142CF10F0E004CE226 /* GameAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D891020C2CEF98EE004CE226 /* XCLocalSwiftPackageReference "gameAPI" */;
+			productName = GameAPI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = CE725D302C89120100386943 /* Project object */;
 }

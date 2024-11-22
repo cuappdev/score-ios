@@ -1,0 +1,14 @@
+query GetAllGames {
+    games {
+        id
+        city
+        date
+        gender
+        opponentId
+        result
+        sport
+        state
+        time
+        location
+    }
+}

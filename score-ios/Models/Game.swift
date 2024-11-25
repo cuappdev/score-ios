@@ -23,10 +23,7 @@ protocol GameType : Identifiable where ID == UUID {
     // TODO: game score details
     var timeUpdates: [TimeUpdate] { get }
     var gameUpdates: [GameUpdate] { get }
-    
 }
-
-
 
 struct Game : GameType {
     var id: UUID = UUID()
@@ -48,20 +45,18 @@ struct TimeUpdate {
     var cornellScore: Int
     var opponentScore: Int
 }
-// TimeUpdate(timestamp: 1, isTotal: false, cornellScore: 13, opponentScore: 7)
 
 struct GameUpdate {
-    var id: UUID = UUID()
-    var timestamp: Int
-    var isTotal: Bool
-    var cornellScore: Int
-    var opponentScore: Int
-    var time: Date
-    var isCornell: Bool
-    var eventParty: EventParty
-    var description: String
+    var id: UUID = UUID() // discard
+    var timestamp: Int // period
+    var isTotal: Bool // discard
+    var cornellScore: Int // corScore
+    var opponentScore: Int // oppScore
+    var time: Date // time
+    var isCornell: Bool //
+    var eventParty: EventParty // team
+    var description: String // description
 }
-// GameUpdate(timestamp: 1, isTotal: false, cornellScore: 10, opponentScore: 7, time: Date.dateComponents(year: 2024, month: 5, day: 19, hour: 6, minute: 21), isCornell: true, eventParty: Cornell, description: "Zhao, Alan field goal attempt from 24 GOOD")
 
 enum EventParty {
     case Cornell

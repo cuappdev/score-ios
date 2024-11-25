@@ -18,8 +18,8 @@ class NetworkManager {
 //    return ApolloClient(url: url)
 //}()
     
-    func fetchGames(completion: @escaping ([GetAllGamesQuery.Data.Game]?, Error?) -> Void) {
-        apolloClient.fetch(query: GetAllGamesQuery()) { result in
+    func fetchGames(completion: @escaping ([GamesQuery.Data.Game]?, Error?) -> Void) {
+        apolloClient.fetch(query: GamesQuery()) { result in
             switch result {
             case .success(let graphQLResult):
                 if let gamesData = graphQLResult.data?.games?.compactMap({ $0 }) {
@@ -36,6 +36,28 @@ class NetworkManager {
                 completion(nil, error)
             }
         }
+    }
+    
+    func filterUpcomingGames(gender: String?, sport: String?, completion: @escaping ([GamesQuery.Data.Game]?, Error?) -> Void) {
+        apolloClient.fetch(query: GamesQuery()) { result in
+            switch result {
+            case .success(let graphQLResult):
+                if let gamesData = graphQLResult.data?.games?.compactMap({ $0 }) {
+                    // filter games by gender and sports
+                    let filteredGames = gamesData.filter { game in
+                        (gender == nil || game.gender == gender) &&
+                        (sport == nil || game.sport == sport)
+                    }
+                    completion(filteredGames, nil)
+                } else if let errors = graphQLResult.errors {
+                    let errorDescription = errors.map { $0.localizedDescription }.joined(separator: "\n")
+                    completion(nil, NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: errorDescription]))
+                }
+            case .failure(let error):
+                completion(nil, error)
+            }
+        }
+        
     }
     
 }

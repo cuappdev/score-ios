@@ -32,6 +32,24 @@ type Query {
 }
 
 """
+A GraphQL type representing a boxscore.
+
+Attributes:
+
+"""
+type BoxScore {
+  team: String
+  period: String
+  time: String
+  description: String
+  scorer: String
+  assist: String
+  scoreBy: String
+  corScore: Int
+  oppScore: Int
+}
+
+"""
 A GraphQL type representing a game.
 
 Attributes:
@@ -56,6 +74,8 @@ type GameType {
   sport: String!
   state: String!
   time: String
+  scoreBreakdown: [[String]]
+  boxScore: [BoxScore]
 }
 
 """

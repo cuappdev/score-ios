@@ -18,9 +18,6 @@ struct ContentView: View {
     var body: some View {
         
         MainTabView(selection: $selectedTab)
-            .onAppear {
-                filterGames()
-            }
     }
     
     private func fetchGames() {

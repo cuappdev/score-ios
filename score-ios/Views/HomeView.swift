@@ -15,6 +15,8 @@ struct HomeView: View {
     @State private var selectedCardIndex: Int = 0
     @State private var games: [Game] = []
     @State private var upcomingGames: [Game] = Array(Game.dummyData.prefix(3))
+    @State private var errorMessage: String?
+    
     
     // Main view
     var body: some View {
@@ -53,16 +55,19 @@ struct HomeView: View {
             .padding(.trailing, paddingMain)
             
         }
+        .onAppear() {
+            fetchGames()
+        }
         .onChange(of: selectedSport) {
-            filterGames()
+            filterUpcomingGames()
         }
         .onChange(of: selectedSex) {
-            filterGames()
+            filterUpcomingGames()
         }
     }
     
     func filterGames() {
-        games = Game.dummyData.filter({(selectedSex == .Both || $0.sex == selectedSex) && (selectedSport == .All || $0.sport == selectedSport)})
+        games = games.filter({(selectedSex == .Both || $0.sex == selectedSex) && (selectedSport == .All || $0.sport == selectedSport)})
     }
 }
 
@@ -70,6 +75,47 @@ struct HomeView: View {
     HomeView()
 }
 
+// MARK: Functions
+extension HomeView {
+    private func fetchGames() {
+        NetworkManager.shared.fetchGames { fetchedGames, error in
+            if let fetchedGames = fetchedGames {
+                games = fetchedGames.map({ game in
+                    Game(game: game)
+                })
+                // Print game info to the console
+                games.forEach { game in
+                    print("Game in \(game.city) on \(game.date), sport: \(game.sport), gender: \(game.sex)")
+                }
+            } else if let error = error {
+                errorMessage = error.localizedDescription
+                print("Error in fetchGames: \(errorMessage ?? "Unknown error")")
+            }
+        }
+    }
+    
+    private func filterUpcomingGames() {
+        let gender = selectedSex.description
+        let sport = selectedSport.description
+        NetworkManager.shared.filterUpcomingGames(gender: gender, sport: sport) { filteredGames, error in
+            if let filteredGames = filteredGames {
+                games = filteredGames.map({ game in
+                    Game(game: game)
+                })
+                print("Filtered games with selected gender \(gender) and selected sport \(sport)")
+                if(games.isEmpty) {
+                    print("games are empty")
+                }
+                games.forEach { game in
+                    print("Game in \(game.city) on \(game.date), sport: \(game.sport), gender: \(game.sex)")
+                }
+            } else if let error = error {
+                errorMessage = error.localizedDescription
+                print("Error in filterUpcomingGames: \(errorMessage ?? "Unknown error")")
+            }
+        }
+    }
+}
 // MARK: Components
 extension HomeView {
     private var carousel: some View {

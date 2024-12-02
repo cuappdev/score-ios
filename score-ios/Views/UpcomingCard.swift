@@ -51,9 +51,14 @@ extension UpcomingCard {
                 .italic()
                 .foregroundStyle(.white)
             Spacer()
-            Image("penn_logo")
-                .resizable()
-                .frame(width: 50, height: 58)
+            AsyncImage(url: URL(string: game.opponent.image)) {
+                image in
+                image.image?.resizable()
+            }
+            .frame(width: 50, height: 50)
+//            Image("penn_logo")
+//                .resizable()
+//                .frame(width: 50, height: 58)
             Spacer()
         }
         .padding()
@@ -70,7 +75,7 @@ extension UpcomingCard {
                 Image("penn_logo")
                     .resizable()
                     .frame(width: 24, height: 30)
-                Text(game.opponent)
+                Text(game.opponent.name)
                     .font(Constants.Fonts.gameTitle)
                 Spacer()
                 Image(game.sport.rawValue + "-g")

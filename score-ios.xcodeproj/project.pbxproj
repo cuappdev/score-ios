@@ -58,6 +58,7 @@
 		D89461192CBF393B0010C532 /* UpcomingCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89461182CBF393B0010C532 /* UpcomingCard.swift */; };
 		D8B1C9D12CD2CE3D0095E563 /* PastGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B1C9D02CD2CE3C0095E563 /* PastGameView.swift */; };
 		D8B1C9D32CD2D20A0095E563 /* PastGameTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B1C9D22CD2D20A0095E563 /* PastGameTile.swift */; };
+		D8DD4E642CFD48ED00F2C46E /* Team.graphql in Resources */ = {isa = PBXBuildFile; fileRef = D8DD4E632CFD48E400F2C46E /* Team.graphql */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -131,6 +132,7 @@
 		D89461182CBF393B0010C532 /* UpcomingCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingCard.swift; sourceTree = "<group>"; };
 		D8B1C9D02CD2CE3C0095E563 /* PastGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastGameView.swift; sourceTree = "<group>"; };
 		D8B1C9D22CD2D20A0095E563 /* PastGameTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastGameTile.swift; sourceTree = "<group>"; };
+		D8DD4E632CFD48E400F2C46E /* Team.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Team.graphql; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -332,6 +334,7 @@
 		D89102052CED6A1E004CE226 /* GraphQL */ = {
 			isa = PBXGroup;
 			children = (
+				D8DD4E632CFD48E400F2C46E /* Team.graphql */,
 				D891020A2CED6A86004CE226 /* Game.graphql */,
 				D89102062CED6A28004CE226 /* schema.graphqls */,
 			);
@@ -456,6 +459,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8DD4E642CFD48ED00F2C46E /* Team.graphql in Resources */,
 				D891020B2CED6A8E004CE226 /* Game.graphql in Resources */,
 				CE528FE42C96A27500C238B5 /* Poppins-Light.ttf in Resources */,
 				CE528FEE2C96A27500C238B5 /* Poppins-Black.ttf in Resources */,

@@ -29,11 +29,15 @@ struct PastGameTile: View {
                 
                 VStack {
                     HStack {
-                        Image(game.opponent)
-                            .resizable()
-                            .frame(width: 20, height: 27)
+                        AsyncImage(url: URL(string: game.opponent.image)) { image in
+                            image.image?.resizable()
+                        }
+                        .frame(width: 20, height: 27)
+//                        Image(game.opponent)
+//                            .resizable()
+//                            .frame(width: 20, height: 27)
 
-                        Text(game.opponent)
+                        Text(game.opponent.name)
                             .font(Constants.Fonts.gameTitle)
                         
                         Spacer()

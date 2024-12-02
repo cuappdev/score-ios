@@ -18,9 +18,15 @@ struct GameTile: View {
             // Opponent Logo, Opponent Name | Sport Icon, Sex Icon
             HStack(spacing: 8) {
                 HStack(spacing: 8) {
-                    Image(game.opponent)
+//                    Image(game.opponent)
+                    AsyncImage(url: URL(string: game.opponent.image)) {image in
+                        image.resizable()
+                    } placeholder: {
+                        Constants.Colors.gray_icons
+                    }
+                    .frame(width: 20, height: 20)
 
-                    Text(game.opponent)
+                    Text(game.opponent.name)
                         .font(Constants.Fonts.gameTitle)
                 }   .padding(.leading, 20)
                 

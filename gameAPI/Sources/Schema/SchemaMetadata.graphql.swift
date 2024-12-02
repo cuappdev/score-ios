@@ -23,6 +23,7 @@ public enum SchemaMetadata: ApolloAPI.SchemaMetadata {
     case "BoxScore": return GameAPI.Objects.BoxScore
     case "GameType": return GameAPI.Objects.GameType
     case "Query": return GameAPI.Objects.Query
+    case "TeamType": return GameAPI.Objects.TeamType
     default: return nil
     }
   }

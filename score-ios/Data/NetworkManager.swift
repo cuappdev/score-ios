@@ -24,6 +24,7 @@ class NetworkManager {
             case .success(let graphQLResult):
                 if let gamesData = graphQLResult.data?.games?.compactMap({ $0 }) {
                     // Print each game's information to the console
+                    
                     gamesData.forEach { game in
                         print("Game in \(game.city) on \(game.date), sport: \(game.sport), result: \(game.result ?? "N/A")")
                     }
@@ -44,10 +45,14 @@ class NetworkManager {
             case .success(let graphQLResult):
                 if let gamesData = graphQLResult.data?.games?.compactMap({ $0 }) {
                     // filter games by gender and sports
+                    for datum in gamesData {
+                        print("Game of \(datum.sport) and \(datum.gender)")
+                    }
                     let filteredGames = gamesData.filter { game in
                         (gender == nil || game.gender == gender) &&
                         (sport == nil || game.sport == sport)
                     }
+                    print("game is empty: " + String(filteredGames.isEmpty))
                     completion(filteredGames, nil)
                 } else if let errors = graphQLResult.errors {
                     let errorDescription = errors.map { $0.localizedDescription }.joined(separator: "\n")
@@ -57,7 +62,23 @@ class NetworkManager {
                 completion(nil, error)
             }
         }
+    }
+    
+    func fetchTeamById(by id: String, completion: @escaping (GetTeamByIdQuery.Data.Team?, Error?) -> Void) {
+        let query = GetTeamByIdQuery(id: id)
         
+        apolloClient.fetch(query: query) { result in
+            switch result {
+            case .success(let graphQLResult):
+                if let team = graphQLResult.data?.team {
+                    completion(team, nil)
+                } else if let errors = graphQLResult.errors {
+                    completion(nil, errors.first!)
+                }
+            case .failure(let error):
+                completion(nil, error)
+            }
+        }
     }
     
 }

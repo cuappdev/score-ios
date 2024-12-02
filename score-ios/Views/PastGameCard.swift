@@ -79,7 +79,7 @@ extension PastGameCard {
                 Image("penn_logo")
                     .resizable()
                     .frame(width: 24, height: 30)
-                Text(game.opponent)
+                Text(game.opponent.name)
                     .font(Constants.Fonts.gameTitle)
                 Spacer()
                 Image(game.sport.rawValue + "-g")

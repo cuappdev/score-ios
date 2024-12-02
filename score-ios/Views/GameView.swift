@@ -42,7 +42,7 @@ struct GameView : View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Men's Football")
                         .font(Constants.Fonts.subheader)
-                    Text("Cornell vs. " + game.opponent)
+                    Text("Cornell vs. " + game.opponent.name)
                         .font(Constants.Fonts.header)
                     
                     HStack(spacing: 10) {

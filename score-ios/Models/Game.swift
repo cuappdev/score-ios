@@ -10,7 +10,7 @@ import GameAPI
 
 protocol GameType : Identifiable where ID == UUID {
     // On Card and Details
-    var opponent: String { get }
+    var opponent: Team { get }
     var city: String { get }
     var state: String { get }
     var date: Date { get }
@@ -26,9 +26,9 @@ protocol GameType : Identifiable where ID == UUID {
     var gameUpdates: [GameUpdate] { get }
 }
 
-struct Game : GameType, Identifiable, Decodable {
+struct Game : GameType, Identifiable {
     var id: UUID = UUID()
-    var opponent: String
+    var opponent: Team
     var city: String
     var state: String
     var date: Date
@@ -45,51 +45,18 @@ struct Game : GameType, Identifiable, Decodable {
     init(game: GamesQuery.Data.Game) {
         self.city = game.city
         self.state = game.state
-        self.date = ISO8601DateFormatter().date(from: game.date) ?? Date()
+        self.date = Game.parseDate(game.date)
         self.sex = game.gender == "Mens" ? .Men : .Women
         self.sport = Sport(rawValue: game.sport) ?? .All
-        self.opponent = "Penn" // TODO: Use opponentId to fetch/display actual name
+        self.opponent = Team.defaultTeam()
         self.address = game.location ?? "N/A"
         self.timeUpdates = parseScoreBreakdown(game.scoreBreakdown)
         self.gameUpdates = parseBoxScore(decodeBoxScoreArray(boxScores: game.boxScore))
     }
     
-    // decode a Game from backend
-    init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-
-            // Decode and map properties from backend JSON format
-            let backendId = try container.decode(String.self, forKey: .id)
-            self.id = UUID(uuidString: backendId) ?? UUID()
-            self.city = try container.decode(String.self, forKey: .city)
-            self.state = try container.decode(String.self, forKey: .state)
-            
-            // Convert date string to Date type
-            let dateString = try container.decode(String.self, forKey: .date)
-            self.date = DateFormatter().date(from: dateString) ?? Date()
-
-            let genderString = try container.decode(String.self, forKey: .gender)
-            self.sex = genderString == "Mens" ? .Men : .Women
-
-            let sportString = try container.decode(String.self, forKey: .sport)
-            self.sport = Sport(rawValue: sportString) ?? .All
-
-            self.opponent = "Opponent Name" // Use opponentId to fetch/display actual name
-            
-            self.address = try container.decodeIfPresent(String.self, forKey: .location) ?? "N/A"
-
-            // Map boxScore and scoreBreakdown to `timeUpdates` and `gameUpdates`
-            // Assuming `boxScore` can be parsed into `GameUpdate`
-            // Use similar logic for scoreBreakdown for `TimeUpdate`
-        let scoreBreakdown = try container.decode([[String]].self, forKey: .scoreBreakdown)
-        let boxScore = try container.decode([BoxScoreItem].self, forKey: .boxScore)
-            self.timeUpdates = parseScoreBreakdown(scoreBreakdown) // Parse `scoreBreakdown` here
-            self.gameUpdates = parseBoxScore(boxScore) // Parse `boxScore` here
-        }
-    
     // initializer with provided arguments
     init(
-            opponent: String,
+            opponent: Team,
             city: String,
             state: String,
             date: Date,
@@ -154,6 +121,26 @@ extension Game {
         
         return updates
     }
+    
+    // update the opponent team
+    func fetchAndUpdateOpponent(opponentId: String, completion: @escaping (Game) -> Void) {
+            fetchOpponentTeam(id: opponentId) { team in
+                DispatchQueue.main.async {
+                    var updatedGame = self
+                    updatedGame.opponent = team ?? Team.defaultTeam()
+                    completion(updatedGame)
+                }
+        }
+    }
+    
+    static func parseDate(_ dateString: String) -> Date {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM d (EEE)" // Matches "Feb 23 (Fri)"
+        formatter.locale = Locale(identifier: "en_US_POSIX") // Ensures consistent parsing
+        formatter.timeZone = TimeZone(abbreviation: "UTC") // Adjust timezone if necessary
+
+        return formatter.date(from: dateString) ?? Date() // Fallback to current date if parsing fails
+    }
 }
 
 struct TimeUpdate {
@@ -213,6 +200,45 @@ func decodeBoxScoreArray(boxScores: [GamesQuery.Data.Game.BoxScore?]?) -> [BoxSc
     return result
 }
 
+func fetchOpponentTeam(id: String, completion: @escaping (Team?) -> Void) {
+    NetworkManager.shared.fetchTeamById(by: id) { team, error in
+        if let result = team {
+            completion(Team(team: result))
+        } else if let error = error {
+            print("Error in fetchOpponentTeam: \(error.localizedDescription)")
+            completion(nil)
+        }
+    }
+}
+
+struct Team {
+    var id: String
+    var color: String
+    var image: String
+    var name: String
+    
+    init(team: GetTeamByIdQuery.Data.Team) {
+        self.id = team.id ?? "N/A"
+        self.color = team.color
+        self.image = team.image ?? "DEFAULT IMAGE URL" // TODO: make a defualt image url
+        self.name = team.name
+    }
+    
+    init(id: String, color: String, image: String, name: String) {
+        self.id = id
+        self.color = color
+        self.image = image
+        self.name = name
+    }
+}
+
+extension Team {
+    static func defaultTeam() -> Team {
+        return Team(id: "N/A", color: "gray", image: "default_image_url", name: "Unknown")
+    }
+}
+
+// Team(id: "673d2c20569abe4465e9f792", color: "blue", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Cornell_University_seal.svg/1200px-Cornell_University_seal.svg.png", name: "Cornell")
 struct GameUpdate {
     var id: UUID = UUID() // discard
     var timestamp: Int // period
@@ -357,7 +383,17 @@ enum Sex : Identifiable, CaseIterable, CustomStringConvertible {
         case .Women:
             return "Women's"
         }
-        
+    }
+    
+    var filterDescription: String {
+        switch self {
+        case .Both:
+            return "All"
+        case .Men:
+            return "Mens"
+        case .Women:
+            return "Womens"
+        }
     }
     // This is strictly for filtering purposes, all datum should have one of Men or Women
     static func index(of sex: Sex) -> Int? {
@@ -368,21 +404,21 @@ enum Sex : Identifiable, CaseIterable, CustomStringConvertible {
 // TEMP Dummy data
 extension Game {
     static let dummyData: [Game] = [
-        Game(opponent: "Penn", city: "Pennsylvania", state: "PA", date: Date.dateComponents(year: 2024, month: 5, day: 19, hour: 10, minute: 0), sport: .Basketball, address: "0 Fake St", sex: .Men, timeUpdates: [TimeUpdate(timestamp: 1, isTotal: false, cornellScore: 13, opponentScore: 7)], gameUpdates: [GameUpdate(timestamp: 1, isTotal: false, cornellScore: 10, opponentScore: 7, time: "05/19/2024", isCornell: true, eventParty: EventParty.Cornell, description: "Zhao, Alan field goal attempt from 24 GOOD")]),
-        Game(opponent: "Harvard", city: "Cambridge", state: "MA", date: Date.dateComponents(year: 2024, month: 5, day: 21, hour: 10, minute: 0), sport: .Football, address: "1 Fake St", sex: .Women, timeUpdates: [TimeUpdate(timestamp: 1, isTotal: false, cornellScore: 13, opponentScore: 7)], gameUpdates: [GameUpdate(timestamp: 1, isTotal: false, cornellScore: 10, opponentScore: 7, time: "05/19/2024", isCornell: true, eventParty: EventParty.Cornell, description: "Zhao, Alan field goal attempt from 24 GOOD")]),
-        Game(opponent: "Princeton", city: "Princeton", state: "NJ", date: Date.dateComponents(year: 2024, month: 5, day: 20, hour: 10, minute: 0), sport: .Basketball, address: "2 Fake St", sex: .Women, timeUpdates: [TimeUpdate(timestamp: 1, isTotal: false, cornellScore: 13, opponentScore: 7)], gameUpdates: [GameUpdate(timestamp: 1, isTotal: false, cornellScore: 10, opponentScore: 7, time: "05/19/2024", isCornell: true, eventParty: EventParty.Cornell, description: "Zhao, Alan field goal attempt from 24 GOOD")]),
-        Game(opponent: "Yale", city: "New Haven", state: "CT", date: Date.dateComponents(year: 2024, month: 5, day: 22, hour: 10, minute: 0), sport: .Soccer, address: "3 Fake St", sex: .Women, timeUpdates: [TimeUpdate(timestamp: 1, isTotal: false, cornellScore: 13, opponentScore: 7)], gameUpdates: [GameUpdate(timestamp: 1, isTotal: false, cornellScore: 10, opponentScore: 7, time: "05/19/2024", isCornell: true, eventParty: EventParty.Cornell, description: "Zhao, Alan field goal attempt from 24 GOOD")]),
-        Game(opponent: "Brown", city: "Providence", state: "RI", date: Date.dateComponents(year: 2024, month: 5, day: 23, hour: 10, minute: 0), sport: .CrossCountry, address: "4 Fake St", sex: .Women, timeUpdates: [TimeUpdate(timestamp: 1, isTotal: false, cornellScore: 13, opponentScore: 7)], gameUpdates: [GameUpdate(timestamp: 1, isTotal: false, cornellScore: 10, opponentScore: 7, time: "05/19/2024", isCornell: true, eventParty: EventParty.Cornell, description: "Zhao, Alan field goal attempt from 24 GOOD")]),
-        Game(opponent: "Dartmouth", city: "Hanover", state: "NH", date: Date.dateComponents(year: 2024, month: 5, day: 24, hour: 10, minute: 0), sport: .IceHockey, address: "5 Fake St", sex: .Women, timeUpdates: [TimeUpdate(timestamp: 1, isTotal: false, cornellScore: 13, opponentScore: 7)], gameUpdates: [GameUpdate(timestamp: 1, isTotal: false, cornellScore: 10, opponentScore: 7, time: "05/19/2024", isCornell: true, eventParty: EventParty.Cornell, description: "Zhao, Alan field goal attempt from 24 GOOD")]),
-        Game(opponent: "Columbia", city: "New York", state: "NY", date: Date.dateComponents(year: 2024, month: 5, day: 25, hour: 10, minute: 0), sport: .Lacrosse, address: "6 Fake St", sex: .Women, timeUpdates: [TimeUpdate(timestamp: 1, isTotal: false, cornellScore: 13, opponentScore: 7)], gameUpdates: [GameUpdate(timestamp: 1, isTotal: false, cornellScore: 10, opponentScore: 7, time: "05/19/2024", isCornell: true, eventParty: EventParty.Cornell, description: "Zhao, Alan field goal attempt from 24 GOOD")]),
+        Game(opponent:  Team(id: "673d2c20569abe4465e9f792", color: "blue", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Cornell_University_seal.svg/1200px-Cornell_University_seal.svg.png", name: "Cornell"), city: "Pennsylvania", state: "PA", date: Date.dateComponents(year: 2024, month: 5, day: 19, hour: 10, minute: 0), sport: .Basketball, address: "0 Fake St", sex: .Men, timeUpdates: [TimeUpdate(timestamp: 1, isTotal: false, cornellScore: 13, opponentScore: 7)], gameUpdates: [GameUpdate(timestamp: 1, isTotal: false, cornellScore: 10, opponentScore: 7, time: "05/19/2024", isCornell: true, eventParty: EventParty.Cornell, description: "Zhao, Alan field goal attempt from 24 GOOD")]),
+        Game(opponent:  Team(id: "673d2c20569abe4465e9f792", color: "blue", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Cornell_University_seal.svg/1200px-Cornell_University_seal.svg.png", name: "Cornell"), city: "Cambridge", state: "MA", date: Date.dateComponents(year: 2024, month: 5, day: 21, hour: 10, minute: 0), sport: .Football, address: "1 Fake St", sex: .Women, timeUpdates: [TimeUpdate(timestamp: 1, isTotal: false, cornellScore: 13, opponentScore: 7)], gameUpdates: [GameUpdate(timestamp: 1, isTotal: false, cornellScore: 10, opponentScore: 7, time: "05/19/2024", isCornell: true, eventParty: EventParty.Cornell, description: "Zhao, Alan field goal attempt from 24 GOOD")]),
+        Game(opponent:  Team(id: "673d2c20569abe4465e9f792", color: "blue", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Cornell_University_seal.svg/1200px-Cornell_University_seal.svg.png", name: "Cornell"), city: "Princeton", state: "NJ", date: Date.dateComponents(year: 2024, month: 5, day: 20, hour: 10, minute: 0), sport: .Basketball, address: "2 Fake St", sex: .Women, timeUpdates: [TimeUpdate(timestamp: 1, isTotal: false, cornellScore: 13, opponentScore: 7)], gameUpdates: [GameUpdate(timestamp: 1, isTotal: false, cornellScore: 10, opponentScore: 7, time: "05/19/2024", isCornell: true, eventParty: EventParty.Cornell, description: "Zhao, Alan field goal attempt from 24 GOOD")]),
+        Game(opponent:  Team(id: "673d2c20569abe4465e9f792", color: "blue", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Cornell_University_seal.svg/1200px-Cornell_University_seal.svg.png", name: "Cornell"), city: "New Haven", state: "CT", date: Date.dateComponents(year: 2024, month: 5, day: 22, hour: 10, minute: 0), sport: .Soccer, address: "3 Fake St", sex: .Women, timeUpdates: [TimeUpdate(timestamp: 1, isTotal: false, cornellScore: 13, opponentScore: 7)], gameUpdates: [GameUpdate(timestamp: 1, isTotal: false, cornellScore: 10, opponentScore: 7, time: "05/19/2024", isCornell: true, eventParty: EventParty.Cornell, description: "Zhao, Alan field goal attempt from 24 GOOD")]),
+        Game(opponent:  Team(id: "673d2c20569abe4465e9f792", color: "blue", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Cornell_University_seal.svg/1200px-Cornell_University_seal.svg.png", name: "Cornell"), city: "Providence", state: "RI", date: Date.dateComponents(year: 2024, month: 5, day: 23, hour: 10, minute: 0), sport: .CrossCountry, address: "4 Fake St", sex: .Women, timeUpdates: [TimeUpdate(timestamp: 1, isTotal: false, cornellScore: 13, opponentScore: 7)], gameUpdates: [GameUpdate(timestamp: 1, isTotal: false, cornellScore: 10, opponentScore: 7, time: "05/19/2024", isCornell: true, eventParty: EventParty.Cornell, description: "Zhao, Alan field goal attempt from 24 GOOD")]),
+        Game(opponent:  Team(id: "673d2c20569abe4465e9f792", color: "blue", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Cornell_University_seal.svg/1200px-Cornell_University_seal.svg.png", name: "Cornell"), city: "Hanover", state: "NH", date: Date.dateComponents(year: 2024, month: 5, day: 24, hour: 10, minute: 0), sport: .IceHockey, address: "5 Fake St", sex: .Women, timeUpdates: [TimeUpdate(timestamp: 1, isTotal: false, cornellScore: 13, opponentScore: 7)], gameUpdates: [GameUpdate(timestamp: 1, isTotal: false, cornellScore: 10, opponentScore: 7, time: "05/19/2024", isCornell: true, eventParty: EventParty.Cornell, description: "Zhao, Alan field goal attempt from 24 GOOD")]),
+        Game(opponent:  Team(id: "673d2c20569abe4465e9f792", color: "blue", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Cornell_University_seal.svg/1200px-Cornell_University_seal.svg.png", name: "Cornell"), city: "New York", state: "NY", date: Date.dateComponents(year: 2024, month: 5, day: 25, hour: 10, minute: 0), sport: .Lacrosse, address: "6 Fake St", sex: .Women, timeUpdates: [TimeUpdate(timestamp: 1, isTotal: false, cornellScore: 13, opponentScore: 7)], gameUpdates: [GameUpdate(timestamp: 1, isTotal: false, cornellScore: 10, opponentScore: 7, time: "05/19/2024", isCornell: true, eventParty: EventParty.Cornell, description: "Zhao, Alan field goal attempt from 24 GOOD")]),
         
-        Game(opponent: "Penn", city: "Pennsylvania", state: "PA", date: Date.dateComponents(year: 2024, month: 5, day: 19, hour: 10, minute: 0), sport: .Basketball, address: "0 Fake St", sex: .Men, timeUpdates: [], gameUpdates: [GameUpdate(timestamp: 1, isTotal: false, cornellScore: 10, opponentScore: 7, time: "05/19/2024", isCornell: true, eventParty: EventParty.Cornell, description: "Zhao, Alan field goal attempt from 24 GOOD")]),
-        Game(opponent: "Harvard", city: "Cambridge", state: "MA", date: Date.dateComponents(year: 2024, month: 5, day: 21, hour: 10, minute: 0), sport: .Football, address: "1 Fake St", sex: .Men, timeUpdates: [TimeUpdate(timestamp: 1, isTotal: false, cornellScore: 13, opponentScore: 7)], gameUpdates: [GameUpdate(timestamp: 1, isTotal: false, cornellScore: 10, opponentScore: 7, time: "05/19/2024", isCornell: true, eventParty: EventParty.Cornell, description: "Zhao, Alan field goal attempt from 24 GOOD")]),
-        Game(opponent: "Princeton", city: "Princeton", state: "NJ", date: Date.dateComponents(year: 2024, month: 5, day: 20, hour: 10, minute: 0), sport: .Basketball, address: "2 Fake St", sex: .Men, timeUpdates: [TimeUpdate(timestamp: 1, isTotal: false, cornellScore: 13, opponentScore: 7)], gameUpdates: [GameUpdate(timestamp: 1, isTotal: false, cornellScore: 10, opponentScore: 7, time: "05/19/2024", isCornell: true, eventParty: EventParty.Cornell, description: "Zhao, Alan field goal attempt from 24 GOOD")]),
-        Game(opponent: "Yale", city: "New Haven", state: "CT", date: Date.dateComponents(year: 2024, month: 5, day: 22, hour: 10, minute: 0), sport: .Soccer, address: "3 Fake St", sex: .Men, timeUpdates: [TimeUpdate(timestamp: 1, isTotal: false, cornellScore: 13, opponentScore: 7)], gameUpdates: [GameUpdate(timestamp: 1, isTotal: false, cornellScore: 10, opponentScore: 7, time: "05/19/2024", isCornell: true, eventParty: EventParty.Cornell, description: "Zhao, Alan field goal attempt from 24 GOOD")]),
-        Game(opponent: "Brown", city: "Providence", state: "RI", date: Date.dateComponents(year: 2024, month: 5, day: 23, hour: 10, minute: 0), sport: .CrossCountry, address: "4 Fake St", sex: .Men, timeUpdates: [TimeUpdate(timestamp: 1, isTotal: false, cornellScore: 13, opponentScore: 7)], gameUpdates: [GameUpdate(timestamp: 1, isTotal: false, cornellScore: 10, opponentScore: 7, time: "05/19/2024", isCornell: true, eventParty: EventParty.Cornell, description: "Zhao, Alan field goal attempt from 24 GOOD")]),
-        Game(opponent: "Dartmouth", city: "Hanover", state: "NH", date: Date.dateComponents(year: 2024, month: 5, day: 24, hour: 10, minute: 0), sport: .IceHockey, address: "5 Fake St", sex: .Men, timeUpdates: [TimeUpdate(timestamp: 1, isTotal: false, cornellScore: 13, opponentScore: 7)], gameUpdates: [GameUpdate(timestamp: 1, isTotal: false, cornellScore: 10, opponentScore: 7, time: "05/19/2024", isCornell: true, eventParty: EventParty.Cornell, description: "Zhao, Alan field goal attempt from 24 GOOD")]),
-        Game(opponent: "Columbia", city: "New York", state: "NY", date: Date.dateComponents(year: 2024, month: 5, day: 25, hour: 10, minute: 0), sport: .Lacrosse, address: "6 Fake St", sex: .Men, timeUpdates: [TimeUpdate(timestamp: 1, isTotal: false, cornellScore: 13, opponentScore: 7)], gameUpdates: [GameUpdate(timestamp: 1, isTotal: false, cornellScore: 10, opponentScore: 7, time: "05/19/2024", isCornell: true, eventParty: EventParty.Cornell, description: "Zhao, Alan field goal attempt from 24 GOOD")])
+        Game(opponent:  Team(id: "673d2c20569abe4465e9f792", color: "blue", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Cornell_University_seal.svg/1200px-Cornell_University_seal.svg.png", name: "Cornell"), city: "Pennsylvania", state: "PA", date: Date.dateComponents(year: 2024, month: 5, day: 19, hour: 10, minute: 0), sport: .Basketball, address: "0 Fake St", sex: .Men, timeUpdates: [], gameUpdates: [GameUpdate(timestamp: 1, isTotal: false, cornellScore: 10, opponentScore: 7, time: "05/19/2024", isCornell: true, eventParty: EventParty.Cornell, description: "Zhao, Alan field goal attempt from 24 GOOD")]),
+        Game(opponent:  Team(id: "673d2c20569abe4465e9f792", color: "blue", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Cornell_University_seal.svg/1200px-Cornell_University_seal.svg.png", name: "Cornell"), city: "Cambridge", state: "MA", date: Date.dateComponents(year: 2024, month: 5, day: 21, hour: 10, minute: 0), sport: .Football, address: "1 Fake St", sex: .Men, timeUpdates: [TimeUpdate(timestamp: 1, isTotal: false, cornellScore: 13, opponentScore: 7)], gameUpdates: [GameUpdate(timestamp: 1, isTotal: false, cornellScore: 10, opponentScore: 7, time: "05/19/2024", isCornell: true, eventParty: EventParty.Cornell, description: "Zhao, Alan field goal attempt from 24 GOOD")]),
+        Game(opponent:  Team(id: "673d2c20569abe4465e9f792", color: "blue", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Cornell_University_seal.svg/1200px-Cornell_University_seal.svg.png", name: "Cornell"), city: "Princeton", state: "NJ", date: Date.dateComponents(year: 2024, month: 5, day: 20, hour: 10, minute: 0), sport: .Basketball, address: "2 Fake St", sex: .Men, timeUpdates: [TimeUpdate(timestamp: 1, isTotal: false, cornellScore: 13, opponentScore: 7)], gameUpdates: [GameUpdate(timestamp: 1, isTotal: false, cornellScore: 10, opponentScore: 7, time: "05/19/2024", isCornell: true, eventParty: EventParty.Cornell, description: "Zhao, Alan field goal attempt from 24 GOOD")]),
+        Game(opponent:  Team(id: "673d2c20569abe4465e9f792", color: "blue", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Cornell_University_seal.svg/1200px-Cornell_University_seal.svg.png", name: "Cornell"), city: "New Haven", state: "CT", date: Date.dateComponents(year: 2024, month: 5, day: 22, hour: 10, minute: 0), sport: .Soccer, address: "3 Fake St", sex: .Men, timeUpdates: [TimeUpdate(timestamp: 1, isTotal: false, cornellScore: 13, opponentScore: 7)], gameUpdates: [GameUpdate(timestamp: 1, isTotal: false, cornellScore: 10, opponentScore: 7, time: "05/19/2024", isCornell: true, eventParty: EventParty.Cornell, description: "Zhao, Alan field goal attempt from 24 GOOD")]),
+        Game(opponent:  Team(id: "673d2c20569abe4465e9f792", color: "blue", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Cornell_University_seal.svg/1200px-Cornell_University_seal.svg.png", name: "Cornell"), city: "Providence", state: "RI", date: Date.dateComponents(year: 2024, month: 5, day: 23, hour: 10, minute: 0), sport: .CrossCountry, address: "4 Fake St", sex: .Men, timeUpdates: [TimeUpdate(timestamp: 1, isTotal: false, cornellScore: 13, opponentScore: 7)], gameUpdates: [GameUpdate(timestamp: 1, isTotal: false, cornellScore: 10, opponentScore: 7, time: "05/19/2024", isCornell: true, eventParty: EventParty.Cornell, description: "Zhao, Alan field goal attempt from 24 GOOD")]),
+        Game(opponent:  Team(id: "673d2c20569abe4465e9f792", color: "blue", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Cornell_University_seal.svg/1200px-Cornell_University_seal.svg.png", name: "Cornell"), city: "Hanover", state: "NH", date: Date.dateComponents(year: 2024, month: 5, day: 24, hour: 10, minute: 0), sport: .IceHockey, address: "5 Fake St", sex: .Men, timeUpdates: [TimeUpdate(timestamp: 1, isTotal: false, cornellScore: 13, opponentScore: 7)], gameUpdates: [GameUpdate(timestamp: 1, isTotal: false, cornellScore: 10, opponentScore: 7, time: "05/19/2024", isCornell: true, eventParty: EventParty.Cornell, description: "Zhao, Alan field goal attempt from 24 GOOD")]),
+        Game(opponent:  Team(id: "673d2c20569abe4465e9f792", color: "blue", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Cornell_University_seal.svg/1200px-Cornell_University_seal.svg.png", name: "Cornell"), city: "New York", state: "NY", date: Date.dateComponents(year: 2024, month: 5, day: 25, hour: 10, minute: 0), sport: .Lacrosse, address: "6 Fake St", sex: .Men, timeUpdates: [TimeUpdate(timestamp: 1, isTotal: false, cornellScore: 13, opponentScore: 7)], gameUpdates: [GameUpdate(timestamp: 1, isTotal: false, cornellScore: 10, opponentScore: 7, time: "05/19/2024", isCornell: true, eventParty: EventParty.Cornell, description: "Zhao, Alan field goal attempt from 24 GOOD")])
     ]
 //    static let dummyData: [Game] = [
 //        Game(opponent: "Penn", city: "Pennsylvania", state: "PA", date: Date.dateComponents(year: 2024, month: 5, day: 19, hour: 10, minute: 0), sport: .Basketball, address: "0 Fake St", sex: .Men, timeUpdates: [TimeUpdate(timestamp: 1, isTotal: false, cornellScore: 13, opponentScore: 7)], gameUpdates: [GameUpdate(timestamp: 1, isTotal: false, cornellScore: 10, opponentScore: 7, time: Date.dateComponents(year: 2024, month: 5, day: 19, hour: 6, minute: 21), isCornell: true, eventParty: EventParty.Cornell, description: "Zhao, Alan field goal attempt from 24 GOOD")]),

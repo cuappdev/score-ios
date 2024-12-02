@@ -100,7 +100,7 @@ extension GameDetailedScoreView {
         VStack(alignment: .leading, spacing: 4) {
             Text("Men's Football")
                 .font(Constants.Fonts.medium14)
-            Text("Cornell vs. " + game.opponent)
+            Text("Cornell vs. " + game.opponent.name)
                 .font(Constants.Fonts.semibold24)
             
             HStack() {
@@ -240,7 +240,7 @@ extension GameDetailedScoreView {
     
     private var thirdRow: some View {
         HStack {
-            Text(game.opponent)
+            Text(game.opponent.name)
                 .font(Constants.Fonts.gameText)
                 .foregroundStyle(.gray)
                 .frame(width: 60, alignment: .leading)

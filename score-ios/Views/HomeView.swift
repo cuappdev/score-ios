@@ -65,10 +65,6 @@ struct HomeView: View {
             filterUpcomingGames()
         }
     }
-    
-    func filterGames() {
-        games = games.filter({(selectedSex == .Both || $0.sex == selectedSex) && (selectedSport == .All || $0.sport == selectedSport)})
-    }
 }
 
 #Preview {
@@ -80,34 +76,95 @@ extension HomeView {
     private func fetchGames() {
         NetworkManager.shared.fetchGames { fetchedGames, error in
             if let fetchedGames = fetchedGames {
-                games = fetchedGames.map({ game in
-                    Game(game: game)
-                })
-                // Print game info to the console
-                games.forEach { game in
-                    print("Game in \(game.city) on \(game.date), sport: \(game.sport), gender: \(game.sex)")
+                var updatedGames: [Game] = []
+                let dispatchGroup = DispatchGroup()
+                
+                fetchedGames.forEach { gameData in
+                    let game = Game(game: gameData)
+                    dispatchGroup.enter() // enter the dispatchGroup
+                    
+                    game.fetchAndUpdateOpponent(opponentId: gameData.opponentId) { updatedGame in
+                        updatedGames.append(updatedGame)
+                        dispatchGroup.leave()
+                    }
                 }
-            } else if let error = error {
-                errorMessage = error.localizedDescription
-                print("Error in fetchGames: \(errorMessage ?? "Unknown error")")
+                
+                dispatchGroup.notify(queue: .main) {
+                        self.games = updatedGames
+                        // Print updated game info to the console
+                        self.games.forEach { game in
+                            print("Game in \(game.city) on \(game.date), sport: \(game.sport), gender: \(game.sex), opponent: \(game.opponent.name)")
+                        }
+                    }
+            }
+            else if let error = error {
+                self.errorMessage = error.localizedDescription
+                print("Error in fetchGames: \(self.errorMessage ?? "Unknown error")")
             }
         }
     }
     
+//    private func filterUpcomingGames() {
+//        let gender: String?
+//        let sport: String?
+//        if selectedSex == .Both {
+//            gender = nil
+//        } else {
+//            gender = selectedSex.filterDescription
+//        }
+//        if selectedSport == .All {
+//            sport = nil
+//        } else {
+//            sport = selectedSport.description
+//        }
+//        NetworkManager.shared.filterUpcomingGames(gender: gender, sport: sport) { filteredGames, error in
+//            if let filteredGames = filteredGames {
+//                var updatedGames: [Game] = []
+//                let dispatchGroup = DispatchGroup()
+//
+//                games = filteredGames.map({ game in
+//                    Game(game: game)
+//                })
+//                games.forEach { game in
+//                    print("Game in \(game.city) on \(game.date), sport: \(game.sport), gender: \(game.sex)")
+//                }
+//            } else if let error = error {
+//                errorMessage = error.localizedDescription
+//                print("Error in filterUpcomingGames: \(errorMessage ?? "Unknown error")")
+//            }
+//        }
+//    }
+    
     private func filterUpcomingGames() {
-        let gender = selectedSex.description
-        let sport = selectedSport.description
+        let gender: String?
+        let sport: String?
+        if selectedSex == .Both {
+            gender = nil
+        } else {
+            gender = selectedSex.filterDescription
+        }
+        if selectedSport == .All {
+            sport = nil
+        } else {
+            sport = selectedSport.description
+        }
         NetworkManager.shared.filterUpcomingGames(gender: gender, sport: sport) { filteredGames, error in
             if let filteredGames = filteredGames {
-                games = filteredGames.map({ game in
-                    Game(game: game)
-                })
-                print("Filtered games with selected gender \(gender) and selected sport \(sport)")
-                if(games.isEmpty) {
-                    print("games are empty")
+                var updatedGames: [Game] = []
+                let dispatchGroup = DispatchGroup()
+                
+                filteredGames.forEach { gameData in
+                    let game = Game(game: gameData)
+                    dispatchGroup.enter() // enter the dispatchGroup
+                    
+                    game.fetchAndUpdateOpponent(opponentId: gameData.opponentId) { updatedGame in
+                        updatedGames.append(updatedGame)
+                        dispatchGroup.leave()
+                    }
                 }
-                games.forEach { game in
-                    print("Game in \(game.city) on \(game.date), sport: \(game.sport), gender: \(game.sex)")
+                
+                dispatchGroup.notify(queue: .main) {
+                    self.games = updatedGames
                 }
             } else if let error = error {
                 errorMessage = error.localizedDescription

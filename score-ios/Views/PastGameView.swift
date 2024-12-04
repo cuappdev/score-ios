@@ -14,7 +14,11 @@ struct PastGameView: View {
     var paddingMain : CGFloat = 20
     @State private var selectedCardIndex: Int = 0
     @State private var games: [Game] = []
-    @State private var pastGames: [Game] = Array(Game.dummyData.prefix(3))
+    @State private var allGames: [Game] = []
+    @State private var errorMessage: String?
+    @State private var pastGames: [Game] = []
+    @EnvironmentObject var viewModel: GamesViewModel
+
     
     var body: some View {
         NavigationView {
@@ -36,33 +40,135 @@ struct PastGameView: View {
                 Divider()
                     .background(.clear)
                 
-                // List of games
-                if (games.isEmpty) {
-                    // make this a separate view
-                    NoGameView()
-                } else {
-                    gameList
+                gameList
+                    .overlay {
+                        if (games.isEmpty) {
+                            NoGameView()
+                    }
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.leading, paddingMain)
             .padding(.trailing, paddingMain)
         }
+        .onAppear {
+            fetchPastGames()
+            print("OTHER")
+        }
         .onChange(of: selectedSport) {
-            filterGames()
+            filterPastGames()
         }
         .onChange(of: selectedSex) {
-            filterGames()
+            filterPastGames()
         }
-    }
-    
-    func filterGames() {
-        games = Game.dummyData.filter({(selectedSex == .Both || $0.sex == selectedSex) && (selectedSport == .All || $0.sport == selectedSport)})
     }
 }
 
 #Preview {
     PastGameView()
+}
+
+// MARK: Functions
+extension PastGameView {
+    private func fetchPastGames() {
+        NetworkManager.shared.fetchGames { fetchedGames, error in
+            if let fetchedGames = fetchedGames {
+                var updatedGames: [Game] = []
+                let dispatchGroup = DispatchGroup()
+                
+                fetchedGames.indices.forEach { index in
+                    let gameData = fetchedGames[index]
+                    let game = Game(game: gameData)
+//                    dispatchGroup.enter() // enter the dispatchGroup
+                    
+                    game.fetchAndUpdateOpponent(opponentId: gameData.opponentId) { updatedGame in
+                        
+                        // append the game only if it is upcoming/live
+                        // TODO: How to determine whether it's live now
+                        let now = Date()
+                        let calendar = Calendar.current
+                        let startOfToday = calendar.startOfDay(for: now)
+                        
+                        let isFinishedByToday = game.date < startOfToday
+                        
+                        if isFinishedByToday {
+                            if (!updatedGame.gameUpdates.isEmpty) {
+                                updatedGames.append(updatedGame)
+                            }
+                        }
+                        
+                        if index == fetchedGames.count - 1 {
+                            self.games = updatedGames
+                            self.allGames = updatedGames
+                            self.pastGames = Array(allGames.prefix(3))
+                            // Print updated game info to the console
+                            self.games.forEach { game in
+                                print("Game in \(game.city) on \(game.date), sport: \(game.sport), gender: \(game.sex), opponent: \(game.opponent.name)")
+                            }
+                        }
+                    }
+                }
+                
+                print(updatedGames.count)
+            }
+            else if let error = error {
+                self.errorMessage = error.localizedDescription
+                print("Error in fetchGames: \(self.errorMessage ?? "Unknown error")")
+            }
+        }
+    }
+    
+    private func filterPastGames() {
+        let gender: String?
+        let sport: String?
+        if selectedSex == .Both {
+            gender = nil
+        } else {
+            gender = selectedSex.filterDescription
+        }
+        if selectedSport == .All {
+            sport = nil
+        } else {
+            sport = selectedSport.description
+        }
+        NetworkManager.shared.filterUpcomingGames(gender: gender, sport: sport) { filteredGames, error in
+            if let filteredGames = filteredGames {
+                var updatedGames: [Game] = []
+                
+                filteredGames.indices.forEach { index in
+                    let gameData = filteredGames[index]
+                    let game = Game(game: gameData)
+//                    dispatchGroup.enter() // enter the dispatchGroup
+                    
+                    game.fetchAndUpdateOpponent(opponentId: gameData.opponentId) { updatedGame in
+                        let now = Date()
+                        let calendar = Calendar.current
+                        let startOfToday = calendar.startOfDay(for: now)
+                        
+                        let isFinishedByToday = game.date < startOfToday
+                        
+                        if isFinishedByToday {
+                            if(!updatedGame.gameUpdates.isEmpty) {
+                                updatedGames.append(updatedGame)
+                            }
+                        }
+                        
+                        if (index == filteredGames.count - 1) {
+                            self.games = updatedGames
+                        }
+//                        dispatchGroup.leave()
+                    }
+                }
+                
+//                dispatchGroup.notify(queue: .main) {
+//                    self.games = updatedGames
+//                }
+            } else if let error = error {
+                errorMessage = error.localizedDescription
+                print("Error in filterPastGames: \(errorMessage ?? "Unknown error")")
+            }
+        }
+    }
 }
 
 // MARK: Components
@@ -146,6 +252,7 @@ extension PastGameView {
                 ) { game in
                     NavigationLink {
                         GameView(game: game)
+                            .navigationBarBackButtonHidden()
                     } label: {
                         PastGameTile(game: game)
                     }
@@ -154,6 +261,4 @@ extension PastGameView {
             }.padding(.top, paddingMain)
         }
     }
-    
-    
 }

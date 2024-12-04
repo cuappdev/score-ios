@@ -35,13 +35,15 @@ extension PastGameCard {
     private var banner: some View {
         HStack {
             Spacer()
+            
             Image("Cornell")
-                .resizable()
-                .frame(width: 50, height: 52)
+            .resizable()
+            .frame(width: 64, height: 64)
+            
             Spacer()
             
             HStack {
-                Text("47")
+                Text(String(game.gameUpdates[game.gameUpdates.count-1].cornellScore))
                     .font(Constants.Fonts.title)
                     .italic()
                     .foregroundStyle(.white)
@@ -52,7 +54,7 @@ extension PastGameCard {
                     .foregroundStyle(.white)
                 
                 // TODO: Change the blur
-                Text("23")
+                Text(String(game.gameUpdates[game.gameUpdates.count-1].opponentScore))
                     .font(Constants.Fonts.title)
                     .blur(radius: 0.5)
                     .italic()
@@ -60,9 +62,14 @@ extension PastGameCard {
             }
             
             Spacer()
-            Image("penn_logo")
-                .resizable()
-                .frame(width: 50, height: 58)
+            
+            AsyncImage(url: URL(string: game.opponent.image)) {image in
+                image.resizable()
+            } placeholder: {
+                Constants.Colors.gray_icons
+            }
+            .frame(width: 64, height: 64)
+            
             Spacer()
         }
         .padding()
@@ -76,9 +83,12 @@ extension PastGameCard {
     private var information: some View {
         VStack {
             HStack {
-                Image("penn_logo")
-                    .resizable()
-                    .frame(width: 24, height: 30)
+                AsyncImage(url: URL(string: game.opponent.image)) {image in
+                    image.resizable()
+                } placeholder: {
+                    Constants.Colors.gray_icons
+                }
+                .frame(width: 25, height: 27)
                 Text(game.opponent.name)
                     .font(Constants.Fonts.gameTitle)
                 Spacer()

@@ -14,9 +14,9 @@ struct HomeView: View {
     var paddingMain : CGFloat = 20
     @State private var selectedCardIndex: Int = 0
     @State private var games: [Game] = []
-    @State private var upcomingGames: [Game] = Array(Game.dummyData.prefix(3))
+    @State private var allGames: [Game] = []
+    @State private var upcomingGames: [Game] = []
     @State private var errorMessage: String?
-    
     
     // Main view
     var body: some View {
@@ -40,12 +40,12 @@ struct HomeView: View {
                     .background(.clear)
                 
                 // List of games
-                if (games.isEmpty) {
-                    // make this a separate view
-                    NoGameView()
-                } else {
-                    gameList
-                }
+                gameList
+                    .overlay {
+                        if games.isEmpty {
+                            NoGameView()
+                        }
+                    }
             }
             .safeAreaInset(edge: .bottom, content: {
                 Color.clear.frame(height: 20)
@@ -55,7 +55,7 @@ struct HomeView: View {
             .padding(.trailing, paddingMain)
             
         }
-        .onAppear() {
+        .onAppear {
             fetchGames()
         }
         .onChange(of: selectedSport) {
@@ -77,25 +77,38 @@ extension HomeView {
         NetworkManager.shared.fetchGames { fetchedGames, error in
             if let fetchedGames = fetchedGames {
                 var updatedGames: [Game] = []
-                let dispatchGroup = DispatchGroup()
-                
-                fetchedGames.forEach { gameData in
+                fetchedGames.indices.forEach { index in
+                    let gameData = fetchedGames[index]
                     let game = Game(game: gameData)
-                    dispatchGroup.enter() // enter the dispatchGroup
                     
                     game.fetchAndUpdateOpponent(opponentId: gameData.opponentId) { updatedGame in
-                        updatedGames.append(updatedGame)
-                        dispatchGroup.leave()
-                    }
-                }
-                
-                dispatchGroup.notify(queue: .main) {
-                        self.games = updatedGames
-                        // Print updated game info to the console
-                        self.games.forEach { game in
-                            print("Game in \(game.city) on \(game.date), sport: \(game.sport), gender: \(game.sex), opponent: \(game.opponent.name)")
+                        
+                        // append the game only if it is upcoming/live
+                        // TODO: How to determine whether it's live now
+                        let now = Date()
+                        let twoHours: TimeInterval = 2 * 60 * 60
+                        let calendar = Calendar.current
+                        let startOfToday = calendar.startOfDay(for: now)
+                        
+                        let isLive = game.date < now && now.timeIntervalSince(game.date) <= twoHours
+                        let isUpcoming = game.date > now
+                        let isFinishedToday = game.date < now && game.date >= startOfToday
+                        
+                        if isLive {
+                            updatedGames.insert(updatedGame, at: 0)
+                        } else if isUpcoming {
+                            updatedGames.append(updatedGame)
+                        } else if isFinishedToday {
+                            updatedGames.append(updatedGame)
+                        }
+                        
+                        if index == fetchedGames.count - 1 {
+                            self.games = updatedGames
+                            self.allGames = updatedGames
+                            self.upcomingGames = Array(allGames.prefix(3))
                         }
                     }
+                }
             }
             else if let error = error {
                 self.errorMessage = error.localizedDescription
@@ -103,37 +116,6 @@ extension HomeView {
             }
         }
     }
-    
-//    private func filterUpcomingGames() {
-//        let gender: String?
-//        let sport: String?
-//        if selectedSex == .Both {
-//            gender = nil
-//        } else {
-//            gender = selectedSex.filterDescription
-//        }
-//        if selectedSport == .All {
-//            sport = nil
-//        } else {
-//            sport = selectedSport.description
-//        }
-//        NetworkManager.shared.filterUpcomingGames(gender: gender, sport: sport) { filteredGames, error in
-//            if let filteredGames = filteredGames {
-//                var updatedGames: [Game] = []
-//                let dispatchGroup = DispatchGroup()
-//
-//                games = filteredGames.map({ game in
-//                    Game(game: game)
-//                })
-//                games.forEach { game in
-//                    print("Game in \(game.city) on \(game.date), sport: \(game.sport), gender: \(game.sex)")
-//                }
-//            } else if let error = error {
-//                errorMessage = error.localizedDescription
-//                print("Error in filterUpcomingGames: \(errorMessage ?? "Unknown error")")
-//            }
-//        }
-//    }
     
     private func filterUpcomingGames() {
         let gender: String?
@@ -151,20 +133,33 @@ extension HomeView {
         NetworkManager.shared.filterUpcomingGames(gender: gender, sport: sport) { filteredGames, error in
             if let filteredGames = filteredGames {
                 var updatedGames: [Game] = []
-                let dispatchGroup = DispatchGroup()
                 
-                filteredGames.forEach { gameData in
+                filteredGames.indices.forEach { index in
+                    let gameData = filteredGames[index]
                     let game = Game(game: gameData)
-                    dispatchGroup.enter() // enter the dispatchGroup
                     
                     game.fetchAndUpdateOpponent(opponentId: gameData.opponentId) { updatedGame in
-                        updatedGames.append(updatedGame)
-                        dispatchGroup.leave()
+                        let now = Date()
+                        let twoHours: TimeInterval = 2 * 60 * 60
+                        let calendar = Calendar.current
+                        let startOfToday = calendar.startOfDay(for: now)
+                        
+                        let isLive = game.date < now && now.timeIntervalSince(game.date) <= twoHours
+                        let isUpcoming = game.date > now
+                        let isFinishedToday = game.date < now && game.date >= startOfToday
+                        
+                        if isLive {
+                            updatedGames.insert(updatedGame, at: 0)
+                        } else if isUpcoming {
+                            updatedGames.append(updatedGame)
+                        } else if isFinishedToday {
+                            updatedGames.append(updatedGame)
+                        }
+                        
+                        if index == filteredGames.count - 1 {
+                            self.games = updatedGames
+                        }
                     }
-                }
-                
-                dispatchGroup.notify(queue: .main) {
-                    self.games = updatedGames
                 }
             } else if let error = error {
                 errorMessage = error.localizedDescription
@@ -173,6 +168,7 @@ extension HomeView {
         }
     }
 }
+
 // MARK: Components
 extension HomeView {
     private var carousel: some View {
@@ -254,6 +250,7 @@ extension HomeView {
                 ) { game in
                     NavigationLink {
                         GameView(game: game)
+                            .navigationBarBackButtonHidden()
                     } label: {
                         GameTile(game: game)
                     }

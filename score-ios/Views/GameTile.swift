@@ -28,7 +28,9 @@ struct GameTile: View {
 
                     Text(game.opponent.name)
                         .font(Constants.Fonts.gameTitle)
-                }   .padding(.leading, 20)
+                        .lineLimit(1)
+                }
+                .padding(.leading, 20)
                 
                 Spacer()
                 

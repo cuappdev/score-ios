@@ -12,9 +12,10 @@ struct PastGameTile: View {
     
         
     var body: some View {
-        let liveNow: Bool = game.date == Date.currentDate
-        let cornellScore: Int = game.timeUpdates[0].cornellScore
-        let opponentScore: Int = game.timeUpdates[0].opponentScore
+        let corScore = game.gameUpdates[game.gameUpdates.count-1].cornellScore
+        let oppScore = game.gameUpdates[game.gameUpdates.count-1].opponentScore
+        let corWon = corScore > oppScore
+        let tie = corScore == oppScore
         
         HStack {
             // VStack of school names and logos and score
@@ -28,33 +29,66 @@ struct PastGameTile: View {
                 }
                 
                 VStack {
+                    // Opponent score
                     HStack {
                         AsyncImage(url: URL(string: game.opponent.image)) { image in
                             image.image?.resizable()
                         }
-                        .frame(width: 20, height: 27)
-//                        Image(game.opponent)
-//                            .resizable()
-//                            .frame(width: 20, height: 27)
+                        .frame(width: 20, height: 20)
 
                         Text(game.opponent.name)
                             .font(Constants.Fonts.gameTitle)
+                            .lineLimit(1)
                         
                         Spacer()
                         
-                        Text("0")
+                        // Opponent Score with Arrow
+                        if corWon {
+                            Text(String(oppScore))
+                                .foregroundStyle(Constants.Colors.gray_text)
+                                .font(Constants.Fonts.medium18)
+                        } else if !tie {
+                            HStack {
+                                Text(String(oppScore))
+                                    .font(Constants.Fonts.semibold18)
+                                Image("pastGame_arrow_back")
+                                    .resizable()
+                                    .frame(width: 11, height: 14)
+                            }
+                            .offset(x: 20)
+                        } else {
+                            Text(String(oppScore))
+                                .font(Constants.Fonts.semibold18)
+                        }
+                        
                     }
+                    
+                    // Cornell Score
                     HStack {
                         Image("Cornell")
                             .resizable()
-                            .frame(width: 20, height: 27)
+                            .frame(width: 20, height: 20)
 
                         Text("Cornell")
                             .font(Constants.Fonts.gameTitle)
                         
                         Spacer()
                         
-                        Text("3")
+                        // Cornell Score with Arrow
+                        if corWon {
+                            HStack {
+                                Text(String(corScore))
+                                    .font(Constants.Fonts.semibold18)
+                                Image("pastGame_arrow_back")
+                                    .resizable()
+                                    .frame(width: 11, height: 14)
+                            }
+                            .offset(x: 20)
+                        } else {
+                            Text(String(corScore))
+                                .foregroundStyle(Constants.Colors.gray_text)
+                                .font(Constants.Fonts.medium18)
+                        }
                     }
                 }
                 .padding(.leading, 16)

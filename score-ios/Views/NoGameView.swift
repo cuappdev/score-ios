@@ -23,7 +23,7 @@ struct NoGameView: View {
                     .foregroundStyle(Constants.Colors.gray_text)
                     .padding(.top, 2)
             }
-            Spacer()
+//            Spacer()
             Spacer()
         }
     }

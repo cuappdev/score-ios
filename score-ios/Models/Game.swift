@@ -45,7 +45,7 @@ struct Game : GameType, Identifiable {
     init(game: GamesQuery.Data.Game) {
         self.city = game.city
         self.state = game.state
-        self.date = Game.parseDate(game.date)
+        self.date = Game.parseDate(dateString: game.date, timeString: game.time ?? "12:00 p.m.")
         self.sex = game.gender == "Mens" ? .Men : .Women
         self.sport = Sport(rawValue: game.sport) ?? .All
         self.opponent = Team.defaultTeam()
@@ -84,6 +84,32 @@ extension Game {
     mutating func parseScoreBreakdown(_ breakdown: [[String?]?]?) -> [TimeUpdate] {
             var updates: [TimeUpdate] = []
             // Parse breakdown and map into `TimeUpdate` array
+            // [["1", "2"], ["2", "3"]]
+        
+        if (breakdown != nil) {
+            let scoreBreakDown = breakdown!
+            let corScores = scoreBreakDown[0]
+            let oppScores = scoreBreakDown[1]
+            var corTotal = 0
+            var oppTotal = 0
+            if (corScores != nil && oppScores != nil) {
+                corScores!.indices.forEach({ index in
+                    let timeStamp = index+1
+                    if (corScores![index] != nil && oppScores![index] != nil) {
+                        let corScore = Int(corScores![index]!) ?? 0
+                        let oppScore = Int(oppScores![index]!) ?? 0
+                        let timeUpdate = TimeUpdate(timestamp: timeStamp, isTotal: false, cornellScore: corScore, opponentScore: oppScore)
+                        corTotal += corScore
+                        oppTotal += oppScore
+                        updates.append(timeUpdate)
+                    }
+                    if (index == corScores!.count - 1) {
+                        let total = TimeUpdate(timestamp: index + 1, isTotal: true, cornellScore: corTotal, opponentScore: oppTotal)
+                        updates.append(total)
+                    }
+                })
+            }
+        }
             return updates
         }
 
@@ -133,13 +159,35 @@ extension Game {
         }
     }
     
-    static func parseDate(_ dateString: String) -> Date {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MMM d (EEE)" // Matches "Feb 23 (Fri)"
-        formatter.locale = Locale(identifier: "en_US_POSIX") // Ensures consistent parsing
-        formatter.timeZone = TimeZone(abbreviation: "UTC") // Adjust timezone if necessary
+    static func parseDate(dateString: String, timeString: String) -> Date {
+        // parse the date without year
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM d (EEE)" // Matches "Feb 23 (Fri)"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX") // Ensures consistent parsing
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC") // Adjust timezone if necessary
+        let parsedDate = dateFormatter.date(from: dateString) ?? Date()
+        
+        // parse the time
+        let timeFormatter = DateFormatter()
+        timeFormatter.dateFormat = "h:mm a" // Matches "4:00 p.m."
+        timeFormatter.locale = Locale(identifier: "en_US_POSIX")
+        timeFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        let parsedTime = timeFormatter.date(from: timeString) ?? Date()
+        
+        // get the current year
+        let calendar = Calendar.current
+        let currentYear = calendar.component(.year, from: Date())
+        
+        // set the year of the parsed date to the current year
+        // Set the year of the parsed date to the current year
+        var dateComponents = calendar.dateComponents([.month, .day], from: parsedDate)
+        dateComponents.year = currentYear
+        let timeComponents = calendar.dateComponents([.hour, .minute], from: parsedTime)
+        dateComponents.hour = timeComponents.hour
+        dateComponents.minute = timeComponents.minute
 
-        return formatter.date(from: dateString) ?? Date() // Fallback to current date if parsing fails
+        // returns the date with the year set to the current year, callback to current date if parsing fails
+        return calendar.date(from: dateComponents) ?? Date()
     }
 }
 
@@ -205,7 +253,7 @@ func fetchOpponentTeam(id: String, completion: @escaping (Team?) -> Void) {
         if let result = team {
             completion(Team(team: result))
         } else if let error = error {
-            print("Error in fetchOpponentTeam: \(error.localizedDescription)")
+//            print("Error in fetchOpponentTeam: \(error.localizedDescription)")
             completion(nil)
         }
     }
@@ -330,7 +378,7 @@ enum Sport : String, Identifiable, CaseIterable, CustomStringConvertible {
         case .Squash:
             return "Squash"
         case .SwimmingDiving:
-            return "Swimming and Diving"
+            return "Swimming"
         case .Tennis:
             return "Tennis"
         case .TrackField:

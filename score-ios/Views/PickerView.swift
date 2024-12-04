@@ -17,15 +17,16 @@ struct PickerView: View {
     @State var selectedIndex: Int = 0
     
     var body: some View {
+        let offsetScalar: Int = selectedIndex == 0 ? -1 : selectedIndex
         
         ZStack (alignment: .leading) {
             
             GeometryReader { geometry in
-                Capsule()
-                    .fill(Constants.Colors.selected)
-                    .frame(width: buttonWidth, height: buttonHeight)
-                    .offset(x: CGFloat(selectedIndex) * (geometry.size.width / CGFloat(Sex.allCases.count)))
-                    .animation(.spring(), value: selectedSex)
+                    Capsule()
+                        .fill(Constants.Colors.selected)
+                        .frame(width: buttonWidth, height: buttonHeight)
+                        .offset(x: CGFloat(selectedIndex) * (geometry.size.width / CGFloat(Sex.allCases.count)) - CGFloat(5 * (offsetScalar)))
+                        .animation(.spring(), value: selectedSex)
             }
             .frame(height: buttonHeight)
             

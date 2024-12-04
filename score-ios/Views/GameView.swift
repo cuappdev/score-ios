@@ -382,9 +382,7 @@ extension GameView {
     }
     
     private var summaryTab: some View {
-        Button {
-            // TODO: navigate to score summary view
-        } label: {
+        NavigationLink(destination: ScoringSummary(game: game)) {
             HStack {
                 Text("Score Summary")
                     .font(Constants.Fonts.medium18)
@@ -401,11 +399,23 @@ extension GameView {
     
     private var gameSummary: some View {
         VStack {
-            ScoreSummaryTile(winner: "Cornell", time: "6:21", round: "1st Quarter", point: "Field Goal", score: "10 - 7")
-            ScoreSummaryTile(winner: "Penn", time: "8:40", round: "1st Quarter", point: "Touchdown", score: "7 - 7")
-            ScoreSummaryTile(winner: "Cornell", time: "11:29", round: "1st Quarter", point: "Touchdown", score: "7 - 0")
+            VStack {
+                ForEach(Array(game.gameUpdates.prefix(3)).indices, id: \.self) { i in
+                    if game.gameUpdates[i].isCornell {
+                        ScoringUpdateCell(update: game.gameUpdates[i], img: "Cornell")
+                    } else {
+                        ScoringUpdateCell(update: game.gameUpdates[i], img: game.opponent.image)
+                    }
+                    
+                    // Add a divider except after the last cell
+                    if i < game.gameUpdates.prefix(3).count - 1 {
+                        Divider()
+                    }
+                }
+            }
         }
     }
+
     
     private var noGameSummary: some View {
         VStack {
@@ -458,7 +468,7 @@ extension GameView {
             // score summary tab
             summaryTab
                 .padding(.top, 24)
-            noGameSummary
+            gameSummary
         }
     }
     
@@ -481,9 +491,7 @@ extension GameView {
             // score summary tab
             summaryTab
                 .padding(.top, 24)
-            // TODO: Change this to gameSummary
-//            gameSummary
-            noGameSummary
+            gameSummary
         }
     }
     
@@ -491,5 +499,5 @@ extension GameView {
 }
 
 #Preview {
-    GameView(game: Game.dummyData[7])
+    GameView(game: Game.dummyData[0])
 }

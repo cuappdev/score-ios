@@ -11,6 +11,8 @@
 		CE335CD52C922ECB0037F572 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE335CD42C922ECB0037F572 /* Constants.swift */; };
 		CE335CD72C922F390037F572 /* Dates.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE335CD62C922F390037F572 /* Dates.swift */; };
 		CE335CD92C9244230037F572 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE335CD82C9244230037F572 /* Game.swift */; };
+		CE3C9C412D010177008BFB4C /* ScoringSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3C9C402D010177008BFB4C /* ScoringSummary.swift */; };
+		CE3C9C432D011A23008BFB4C /* OrdinalSuffix.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3C9C422D011A23008BFB4C /* OrdinalSuffix.swift */; };
 		CE528FA02C96420700C238B5 /* PickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE528F9F2C96420700C238B5 /* PickerView.swift */; };
 		CE528FA22C9651C800C238B5 /* GameTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE528FA12C9651C800C238B5 /* GameTile.swift */; };
 		CE528FA42C9653C200C238B5 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE528FA32C9653C200C238B5 /* Error.swift */; };
@@ -84,6 +86,8 @@
 		CE335CD42C922ECB0037F572 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CE335CD62C922F390037F572 /* Dates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dates.swift; sourceTree = "<group>"; };
 		CE335CD82C9244230037F572 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		CE3C9C402D010177008BFB4C /* ScoringSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoringSummary.swift; sourceTree = "<group>"; };
+		CE3C9C422D011A23008BFB4C /* OrdinalSuffix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdinalSuffix.swift; sourceTree = "<group>"; };
 		CE528F9F2C96420700C238B5 /* PickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerView.swift; sourceTree = "<group>"; };
 		CE528FA12C9651C800C238B5 /* GameTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTile.swift; sourceTree = "<group>"; };
 		CE528FA32C9653C200C238B5 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
@@ -204,6 +208,7 @@
 				CE335CD42C922ECB0037F572 /* Constants.swift */,
 				CE335CD62C922F390037F572 /* Dates.swift */,
 				CE528FA32C9653C200C238B5 /* Error.swift */,
+				CE3C9C422D011A23008BFB4C /* OrdinalSuffix.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -233,6 +238,7 @@
 				D86347B02CDBFF7C003DD8F6 /* HomeView.swift */,
 				D86347DE2CE98B3C003DD8F6 /* MainTabView.swift */,
 				D86347E02CE98D37003DD8F6 /* TabViewIcon.swift */,
+				CE3C9C402D010177008BFB4C /* ScoringSummary.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -539,6 +545,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE3C9C432D011A23008BFB4C /* OrdinalSuffix.swift in Sources */,
 				D89102132CF10CA9004CE226 /* NetworkManager.swift in Sources */,
 				CE725D3E2C89120200386943 /* ScoreApp.swift in Sources */,
 				D836AD922CB62C8800BD1545 /* NoGameView.swift in Sources */,
@@ -561,6 +568,7 @@
 				CE528FA42C9653C200C238B5 /* Error.swift in Sources */,
 				CE335CD52C922ECB0037F572 /* Constants.swift in Sources */,
 				D86347E12CE98D37003DD8F6 /* TabViewIcon.swift in Sources */,
+				CE3C9C412D010177008BFB4C /* ScoringSummary.swift in Sources */,
 				D86347B12CDBFF7C003DD8F6 /* HomeView.swift in Sources */,
 				D86347DF2CE98B3C003DD8F6 /* MainTabView.swift in Sources */,
 			);

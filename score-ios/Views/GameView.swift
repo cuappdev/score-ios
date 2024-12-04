@@ -16,12 +16,12 @@ struct GameView : View {
     @State var corScore2: String = "-"
     @State var corScore3: String = "-"
     @State var corScore4: String = "-"
-    @State var corScoreTotal: String = "-"
+    @State var corScoreTotal: String = "0"
     @State var oppScore1: String = "-"
     @State var oppScore2: String = "-"
     @State var oppScore3: String = "-"
     @State var oppScore4: String = "-"
-    @State var oppScoreTotal: String = "-"
+    @State var oppScoreTotal: String = "0"
     @Environment(\.presentationMode) var presentationMode
     // 0: hasn't started
     // 1: game started (no updates yet)
@@ -140,6 +140,12 @@ extension GameView {
                 oppScoreTotal = "-"
             }
         }
+        
+        // get total scores
+        if (!game.gameUpdates.isEmpty) {
+            corScoreTotal = String(game.gameUpdates[game.gameUpdates.count-1].cornellScore)
+            oppScoreTotal = String(game.gameUpdates[game.gameUpdates.count-1].opponentScore)
+        }
     }
 }
 
@@ -152,7 +158,7 @@ extension GameView {
                 .resizable()
                 .frame(width: 72, height: 72)
             Spacer()
-            Text("0 - 0")
+            Text("\(corScoreTotal) - \(oppScoreTotal)")
                 .font(Constants.Fonts.bold40)
                 .foregroundColor(Constants.Colors.white)
             Spacer()
@@ -322,6 +328,7 @@ extension GameView {
     private var thirdRow: some View {
         HStack {
             Text(game.opponent.name)
+                .lineLimit(1)
                 .font(Constants.Fonts.gameText)
                 .foregroundStyle(.gray)
                 .frame(width: 60, alignment: .leading)

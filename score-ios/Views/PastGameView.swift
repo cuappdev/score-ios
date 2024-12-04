@@ -27,7 +27,7 @@ struct PastGameView: View {
                 
                 VStack {
                     Text("All Scores")
-                        .font(Constants.Fonts.h1)
+                        .font(Constants.Fonts.semibold24)
                         .frame(maxWidth: .infinity, alignment: .leading) // Align to the left
                     
                     genderSelector
@@ -176,9 +176,8 @@ extension PastGameView {
     private var carousel: some View {
         VStack {
             Text("Latest")
-                .font(Constants.Fonts.h1)
+                .font(Constants.Fonts.semibold24)
                 .frame(maxWidth: .infinity, alignment: .leading) // Align to the left
-                .padding(.leading, 20)
                 .padding(.top, 24)
             
             // Carousel

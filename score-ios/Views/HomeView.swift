@@ -26,7 +26,7 @@ struct HomeView: View {
                 
                 VStack {
                     Text("Game Schedule")
-                        .font(Constants.Fonts.h1)
+                        .font(Constants.Fonts.semibold24)
                         .frame(maxWidth: .infinity, alignment: .leading) // Align to the left
                     
                     genderSelector
@@ -174,9 +174,8 @@ extension HomeView {
     private var carousel: some View {
         VStack {
             Text("Upcoming")
-                .font(Constants.Fonts.h1)
+                .font(Constants.Fonts.semibold24)
                 .frame(maxWidth: .infinity, alignment: .leading) // Align to the left
-                .padding(.leading, 20)
                 .padding(.top, 24)
             
             // Carousel

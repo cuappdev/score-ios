@@ -47,7 +47,8 @@ struct Game : GameType, Identifiable {
         self.state = game.state
         self.date = Game.parseDate(dateString: game.date, timeString: game.time ?? "12:00 p.m.")
         self.sex = game.gender == "Mens" ? .Men : .Women
-        self.sport = Sport(rawValue: game.sport) ?? .All
+//        self.sport = Sport(rawValue: game.sport) ?? .All
+        self.sport = Sport(normalizedValue: game.sport) ?? .All
         self.opponent = Team.defaultTeam()
         self.address = game.location ?? "N/A"
         self.timeUpdates = parseScoreBreakdown(game.scoreBreakdown)
@@ -286,7 +287,6 @@ extension Team {
     }
 }
 
-// Team(id: "673d2c20569abe4465e9f792", color: "blue", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Cornell_University_seal.svg/1200px-Cornell_University_seal.svg.png", name: "Cornell")
 struct GameUpdate {
     var id: UUID = UUID() // discard
     var timestamp: Int // period
@@ -359,6 +359,19 @@ enum Sport : String, Identifiable, CaseIterable, CustomStringConvertible {
     case RowingLightweight
     case SprintFootball
     case Wrestling
+    
+    // init from a string from backend (might include spaces)
+    init?(normalizedValue: String) {
+        // Normalize the input by removing spaces and making it case insensitive
+        let cleanedValue = normalizedValue.replacingOccurrences(of: " ", with: "").lowercased()
+        for sport in Sport.allCases {
+            if sport.rawValue.lowercased() == cleanedValue {
+                self = sport
+                return
+            }
+        }
+        return nil
+    }
     
     // Make a to string function
     var description: String {

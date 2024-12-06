@@ -78,7 +78,8 @@ struct ScoringUpdateCell : View {
                     Text("\(update.cornellScore) - **\(update.opponentScore)**")
                         .font(Constants.Fonts.regular14)
                 }
-            }.frame(width:72)
+            }
+            .frame(width:72)
             
             Spacer()
             
@@ -86,10 +87,11 @@ struct ScoringUpdateCell : View {
                 .font(Constants.Fonts.regular14)
                 .frame(width: 217)
             
-        }.padding(.leading, 24)
-            .padding(.trailing, 24)
-            .padding(.top, 12)
-            .padding(.bottom, 12)
+        }
+        .padding(.leading, 24)
+        .padding(.trailing, 24)
+        .padding(.top, 12)
+        .padding(.bottom, 12)
     }
 }
 

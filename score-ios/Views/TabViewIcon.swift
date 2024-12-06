@@ -18,8 +18,6 @@ struct TabViewIcon: View {
     var body: some View {
         Button {
                 selectionIndex = itemIndex
-                print("Tab selected: \(itemIndex)")
-            print("Tab selected: \(selectionIndex)")
                 } label: {
                     VStack {
                         Image(itemIndex == selectionIndex ? "\(tabItems[itemIndex])-selected" : tabItems[itemIndex])

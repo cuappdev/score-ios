@@ -399,23 +399,20 @@ extension GameView {
     
     private var gameSummary: some View {
         VStack {
-            VStack {
-                ForEach(Array(game.gameUpdates.prefix(3)).indices, id: \.self) { i in
-                    if game.gameUpdates[i].isCornell {
-                        ScoringUpdateCell(update: game.gameUpdates[i], img: "Cornell")
-                    } else {
-                        ScoringUpdateCell(update: game.gameUpdates[i], img: game.opponent.image)
-                    }
-                    
-                    // Add a divider except after the last cell
-                    if i < game.gameUpdates.prefix(3).count - 1 {
-                        Divider()
-                    }
+            ForEach(Array(game.gameUpdates.prefix(3)).indices, id: \.self) { i in
+                if game.gameUpdates[i].isCornell {
+                    ScoringUpdateCell(update: game.gameUpdates[i], img: "Cornell")
+                } else {
+                    ScoringUpdateCell(update: game.gameUpdates[i], img: game.opponent.image)
+                }
+                
+                // Add a divider except after the last cell
+                if i < game.gameUpdates.prefix(3).count - 1 {
+                    Divider()
                 }
             }
         }
     }
-
     
     private var noGameSummary: some View {
         VStack {
@@ -428,8 +425,7 @@ extension GameView {
                 .font(Constants.Fonts.regular14)
                 .foregroundStyle(Constants.Colors.gray_text)
         }
-        .padding(.top, 40)
-        .padding(.bottom, 50)
+        .frame(maxWidth: .infinity)
     }
     
     private var hasntStartedView: some View {
@@ -452,7 +448,6 @@ extension GameView {
     private var gameStartedView: some View {
         VStack {
             banner
-            Spacer()
             gameInfo
                 .padding(.leading, 24)
                 .padding(.top, 24)
@@ -468,7 +463,18 @@ extension GameView {
             // score summary tab
             summaryTab
                 .padding(.top, 24)
+            
             gameSummary
+                .overlay {
+                    if (game.gameUpdates.count < 3) {
+                        noGameSummary
+                            .padding(.top, 150)
+                            .frame(maxWidth: .infinity)
+                }
+            }
+            .frame(maxWidth: .infinity)
+            
+            Spacer()
         }
     }
     

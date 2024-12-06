@@ -28,11 +28,6 @@ struct MainTabView: View {
                 ForEach(0..<2, id: \.self) {
                     index in
                     TabViewIcon(selectionIndex: $selection, itemIndex: index)
-                        .onChange(of: selection) {
-                            newValue in
-                                print("MainTabView selection changed to: \(newValue)")
-                            
-                        }
                         .frame(width: 67, height: 45)
                     if index != 1 {
                         Spacer()

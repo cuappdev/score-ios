@@ -6,63 +6,30 @@
 //
 
 import SwiftUI
+import GameAPI
 
 /// Main View of the app
 struct ContentView: View {
+    @State private var selectedTab: Int = 0
+    @State private var games: [GamesQuery.Data.Game] = []
+    @State private var errorMessage: String?
     
-    // State variables
-    @State private var selectedSex : Sex = .Both
-    @State private var selectedSport : Sport = .All
-    var paddingMain : CGFloat = 20
-    @State private var selectedCardIndex: Int = 0
-    @State private var games: [Game] = []
-    @State private var upcomingGames: [Game] = Array(Game.dummyData.prefix(3))
     
-    // Main view
     var body: some View {
-        NavigationView {
-            VStack(spacing: 0) {
-                carousel
-                
-                Text("Game Schedule")
-                    .font(Constants.Fonts.h1)
-                    .frame(maxWidth: .infinity, alignment: .leading) // Align to the left
-                    .padding(.leading, 20)
-                    .padding(.bottom, 16)
-                
-                filters
-                
-                // Seperator line
-                Divider()
-                    .background(.clear)
-                
-                // List of games
-                if (games.isEmpty) {
-                    // make this a separate view
-                    NoGameView()
-                } else {
-                    gameList
-                }
-            }   
-            .padding(.leading, paddingMain)
-            .padding(.trailing, paddingMain)
-            .edgesIgnoringSafeArea(.bottom)
-        }
-        .onChange(of: selectedSport) {
-            filterGames()
-        }
-        .onChange(of: selectedSex) {
-            filterGames()
-        }
-    }
-    
-    func filterGames() {
-        games = Game.dummyData.filter({(selectedSex == .Both || $0.sex == selectedSex) && (selectedSport == .All || $0.sport == selectedSport)})
+        MainTabView(selection: $selectedTab)
     }
 }
 
 #Preview {
-    ContentView()
+    StateWrapper()
+}
+
+struct StateWrapper: View {
+    @State private var selectedTab: Int = 0
+    
+    var body: some View {
+        MainTabView(selection: $selectedTab)
+    }
 }
 
 // MARK: Components

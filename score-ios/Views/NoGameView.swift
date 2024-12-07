@@ -24,7 +24,6 @@ struct NoGameView: View {
                     .padding(.top, 2)
             }
             Spacer()
-            Spacer()
         }
     }
 }

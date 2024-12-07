@@ -1,0 +1,27 @@
+query Games {
+    games {
+        id
+        city
+        date
+        gender
+        location
+        opponentId
+        result
+        sport
+        state
+        time
+        scoreBreakdown
+        boxScore {
+            team
+            period
+            time
+            description
+            scorer
+            assist
+            scoreBy
+            corScore
+            oppScore
+        }
+    }
+}
+

@@ -9,7 +9,7 @@ import SwiftUI
 
 /// Custom PickerView code heavily inspired from https://www.reddit.com/r/SwiftUI/comments/qonfey/how_do_i_get_a_picker_that_looks_like_this_very/
 
-private var buttonWidth : CGFloat = 100
+private var buttonWidth : CGFloat = 111
 private var buttonHeight : CGFloat = 37
 
 struct PickerView: View {
@@ -17,13 +17,18 @@ struct PickerView: View {
     @State var selectedIndex: Int = 0
     
     var body: some View {
+        let offsetScalar: Int = selectedIndex == 0 ? -1 : selectedIndex
+        
         ZStack (alignment: .leading) {
             
-            Capsule()
-                .fill(Constants.Colors.selected)
-                .frame(width: buttonWidth, height: buttonHeight)
-                .offset(x: 6 + CGFloat(selectedIndex) * 99)
-                .animation(.spring(), value: selectedSex)
+            GeometryReader { geometry in
+                    Capsule()
+                        .fill(Constants.Colors.selected)
+                        .frame(width: buttonWidth, height: buttonHeight)
+                        .offset(x: CGFloat(selectedIndex) * (geometry.size.width / CGFloat(Sex.allCases.count)) - CGFloat(5 * (offsetScalar)))
+                        .animation(.spring(), value: selectedSex)
+            }
+            .frame(height: buttonHeight)
             
             // Options
             HStack (spacing: 0) {
@@ -51,6 +56,7 @@ struct PickerView: View {
             .overlay(
                 Capsule()
                     .stroke(Constants.Colors.gray_liner, lineWidth: 2)
+                    .frame(width: 345, height: 49)
             )
         }
     }

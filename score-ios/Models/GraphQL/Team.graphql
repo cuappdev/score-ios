@@ -1,0 +1,8 @@
+query GetTeamById($id: String!) {
+  team(id: $id) {
+    id
+    color
+    image
+    name
+  }
+}

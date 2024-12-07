@@ -507,3 +507,7 @@ extension GameView {
 #Preview {
     GameView(game: Game.dummyData[0])
 }
+
+#Preview {
+    GameView(game: Game.dummyData[7])
+}

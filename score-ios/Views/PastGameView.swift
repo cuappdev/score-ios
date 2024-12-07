@@ -78,7 +78,6 @@ extension PastGameView {
                 fetchedGames.indices.forEach { index in
                     let gameData = fetchedGames[index]
                     let game = Game(game: gameData)
-//                    dispatchGroup.enter() // enter the dispatchGroup
                     
                     game.fetchAndUpdateOpponent(opponentId: gameData.opponentId) { updatedGame in
                         
@@ -131,7 +130,6 @@ extension PastGameView {
                 filteredGames.indices.forEach { index in
                     let gameData = filteredGames[index]
                     let game = Game(game: gameData)
-//                    dispatchGroup.enter() // enter the dispatchGroup
                     
                     game.fetchAndUpdateOpponent(opponentId: gameData.opponentId) { updatedGame in
                         let now = Date()
@@ -149,13 +147,8 @@ extension PastGameView {
                         if (index == filteredGames.count - 1) {
                             self.games = updatedGames
                         }
-//                        dispatchGroup.leave()
                     }
-                }
-                
-//                dispatchGroup.notify(queue: .main) {
-//                    self.games = updatedGames
-//                }
+                }             
             } else if let error = error {
                 errorMessage = error.localizedDescription
                 print("Error in filterPastGames: \(errorMessage ?? "Unknown error")")

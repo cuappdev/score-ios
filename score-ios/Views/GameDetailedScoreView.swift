@@ -42,7 +42,6 @@ struct GameDetailedScoreView: View {
                     countDown
                         .padding(.top, 40)
                 }
-                
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

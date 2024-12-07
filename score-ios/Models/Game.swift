@@ -22,6 +22,7 @@ protocol GameType : Identifiable where ID == UUID {
     var address: String { get }
     
     // TODO: game score details
+
     var timeUpdates: [TimeUpdate] { get }
     var gameUpdates: [GameUpdate] { get }
 }

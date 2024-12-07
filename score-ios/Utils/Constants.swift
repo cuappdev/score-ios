@@ -61,7 +61,6 @@ struct Constants {
         static let medium18 = Font.custom("Poppins Medium", size: 18)
         static let regular14 = Font.custom("Poppins Regular", size: 14)
         static let bold40 = Font.custom("Poppins Bold", size: 40)
-        
         static let title = Font.system(size: 36, weight: .bold, design: .default)
         static let header = Font.system(size: 24, weight: .bold, design: .default)
         static let subheader = Font.system(size: 18, weight: .bold, design: .default)

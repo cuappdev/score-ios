@@ -173,8 +173,8 @@ extension GameView {
         .padding()
         .frame(height: 185)
         .background(LinearGradient(gradient: Gradient(colors: [
-            Color(red: 179 / 255, green: 27 / 255, blue: 27 / 255, opacity: 0.4),
-            Color(red: 1 / 255, green: 31 / 255, blue: 91 / 255, opacity: 0.4)
+            Constants.Colors.gradient_red,
+            /*Color(hexString: game.opponent.color) ??*/ Constants.Colors.gradient_blue
         ]), startPoint: .leading, endPoint: .trailing))
     }
     

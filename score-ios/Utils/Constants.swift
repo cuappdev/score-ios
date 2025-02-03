@@ -73,3 +73,32 @@ struct Constants {
 
 }
 
+extension Color {
+    init?(hexString: String) {
+        let r, g, b, a: Double
+
+        // Remove '#' if it exists
+        let hexColor = hexString.trimmingCharacters(in: CharacterSet(charactersIn: "#"))
+
+        guard hexColor.count == 6 || hexColor.count == 8 else {
+            return nil
+        }
+
+        var hexValue: UInt64 = 0
+        Scanner(string: hexColor).scanHexInt64(&hexValue)
+
+        if hexColor.count == 6 {
+            r = Double((hexValue & 0xFF0000) >> 16) / 255
+            g = Double((hexValue & 0x00FF00) >> 8) / 255
+            b = Double(hexValue & 0x0000FF) / 255
+            a = 1.0 // Default alpha for 6-digit hex
+        } else { // 8 characters for RGBA
+            r = Double((hexValue & 0xFF000000) >> 24) / 255
+            g = Double((hexValue & 0x00FF0000) >> 16) / 255
+            b = Double((hexValue & 0x0000FF00) >> 8) / 255
+            a = Double(hexValue & 0x000000FF) / 255
+        }
+
+        self.init(red: r, green: g, blue: b, opacity: a)
+    }
+}

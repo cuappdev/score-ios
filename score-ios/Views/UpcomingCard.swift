@@ -62,7 +62,7 @@ extension UpcomingCard {
         .frame(height: 100)
         .background(LinearGradient(gradient: Gradient(colors: [
             Constants.Colors.gradient_red,
-            Constants.Colors.gradient_blue
+           /* Color(hexString: game.opponent.color) ??*/ Constants.Colors.gradient_blue
         ]), startPoint: .leading, endPoint: .trailing))
     }
     

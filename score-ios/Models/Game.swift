@@ -84,8 +84,6 @@ extension Game {
     // parse score breakdown into TimeUpdate
     mutating func parseScoreBreakdown(_ breakdown: [[String?]?]?) -> [TimeUpdate] {
             var updates: [TimeUpdate] = []
-            // Parse breakdown and map into `TimeUpdate` array
-            // [["1", "2"], ["2", "3"]]
         
         if (breakdown != nil) {
             let scoreBreakDown = breakdown!
@@ -155,6 +153,7 @@ extension Game {
                 DispatchQueue.main.async {
                     var updatedGame = self
                     updatedGame.opponent = team ?? Team.defaultTeam()
+                    print("team \(updatedGame.opponent.name): \(updatedGame.opponent.color)")
                     completion(updatedGame)
                 }
         }

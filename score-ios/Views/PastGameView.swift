@@ -53,7 +53,6 @@ struct PastGameView: View {
         }
         .onAppear {
             fetchPastGames()
-            print("OTHER")
         }
         .onChange(of: selectedSport) {
             filterPastGames()
@@ -102,14 +101,12 @@ extension PastGameView {
                             self.allGames = updatedGames
                             self.pastGames = Array(allGames.prefix(3))
                             // Print updated game info to the console
-                            self.games.forEach { game in
-                                print("Game in \(game.city) on \(game.date), sport: \(game.sport), gender: \(game.sex), opponent: \(game.opponent.name)")
-                            }
+//                            self.games.forEach { game in
+//                                print("Game in \(game.city) on \(game.date), sport: \(game.sport), gender: \(game.sex), opponent: \(game.opponent.name)")
+//                            }
                         }
                     }
                 }
-                
-                print(updatedGames.count)
             }
             else if let error = error {
                 self.errorMessage = error.localizedDescription

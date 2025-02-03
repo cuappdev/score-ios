@@ -382,9 +382,7 @@ extension GameView {
     }
     
     private var summaryTab: some View {
-        Button {
-            // TODO: navigate to score summary view
-        } label: {
+        NavigationLink(destination: ScoringSummary(game: game)) {
             HStack {
                 Text("Score Summary")
                     .font(Constants.Fonts.medium18)
@@ -401,9 +399,18 @@ extension GameView {
     
     private var gameSummary: some View {
         VStack {
-            ScoreSummaryTile(winner: "Cornell", time: "6:21", round: "1st Quarter", point: "Field Goal", score: "10 - 7")
-            ScoreSummaryTile(winner: "Penn", time: "8:40", round: "1st Quarter", point: "Touchdown", score: "7 - 7")
-            ScoreSummaryTile(winner: "Cornell", time: "11:29", round: "1st Quarter", point: "Touchdown", score: "7 - 0")
+            ForEach(Array(game.gameUpdates.prefix(3)).indices, id: \.self) { i in
+                if game.gameUpdates[i].isCornell {
+                    ScoringUpdateCell(update: game.gameUpdates[i], img: "Cornell")
+                } else {
+                    ScoringUpdateCell(update: game.gameUpdates[i], img: game.opponent.image)
+                }
+                
+                // Add a divider except after the last cell
+                if i < game.gameUpdates.prefix(3).count - 1 {
+                    Divider()
+                }
+            }
         }
     }
     
@@ -418,8 +425,7 @@ extension GameView {
                 .font(Constants.Fonts.regular14)
                 .foregroundStyle(Constants.Colors.gray_text)
         }
-        .padding(.top, 40)
-        .padding(.bottom, 50)
+        .frame(maxWidth: .infinity)
     }
     
     private var hasntStartedView: some View {
@@ -442,7 +448,6 @@ extension GameView {
     private var gameStartedView: some View {
         VStack {
             banner
-            Spacer()
             gameInfo
                 .padding(.leading, 24)
                 .padding(.top, 24)
@@ -458,7 +463,18 @@ extension GameView {
             // score summary tab
             summaryTab
                 .padding(.top, 24)
-            noGameSummary
+            
+            gameSummary
+                .overlay {
+                    if (game.gameUpdates.count < 3) {
+                        noGameSummary
+                            .padding(.top, 150)
+                            .frame(maxWidth: .infinity)
+                }
+            }
+            .frame(maxWidth: .infinity)
+            
+            Spacer()
         }
     }
     
@@ -481,13 +497,15 @@ extension GameView {
             // score summary tab
             summaryTab
                 .padding(.top, 24)
-            // TODO: Change this to gameSummary
-//            gameSummary
-            noGameSummary
+            gameSummary
         }
     }
     
     
+}
+
+#Preview {
+    GameView(game: Game.dummyData[0])
 }
 
 #Preview {

@@ -46,6 +46,7 @@
 		CE725D592C89120500386943 /* score_iosUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE725D582C89120500386943 /* score_iosUITestsLaunchTests.swift */; };
 		CE7666812D5C8CA500659A3B /* NetworkEnv.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7666802D5C8CA500659A3B /* NetworkEnv.swift */; };
 		CE7666832D5C8FCD00659A3B /* FontDebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7666822D5C8FCD00659A3B /* FontDebugView.swift */; };
+		CE7666872D5D108E00659A3B /* ScoringUpdateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7666862D5D108E00659A3B /* ScoringUpdateCell.swift */; };
 		D836AD922CB62C8800BD1545 /* NoGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D836AD912CB62C8800BD1545 /* NoGameView.swift */; };
 		D83EE8862CC9917C008B693C /* ScoreSummaryTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83EE8852CC9917C008B693C /* ScoreSummaryTile.swift */; };
 		D86347AF2CDBD2F4003DD8F6 /* PastGameCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86347AE2CDBD2F3003DD8F6 /* PastGameCard.swift */; };
@@ -127,6 +128,7 @@
 		CE725D582C89120500386943 /* score_iosUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = score_iosUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		CE7666802D5C8CA500659A3B /* NetworkEnv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkEnv.swift; sourceTree = "<group>"; };
 		CE7666822D5C8FCD00659A3B /* FontDebugView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontDebugView.swift; sourceTree = "<group>"; };
+		CE7666862D5D108E00659A3B /* ScoringUpdateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoringUpdateCell.swift; sourceTree = "<group>"; };
 		D836AD912CB62C8800BD1545 /* NoGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoGameView.swift; sourceTree = "<group>"; };
 		D83EE8852CC9917C008B693C /* ScoreSummaryTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreSummaryTile.swift; sourceTree = "<group>"; };
 		D86347AE2CDBD2F3003DD8F6 /* PastGameCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastGameCard.swift; sourceTree = "<group>"; };
@@ -244,6 +246,7 @@
 				D86347E02CE98D37003DD8F6 /* TabViewIcon.swift */,
 				CE3C9C402D010177008BFB4C /* ScoringSummary.swift */,
 				CE7666822D5C8FCD00659A3B /* FontDebugView.swift */,
+				CE7666862D5D108E00659A3B /* ScoringUpdateCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -556,6 +559,7 @@
 				CE725D3E2C89120200386943 /* ScoreApp.swift in Sources */,
 				D836AD922CB62C8800BD1545 /* NoGameView.swift in Sources */,
 				CE528FF52C9798AC00C238B5 /* FilterTile.swift in Sources */,
+				CE7666872D5D108E00659A3B /* ScoringUpdateCell.swift in Sources */,
 				D8B1C9D32CD2D20A0095E563 /* PastGameTile.swift in Sources */,
 				CE528FA22C9651C800C238B5 /* GameTile.swift in Sources */,
 				CE7666832D5C8FCD00659A3B /* FontDebugView.swift in Sources */,

@@ -9,18 +9,7 @@ import Foundation
 import SwiftUI
 
 class GamesViewModel: ObservableObject {
-//    @Published var allGames: [Game] = []
-//    @Published var upcomingGames: [Game] = []
-//    @Published var pastGames: [Game] = []
-    
-    init() {
-//        fetchAllGames { [weak self] game in
-//            DispatchQueue.main.async {
-//                self?.allGames = games
-//            }
-//        }
-    }
-    
+
     private func getUpcomingGames(allGames: [Game]) -> [Game] {
         var upcomingGames: [Game] = []
         
@@ -65,66 +54,3 @@ class GamesViewModel: ObservableObject {
         return pastGames
     }
 }
-
-//func fetchAllGames() -> [Game] {
-//    var games: [Game] = []
-//    NetworkManager.shared.fetchGames { fetchedGames, error in
-//        if let fetchedGames = fetchedGames {
-//            var updatedGames: [Game] = []
-//            let dispatchGroup = DispatchGroup()
-//            
-//            fetchedGames.forEach { gameData in
-//                let game = Game(game: gameData)
-//                dispatchGroup.enter() // enter the dispatchGroup
-//                
-//                game.fetchAndUpdateOpponent(opponentId: gameData.opponentId) { updatedGame in
-//                    updatedGames.append(updatedGame)
-//                    print("UpdatedGame: \(updatedGame.sport) game with \(updatedGame.opponent.name)")
-//                    dispatchGroup.leave()
-//                }
-//            }
-//            
-//            dispatchGroup.notify(queue: .main) {
-//                games = updatedGames
-//            }
-//            print(games.isEmpty)
-//            games.forEach { game in
-//                print("Game: \(game.sport) game with \(game.opponent.name)")
-//            }
-//        }
-//        else if let error = error {
-//            print("Error in fetchAllGames: \(error.localizedDescription)")
-//        }
-//    }
-//    return games
-//}
-
-//func fetchAllGames(completion: @escaping ([Game]) -> Void) -> [Game] {
-//    var games: [Game] = []
-//    NetworkManager.shared.fetchGames { fetchedGames, error in
-//        if let fetchedGames = fetchedGames {
-//            var updatedGames: [Game] = []
-//            let dispatchGroup = DispatchGroup()
-//            
-//            fetchedGames.forEach { gameData in
-//                let game = Game(game: gameData)
-//                dispatchGroup.enter() // enter the dispatchGroup
-//                
-//                    game.fetchAndUpdateOpponent(opponentId: gameData.opponentId) { updatedGame in
-//                    updatedGames.append(updatedGame)
-//                    print("UpdatedGame: \(updatedGame.sport) game with \(updatedGame.opponent.name)")
-//                    dispatchGroup.leave()
-//                }
-//            }
-//            
-//            dispatchGroup.notify(queue: .main) {
-//                games = updatedGames
-//                completion(updatedGames)
-//            }
-//        }
-//        else if let error = error {
-//            print("Error in fetchAllGames: \(error.localizedDescription)")
-//            completion([])
-//        }
-//    }
-//}

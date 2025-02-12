@@ -188,7 +188,7 @@ extension HomeView {
 // MARK: Components
 extension HomeView {
     private var carousel: some View {
-        VStack {
+        VStack (alignment: .center) {
             Text("Upcoming")
                 .font(Constants.Fonts.semibold24)
                 .frame(maxWidth: .infinity, alignment: .leading) // Align to the left
@@ -204,11 +204,16 @@ extension HomeView {
             .frame(height: 220)
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
             
-            HStack(spacing: 32) {
-                ForEach(0..<3, id: \.self) { index in
-                    Circle()
-                        .fill(index == selectedCardIndex ? Constants.Colors.primary_red : Constants.Colors.unselected)
-                        .frame(width: 10, height: 10)
+            // TODO: make this geometry reader only occur for iPhones with notches? Not sure, will need to check older phones
+            GeometryReader { geometry in
+                if geometry.frame(in: .global).minY > 30 {
+                    HStack(spacing: 32) {
+                        ForEach(0..<3, id: \.self) { index in
+                            Circle()
+                                .fill(index == selectedCardIndex ? Constants.Colors.primary_red : Constants.Colors.unselected)
+                                .frame(width: 10, height: 10)
+                        }
+                    }.position(x: geometry.frame(in: .local).midX)
                 }
             }
         }

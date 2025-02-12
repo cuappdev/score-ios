@@ -13,10 +13,6 @@ class NetworkManager {
     static let shared = NetworkManager()
     let apolloClient = ApolloClient(url: URL(string: network_mode.endpoint)!)
     
-    // private(set) lazy var apollo: ApolloClient = {
-//    return ApolloClient(url: url)
-//}()
-    
     func fetchGames(completion: @escaping ([GamesQuery.Data.Game]?, Error?) -> Void) {
         apolloClient.fetch(query: GamesQuery()) { result in
             switch result {
@@ -38,15 +34,10 @@ class NetworkManager {
             switch result {
             case .success(let graphQLResult):
                 if let gamesData = graphQLResult.data?.games?.compactMap({ $0 }) {
-                    // filter games by gender and sports
-//                    for datum in gamesData {
-//                        print("Game of \(datum.sport) and \(datum.gender)")
-//                    }
                     let filteredGames = gamesData.filter { game in
                         (gender == nil || game.gender == gender) &&
                         (sport == nil || game.sport == sport)
                     }
-//                    print("game is empty: " + String(filteredGames.isEmpty))
                     completion(filteredGames, nil)
                 } else if let errors = graphQLResult.errors {
                     let errorDescription = errors.map { $0.localizedDescription }.joined(separator: "\n")

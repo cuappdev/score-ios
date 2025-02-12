@@ -260,32 +260,37 @@ extension GameView {
     
     private var firstRow: some View {
         HStack {
-            HStack{
-                Text("1")
-                    .font(Constants.Fonts.gameText)
-                    .foregroundStyle(.white)
-                    .frame(maxWidth: .infinity)
-                Text("2")
-                    .font(Constants.Fonts.gameText)
-                    .foregroundStyle(.white)
-                    .frame(maxWidth: .infinity)
-                Text("3")
-                    .font(Constants.Fonts.gameText)
-                    .foregroundStyle(.white)
-                    .frame(maxWidth: .infinity)
-                Text("4")
-                    .font(Constants.Fonts.gameText)
-                    .foregroundStyle(.white)
-                    .frame(maxWidth: .infinity)
-                Text("Total")
-                    .font(Constants.Fonts.gameText)
-                    .foregroundStyle(.white)
-                    .frame(maxWidth: .infinity)
-            }
-            .padding(.leading, 60)
-            .padding(.trailing, 10)
+            Text("")
+                .font(Constants.Fonts.gameText)
+                .foregroundStyle(Constants.Colors.white)
+                .frame(width: 60, alignment: .leading)
+            Text("1")
+                .font(Constants.Fonts.gameText)
+                .foregroundStyle(Constants.Colors.white)
+                .frame(width: 24)
+            Text("2")
+                .font(Constants.Fonts.gameText)
+                .foregroundStyle(Constants.Colors.white)
+                .frame(width: 24)
+                .padding(.leading, 29.5)
+            Text("3")
+                .font(Constants.Fonts.gameText)
+                .foregroundStyle(Constants.Colors.white)
+                .frame(width: 24)
+                .padding(.leading, 29.5)
+            Text("4")
+                .font(Constants.Fonts.gameText)
+                .foregroundStyle(Constants.Colors.white)
+                .frame(width: 24)
+                .padding(.leading, 29.5)
+            Text("Total")
+                .font(Constants.Fonts.gameText)
+                .foregroundStyle(Constants.Colors.white)
+                .frame(maxWidth: .infinity)
+                .padding(.trailing, 3)
         }
         .frame(height: 40)
+        .padding(.leading, 10)
         .background(Constants.Colors.primary_red)
     }
     
@@ -387,13 +392,13 @@ extension GameView {
                 Text("Score Summary")
                     .font(Constants.Fonts.medium18)
                     .foregroundStyle(.gray)
+                
                 Spacer()
+                
                 Image("Right-arrow")
                     .resizable()
                     .frame(width: 9.87, height: 18.57)
             }
-            .padding(.leading, 15)
-            .padding(.trailing, 17)
         }
     }
     
@@ -455,14 +460,11 @@ extension GameView {
             VStack {
                 scoreBox
                     .frame(maxWidth: .infinity, alignment: .leading)
+                summaryTab
             }
             .padding(.leading, 24)
             .padding(.trailing, 24)
             .padding(.top, 24)
-            
-            // score summary tab
-            summaryTab
-                .padding(.top, 24)
             
             gameSummary
                 .overlay {
@@ -489,14 +491,13 @@ extension GameView {
             VStack {
                 scoreBox
                     .frame(maxWidth: .infinity, alignment: .leading)
+                summaryTab
+                    .padding(.top, 24)
             }
             .padding(.leading, 24)
             .padding(.trailing, 24)
             .padding(.top, 24)
             
-            // score summary tab
-            summaryTab
-                .padding(.top, 24)
             gameSummary
         }
     }

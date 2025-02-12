@@ -19,18 +19,22 @@ struct GameDetailedScoreView: View {
                 
                 // information
                 information
-                    .frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 24)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.leading, 24)
                     .padding(.trailing, 24)
                 
                 if (gameStarted) {
                     VStack {
                         scoreBox
-                            .frame(maxWidth: .infinity, alignment: .leading)
                     }
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.leading, 24)
                     .padding(.trailing, 24)
-                    // score summary tab
+                    
                     summaryTab
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.leading, 24)
+                    .padding(.trailing, 24)
                     
                     // score summary
                     if (!game.timeUpdates.isEmpty) {
@@ -294,20 +298,20 @@ extension GameDetailedScoreView {
     }
     
     private var summaryTab: some View {
-        Button {
-            // TODO: navigate to score summary view
+        NavigationLink {
+            ScoringSummary(game: game)
         } label: {
             HStack {
                 Text("Score Summary")
                     .font(Constants.Fonts.medium18)
                     .foregroundStyle(.gray)
+                
                 Spacer()
+                
                 Image("Right-arrow")
                     .resizable()
                     .frame(width: 9.87, height: 18.57)
             }
-            .padding(.leading, 15)
-            .padding(.trailing, 17)
         }
     }
     

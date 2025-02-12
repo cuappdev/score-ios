@@ -18,9 +18,9 @@ struct FilterTile : View {
         VStack(spacing: 6) {
             Image(imageName)
                 .resizable()
-                .renderingMode(.template)
+                .renderingMode(.original)
                 .frame(width: 32, height: 32)
-                .foregroundStyle(selected ? Constants.Colors.selected : Constants.Colors.iconGray)
+//                .foregroundStyle(selected ? Constants.Colors.selected : Constants.Colors.iconGray)
             
             Text(sport.description)
                 .foregroundStyle(selected ? Constants.Colors.selected : Constants.Colors.iconGray)

@@ -314,17 +314,6 @@ enum EventParty {
     }
 }
 
-// Enums for various types
-enum Opponent : String {
-    case Penn
-    case Princeton
-    case Harvard
-    case Yale
-    case Brown
-    case Dartmouth
-    case Columbia
-}
-
 enum Sport : String, Identifiable, CaseIterable, CustomStringConvertible {
     // https://health.cornell.edu/services/sports-medicine/sports-clearance/ncaa-teams
     var id: Self { self }

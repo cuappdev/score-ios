@@ -75,12 +75,16 @@ extension UpcomingCard {
                     Constants.Colors.gray_icons
                 }
                 .frame(width: 24, height: 24)
+                
                 Text(game.opponent.name)
                     .font(Constants.Fonts.gameTitle)
+                
                 Spacer()
+                
                 Image(game.sport.rawValue + "-g")
                     .resizable()
-                    .frame(width: 30, height: 30)
+                    .frame(width: 25, height: 25)
+                
                 Image(game.sex.description + "-g")
                     .resizable()
                     .frame(width: 25, height: 25)

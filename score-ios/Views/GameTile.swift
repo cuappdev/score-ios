@@ -18,7 +18,6 @@ struct GameTile: View {
             // Opponent Logo, Opponent Name | Sport Icon, Sex Icon
             HStack(spacing: 8) {
                 HStack(spacing: 8) {
-//                    Image(game.opponent)
                     AsyncImage(url: URL(string: game.opponent.image)) {image in
                         image.resizable()
                     } placeholder: {
@@ -35,12 +34,25 @@ struct GameTile: View {
                 Spacer()
                 
                 HStack(spacing: 8) {
-                    // Sport icon
-                    Image(game.sport.rawValue+"-g")
-                        .resizable()
-                        .renderingMode(.template)
-                        .frame(width: 24, height: 24)
-                        .foregroundStyle(Constants.Colors.iconGray)
+//                    // Sport icon
+//                    Image(game.sport.rawValue+"-g")
+//                        .resizable()
+//                        .renderingMode(.template)
+//                        .scaledToFill()
+//                        .frame(width: 19, height: 19)
+//                        .foregroundStyle(Constants.Colors.iconGray)
+                        
+                    ZStack {
+                        Circle()
+                            .frame(width: 19, height: 19)
+                            .foregroundStyle(.white)
+                        Image(game.sport.rawValue+"-g")
+                            .resizable()
+                            .renderingMode(.template)
+                            .scaledToFill()
+                            .frame(width: 19, height: 19)
+                            .foregroundStyle(Constants.Colors.iconGray)
+                    }
                     
                     // Sex icon
                     ZStack {

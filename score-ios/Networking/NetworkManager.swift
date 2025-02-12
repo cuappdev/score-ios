@@ -11,10 +11,9 @@ import GameAPI
 
 class NetworkManager {
     static let shared = NetworkManager()
-    let apolloClient = ApolloClient(url: URL(string: "http://localhost:5000/graphql")!)
+    let apolloClient = ApolloClient(url: URL(string: network_mode.endpoint)!)
     
     // private(set) lazy var apollo: ApolloClient = {
-//    let url = URL(string: "https://yourgraphqlendpoint.com/graphql")!
 //    return ApolloClient(url: url)
 //}()
     

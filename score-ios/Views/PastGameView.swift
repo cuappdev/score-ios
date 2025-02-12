@@ -206,7 +206,7 @@ extension PastGameView {
                     Button {
                         selectedSport = sport
                     } label: {
-                    FilterTile(sport: sport, selected: sport == selectedSport)
+                        FilterTile(sport: sport, selected: sport == selectedSport)
                     }
                 }
             }

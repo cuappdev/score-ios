@@ -64,7 +64,6 @@ struct GameTile: View {
                         .resizable()
                         .renderingMode(/*@START_MENU_TOKEN@*/.template/*@END_MENU_TOKEN@*/)
                         .frame(width: 13.7, height: 20)
-                    //TODO: ratio of location icon (actual dim: 10.83*15.83)
                         .foregroundStyle(Constants.Colors.iconGray)
                     Text("\(game.city), \(game.state)")
                         .font(Constants.Fonts.gameText)

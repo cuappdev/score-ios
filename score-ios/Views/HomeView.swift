@@ -21,39 +21,36 @@ struct HomeView: View {
     // Main view
     var body: some View {
         NavigationView {
-            VStack(spacing: 0) {
-                carousel
+            ScrollView (.vertical, showsIndicators: false) {
                 
-                VStack {
-                    Text("Game Schedule")
-                        .font(Constants.Fonts.semibold24)
-                        .frame(maxWidth: .infinity, alignment: .leading) // Align to the left
-                    
-                    genderSelector
-                        .frame(maxWidth: .infinity, alignment: .center)
-                    sportSelector
-                }
-                .padding(.bottom, 16)
-                
-                // Seperator line
-                Divider()
-                    .background(.clear)
-                
-                // List of games
-                gameList
-                    .overlay {
-                        if games.isEmpty {
-                            NoGameView()
-                        }
+                ZStack {
+                    LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
+                        carousel
+                            .padding(.leading, paddingMain)
+                            .padding(.trailing, paddingMain)
+                        
+                        Section(header: gameSectionHeader
+                            .padding(.leading, paddingMain)
+                            .padding(.trailing, paddingMain)) {
+                                
+                            // List of games
+                            gameList
+                                .overlay {
+                                    if games.isEmpty {
+                                        NoGameView()
+                                    }
+                                }
+                                .padding(.leading, paddingMain)
+                                .padding(.trailing, paddingMain)
+                        }.background(Color.white)
+                         .edgesIgnoringSafeArea(.top)
                     }
+                    .safeAreaInset(edge: .bottom, content: {
+                        Color.clear.frame(height: 20)
+                    })
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
             }
-            .safeAreaInset(edge: .bottom, content: {
-                Color.clear.frame(height: 20)
-            })
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding(.leading, paddingMain)
-            .padding(.trailing, paddingMain)
-            
         }
         .onAppear {
             fetchGames()
@@ -65,6 +62,25 @@ struct HomeView: View {
             filterUpcomingGames()
         }
     }
+    
+    private var gameSectionHeader: some View {
+        VStack {
+            VStack {
+                Text("Game Schedule")
+                    .font(Constants.Fonts.semibold24)
+                    .frame(maxWidth: .infinity, alignment: .leading) // Align to the left
+                
+                genderSelector
+                    .frame(maxWidth: .infinity, alignment: .center)
+                sportSelector
+            }
+            .padding(.bottom, 16)
+            
+            Divider()
+                .background(.clear)
+        }
+    }
+    
 }
 
 #Preview {
@@ -242,20 +258,24 @@ extension HomeView {
     }
     
     private var gameList: some View {
-        ScrollView (.vertical, showsIndicators: false) {
-            LazyVStack(spacing: 16) {
-                ForEach(
-                    games
-                ) { game in
-                    NavigationLink {
-                        GameView(game: game)
-                            .navigationBarBackButtonHidden()
-                    } label: {
-                        GameTile(game: game)
+        LazyVStack(spacing: 16) {
+            ForEach(
+                games
+            ) { game in
+                GeometryReader { cellGeometry in
+                    let isCellCovered = cellGeometry.frame(in: .global).minY < 100
+                    if !isCellCovered {
+                        NavigationLink {
+                            GameView(game: game)
+                                .navigationBarBackButtonHidden()
+                        } label: {
+                            GameTile(game: game)
+                        }
+                        .buttonStyle(PlainButtonStyle())
                     }
-                    .buttonStyle(PlainButtonStyle())
                 }
             }
+            .frame(height: 96)
             .padding(.top, paddingMain)
         }
     }

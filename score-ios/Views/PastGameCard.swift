@@ -103,7 +103,7 @@ extension PastGameCard {
             HStack {
                 Image("Location-g")
                     .resizable()
-                    .frame(width: 10, height: 15)
+                    .frame(width: 13, height: 19)
                 Text("\(game.city), \(game.state)")
                     .font(Constants.Fonts.gameText)
                     .foregroundStyle(.gray)

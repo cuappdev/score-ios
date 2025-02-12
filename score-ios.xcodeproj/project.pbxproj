@@ -44,6 +44,8 @@
 		CE725D4D2C89120500386943 /* score_iosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE725D4C2C89120500386943 /* score_iosTests.swift */; };
 		CE725D572C89120500386943 /* score_iosUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE725D562C89120500386943 /* score_iosUITests.swift */; };
 		CE725D592C89120500386943 /* score_iosUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE725D582C89120500386943 /* score_iosUITestsLaunchTests.swift */; };
+		CE7666812D5C8CA500659A3B /* NetworkEnv.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7666802D5C8CA500659A3B /* NetworkEnv.swift */; };
+		CE7666832D5C8FCD00659A3B /* FontDebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7666822D5C8FCD00659A3B /* FontDebugView.swift */; };
 		D836AD922CB62C8800BD1545 /* NoGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D836AD912CB62C8800BD1545 /* NoGameView.swift */; };
 		D83EE8862CC9917C008B693C /* ScoreSummaryTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83EE8852CC9917C008B693C /* ScoreSummaryTile.swift */; };
 		D86347AF2CDBD2F4003DD8F6 /* PastGameCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86347AE2CDBD2F3003DD8F6 /* PastGameCard.swift */; };
@@ -123,6 +125,8 @@
 		CE725D522C89120500386943 /* score-iosUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "score-iosUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE725D562C89120500386943 /* score_iosUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = score_iosUITests.swift; sourceTree = "<group>"; };
 		CE725D582C89120500386943 /* score_iosUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = score_iosUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		CE7666802D5C8CA500659A3B /* NetworkEnv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkEnv.swift; sourceTree = "<group>"; };
+		CE7666822D5C8FCD00659A3B /* FontDebugView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontDebugView.swift; sourceTree = "<group>"; };
 		D836AD912CB62C8800BD1545 /* NoGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoGameView.swift; sourceTree = "<group>"; };
 		D83EE8852CC9917C008B693C /* ScoreSummaryTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreSummaryTile.swift; sourceTree = "<group>"; };
 		D86347AE2CDBD2F3003DD8F6 /* PastGameCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastGameCard.swift; sourceTree = "<group>"; };
@@ -239,6 +243,7 @@
 				D86347DE2CE98B3C003DD8F6 /* MainTabView.swift */,
 				D86347E02CE98D37003DD8F6 /* TabViewIcon.swift */,
 				CE3C9C402D010177008BFB4C /* ScoringSummary.swift */,
+				CE7666822D5C8FCD00659A3B /* FontDebugView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -294,7 +299,7 @@
 			isa = PBXGroup;
 			children = (
 				D87787C62CFFAE3D00EA79E1 /* ViewModels */,
-				D891020D2CF0EB88004CE226 /* Data */,
+				D891020D2CF0EB88004CE226 /* Networking */,
 				CE528FF32C96A50F00C238B5 /* Info.plist */,
 				CE725D412C89120400386943 /* Preview Content */,
 				CE335CD12C9227170037F572 /* Views */,
@@ -358,13 +363,14 @@
 			path = GraphQL;
 			sourceTree = "<group>";
 		};
-		D891020D2CF0EB88004CE226 /* Data */ = {
+		D891020D2CF0EB88004CE226 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
 				D89102122CF10CA5004CE226 /* NetworkManager.swift */,
+				CE7666802D5C8CA500659A3B /* NetworkEnv.swift */,
 				D891020F2CF0EBA0004CE226 /* DataCoordinator.swift */,
 			);
-			path = Data;
+			path = Networking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -552,6 +558,7 @@
 				CE528FF52C9798AC00C238B5 /* FilterTile.swift in Sources */,
 				D8B1C9D32CD2D20A0095E563 /* PastGameTile.swift in Sources */,
 				CE528FA22C9651C800C238B5 /* GameTile.swift in Sources */,
+				CE7666832D5C8FCD00659A3B /* FontDebugView.swift in Sources */,
 				CE335CD92C9244230037F572 /* Game.swift in Sources */,
 				D89102102CF0EBA4004CE226 /* DataCoordinator.swift in Sources */,
 				D87787C82CFFAE5A00EA79E1 /* GamesViewModel.swift in Sources */,
@@ -567,6 +574,7 @@
 				CE528FA02C96420700C238B5 /* PickerView.swift in Sources */,
 				CE528FA42C9653C200C238B5 /* Error.swift in Sources */,
 				CE335CD52C922ECB0037F572 /* Constants.swift in Sources */,
+				CE7666812D5C8CA500659A3B /* NetworkEnv.swift in Sources */,
 				D86347E12CE98D37003DD8F6 /* TabViewIcon.swift in Sources */,
 				CE3C9C412D010177008BFB4C /* ScoringSummary.swift in Sources */,
 				D86347B12CDBFF7C003DD8F6 /* HomeView.swift in Sources */,

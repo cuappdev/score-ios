@@ -189,6 +189,8 @@ extension GameView {
                 HStack(spacing: 10) {
                     HStack {
                         Image("Location-g")
+                            .resizable()
+                            .frame(width: 13, height: 19)
                         Text(game.address)
                     }
                     

@@ -35,11 +35,6 @@ struct HomeView: View {
                                 
                             // List of games
                             gameList
-                                .overlay {
-                                    if games.isEmpty {
-                                        NoGameView()
-                                    }
-                                }
                                 .padding(.leading, paddingMain)
                                 .padding(.trailing, paddingMain)
                         }.background(Color.white)
@@ -213,7 +208,8 @@ extension HomeView {
                                 .fill(index == selectedCardIndex ? Constants.Colors.primary_red : Constants.Colors.unselected)
                                 .frame(width: 10, height: 10)
                         }
-                    }.position(x: geometry.frame(in: .local).midX)
+                    }
+                    .position(x: geometry.frame(in: .local).midX)
                 }
             }
         }
@@ -264,24 +260,28 @@ extension HomeView {
     
     private var gameList: some View {
         LazyVStack(spacing: 16) {
-            ForEach(
-                games
-            ) { game in
-                GeometryReader { cellGeometry in
-                    let isCellCovered = cellGeometry.frame(in: .global).minY < 100
-                    if !isCellCovered {
-                        NavigationLink {
-                            GameView(game: game)
-                                .navigationBarBackButtonHidden()
-                        } label: {
-                            GameTile(game: game)
+            if games.isEmpty {
+                NoGameView()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else {
+                ForEach(
+                    games
+                ) { game in
+                    GeometryReader { cellGeometry in
+                        let isCellCovered = cellGeometry.frame(in: .global).minY < 100
+                        if !isCellCovered {
+                            NavigationLink {
+                                GameView(game: game)
+                                    .navigationBarBackButtonHidden()
+                            } label: {
+                                GameTile(game: game)
+                            }
+                            .buttonStyle(PlainButtonStyle())
                         }
-                        .buttonStyle(PlainButtonStyle())
                     }
                 }
+                .frame(height: 96)
             }
-            .frame(height: 96)
-            .padding(.top, paddingMain)
         }
     }
 }

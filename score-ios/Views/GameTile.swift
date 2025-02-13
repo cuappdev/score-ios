@@ -96,7 +96,8 @@ struct GameTile: View {
                     }
                 }
             }
-        }   .frame(width: 345, height: 96)
+        }
+            .frame(width: 345, height: 96)
             .background(Constants.Colors.white)
             .clipShape(RoundedRectangle(cornerRadius: 12))
             .background(
@@ -104,7 +105,6 @@ struct GameTile: View {
                     .stroke(Constants.Colors.gray_border, lineWidth: 1)
                     .shadow(radius: 5)
             )
-
     }
 }
 

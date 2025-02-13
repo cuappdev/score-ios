@@ -22,34 +22,29 @@ struct PastGameView: View {
     
     var body: some View {
         NavigationView {
-            VStack(spacing: 0) {
-                carousel
-                
-                VStack {
-                    Text("All Scores")
-                        .font(Constants.Fonts.semibold24)
-                        .frame(maxWidth: .infinity, alignment: .leading) // Align to the left
-                    
-                    genderSelector
-                        .frame(maxWidth: .infinity, alignment: .center)
-                    sportSelector
-                }
-                .padding(.bottom, 16)
-                
-                // Seperator line
-                Divider()
-                    .background(.clear)
-                
-                gameList
-                    .overlay {
-                        if (games.isEmpty) {
-                            NoGameView()
+            ScrollView(.vertical, showsIndicators: false) {
+                ZStack {
+                    LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
+                        carousel
+                        
+                        Section(header: gameSectionHeader
+                            .padding(.leading, paddingMain)
+                            .padding(.trailing, paddingMain)) {
+                                
+                            // List of games
+                            gameList
+                                .padding(.leading, paddingMain)
+                                .padding(.trailing, paddingMain)
+                        }
+                            .background(Color.white)
+                            .edgesIgnoringSafeArea(.top)
                     }
+                    .safeAreaInset(edge: .bottom, content: {
+                        Color.clear.frame(height: 20)
+                    })
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding(.leading, paddingMain)
-            .padding(.trailing, paddingMain)
         }
         .onAppear {
             fetchPastGames()
@@ -59,6 +54,24 @@ struct PastGameView: View {
         }
         .onChange(of: selectedSex) {
             filterPastGames()
+        }
+    }
+    
+    private var gameSectionHeader: some View {
+        VStack {
+            VStack {
+                Text("All Scores")
+                    .font(Constants.Fonts.semibold24)
+                    .frame(maxWidth: .infinity, alignment: .leading) // Align to the left
+                
+                genderSelector
+                    .frame(maxWidth: .infinity, alignment: .center)
+                sportSelector
+            }
+            .padding(.bottom, 16)
+            
+            Divider()
+                .background(.clear)
         }
     }
 }
@@ -73,7 +86,6 @@ extension PastGameView {
         NetworkManager.shared.fetchGames { fetchedGames, error in
             if let fetchedGames = fetchedGames {
                 var updatedGames: [Game] = []
-                let dispatchGroup = DispatchGroup()
                 
                 fetchedGames.indices.forEach { index in
                     let gameData = fetchedGames[index]
@@ -165,6 +177,7 @@ extension PastGameView {
                 .font(Constants.Fonts.semibold24)
                 .frame(maxWidth: .infinity, alignment: .leading) // Align to the left
                 .padding(.top, 24)
+                .padding(.leading, 24)
             
             // Carousel
             TabView(selection: $selectedCardIndex) {
@@ -176,13 +189,19 @@ extension PastGameView {
             .frame(height: 220)
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
             
-            HStack(spacing: 32) {
-                ForEach(0..<3, id: \.self) { index in
-                    Circle()
-                        .fill(index == selectedCardIndex ? Constants.Colors.primary_red : Constants.Colors.unselected)
-                        .frame(width: 10, height: 10)
+            GeometryReader { geometry in
+                if geometry.frame(in: .global).minY > 30 {
+                    HStack(spacing: 32) {
+                        ForEach(0..<3, id: \.self) { index in
+                            Circle()
+                                .fill(index == selectedCardIndex ? Constants.Colors.primary_red : Constants.Colors.unselected)
+                                .frame(width: 10, height: 10)
+                        }
+                    }
+                    .position(x: geometry.frame(in: .local).midX)
                 }
             }
+            
         }
         .padding(.bottom, 24)
     }
@@ -230,20 +249,29 @@ extension PastGameView {
     }
     
     private var gameList: some View {
-        ScrollView (.vertical, showsIndicators: false) {
-            LazyVStack(spacing: 16) {
+        LazyVStack(spacing: 16) {
+            if (games.isEmpty) {
+                NoGameView()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else {
                 ForEach(
                     games
                 ) { game in
-                    NavigationLink {
-                        GameView(game: game)
-                            .navigationBarBackButtonHidden()
-                    } label: {
-                        PastGameTile(game: game)
-                    }
-                    .buttonStyle(PlainButtonStyle())
+                        GeometryReader { cellGeometry in
+                            let isCellCovered = cellGeometry.frame(in: .global).minY < 100
+                            if !isCellCovered {
+                                NavigationLink {
+                                    GameView(game: game)
+                                        .navigationBarBackButtonHidden()
+                                } label: {
+                                    PastGameTile(game: game)
+                                }
+                                .buttonStyle(PlainButtonStyle())
+                            }
+                        }
                 }
-            }.padding(.top, paddingMain)
+                .frame(height: 96)
+            }
         }
     }
 }

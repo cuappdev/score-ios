@@ -141,6 +141,7 @@ extension GameView {
             }
         }
         
+        // TODO: Fix total score logic
         // get total scores
         if (!game.gameUpdates.isEmpty) {
             corScoreTotal = String(game.gameUpdates[game.gameUpdates.count-1].cornellScore)
@@ -462,7 +463,10 @@ extension GameView {
             VStack {
                 scoreBox
                     .frame(maxWidth: .infinity, alignment: .leading)
+//                ScoreBox(game: game)
+//                    .frame(maxWidth: .infinity, alignment: .leading)
                 summaryTab
+                    .padding(.top, 24)
             }
             .padding(.leading, 24)
             .padding(.trailing, 24)
@@ -493,8 +497,9 @@ extension GameView {
             VStack {
                 scoreBox
                     .frame(maxWidth: .infinity, alignment: .leading)
-                summaryTab
-                    .padding(.top, 24)
+//                ScoreBox(game: game)
+//                summaryTab
+//                    .padding(.top, 24)
             }
             .padding(.leading, 24)
             .padding(.trailing, 24)

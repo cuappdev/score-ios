@@ -294,7 +294,7 @@ struct GameUpdate : Hashable {
     var cornellScore: Int // corScore
     var opponentScore: Int // oppScore
     var time: String // time
-    var isCornell: Bool //
+    var isCornell: Bool
     var eventParty: EventParty // team
     var description: String // description
 }

@@ -327,9 +327,9 @@ enum Sport : String, Identifiable, CaseIterable, CustomStringConvertible {
     case Lacrosse
     case Soccer
     case Squash
-    case SwimmingDiving
+//    case SwimmingDiving
     case Tennis
-    case TrackField
+//    case TrackField
     
     // Women
     case Fencing
@@ -344,8 +344,8 @@ enum Sport : String, Identifiable, CaseIterable, CustomStringConvertible {
     case Baseball
     case Football
     case Golf
-    case RowingHeavyweight
-    case RowingLightweight
+//    case RowingHeavyweight
+//    case RowingLightweight
     case SprintFootball
     case Wrestling
     
@@ -379,12 +379,12 @@ enum Sport : String, Identifiable, CaseIterable, CustomStringConvertible {
             return "Soccer"
         case .Squash:
             return "Squash"
-        case .SwimmingDiving:
-            return "Swimming"
+//        case .SwimmingDiving:
+//            return "Swimming"
         case .Tennis:
             return "Tennis"
-        case .TrackField:
-            return "Track and Field"
+//        case .TrackField:
+//            return "Track and Field"
         case .Fencing:
             return "Fencing"
         case .FieldHockey:
@@ -405,10 +405,10 @@ enum Sport : String, Identifiable, CaseIterable, CustomStringConvertible {
             return "Football"
         case .Golf:
             return "Golf"
-        case .RowingHeavyweight:
-            return "HW Rowing"
-        case .RowingLightweight:
-            return "LW Rowing"
+//        case .RowingHeavyweight:
+//            return "HW Rowing"
+//        case .RowingLightweight:
+//            return "LW Rowing"
         case .SprintFootball:
             return "Sprint Football"
         case .Wrestling:

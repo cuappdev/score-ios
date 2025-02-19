@@ -44,16 +44,18 @@ extension UpcomingCard {
             Spacer()
             Image("Cornell")
                 .resizable()
-                .frame(width: 50, height: 52)
+                .frame(width: 64, height: 64)
             Spacer()
             Text("VS")
                 .font(Constants.Fonts.title)
                 .italic()
                 .foregroundStyle(.white)
             Spacer()
-            Image("penn_logo")
-                .resizable()
-                .frame(width: 50, height: 58)
+            AsyncImage(url: URL(string: game.opponent.image)) {
+                image in
+                image.image?.resizable()
+            }
+            .frame(width: 64, height: 64)
             Spacer()
         }
         .padding()
@@ -67,15 +69,22 @@ extension UpcomingCard {
     private var information: some View {
         VStack {
             HStack {
-                Image("penn_logo")
-                    .resizable()
-                    .frame(width: 24, height: 30)
-                Text(game.opponent.rawValue)
+                AsyncImage(url: URL(string: game.opponent.image)) {image in
+                    image.resizable()
+                } placeholder: {
+                    Constants.Colors.gray_icons
+                }
+                .frame(width: 24, height: 24)
+                
+                Text(game.opponent.name)
                     .font(Constants.Fonts.gameTitle)
+                
                 Spacer()
+                
                 Image(game.sport.rawValue + "-g")
                     .resizable()
-                    .frame(width: 30, height: 30)
+                    .frame(width: 25, height: 25)
+                
                 Image(game.sex.description + "-g")
                     .resizable()
                     .frame(width: 25, height: 25)
@@ -84,7 +93,7 @@ extension UpcomingCard {
             HStack {
                 Image("Location-g")
                     .resizable()
-                    .frame(width: 10, height: 15)
+                    .frame(width: 13, height: 19)
                 Text("\(game.city), \(game.state)")
                     .font(Constants.Fonts.gameText)
                     .foregroundStyle(.gray)

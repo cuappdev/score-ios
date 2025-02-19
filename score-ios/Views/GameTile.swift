@@ -18,21 +18,41 @@ struct GameTile: View {
             // Opponent Logo, Opponent Name | Sport Icon, Sex Icon
             HStack(spacing: 8) {
                 HStack(spacing: 8) {
-                    Image(game.opponent.rawValue)
+                    AsyncImage(url: URL(string: game.opponent.image)) {image in
+                        image.resizable()
+                    } placeholder: {
+                        Constants.Colors.gray_icons
+                    }
+                    .frame(width: 20, height: 20)
 
-                    Text(game.opponent.rawValue)
+                    Text(game.opponent.name)
                         .font(Constants.Fonts.gameTitle)
-                }   .padding(.leading, 20)
+                        .lineLimit(1)
+                }
+                .padding(.leading, 20)
                 
                 Spacer()
                 
                 HStack(spacing: 8) {
-                    // Sport icon
-                    Image(game.sport.rawValue+"-g")
-                        .resizable()
-                        .renderingMode(.template)
-                        .frame(width: 24, height: 24)
-                        .foregroundStyle(Constants.Colors.iconGray)
+//                    // Sport icon
+//                    Image(game.sport.rawValue+"-g")
+//                        .resizable()
+//                        .renderingMode(.template)
+//                        .scaledToFill()
+//                        .frame(width: 19, height: 19)
+//                        .foregroundStyle(Constants.Colors.iconGray)
+                        
+                    ZStack {
+                        Circle()
+                            .frame(width: 19, height: 19)
+                            .foregroundStyle(.white)
+                        Image(game.sport.rawValue+"-g")
+                            .resizable()
+                            .renderingMode(.template)
+                            .scaledToFill()
+                            .frame(width: 19, height: 19)
+                            .foregroundStyle(Constants.Colors.iconGray)
+                    }
                     
                     // Sex icon
                     ZStack {
@@ -56,7 +76,6 @@ struct GameTile: View {
                         .resizable()
                         .renderingMode(/*@START_MENU_TOKEN@*/.template/*@END_MENU_TOKEN@*/)
                         .frame(width: 13.7, height: 20)
-                    //TODO: ratio of location icon (actual dim: 10.83*15.83)
                         .foregroundStyle(Constants.Colors.iconGray)
                     Text("\(game.city), \(game.state)")
                         .font(Constants.Fonts.gameText)
@@ -77,7 +96,8 @@ struct GameTile: View {
                     }
                 }
             }
-        }   .frame(width: 345, height: 96)
+        }
+            .frame(width: 345, height: 96)
             .background(Constants.Colors.white)
             .clipShape(RoundedRectangle(cornerRadius: 12))
             .background(
@@ -85,7 +105,6 @@ struct GameTile: View {
                     .stroke(Constants.Colors.gray_border, lineWidth: 1)
                     .shadow(radius: 5)
             )
-
     }
 }
 

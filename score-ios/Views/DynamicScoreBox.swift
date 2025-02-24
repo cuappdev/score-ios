@@ -1,25 +1,13 @@
 //
-//  ScoreBox.swift
+//  DynamicScoreBox.swift
 //  score-ios
 //
-//  Created by Hsia Lu wu on 2/14/25.
+//  Created by Hsia Lu wu on 2/24/25.
 //
 import Foundation
 import SwiftUI
-// baseball: 9
-// basketball, soccer, volleyball: 2
-// ice hockey: 3
-// field hockey, football, lacrosse, sprint football: 4
 
-// you can find the sport of this game in game.sport
-// the box should have n+2 columns where n = the number of rounds in a game for this sport
-// first column displays school names, last column displays total score, and the middle columns are the scores for each rounds
-// the first column should have width 60, the last should have width 24, and the middle ones should have equal width
-// game.timeUpdates is an array of timeUpdate, the score of ith round can be found in game.timeUpdates[i-1].cornellScore and game.timeUpdates[i-1].opponentScore
-// if the the score hasn't been updated in timeUpdates yet, display '-' in the scorebox for that round
-// total score should be the sum of the scores of all rounds after every round is finished (when timeUpdates has length n-1)
-
-struct ScoreBox: View {
+struct DynamicScoreBox: View {
     var game: Game
     
     private var numberOfRounds: Int {
@@ -28,7 +16,7 @@ struct ScoreBox: View {
         case .Basketball, .Soccer, .Volleyball: return 2
         case .IceHockey: return 3
         case .FieldHockey, .Football, .Lacrosse, .SprintFootball: return 4
-        default: return 0
+        default: return 1
         }
     }
     
@@ -37,7 +25,7 @@ struct ScoreBox: View {
             return game.timeUpdates.reduce(0, { $0 + $1.cornellScore }) // sum up the score for each round
         } else if game.timeUpdates.count == numberOfRounds + 1 {
             // the last one is the sum
-            return game.timeUpdates[game.timeUpdates.count].cornellScore
+            return game.timeUpdates[game.timeUpdates.count-1].cornellScore
         } else {
             return -1
         }
@@ -48,22 +36,14 @@ struct ScoreBox: View {
             return game.timeUpdates.reduce(0, { $0 + $1.opponentScore })
         } else if game.timeUpdates.count == numberOfRounds + 1 {
             // the last one is the sum
-            return game.timeUpdates[game.timeUpdates.count].opponentScore
+            return game.timeUpdates[game.timeUpdates.count-1].opponentScore
         } else {
             return -1
         }
     }
     
-    // average column width of the middle columns
-//    private var columnWidth: CGFloat {
-//        let middleColumns = CGFloat(numberOfRounds)
-//        return middleColumns > 0 ? (180 - 84) / middleColumns : 24
-//    }
-    
     var body: some View {
-        GeometryReader { geometry in
-            let availableWidth = geometry.size.width
-            let columnWidth = max(24, (availableWidth - 96) / CGFloat(numberOfRounds))
+            let columnWidth = floor((345 - 100) / CGFloat(numberOfRounds))
             
             VStack {
                 firstRow(columnWidth: columnWidth)
@@ -73,7 +53,7 @@ struct ScoreBox: View {
                     .frame(height: 0.8)
                 thirdRow(columnWidth: columnWidth)
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
+            .frame(width: 345)
             .background(Constants.Colors.white)
             .clipShape(RoundedRectangle(cornerRadius: 8))
             .background(
@@ -81,18 +61,19 @@ struct ScoreBox: View {
                     .stroke(Constants.Colors.primary_red, lineWidth: 1)
                     .shadow(radius: 5)
             )
-        }
+     
     }
 }
 
 
 // MARK: Components
-extension ScoreBox {
+extension DynamicScoreBox {
     private func firstRow(columnWidth: CGFloat) -> some View {
-        HStack {
+        HStack(spacing: 0) {
             Text("")
                 .font(Constants.Fonts.gameText)
                 .frame(width: 60, alignment: .leading)
+                
             
             ForEach(1...numberOfRounds, id: \..self) { round in
                 Text("\(round)")
@@ -104,55 +85,64 @@ extension ScoreBox {
                 .font(Constants.Fonts.gameText)
                 .frame(width: 36)
                 .padding(.trailing, 3)
+                
         }
-        .frame(height: 40)
-        .padding(.leading, 10)
+        .frame(width: 345, height: 40)
         .background(Constants.Colors.primary_red)
         .foregroundStyle(Constants.Colors.white)
     }
     
     private func secondRow(columnWidth: CGFloat) -> some View {
-        HStack {
+        HStack(spacing: 0) {
             Text("Cornell")
                 .font(Constants.Fonts.gameText)
-                .frame(width: 60, alignment: .leading)
+                .frame(width: 55, alignment: .leading)
+                .padding(.leading, 5)
             
             ForEach(0..<numberOfRounds, id: \..self) { index in
                 Text(game.timeUpdates.indices.contains(index) ? "\(game.timeUpdates[index].cornellScore)" : "-")
-                    .frame(width: columnWidth)
+                    .frame(minWidth: columnWidth, maxWidth: columnWidth)
             }
             
             Text(cornellTotalScore != -1 ? "\(cornellTotalScore)" : "-")
                 .frame(width: 36)
+                .padding(.trailing, 3)
+       
         }
-        .frame(height: 40)
-        .padding(.leading, 10)
+        .frame(width: 345, height: 40)
         .foregroundStyle(.gray)
     }
     
     private func thirdRow(columnWidth: CGFloat) -> some View {
-        HStack {
+        HStack(spacing: 0) {
             Text(game.opponent.name)
                 .lineLimit(1)
                 .font(Constants.Fonts.gameText)
-                .frame(width: 60, alignment: .leading)
+                .frame(width: 55, alignment: .leading)
+                .padding(.leading, 5)
             
             ForEach(0..<numberOfRounds, id: \..self) { index in
                 Text(game.timeUpdates.indices.contains(index) ? "\(game.timeUpdates[index].opponentScore)" : "-")
-                    .frame(width: columnWidth)
+                    .frame(minWidth: columnWidth, maxWidth: columnWidth)
             }
             
             Text(opponentTotalScore != -1 ? "\(opponentTotalScore)" : "-")
                 .frame(width: 36)
+                .padding(.trailing, 3)
         }
-        .frame(height: 40)
-        .padding(.leading, 10)
+        .frame(width: 345, height: 40)
         .foregroundStyle(.gray)
     }
 }
 
-let dummyGame: Game = Game(opponent:  Team(id: "673d2c20569abe4465e9f792", color: "blue", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Cornell_University_seal.svg/1200px-Cornell_University_seal.svg.png", name: "Cornell"), city: "New York", state: "NY", date: Date.dateComponents(year: 2024, month: 5, day: 25, hour: 10, minute: 0), sport: .Baseball, address: "6 Fake St", sex: .Men, timeUpdates: [TimeUpdate(timestamp: 1, isTotal: false, cornellScore: 13, opponentScore: 7)], gameUpdates: [GameUpdate(timestamp: 1, isTotal: false, cornellScore: 10, opponentScore: 7, time: "05/19/2024", isCornell: true, eventParty: EventParty.Cornell, description: "Zhao, Alan field goal attempt from 24 GOOD")])
+let dummyGame: Game = Game(opponent:  Team(id: "673d2c20569abe4465e9f792", color: "blue", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Cornell_University_seal.svg/1200px-Cornell_University_seal.svg.png", name: "Cornell"), city: "New York", state: "NY", date: Date.dateComponents(year: 2024, month: 5, day: 25, hour: 10, minute: 0), sport: .FieldHockey, address: "6 Fake St", sex: .Men, timeUpdates: [TimeUpdate(timestamp: 1, isTotal: false, cornellScore: 13, opponentScore: 7)], gameUpdates: [GameUpdate(timestamp: 1, isTotal: false, cornellScore: 10, opponentScore: 7, time: "05/19/2024", isCornell: true, eventParty: EventParty.Cornell, description: "Zhao, Alan field goal attempt from 24 GOOD")])
 
 #Preview {
-    ScoreBox(game: dummyGame)
+    DynamicScoreBox(game: dummyGame)
 }
+
+// average column width of the middle columns
+//    private var columnWidth: CGFloat {
+//        let middleColumns = CGFloat(numberOfRounds)
+//        return middleColumns > 0 ? (180 - 84) / middleColumns : 24
+//    }

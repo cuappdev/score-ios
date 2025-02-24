@@ -12,21 +12,42 @@ struct GameView : View {
     @State var viewState: Int = 0
     @State var dayFromNow: Int = 0
     @State var hourFromNow: Int = 0
-    @State var corScore1: String = "-"
-    @State var corScore2: String = "-"
-    @State var corScore3: String = "-"
-    @State var corScore4: String = "-"
-    @State var corScoreTotal: String = "0"
-    @State var oppScore1: String = "-"
-    @State var oppScore2: String = "-"
-    @State var oppScore3: String = "-"
-    @State var oppScore4: String = "-"
-    @State var oppScoreTotal: String = "0"
     @Environment(\.presentationMode) var presentationMode
     // 0: hasn't started
     // 1: game started (no updates yet)
     // 2: game in progress / game finished
-
+    
+    private var numberOfRounds: Int {
+        switch game.sport {
+        case .Baseball: return 9
+        case .Basketball, .Soccer, .Volleyball: return 2
+        case .IceHockey: return 3
+        case .FieldHockey, .Football, .Lacrosse, .SprintFootball: return 4
+        default: return 1
+        }
+    }
+    
+    private var cornellTotalScore: Int {
+        if game.timeUpdates.count == numberOfRounds {
+            return game.timeUpdates.reduce(0, { $0 + $1.cornellScore }) // sum up the score for each round
+        } else if game.timeUpdates.count == numberOfRounds + 1 {
+            // the last one is the sum
+            return game.timeUpdates[game.timeUpdates.count-1].cornellScore
+        } else {
+            return -1
+        }
+    }
+    
+    private var opponentTotalScore: Int {
+        if game.timeUpdates.count == numberOfRounds {
+            return game.timeUpdates.reduce(0, { $0 + $1.opponentScore })
+        } else if game.timeUpdates.count == numberOfRounds + 1 {
+            // the last one is the sum
+            return game.timeUpdates[game.timeUpdates.count-1].opponentScore
+        } else {
+            return -1
+        }
+    }
     
     var body : some View {
         NavigationView {
@@ -35,7 +56,6 @@ struct GameView : View {
                     case 0: hasntStartedView
                     case 1: gameStartedView
                     case 2: gameInProgressView
-                        .onAppear { updateScores() }
                     default: hasntStartedView
                 }
             }
@@ -90,64 +110,6 @@ extension GameView {
             self.viewState = 2
         }
     }
-    
-    private func updateScores() {
-        if (game.timeUpdates.count >= 2) {
-            // scores for more than 4 rounds are available, display the first four rounds
-            let timeUpdate1 = game.timeUpdates[0]
-            corScore1 = String(timeUpdate1.cornellScore)
-            oppScore1 = String(timeUpdate1.opponentScore)
-        }
-        
-        if (game.timeUpdates.count >= 3) {
-            // scores for more than 4 rounds are available, display the first four rounds
-            let timeUpdate2 = game.timeUpdates[1]
-            corScore2 = String(timeUpdate2.cornellScore)
-            oppScore2 = String(timeUpdate2.opponentScore)
-        } else {
-            corScore3 = "-"
-            corScore4 = "-"
-            corScoreTotal = "-"
-            oppScore3 = "-"
-            oppScore4 = "-"
-            oppScoreTotal = "-"
-        }
-        
-        
-        if (game.timeUpdates.count >= 4) {
-            // scores for more than 4 rounds are available, display the first four rounds
-            let timeUpdate3 = game.timeUpdates[2]
-            corScore3 = String(timeUpdate3.cornellScore)
-            oppScore3 = String(timeUpdate3.opponentScore)
-        } else {
-            corScore4 = "-"
-            corScoreTotal = "-"
-            oppScore4 = "-"
-            oppScoreTotal = "-"
-        }
-        
-        if (game.timeUpdates.count >= 5) {
-            // scores for more than 4 rounds are available, display the first four rounds
-            let timeUpdate4 = game.timeUpdates[3]
-            corScore4 = String(timeUpdate4.cornellScore)
-            oppScore4 = String(timeUpdate4.opponentScore)
-            if (game.timeUpdates[game.timeUpdates.count - 1].isTotal) {
-                let totalScores = game.timeUpdates[game.timeUpdates.count - 1]
-                corScoreTotal = String(totalScores.cornellScore)
-                oppScoreTotal = String(totalScores.opponentScore)
-            } else {
-                corScoreTotal = "-"
-                oppScoreTotal = "-"
-            }
-        }
-        
-        // TODO: Fix total score logic
-        // get total scores
-        if (!game.gameUpdates.isEmpty) {
-            corScoreTotal = String(game.gameUpdates[game.gameUpdates.count-1].cornellScore)
-            oppScoreTotal = String(game.gameUpdates[game.gameUpdates.count-1].opponentScore)
-        }
-    }
 }
 
 // MARK: Components
@@ -159,7 +121,7 @@ extension GameView {
                 .resizable()
                 .frame(width: 72, height: 72)
             Spacer()
-            Text("\(corScoreTotal) - \(oppScoreTotal)")
+            Text("\(cornellTotalScore) - \(opponentTotalScore)")
                 .font(Constants.Fonts.bold40)
                 .foregroundColor(Constants.Colors.white)
             Spacer()
@@ -261,134 +223,6 @@ extension GameView {
         }
     }
     
-    private var firstRow: some View {
-        HStack {
-            Text("")
-                .font(Constants.Fonts.gameText)
-                .foregroundStyle(Constants.Colors.white)
-                .frame(width: 60, alignment: .leading)
-            Text("1")
-                .font(Constants.Fonts.gameText)
-                .foregroundStyle(Constants.Colors.white)
-                .frame(width: 24)
-            Text("2")
-                .font(Constants.Fonts.gameText)
-                .foregroundStyle(Constants.Colors.white)
-                .frame(width: 24)
-                .padding(.leading, 29.5)
-            Text("3")
-                .font(Constants.Fonts.gameText)
-                .foregroundStyle(Constants.Colors.white)
-                .frame(width: 24)
-                .padding(.leading, 29.5)
-            Text("4")
-                .font(Constants.Fonts.gameText)
-                .foregroundStyle(Constants.Colors.white)
-                .frame(width: 24)
-                .padding(.leading, 29.5)
-            Text("Total")
-                .font(Constants.Fonts.gameText)
-                .foregroundStyle(Constants.Colors.white)
-                .frame(maxWidth: .infinity)
-                .padding(.trailing, 3)
-        }
-        .frame(height: 40)
-        .padding(.leading, 10)
-        .background(Constants.Colors.primary_red)
-    }
-    
-    private var secondRow: some View {
-        HStack {
-            Text("Cornell")
-                .font(Constants.Fonts.gameText)
-                .foregroundStyle(.gray)
-                .frame(width: 60, alignment: .leading)
-            Text(corScore1)
-                .font(Constants.Fonts.gameText)
-                .foregroundStyle(.gray)
-                .frame(width: 24)
-            Text(corScore2)
-                .font(Constants.Fonts.gameText)
-                .foregroundStyle(.gray)
-                .frame(width: 24)
-                .padding(.leading, 29.5)
-            Text(corScore3)
-                .font(Constants.Fonts.gameText)
-                .foregroundStyle(.gray)
-                .frame(width: 24)
-                .padding(.leading, 29.5)
-            Text(corScore4)
-                .font(Constants.Fonts.gameText)
-                .foregroundStyle(.gray)
-                .frame(width: 24)
-                .padding(.leading, 29.5)
-            Text(corScoreTotal)
-                .font(Constants.Fonts.gameText)
-                .foregroundStyle(.gray)
-                .frame(width: 24)
-                .padding(.leading, 29.5)
-                .padding(.trailing, 12)
-        }
-        .frame(height: 40)
-        .padding(.leading, 10)
-    }
-    
-    private var thirdRow: some View {
-        HStack {
-            Text(game.opponent.name)
-                .lineLimit(1)
-                .font(Constants.Fonts.gameText)
-                .foregroundStyle(.gray)
-                .frame(width: 60, alignment: .leading)
-            Text(oppScore1)
-                .font(Constants.Fonts.gameText)
-                .foregroundStyle(.gray)
-                .frame(width: 24)
-            Text(oppScore2)
-                .font(Constants.Fonts.gameText)
-                .foregroundStyle(.gray)
-                .frame(width: 24)
-                .padding(.leading, 29.5)
-            Text(oppScore3)
-                .font(Constants.Fonts.gameText)
-                .foregroundStyle(.gray)
-                .frame(width: 24)
-                .padding(.leading, 29.5)
-            Text(oppScore4)
-                .font(Constants.Fonts.gameText)
-                .foregroundStyle(.gray)
-                .frame(width: 24)
-                .padding(.leading, 29.5)
-            Text(oppScoreTotal)
-                .font(Constants.Fonts.gameText)
-                .foregroundStyle(.gray)
-                .frame(width: 24)
-                .padding(.leading, 29.5)
-                .padding(.trailing, 12)
-        }
-        .frame(height: 40)
-        .padding(.leading, 10)
-    }
-    
-    private var scoreBox: some View {
-        VStack(spacing: 0) {
-            firstRow
-            secondRow
-            Rectangle() // Custom red divider
-                .fill(Constants.Colors.primary_red)
-                .frame(height: 0.8)
-            thirdRow
-        }
-        .frame(maxWidth: .infinity)
-        .background(Constants.Colors.white)
-        .clipShape(RoundedRectangle(cornerRadius: 8))
-        .background(
-            RoundedRectangle(cornerRadius: 8)
-                .stroke(Constants.Colors.primary_red, lineWidth: 1)
-                .shadow(radius: 5)
-        )
-    }
-    
     private var summaryTab: some View {
         NavigationLink(destination: ScoringSummary(game: game)) {
             HStack {
@@ -454,58 +288,60 @@ extension GameView {
     }
     
     private var gameStartedView: some View {
-        VStack {
-            banner
-            gameInfo
-                .padding(.leading, 24)
-                .padding(.top, 24)
-            
+        GeometryReader { geometry in
             VStack {
-                scoreBox
-                    .frame(maxWidth: .infinity, alignment: .leading)
-//                ScoreBox(game: game)
-//                    .frame(maxWidth: .infinity, alignment: .leading)
-                summaryTab
+                banner
+                gameInfo
+                    .padding(.leading, 24)
                     .padding(.top, 24)
-            }
-            .padding(.leading, 24)
-            .padding(.trailing, 24)
-            .padding(.top, 24)
-            
-            gameSummary
-                .overlay {
-                    if (game.gameUpdates.count < 3) {
-                        noGameSummary
-                            .padding(.top, 150)
-                            .frame(maxWidth: .infinity)
+                
+                VStack {
+                    DynamicScoreBox(game: game)
+                    
+                    summaryTab
+                        .padding(.top, 24)
                 }
+                .padding(.leading, 24)
+                .padding(.trailing, 24)
+                .padding(.top, 24)
+                
+                gameSummary
+                    .overlay {
+                        if (game.gameUpdates.count < 3) {
+                            noGameSummary
+                                .padding(.top, 150)
+                                .frame(maxWidth: .infinity)
+                    }
+                }
+                .frame(maxWidth: .infinity)
+                
+                Spacer()
             }
-            .frame(maxWidth: .infinity)
-            
-            Spacer()
         }
+        
     }
     
     private var gameInProgressView: some View {
-        VStack {
-            banner
-            Spacer()
-            gameInfo
-                .padding(.leading, 24)
-                .padding(.top, 24)
-            
+        GeometryReader { geometry in
             VStack {
-                scoreBox
-                    .frame(maxWidth: .infinity, alignment: .leading)
-//                ScoreBox(game: game)
-//                summaryTab
-//                    .padding(.top, 24)
+                banner
+                Spacer()
+                gameInfo
+                    .padding(.leading, 24)
+                    .padding(.top, 24)
+                
+                VStack {
+                    DynamicScoreBox(game: game)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    summaryTab
+                        .padding(.top, 24)
+                }
+                .padding(.leading, 24)
+                .padding(.trailing, 24)
+                .padding(.top, 24)
+                
+                gameSummary
             }
-            .padding(.leading, 24)
-            .padding(.trailing, 24)
-            .padding(.top, 24)
-            
-            gameSummary
         }
     }
     

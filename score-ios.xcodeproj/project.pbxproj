@@ -49,6 +49,7 @@
 		CE7666872D5D108E00659A3B /* ScoringUpdateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7666862D5D108E00659A3B /* ScoringUpdateCell.swift */; };
 		D836AD922CB62C8800BD1545 /* NoGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D836AD912CB62C8800BD1545 /* NoGameView.swift */; };
 		D83EE8862CC9917C008B693C /* ScoreSummaryTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83EE8852CC9917C008B693C /* ScoreSummaryTile.swift */; };
+		D85802102D6C38700075B036 /* DynamicScoreBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D858020F2D6C38670075B036 /* DynamicScoreBox.swift */; };
 		D86347AF2CDBD2F4003DD8F6 /* PastGameCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86347AE2CDBD2F3003DD8F6 /* PastGameCard.swift */; };
 		D86347B12CDBFF7C003DD8F6 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86347B02CDBFF7C003DD8F6 /* HomeView.swift */; };
 		D86347DF2CE98B3C003DD8F6 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86347DE2CE98B3C003DD8F6 /* MainTabView.swift */; };
@@ -131,6 +132,7 @@
 		CE7666862D5D108E00659A3B /* ScoringUpdateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoringUpdateCell.swift; sourceTree = "<group>"; };
 		D836AD912CB62C8800BD1545 /* NoGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoGameView.swift; sourceTree = "<group>"; };
 		D83EE8852CC9917C008B693C /* ScoreSummaryTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreSummaryTile.swift; sourceTree = "<group>"; };
+		D858020F2D6C38670075B036 /* DynamicScoreBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicScoreBox.swift; sourceTree = "<group>"; };
 		D86347AE2CDBD2F3003DD8F6 /* PastGameCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastGameCard.swift; sourceTree = "<group>"; };
 		D86347B02CDBFF7C003DD8F6 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		D86347DE2CE98B3C003DD8F6 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
@@ -229,6 +231,7 @@
 		CE335CD12C9227170037F572 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D858020F2D6C38670075B036 /* DynamicScoreBox.swift */,
 				CE725D3D2C89120200386943 /* ScoreApp.swift */,
 				CE528F9F2C96420700C238B5 /* PickerView.swift */,
 				CE528FA12C9651C800C238B5 /* GameTile.swift */,
@@ -560,6 +563,7 @@
 				D836AD922CB62C8800BD1545 /* NoGameView.swift in Sources */,
 				CE528FF52C9798AC00C238B5 /* FilterTile.swift in Sources */,
 				CE7666872D5D108E00659A3B /* ScoringUpdateCell.swift in Sources */,
+				D85802102D6C38700075B036 /* DynamicScoreBox.swift in Sources */,
 				D8B1C9D32CD2D20A0095E563 /* PastGameTile.swift in Sources */,
 				CE528FA22C9651C800C238B5 /* GameTile.swift in Sources */,
 				CE7666832D5C8FCD00659A3B /* FontDebugView.swift in Sources */,

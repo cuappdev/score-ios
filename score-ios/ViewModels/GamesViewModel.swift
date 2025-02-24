@@ -8,29 +8,31 @@
 import Foundation
 import SwiftUI
 
-class GamesViewModel: ObservableObject {
-    @Published var selectedSex : Sex = .Both
-    @Published var selectedSport : Sport = .All
-    var paddingMain : CGFloat = 20
-    @Published var selectedCardIndex: Int = 0
-    @Published var games: [Game] = []
+class GamesViewModel: ObservableObject 
+{
+    @Published var errorMessage: String?
+    @Published var games: [Game] = [] // List of all games
     @Published var allUpcomingGames: [Game] = []
     @Published var allPastGames: [Game] = []
-    // Based on the filters
-    @Published var selectedUpcomingGames: [Game] = []
-    @Published var selectedPastGames: [Game] = []
-    // These are the 3 games displayed on the carasol
-    @Published var topUpcomingGames: [Game] = []
+    
+    // Carousel Logic
+    @Published var selectedCardIndex: Int = 0
+    @Published var topUpcomingGames: [Game] = [] // Displayed in Carousel
     @Published var topPastGames: [Game] = []
-    @Published var errorMessage: String?
-    // Filter indices
+    
+    // Filters Logic
     @Published var selectedSexIndex: Int = 0
+    @Published var selectedSex : Sex = .Both
+    @Published var selectedSport : Sport = .All
+    @Published var selectedUpcomingGames: [Game] = [] // Based on the filters
+    @Published var selectedPastGames: [Game] = []
+    @Published var sportSelectorOffset: CGFloat = 0
     
     // Singleton structure so it is shared
     static let shared = GamesViewModel()
     private init() { }
     
-    // Filtering
+    // Filtering the data
     func filter() {
         self.selectedUpcomingGames = self.allUpcomingGames.filter{ game in
             // Filter by sex

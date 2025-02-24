@@ -44,7 +44,6 @@ struct Constants {
     }
 
     enum Fonts {
-        // Make it poppins
         static let h1 = Font.custom("Poppins Medium", size: 24)
         static let h2 = Font.custom("Poppins SemiBold", size: 18)
         static let countdownNum = Font.custom("Poppins Medium", size: 36)

@@ -16,10 +16,10 @@ struct MainTabView: View {
         NavigationStack {
             ZStack(alignment: .bottom) {
                 if (selection == 0) {
-                    HomeView()
+                    UpcomingGamesView()
                         .environmentObject(gamesViewModel)
                 } else {
-                    PastGameView()
+                    PastGamesView()
                         .environmentObject(gamesViewModel)
                 }
             }

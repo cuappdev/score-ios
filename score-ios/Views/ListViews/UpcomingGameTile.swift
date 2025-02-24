@@ -1,5 +1,5 @@
 //
-//  GameTile.swift
+//  UpcomingGameTile.swift
 //  score-ios
 //
 //  Created by Daniel Chuang on 9/14/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct GameTile: View {
+struct UpcomingGameTile: View {
     
     var game: Game
     
@@ -108,7 +108,6 @@ struct GameTile: View {
     }
 }
 
-// Preview
 #Preview {
-    GameTile(game: Game.dummyData[7])
+    UpcomingGameTile(game: Game.dummyData[7])
 }

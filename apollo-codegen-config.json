@@ -1,43 +1,36 @@
 {
-  "schemaNamespace" : "gameAPI",
-  "input" : {
-    "operationSearchPaths" : [
-      "**/*.graphql"
-    ],
-    "schemaSearchPaths" : [
-      "**/*.graphqls"
-    ]
+  "schemaNamespace": "gameAPI",
+  "input": {
+    "operationSearchPaths": ["**/*.graphql"],
+    "schemaSearchPaths": ["**/*.graphqls"]
   },
   "schemaDownloadConfiguration": {
-  "downloadMethod": {
-  "introspection": {
-  "endpointURL": "http://localhost:5000/graphql",
-  "httpMethod": {
-  "POST": {}
-              },
-  "includeDeprecatedInputValues": false,
-  "outputFormat": "SDL"
-          }
-      },
-  "downloadTimeout": 60,
-  "headers": [],
-  "outputPath": "./score-ios/Models/GraphQL/schema.graphqls"
+    "downloadMethod": {
+      "introspection": {
+        "endpointURL": "http://localhost:8000/graphql",
+        "httpMethod": {
+          "POST": {}
+        },
+        "includeDeprecatedInputValues": false,
+        "outputFormat": "SDL"
+      }
+    },
+    "downloadTimeout": 60,
+    "headers": [],
+    "outputPath": "./score-ios/Models/GraphQL/schema.graphqls"
   },
-  "output" : {
-    "testMocks" : {
-      "none" : {
+  "output": {
+    "testMocks": {
+      "none": {}
+    },
+    "schemaTypes": {
+      "path": "./gameAPI",
+      "moduleType": {
+        "swiftPackageManager": {}
       }
     },
-    "schemaTypes" : {
-      "path" : "./gameAPI",
-      "moduleType" : {
-        "swiftPackageManager" : {
-        }
-      }
-    },
-    "operations" : {
-      "inSchemaModule" : {
-      }
+    "operations": {
+      "inSchemaModule": {}
     }
   }
 }

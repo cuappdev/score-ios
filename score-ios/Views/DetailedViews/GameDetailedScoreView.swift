@@ -52,7 +52,7 @@ struct GameDetailedScoreView: View {
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     Text("Game Details")
-                        .font(Constants.Fonts.gameTitle)
+                        .font(Constants.Fonts.medium18)
                 }
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(action: {

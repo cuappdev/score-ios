@@ -1,0 +1,25 @@
+{
+  "images" : [
+    {
+<<<<<<< HEAD
+      "filename" : "Basketball-r.svg",
+=======
+      "filename" : "Baseball-g.svg",
+>>>>>>> main
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

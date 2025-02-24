@@ -12,6 +12,7 @@ struct GameView : View {
     @State var viewState: Int = 0
     @State var dayFromNow: Int = 0
     @State var hourFromNow: Int = 0
+    @State var minuteFromNow: Int = 0
     @State var corScore1: String = "-"
     @State var corScore2: String = "-"
     @State var corScore3: String = "-"
@@ -69,10 +70,11 @@ extension GameView {
     private func computeTimeFromNow() {
         let now = Date()
         let calendar = Calendar.current
-        let components = calendar.dateComponents([.day, .hour], from: now, to: game.date)
+        let components = calendar.dateComponents([.day, .hour, .minute], from: now, to: game.date)
         // Extract the values safely
         self.dayFromNow = components.day ?? 0
         self.hourFromNow = components.hour ?? 0
+        self.minuteFromNow = components.minute ?? 0
     }
     
     private func updateViewState() {
@@ -226,6 +228,9 @@ extension GameView {
                         .font(Constants.Fonts.countdownNum)
                     Text("hours")
                         .font(Constants.Fonts.gameText)
+                    Text(String(minuteFromNow))
+                        .font(Constants.Fonts.countdownNum)
+                    Text("minutes")
                 }
                 .padding(.top, 8)
             }

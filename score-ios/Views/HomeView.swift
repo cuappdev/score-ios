@@ -9,14 +9,9 @@ import SwiftUI
 
 struct HomeView: View {
     // State variables
-    @State private var selectedSex : Sex = .Both
-    @State private var selectedSport : Sport = .All
     var paddingMain : CGFloat = 20
     @State private var selectedCardIndex: Int = 0
-    @State private var games: [Game] = []
-    @State private var allGames: [Game] = []
-    @State private var upcomingGames: [Game] = []
-    @State private var errorMessage: String?
+    @StateObject private var viewModel = GamesViewModel.shared
     
     // Main view
     var body: some View {
@@ -48,13 +43,13 @@ struct HomeView: View {
             }
         }
         .onAppear {
-            fetchGames()
+            viewModel.fetchGames()
         }
-        .onChange(of: selectedSport) {
-            filterUpcomingGames()
+        .onChange(of: viewModel.selectedSport) {
+            viewModel.filter()
         }
-        .onChange(of: selectedSex) {
-            filterUpcomingGames()
+        .onChange(of: viewModel.selectedSex) {
+            viewModel.filter()
         }
     }
     
@@ -78,108 +73,6 @@ struct HomeView: View {
     
 }
 
-#Preview {
-    HomeView()
-}
-
-// MARK: Functions
-extension HomeView {
-    private func fetchGames() {
-        NetworkManager.shared.fetchGames { fetchedGames, error in
-            if let fetchedGames = fetchedGames {
-                var updatedGames: [Game] = []
-                fetchedGames.indices.forEach { index in
-                    let gameData = fetchedGames[index]
-                    let game = Game(game: gameData)
-                    
-                    game.fetchAndUpdateOpponent(opponentId: gameData.opponentId) { updatedGame in
-                        
-                        // append the game only if it is upcoming/live
-                        // TODO: How to determine whether it's live now
-                        let now = Date()
-                        let twoHours: TimeInterval = 2 * 60 * 60
-                        let calendar = Calendar.current
-                        let startOfToday = calendar.startOfDay(for: now)
-                        
-                        let isLive = game.date < now && now.timeIntervalSince(game.date) <= twoHours
-                        let isUpcoming = game.date > now
-                        let isFinishedToday = game.date < now && game.date >= startOfToday
-                        
-                        if isLive {
-                            updatedGames.insert(updatedGame, at: 0)
-                        } else if isUpcoming {
-                            updatedGames.append(updatedGame)
-                        } else if isFinishedToday {
-                            updatedGames.append(updatedGame)
-                        }
-                        
-                        if index == fetchedGames.count - 1 {
-                            self.games = updatedGames
-                            self.allGames = updatedGames
-                            self.upcomingGames = Array(allGames.prefix(3))
-                        }
-                    }
-                }
-            }
-            else if let error = error {
-                self.errorMessage = error.localizedDescription
-                print("Error in fetchGames: \(self.errorMessage ?? "Unknown error")")
-            }
-        }
-    }
-    
-    private func filterUpcomingGames() {
-        let gender: String?
-        let sport: String?
-        if selectedSex == .Both {
-            gender = nil
-        } else {
-            gender = selectedSex.filterDescription
-        }
-        if selectedSport == .All {
-            sport = nil
-        } else {
-            sport = selectedSport.description
-        }
-        NetworkManager.shared.filterUpcomingGames(gender: gender, sport: sport) { filteredGames, error in
-            if let filteredGames = filteredGames {
-                var updatedGames: [Game] = []
-                
-                filteredGames.indices.forEach { index in
-                    let gameData = filteredGames[index]
-                    let game = Game(game: gameData)
-                    
-                    game.fetchAndUpdateOpponent(opponentId: gameData.opponentId) { updatedGame in
-                        let now = Date()
-                        let twoHours: TimeInterval = 2 * 60 * 60
-                        let calendar = Calendar.current
-                        let startOfToday = calendar.startOfDay(for: now)
-                        
-                        let isLive = game.date < now && now.timeIntervalSince(game.date) <= twoHours
-                        let isUpcoming = game.date > now
-                        let isFinishedToday = game.date < now && game.date >= startOfToday
-                        
-                        if isLive {
-                            updatedGames.insert(updatedGame, at: 0)
-                        } else if isUpcoming {
-                            updatedGames.append(updatedGame)
-                        } else if isFinishedToday {
-                            updatedGames.append(updatedGame)
-                        }
-                        
-                        if index == filteredGames.count - 1 {
-                            self.games = updatedGames
-                        }
-                    }
-                }
-            } else if let error = error {
-                errorMessage = error.localizedDescription
-                print("Error in filterUpcomingGames: \(errorMessage ?? "Unknown error")")
-            }
-        }
-    }
-}
-
 // MARK: Components
 extension HomeView {
     private var carousel: some View {
@@ -191,8 +84,8 @@ extension HomeView {
             
             // Carousel
             TabView(selection: $selectedCardIndex) {
-                ForEach(upcomingGames.indices, id: \.self) { index in
-                    UpcomingCard(game: upcomingGames[index])
+                ForEach(viewModel.topUpcomingGames.indices, id: \.self) { index in
+                    UpcomingCard(game: viewModel.topUpcomingGames[index])
                         .tag(index)
                 }
             }
@@ -217,7 +110,7 @@ extension HomeView {
     }
     
     private var genderSelector: some View {
-        PickerView(selectedSex: $selectedSex, selectedIndex: 0)
+        PickerView(selectedSex: $viewModel.selectedSex, selectedIndex: viewModel.selectedSexIndex)
             .padding(.bottom, 12)
     }
     
@@ -226,9 +119,9 @@ extension HomeView {
             HStack {
                 ForEach(Sport.allCases) { sport in
                     Button {
-                        selectedSport = sport
+                        viewModel.selectedSport = sport
                     } label: {
-                        FilterTile(sport: sport, selected: sport == selectedSport)
+                        FilterTile(sport: sport, selected: sport == viewModel.selectedSport)
                     }
                 }
             }
@@ -239,7 +132,7 @@ extension HomeView {
         // Sex selector
         // TODO: full-width to fit the screen
         VStack {
-            PickerView(selectedSex: $selectedSex, selectedIndex: 0)
+            PickerView(selectedSex: $viewModel.selectedSex, selectedIndex: 0)
                 .padding(.bottom, 12)
             
             // Sport selector
@@ -247,9 +140,9 @@ extension HomeView {
                 HStack {
                     ForEach(Sport.allCases) { sport in
                         Button {
-                            selectedSport = sport
+                            viewModel.selectedSport = sport
                         } label: {
-                        FilterTile(sport: sport, selected: sport == selectedSport)
+                            FilterTile(sport: sport, selected: sport == viewModel.selectedSport)
                         }
                     }
                 }
@@ -260,12 +153,12 @@ extension HomeView {
     
     private var gameList: some View {
         LazyVStack(spacing: 16) {
-            if games.isEmpty {
+            if viewModel.selectedUpcomingGames.isEmpty {
                 NoGameView()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
                 ForEach(
-                    games
+                    viewModel.selectedUpcomingGames
                 ) { game in
                     GeometryReader { cellGeometry in
                         let isCellCovered = cellGeometry.frame(in: .global).minY < 100
@@ -284,4 +177,8 @@ extension HomeView {
             }
         }
     }
+}
+
+#Preview {
+    HomeView()
 }

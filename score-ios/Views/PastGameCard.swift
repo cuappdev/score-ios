@@ -43,7 +43,7 @@ extension PastGameCard {
             Spacer()
             
             HStack {
-                Text(String(game.gameUpdates[game.gameUpdates.count-1].cornellScore))
+                Text(game.gameUpdates.count != 0 ? String(game.gameUpdates[game.gameUpdates.count-1].cornellScore) : "999")
                     .font(Constants.Fonts.title)
                     .italic()
                     .foregroundStyle(.white)
@@ -54,7 +54,7 @@ extension PastGameCard {
                     .foregroundStyle(.white)
                 
                 // TODO: Change the blur
-                Text(String(game.gameUpdates[game.gameUpdates.count-1].opponentScore))
+                Text(game.gameUpdates.count != 0 ? String(game.gameUpdates[game.gameUpdates.count-1].opponentScore) : "999")
                     .font(Constants.Fonts.title)
                     .blur(radius: 0.5)
                     .italic()

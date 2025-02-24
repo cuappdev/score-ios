@@ -11,6 +11,12 @@ query Games {
         state
         time
         scoreBreakdown
+        team {
+          id
+          color
+          image
+          name
+        }
         boxScore {
             team
             period
@@ -24,4 +30,3 @@ query Games {
         }
     }
 }
-

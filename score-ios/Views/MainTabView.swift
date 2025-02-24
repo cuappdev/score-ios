@@ -10,7 +10,7 @@ import SwiftUI
 struct MainTabView: View {
     // MARK: Properties
     @Binding var selection: Int
-    @StateObject private var gamesViewModel = GamesViewModel()
+    @StateObject private var gamesViewModel = GamesViewModel.shared
     
     var body: some View {
         NavigationStack {

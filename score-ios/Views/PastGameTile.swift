@@ -10,12 +10,48 @@ import SwiftUI
 struct PastGameTile: View {
     var game: Game
     
+    private var numberOfRounds: Int {
+        switch game.sport {
+        case .Baseball: return 9
+        case .Basketball, .Soccer, .Volleyball: return 2
+        case .IceHockey: return 3
+        case .FieldHockey, .Football, .Lacrosse, .SprintFootball: return 4
+        default: return 1
+        }
+    }
+    
+    private var cornellTotalScore: Int {
+        if game.timeUpdates.count == numberOfRounds {
+            return game.timeUpdates.reduce(0, { $0 + $1.cornellScore }) // sum up the score for each round
+        } else if game.timeUpdates.count == numberOfRounds + 1 {
+            // the last one is the sum
+            return game.timeUpdates[game.timeUpdates.count-1].cornellScore
+        } else if game.timeUpdates.count > numberOfRounds {
+            var scores = game.timeUpdates[0..<numberOfRounds]
+            return scores.reduce(0, { $0 + $1.cornellScore }) // sum up the score for each round
+        }
+        else {
+            return -1
+        }
+    }
+    
+    private var opponentTotalScore: Int {
+        if game.timeUpdates.count == numberOfRounds {
+            return game.timeUpdates.reduce(0, { $0 + $1.opponentScore })
+        } else if game.timeUpdates.count == numberOfRounds + 1 {
+            // the last one is the sum
+            return game.timeUpdates[game.timeUpdates.count-1].opponentScore
+        } else if game.timeUpdates.count > numberOfRounds {
+            var scores = game.timeUpdates[0..<numberOfRounds]
+            return scores.reduce(0, { $0 + $1.opponentScore }) // sum up the score for each round
+        } else {
+            return -1
+        }
+    }
         
     var body: some View {
-        let corScore = game.gameUpdates[game.gameUpdates.count-1].cornellScore
-        let oppScore = game.gameUpdates[game.gameUpdates.count-1].opponentScore
-        let corWon = corScore > oppScore
-        let tie = corScore == oppScore
+        let corWon = cornellTotalScore > opponentTotalScore
+        let tie = cornellTotalScore == opponentTotalScore
         
         HStack {
             // VStack of school names and logos and score
@@ -44,12 +80,12 @@ struct PastGameTile: View {
                         
                         // Opponent Score with Arrow
                         if corWon {
-                            Text(String(oppScore))
+                            Text(String(opponentTotalScore))
                                 .foregroundStyle(Constants.Colors.gray_text)
                                 .font(Constants.Fonts.medium18)
                         } else if !tie {
                             HStack {
-                                Text(String(oppScore))
+                                Text(String(opponentTotalScore))
                                     .font(Constants.Fonts.semibold18)
                                 Image("pastGame_arrow_back")
                                     .resizable()
@@ -57,7 +93,7 @@ struct PastGameTile: View {
                             }
                             .offset(x: 20)
                         } else {
-                            Text(String(oppScore))
+                            Text(String(opponentTotalScore))
                                 .font(Constants.Fonts.semibold18)
                         }
                         
@@ -77,7 +113,7 @@ struct PastGameTile: View {
                         // Cornell Score with Arrow
                         if corWon {
                             HStack {
-                                Text(String(corScore))
+                                Text(String(cornellTotalScore))
                                     .font(Constants.Fonts.semibold18)
                                 Image("pastGame_arrow_back")
                                     .resizable()
@@ -85,7 +121,7 @@ struct PastGameTile: View {
                             }
                             .offset(x: 20)
                         } else {
-                            Text(String(corScore))
+                            Text(String(cornellTotalScore))
                                 .foregroundStyle(Constants.Colors.gray_text)
                                 .font(Constants.Fonts.medium18)
                         }

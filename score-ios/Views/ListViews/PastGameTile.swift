@@ -12,8 +12,8 @@ struct PastGameTile: View {
     
         
     var body: some View {
-        let corScore = game.gameUpdates[game.gameUpdates.count-1].cornellScore
-        let oppScore = game.gameUpdates[game.gameUpdates.count-1].opponentScore
+        let corScore = game.gameUpdates.count != 0 ? game.gameUpdates[game.gameUpdates.count-1].cornellScore : 999
+        let oppScore = game.gameUpdates.count != 0 ? game.gameUpdates[game.gameUpdates.count-1].opponentScore : 999
         let corWon = corScore > oppScore
         let tie = corScore == oppScore
         

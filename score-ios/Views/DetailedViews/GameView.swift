@@ -2,7 +2,7 @@
 //  GameView.swift
 //  score-ios
 //
-//  Created by Mac User on 9/15/24.
+//  Created by Daniel Chuang on 9/15/24.
 //
 
 import SwiftUI
@@ -12,6 +12,7 @@ struct GameView : View {
     @State var viewState: Int = 0
     @State var dayFromNow: Int = 0
     @State var hourFromNow: Int = 0
+    @State var minuteFromNow: Int = 0
     @State var corScore1: String = "-"
     @State var corScore2: String = "-"
     @State var corScore3: String = "-"
@@ -45,7 +46,7 @@ struct GameView : View {
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     Text("Game Details")
-                    .font(.system(size: 27, weight: .regular))
+                    .font(Constants.Fonts.h1)
                 }
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
@@ -69,10 +70,11 @@ extension GameView {
     private func computeTimeFromNow() {
         let now = Date()
         let calendar = Calendar.current
-        let components = calendar.dateComponents([.day, .hour], from: now, to: game.date)
+        let components = calendar.dateComponents([.day, .hour, .minute], from: now, to: game.date)
         // Extract the values safely
         self.dayFromNow = components.day ?? 0
         self.hourFromNow = components.hour ?? 0
+        self.minuteFromNow = components.minute ?? 0
     }
     
     private func updateViewState() {
@@ -226,6 +228,9 @@ extension GameView {
                         .font(Constants.Fonts.countdownNum)
                     Text("hours")
                         .font(Constants.Fonts.gameText)
+                    Text(String(minuteFromNow))
+                        .font(Constants.Fonts.countdownNum)
+                    Text("minutes")
                 }
                 .padding(.top, 8)
             }
@@ -426,13 +431,22 @@ extension GameView {
             Image("speaker")
                 .resizable()
                 .frame(width: 90, height: 90)
+                .padding(.top, 15)
+            
             Text("No Scores Yet.")
                 .font(Constants.Fonts.medium18)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
+            
             Text("Check back here later!")
                 .font(Constants.Fonts.regular14)
                 .foregroundStyle(Constants.Colors.gray_text)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
         }
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
     private var hasntStartedView: some View {
@@ -470,7 +484,7 @@ extension GameView {
             
             gameSummary
                 .overlay {
-                    if (game.gameUpdates.count < 3) {
+                    if (game.gameUpdates.count < 1) {
                         noGameSummary
                             .padding(.top, 150)
                             .frame(maxWidth: .infinity)

@@ -7,7 +7,7 @@ public class GamesQuery: GraphQLQuery {
   public static let operationName: String = "Games"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query Games { games { __typename id city date gender location opponentId result sport state time scoreBreakdown boxScore { __typename team period time description scorer assist scoreBy corScore oppScore } } }"#
+      #"query Games { games { __typename id city date gender location opponentId result sport state time scoreBreakdown team { __typename id color image name } boxScore { __typename team period time description scorer assist scoreBy corScore oppScore } } }"#
     ))
 
   public init() {}
@@ -44,6 +44,7 @@ public class GamesQuery: GraphQLQuery {
         .field("state", String.self),
         .field("time", String?.self),
         .field("scoreBreakdown", [[String?]?]?.self),
+        .field("team", Team?.self),
         .field("boxScore", [BoxScore?]?.self),
       ] }
 
@@ -58,7 +59,30 @@ public class GamesQuery: GraphQLQuery {
       public var state: String { __data["state"] }
       public var time: String? { __data["time"] }
       public var scoreBreakdown: [[String?]?]? { __data["scoreBreakdown"] }
+      public var team: Team? { __data["team"] }
       public var boxScore: [BoxScore?]? { __data["boxScore"] }
+
+      /// Game.Team
+      ///
+      /// Parent Type: `TeamType`
+      public struct Team: GameAPI.SelectionSet {
+        public let __data: DataDict
+        public init(_dataDict: DataDict) { __data = _dataDict }
+
+        public static var __parentType: any ApolloAPI.ParentType { GameAPI.Objects.TeamType }
+        public static var __selections: [ApolloAPI.Selection] { [
+          .field("__typename", String.self),
+          .field("id", String?.self),
+          .field("color", String.self),
+          .field("image", String?.self),
+          .field("name", String.self),
+        ] }
+
+        public var id: String? { __data["id"] }
+        public var color: String { __data["color"] }
+        public var image: String? { __data["image"] }
+        public var name: String { __data["name"] }
+      }
 
       /// Game.BoxScore
       ///

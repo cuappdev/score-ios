@@ -14,7 +14,7 @@ private var buttonHeight : CGFloat = 37
 
 struct PickerView: View {
     @Binding var selectedSex: Sex
-    @State var selectedIndex: Int = 0
+    @Binding var selectedIndex: Int
     
     var body: some View {
         let offsetScalar: Int = selectedIndex == 0 ? -1 : selectedIndex

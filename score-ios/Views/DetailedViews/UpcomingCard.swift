@@ -1,75 +1,61 @@
 //
-//  PastGameCard.swift
+//  UpcomingGameCard.swift
 //  score-ios
 //
-//  Created by Hsia Lu wu on 11/6/24.
+//  Created by Hsia Lu wu on 10/15/24.
 //
 
 import SwiftUI
 
-struct PastGameCard: View {
+struct UpcomingGameCard: View {
+    
     var game: Game
+    
     var body: some View {
         VStack {
+            // banner
             banner
+            
             Spacer()
+            
+            // information
             information
-        }.frame(width: 345, height: 192)
-            .background(Constants.Colors.white)
-            .clipShape(RoundedRectangle(cornerRadius: 19))
-            .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .stroke(Constants.Colors.gray_border, lineWidth: 1)
-                    .shadow(radius: 5)
-            )
-            .padding(.vertical, 10)
+        }
+        .frame(width: 345, height: 192)
+        .background(Constants.Colors.white)
+        .clipShape(RoundedRectangle(cornerRadius: 19))
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(Constants.Colors.gray_border, lineWidth: 1)
+                .shadow(radius: 5)
+        )
+        .padding(.vertical, 10)
     }
 }
 
 #Preview {
-    PastGameCard(game: Game.dummyData[7])
+    UpcomingGameCard(game: Game.dummyData[7])
 }
 
 // MARK: Components
-extension PastGameCard {
+extension UpcomingGameCard {
     private var banner: some View {
         HStack {
             Spacer()
-            
             Image("Cornell")
-            .resizable()
-            .frame(width: 64, height: 64)
-            
+                .resizable()
+                .frame(width: 64, height: 64)
             Spacer()
-            
-            HStack {
-                Text(String(game.gameUpdates[game.gameUpdates.count-1].cornellScore))
-                    .font(Constants.Fonts.title)
-                    .italic()
-                    .foregroundStyle(.white)
-                
-                Text(" - ")
-                    .font(Constants.Fonts.title)
-                    .italic()
-                    .foregroundStyle(.white)
-                
-                // TODO: Change the blur
-                Text(String(game.gameUpdates[game.gameUpdates.count-1].opponentScore))
-                    .font(Constants.Fonts.title)
-                    .blur(radius: 0.5)
-                    .italic()
-                    .foregroundStyle(.white)
-            }
-            
+            Text("VS")
+                .font(Constants.Fonts.title)
+                .italic()
+                .foregroundStyle(.white)
             Spacer()
-            
-            AsyncImage(url: URL(string: game.opponent.image)) {image in
-                image.resizable()
-            } placeholder: {
-                Constants.Colors.gray_icons
+            AsyncImage(url: URL(string: game.opponent.image)) {
+                image in
+                image.image?.resizable()
             }
             .frame(width: 64, height: 64)
-            
             Spacer()
         }
         .padding()
@@ -88,13 +74,18 @@ extension PastGameCard {
                 } placeholder: {
                     Constants.Colors.gray_icons
                 }
-                .frame(width: 25, height: 27)
+                .frame(width: 24, height: 24)
+                
                 Text(game.opponent.name)
                     .font(Constants.Fonts.gameTitle)
+                    .foregroundStyle(Color.black)
+                
                 Spacer()
+                
                 Image(game.sport.rawValue + "-g")
                     .resizable()
-                    .frame(width: 30, height: 30)
+                    .frame(width: 25, height: 25)
+                
                 Image(game.sex.description + "-g")
                     .resizable()
                     .frame(width: 25, height: 25)

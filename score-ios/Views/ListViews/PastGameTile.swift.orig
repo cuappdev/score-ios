@@ -1,0 +1,194 @@
+//
+//  PastGameTile.swift
+//  score-ios
+//
+//  Created by Hsia Lu wu on 10/30/24.
+//
+
+import SwiftUI
+
+struct PastGameTile: View {
+    var game: Game
+    
+    private var numberOfRounds: Int {
+        switch game.sport {
+        case .Baseball: return 9
+        case .Basketball, .Soccer, .Volleyball: return 2
+        case .IceHockey: return 3
+        case .FieldHockey, .Football, .Lacrosse, .SprintFootball: return 4
+        default: return 1
+        }
+    }
+    
+    private var cornellTotalScore: Int {
+        if game.timeUpdates.count == numberOfRounds {
+            return game.timeUpdates.reduce(0, { $0 + $1.cornellScore }) // sum up the score for each round
+        } else if game.timeUpdates.count == numberOfRounds + 1 {
+            // the last one is the sum
+            return game.timeUpdates[game.timeUpdates.count-1].cornellScore
+        } else if game.timeUpdates.count > numberOfRounds {
+            var scores = game.timeUpdates[0..<numberOfRounds]
+            return scores.reduce(0, { $0 + $1.cornellScore }) // sum up the score for each round
+        }
+        else {
+            return -1
+        }
+    }
+    
+    private var opponentTotalScore: Int {
+        if game.timeUpdates.count == numberOfRounds {
+            return game.timeUpdates.reduce(0, { $0 + $1.opponentScore })
+        } else if game.timeUpdates.count == numberOfRounds + 1 {
+            // the last one is the sum
+            return game.timeUpdates[game.timeUpdates.count-1].opponentScore
+        } else if game.timeUpdates.count > numberOfRounds {
+            var scores = game.timeUpdates[0..<numberOfRounds]
+            return scores.reduce(0, { $0 + $1.opponentScore }) // sum up the score for each round
+        } else {
+            return -1
+        }
+    }
+        
+    var body: some View {
+<<<<<<< HEAD:score-ios/Views/PastGameTile.swift
+        let corWon = cornellTotalScore > opponentTotalScore
+        let tie = cornellTotalScore == opponentTotalScore
+=======
+        let corScore = game.gameUpdates.count != 0 ? game.gameUpdates[game.gameUpdates.count-1].cornellScore : 999
+        let oppScore = game.gameUpdates.count != 0 ? game.gameUpdates[game.gameUpdates.count-1].opponentScore : 999
+        let corWon = corScore > oppScore
+        let tie = corScore == oppScore
+>>>>>>> main:score-ios/Views/ListViews/PastGameTile.swift
+        
+        HStack {
+            // VStack of school names and logos and score
+            ZStack {
+                HStack {
+                    Spacer() // Pushes the rectangle to the right side
+                    Spacer()
+                    Rectangle()
+                        .frame(width: 2, height: 70) // Adjust the thickness of the right border here
+                        .foregroundColor(Constants.Colors.gray_liner) // Color of the right border
+                }
+                
+                VStack {
+                    // Opponent score
+                    HStack {
+                        AsyncImage(url: URL(string: game.opponent.image)) { image in
+                            image.image?.resizable()
+                        }
+                        .frame(width: 20, height: 20)
+
+                        Text(game.opponent.name)
+                            .font(Constants.Fonts.gameTitle)
+                            .lineLimit(1)
+                        
+                        Spacer()
+                        
+                        // Opponent Score with Arrow
+                        if corWon {
+                            Text(String(opponentTotalScore))
+                                .foregroundStyle(Constants.Colors.gray_text)
+                                .font(Constants.Fonts.medium18)
+                        } else if !tie {
+                            HStack {
+                                Text(String(opponentTotalScore))
+                                    .font(Constants.Fonts.semibold18)
+                                Image("pastGame_arrow_back")
+                                    .resizable()
+                                    .frame(width: 11, height: 14)
+                            }
+                            .offset(x: 20)
+                        } else {
+                            Text(String(opponentTotalScore))
+                                .font(Constants.Fonts.semibold18)
+                        }
+                        
+                    }
+                    
+                    // Cornell Score
+                    HStack {
+                        Image("Cornell")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+
+                        Text("Cornell")
+                            .font(Constants.Fonts.gameTitle)
+                        
+                        Spacer()
+                        
+                        // Cornell Score with Arrow
+                        if corWon {
+                            HStack {
+                                Text(String(cornellTotalScore))
+                                    .font(Constants.Fonts.semibold18)
+                                Image("pastGame_arrow_back")
+                                    .resizable()
+                                    .frame(width: 11, height: 14)
+                            }
+                            .offset(x: 20)
+                        } else {
+                            Text(String(cornellTotalScore))
+                                .foregroundStyle(Constants.Colors.gray_text)
+                                .font(Constants.Fonts.medium18)
+                        }
+                    }
+                }
+                .padding(.leading, 16)
+                .padding(.trailing, 24)
+                .frame(maxWidth: .infinity)
+            }
+            
+            // arrow
+            
+            
+            // game info: sport, sex, time
+            VStack {
+                HStack(spacing: 8) {
+                    // Sport icon
+                    // TODO: frame 24*24
+                    Image(game.sport.rawValue+"-g")
+                        .resizable()
+                        .renderingMode(.template)
+                        .frame(width: 19, height: 19)
+                        .foregroundStyle(Constants.Colors.iconGray)
+                    
+                    // Sex icon
+                    ZStack {
+                        Circle()
+                            .frame(width: 19, height: 19)
+                            .foregroundStyle(.gray)
+                        Image(game.sex.description)
+                            .resizable()
+                            .renderingMode(.template)
+                            .frame(width: 19, height: 19)
+                            .foregroundStyle(Constants.Colors.white)
+                        // TODO: location icon ratio
+                    }
+                }
+                .padding(.trailing, 20)
+                .padding(.bottom, 22)
+                
+                HStack {
+                    Text(Date.dateToString(date: game.date))
+                        .font(Constants.Fonts.gameDate)
+                        .foregroundStyle(Constants.Colors.gray_text)
+                        .padding(.trailing, 20)
+                }
+            }
+            .padding(.leading, 24)
+        }
+        .frame(width: 345, height: 96)
+        .background(Constants.Colors.white)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(Constants.Colors.gray_border, lineWidth: 1)
+                .shadow(radius: 5)
+        )
+    }
+}
+
+#Preview {
+    PastGameTile(game: Game.dummyData[7])
+}

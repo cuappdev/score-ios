@@ -250,32 +250,10 @@
 		CE335CD12C9227170037F572 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
-				D858020F2D6C38670075B036 /* DynamicScoreBox.swift */,
-				CE725D3D2C89120200386943 /* ScoreApp.swift */,
-				CE528F9F2C96420700C238B5 /* PickerView.swift */,
-				CE528FA12C9651C800C238B5 /* GameTile.swift */,
-				CE528FF42C9798AC00C238B5 /* FilterTile.swift */,
-				CE528FF62C979DA000C238B5 /* GameView.swift */,
-				D836AD912CB62C8800BD1545 /* NoGameView.swift */,
-				D89461182CBF393B0010C532 /* UpcomingCard.swift */,
-				D87882272CC060FC00421F67 /* GameDetailedScoreView.swift */,
-				D83EE8852CC9917C008B693C /* ScoreSummaryTile.swift */,
-				D8B1C9D02CD2CE3C0095E563 /* PastGameView.swift */,
-				D8B1C9D22CD2D20A0095E563 /* PastGameTile.swift */,
-				D86347AE2CDBD2F3003DD8F6 /* PastGameCard.swift */,
-				D86347B02CDBFF7C003DD8F6 /* HomeView.swift */,
-				D86347DE2CE98B3C003DD8F6 /* MainTabView.swift */,
-				D86347E02CE98D37003DD8F6 /* TabViewIcon.swift */,
-				CE3C9C402D010177008BFB4C /* ScoringSummary.swift */,
-				CE7666822D5C8FCD00659A3B /* FontDebugView.swift */,
-				CE7666862D5D108E00659A3B /* ScoringUpdateCell.swift */,
-=======
 				CE8ED50C2D6C388E00A274DE /* ListViews */,
 				CE8ED50B2D6C386B00A274DE /* DetailedViews */,
 				CE8ED50A2D6C385E00A274DE /* MainViews */,
 				CE8ED5092D6C384C00A274DE /* Screens */,
->>>>>>> main
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -390,6 +368,7 @@
 		CE8ED50B2D6C386B00A274DE /* DetailedViews */ = {
 			isa = PBXGroup;
 			children = (
+				D858020F2D6C38670075B036 /* DynamicScoreBox.swift */,
 				D83EE8852CC9917C008B693C /* ScoreSummaryTile.swift */,
 				D89461182CBF393B0010C532 /* UpcomingCard.swift */,
 				CE7666862D5D108E00659A3B /* ScoringUpdateCell.swift */,

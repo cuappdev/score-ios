@@ -12,6 +12,7 @@ struct GameView : View {
     @State var viewState: Int = 0
     @State var dayFromNow: Int = 0
     @State var hourFromNow: Int = 0
+    @State var minuteFromNow: Int = 0
     @Environment(\.presentationMode) var presentationMode
     // 0: hasn't started
     // 1: game started (no updates yet)
@@ -324,22 +325,14 @@ extension GameView {
                 .padding(.leading, 24)
                 .padding(.trailing, 24)
                 .padding(.top, 24)
-            
-            VStack {
-                scoreBox
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                summaryTab
-            }
-            .padding(.leading, 24)
-            .padding(.trailing, 24)
-            .padding(.top, 24)
-            
-            gameSummary
-                .overlay {
-                    if (game.gameUpdates.count < 1) {
-                        noGameSummary
-                            .padding(.top, 150)
-                            .frame(maxWidth: .infinity)
+                
+                gameSummary
+                    .overlay {
+                        if (game.gameUpdates.count < 3) {
+                            noGameSummary
+                                .padding(.top, 150)
+                                .frame(maxWidth: .infinity)
+                    }
                 }
                 .frame(maxWidth: .infinity)
                 

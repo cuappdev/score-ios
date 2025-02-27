@@ -12,7 +12,20 @@ struct GameView : View {
     @State var viewState: Int = 0
     @State var dayFromNow: Int = 0
     @State var hourFromNow: Int = 0
+<<<<<<< HEAD:score-ios/Views/GameView.swift
+=======
     @State var minuteFromNow: Int = 0
+    @State var corScore1: String = "-"
+    @State var corScore2: String = "-"
+    @State var corScore3: String = "-"
+    @State var corScore4: String = "-"
+    @State var corScoreTotal: String = "0"
+    @State var oppScore1: String = "-"
+    @State var oppScore2: String = "-"
+    @State var oppScore3: String = "-"
+    @State var oppScore4: String = "-"
+    @State var oppScoreTotal: String = "0"
+>>>>>>> main:score-ios/Views/DetailedViews/GameView.swift
     @Environment(\.presentationMode) var presentationMode
     // 0: hasn't started
     // 1: game started (no updates yet)
@@ -311,6 +324,7 @@ extension GameView {
     private var gameStartedView: some View {
         GeometryReader { geometry in
             VStack {
+<<<<<<< HEAD:score-ios/Views/GameView.swift
                 banner
                 gameInfo
                     .padding(.leading, 24)
@@ -321,6 +335,22 @@ extension GameView {
                     
                     summaryTab
                         .padding(.top, 24)
+=======
+                scoreBox
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                summaryTab
+            }
+            .padding(.leading, 24)
+            .padding(.trailing, 24)
+            .padding(.top, 24)
+            
+            gameSummary
+                .overlay {
+                    if (game.gameUpdates.count < 1) {
+                        noGameSummary
+                            .padding(.top, 150)
+                            .frame(maxWidth: .infinity)
+>>>>>>> main:score-ios/Views/DetailedViews/GameView.swift
                 }
                 .padding(.leading, 24)
                 .padding(.trailing, 24)

@@ -11,7 +11,7 @@ import GameAPI
 
 class NetworkManager {
     static let shared = NetworkManager()
-    let apolloClient = ApolloClient(url: URL(string: network_mode.endpoint)!)
+    let apolloClient = ApolloClient(url: ScoreEnvironment.baseURL)
     
     func fetchGames(completion: @escaping ([GamesQuery.Data.Game]?, Error?) -> Void) {
         apolloClient.fetch(query: GamesQuery()) { result in

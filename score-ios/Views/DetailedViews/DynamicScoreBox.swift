@@ -27,7 +27,7 @@ struct DynamicScoreBox: View {
             // the last one is the sum
             return game.timeUpdates[game.timeUpdates.count-1].cornellScore
         } else if game.timeUpdates.count > numberOfRounds {
-            var scores = game.timeUpdates[0..<numberOfRounds]
+            let scores = game.timeUpdates[0..<numberOfRounds]
             return scores.reduce(0, { $0 + $1.cornellScore }) // sum up the score for each round
         }
         else {

@@ -99,6 +99,7 @@ class GamesViewModel: ObservableObject
             }
             else if let error = error {
                 self.errorMessage = error.localizedDescription
+                print(ScoreEnvironment.baseURL)
                 print("Error in fetchGames: \(self.errorMessage ?? "Unknown error")")
             }
         }

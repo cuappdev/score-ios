@@ -122,7 +122,8 @@ extension DynamicScoreBox {
     
     private func thirdRow(columnWidth: CGFloat) -> some View {
         HStack(spacing: 0) {
-            Text(game.opponent.name)
+    
+            Text(game.opponent.name.removingUniversityPrefix())
                 .lineLimit(1)
                 .font(Constants.Fonts.gameText)
                 .frame(width: 55, alignment: .leading)

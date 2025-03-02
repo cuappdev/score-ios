@@ -7,10 +7,11 @@
 
 import Foundation
 
-class UtilFunctions {
-    static func removeUniversityPrefix(from str: String) -> String {
-        return str.localizedCaseInsensitiveContains("University of ") ? str.replacingOccurrences(of: "University of ", with: "U", options: .caseInsensitive) : str
+extension String {
+    /// remove "University of " and replay it with "U", eg. University of Miama -> UMiami
+    func removingUniversityPrefix() -> String {
+        return self.localizedCaseInsensitiveContains("University of ")
+            ? self.replacingOccurrences(of: "University of ", with: "U", options: .caseInsensitive)
+            : self
     }
 }
-
-extension 

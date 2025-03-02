@@ -155,7 +155,7 @@ extension GameView {
             VStack(alignment: .leading, spacing: 4) {
                 Text("\(game.sex.description) \(game.sport.description)")
                     .font(Constants.Fonts.subheader)
-                Text("Cornell vs. " + game.opponent.name)
+                Text("Cornell vs. " + game.opponent.name.removingUniversityPrefix())
                     .font(Constants.Fonts.header)
                 
                 HStack(spacing: 10) {

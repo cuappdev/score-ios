@@ -72,7 +72,7 @@ struct PastGameTile: View {
                         }
                         .frame(width: 20, height: 20)
 
-                        Text(game.opponent.name)
+                        Text(game.opponent.name.removingUniversityPrefix())
                             .font(Constants.Fonts.gameTitle)
                             .lineLimit(1)
                         

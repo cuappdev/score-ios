@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1CFA55BB2D74001200493D75 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CFA55BA2D74001200493D75 /* StringExtension.swift */; };
 		CE335CD32C922E8D0037F572 /* PrimaryColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE335CD22C922E8D0037F572 /* PrimaryColors.swift */; };
 		CE335CD52C922ECB0037F572 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE335CD42C922ECB0037F572 /* Constants.swift */; };
 		CE335CD72C922F390037F572 /* Dates.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE335CD62C922F390037F572 /* Dates.swift */; };
@@ -96,6 +97,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1CFA55BA2D74001200493D75 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		CE335CD22C922E8D0037F572 /* PrimaryColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryColors.swift; sourceTree = "<group>"; };
 		CE335CD42C922ECB0037F572 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CE335CD62C922F390037F572 /* Dates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dates.swift; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 				CE335CD62C922F390037F572 /* Dates.swift */,
 				CE528FA32C9653C200C238B5 /* Error.swift */,
 				CE3C9C422D011A23008BFB4C /* OrdinalSuffix.swift */,
+				1CFA55BA2D74001200493D75 /* StringExtension.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -651,6 +654,7 @@
 				CE8ED5142D6C42D400A274DE /* GameSectionHeaderView.swift in Sources */,
 				D86347B12CDBFF7C003DD8F6 /* UpcomingGamesView.swift in Sources */,
 				D86347DF2CE98B3C003DD8F6 /* MainTabView.swift in Sources */,
+				1CFA55BB2D74001200493D75 /* StringExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -814,7 +818,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"score-ios/Preview Content\"";
-				DEVELOPMENT_TEAM = YLRVJFG2A8;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "score-ios/Info.plist";
@@ -844,7 +848,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"score-ios/Preview Content\"";
-				DEVELOPMENT_TEAM = YLRVJFG2A8;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "score-ios/Info.plist";

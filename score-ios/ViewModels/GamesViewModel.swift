@@ -75,7 +75,7 @@ class GamesViewModel: ObservableObject
                         let isUpcoming = game.date > now
                         let isFinishedToday = game.date < now && game.date >= startOfToday
                         let isFinishedByToday = game.date < startOfToday
-                        
+                    
                         updatedGames.append(game)
                         if isLive {
                             self.allUpcomingGames.insert(game, at: 0)
@@ -105,3 +105,4 @@ class GamesViewModel: ObservableObject
         
     }
 }
+

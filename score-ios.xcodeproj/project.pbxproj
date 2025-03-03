@@ -150,7 +150,7 @@
 		CE8ED5112D6C3FCB00A274DE /* CarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselView.swift; sourceTree = "<group>"; };
 		CE8ED5132D6C42D400A274DE /* GameSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSectionHeaderView.swift; sourceTree = "<group>"; };
 		CEA25A922D75279A00B9837A /* ScoreEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreEnvironment.swift; sourceTree = "<group>"; };
-		CEA25A962D75292900B9837A /* Keys.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Keys.xcconfig; path = "score-ios/Config/Keys.xcconfig"; sourceTree = SOURCE_ROOT; };
+		CEA25A962D75292900B9837A /* Keys.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Keys.xcconfig; path = ScoreSecrets/Keys.xcconfig; sourceTree = SOURCE_ROOT; };
 		D836AD912CB62C8800BD1545 /* NoGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoGameView.swift; sourceTree = "<group>"; };
 		D83EE8852CC9917C008B693C /* ScoreSummaryTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreSummaryTile.swift; sourceTree = "<group>"; };
 		D858020F2D6C38670075B036 /* DynamicScoreBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicScoreBox.swift; sourceTree = "<group>"; };
@@ -281,7 +281,7 @@
 		CE725D2F2C89120100386943 = {
 			isa = PBXGroup;
 			children = (
-				CEA25A892D75118C00B9837A /* ScoreSecrets */,
+				CEA25A972D752C6F00B9837A /* ScoreSecrets */,
 				CE725D3A2C89120200386943 /* score-ios */,
 				CE725D4B2C89120500386943 /* score-iosTests */,
 				CE725D552C89120500386943 /* score-iosUITests */,
@@ -393,20 +393,20 @@
 			path = ListViews;
 			sourceTree = "<group>";
 		};
-		CEA25A892D75118C00B9837A /* ScoreSecrets */ = {
-			isa = PBXGroup;
-			children = (
-				CEA25A962D75292900B9837A /* Keys.xcconfig */,
-			);
-			path = ScoreSecrets;
-			sourceTree = "<group>";
-		};
 		CEA25A912D75278800B9837A /* Config */ = {
 			isa = PBXGroup;
 			children = (
 				CEA25A922D75279A00B9837A /* ScoreEnvironment.swift */,
 			);
 			path = Config;
+			sourceTree = "<group>";
+		};
+		CEA25A972D752C6F00B9837A /* ScoreSecrets */ = {
+			isa = PBXGroup;
+			children = (
+				CEA25A962D75292900B9837A /* Keys.xcconfig */,
+			);
+			path = ScoreSecrets;
 			sourceTree = "<group>";
 		};
 		D87787C62CFFAE3D00EA79E1 /* ViewModels */ = {

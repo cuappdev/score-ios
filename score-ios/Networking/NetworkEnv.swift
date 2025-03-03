@@ -5,7 +5,7 @@
 //  Created by Daniel Chuang on 2/12/25.
 //
 
-let network_mode = NetworkEnv.local
+let network_mode = NetworkEnv.deployment
 
 enum NetworkEnv {
     case local

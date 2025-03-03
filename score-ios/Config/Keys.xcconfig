@@ -1,0 +1,12 @@
+//
+//  Keys.xcconfig
+//  score-ios
+//
+//  Created by Mac User on 3/2/25.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+SCORE_DEV_URL = http:/$()/localhost:8000/graphql
+SCORE_PROD_URL = https:/$()/score-dev.cornellappdev.com/graphql

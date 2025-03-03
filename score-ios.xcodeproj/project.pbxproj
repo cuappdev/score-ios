@@ -56,7 +56,7 @@
 		CE8ED50E2D6C3B8000A274DE /* SportSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8ED50D2D6C3B8000A274DE /* SportSelectorView.swift */; };
 		CE8ED5122D6C3FCB00A274DE /* CarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8ED5112D6C3FCB00A274DE /* CarouselView.swift */; };
 		CE8ED5142D6C42D400A274DE /* GameSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8ED5132D6C42D400A274DE /* GameSectionHeaderView.swift */; };
-		CEA25A8C2D75121C00B9837A /* ScoreEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA25A8B2D75121C00B9837A /* ScoreEnvironment.swift */; };
+		CEA25A932D75279A00B9837A /* ScoreEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA25A922D75279A00B9837A /* ScoreEnvironment.swift */; };
 		D836AD922CB62C8800BD1545 /* NoGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D836AD912CB62C8800BD1545 /* NoGameView.swift */; };
 		D83EE8862CC9917C008B693C /* ScoreSummaryTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83EE8852CC9917C008B693C /* ScoreSummaryTile.swift */; };
 		D85802102D6C38700075B036 /* DynamicScoreBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D858020F2D6C38670075B036 /* DynamicScoreBox.swift */; };
@@ -149,8 +149,8 @@
 		CE8ED50D2D6C3B8000A274DE /* SportSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportSelectorView.swift; sourceTree = "<group>"; };
 		CE8ED5112D6C3FCB00A274DE /* CarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselView.swift; sourceTree = "<group>"; };
 		CE8ED5132D6C42D400A274DE /* GameSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSectionHeaderView.swift; sourceTree = "<group>"; };
-		CEA25A8A2D7511C600B9837A /* Keys.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Keys.xcconfig; sourceTree = "<group>"; };
-		CEA25A8B2D75121C00B9837A /* ScoreEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ScoreEnvironment.swift; path = ScoreSecrets/ScoreEnvironment.swift; sourceTree = SOURCE_ROOT; };
+		CEA25A922D75279A00B9837A /* ScoreEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreEnvironment.swift; sourceTree = "<group>"; };
+		CEA25A962D75292900B9837A /* Keys.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Keys.xcconfig; path = "score-ios/Config/Keys.xcconfig"; sourceTree = SOURCE_ROOT; };
 		D836AD912CB62C8800BD1545 /* NoGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoGameView.swift; sourceTree = "<group>"; };
 		D83EE8852CC9917C008B693C /* ScoreSummaryTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreSummaryTile.swift; sourceTree = "<group>"; };
 		D858020F2D6C38670075B036 /* DynamicScoreBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicScoreBox.swift; sourceTree = "<group>"; };
@@ -197,14 +197,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		CE335CCA2C9226EB0037F572 /* Configs */ = {
-			isa = PBXGroup;
-			children = (
-				CEA25A8B2D75121C00B9837A /* ScoreEnvironment.swift */,
-			);
-			path = Configs;
-			sourceTree = "<group>";
-		};
 		CE335CCC2C9226F90037F572 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -311,6 +303,7 @@
 		CE725D3A2C89120200386943 /* score-ios */ = {
 			isa = PBXGroup;
 			children = (
+				CEA25A912D75278800B9837A /* Config */,
 				D87787C62CFFAE3D00EA79E1 /* ViewModels */,
 				D891020D2CF0EB88004CE226 /* Networking */,
 				CE528FF32C96A50F00C238B5 /* Info.plist */,
@@ -320,7 +313,6 @@
 				CE335CCE2C9227050037F572 /* Utils */,
 				CE335CCD2C9227000037F572 /* Resources */,
 				CE335CCC2C9226F90037F572 /* Models */,
-				CE335CCA2C9226EB0037F572 /* Configs */,
 			);
 			path = "score-ios";
 			sourceTree = "<group>";
@@ -404,9 +396,17 @@
 		CEA25A892D75118C00B9837A /* ScoreSecrets */ = {
 			isa = PBXGroup;
 			children = (
-				CEA25A8A2D7511C600B9837A /* Keys.xcconfig */,
+				CEA25A962D75292900B9837A /* Keys.xcconfig */,
 			);
 			path = ScoreSecrets;
+			sourceTree = "<group>";
+		};
+		CEA25A912D75278800B9837A /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				CEA25A922D75279A00B9837A /* ScoreEnvironment.swift */,
+			);
+			path = Config;
 			sourceTree = "<group>";
 		};
 		D87787C62CFFAE3D00EA79E1 /* ViewModels */ = {
@@ -622,7 +622,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE3C9C432D011A23008BFB4C /* OrdinalSuffix.swift in Sources */,
-				CEA25A8C2D75121C00B9837A /* ScoreEnvironment.swift in Sources */,
 				CE8ED5022D6BF4E800A274DE /* TimeUpdate.swift in Sources */,
 				D89102132CF10CA9004CE226 /* NetworkManager.swift in Sources */,
 				CE725D3E2C89120200386943 /* ScoreApp.swift in Sources */,
@@ -632,6 +631,7 @@
 				D85802102D6C38700075B036 /* DynamicScoreBox.swift in Sources */,
 				D8B1C9D32CD2D20A0095E563 /* PastGameTile.swift in Sources */,
 				CE528FA22C9651C800C238B5 /* UpcomingGameTile.swift in Sources */,
+				CEA25A932D75279A00B9837A /* ScoreEnvironment.swift in Sources */,
 				CE8ED4FC2D6BF47C00A274DE /* DummyData.swift in Sources */,
 				CE335CD92C9244230037F572 /* Game.swift in Sources */,
 				D89102102CF0EBA4004CE226 /* DataCoordinator.swift in Sources */,
@@ -818,7 +818,7 @@
 		};
 		CE725D5D2C89120500386943 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CEA25A8A2D7511C600B9837A /* Keys.xcconfig */;
+			baseConfigurationReference = CEA25A962D75292900B9837A /* Keys.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -849,7 +849,7 @@
 		};
 		CE725D5E2C89120500386943 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CEA25A8A2D7511C600B9837A /* Keys.xcconfig */;
+			baseConfigurationReference = CEA25A962D75292900B9837A /* Keys.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

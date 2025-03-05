@@ -16,8 +16,8 @@ public extension Objects {
   ///     - `score_by`: Indicates which team scored.
   ///     - `cor_score`: Cornell's score at the time of the event.
   ///     - `opp_score`: Opponent's score at the time of the event.
-  static let BoxScore = ApolloAPI.Object(
-    typename: "BoxScore",
+  static let BoxScoreEntryType = ApolloAPI.Object(
+    typename: "BoxScoreEntryType",
     implementedInterfaces: []
   )
 }

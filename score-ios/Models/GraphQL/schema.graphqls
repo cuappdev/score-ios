@@ -23,30 +23,37 @@ directive @defer(
 ) on FRAGMENT_SPREAD | INLINE_FRAGMENT
 
 type Query {
+  youtubeVideos: [YoutubeVideoType]
+  youtubeVideo(id: String!): YoutubeVideoType
   games: [GameType]
   game(id: String!): GameType
   gameByData(city: String!, date: String!, gender: String!, location: String, opponentId: String!, sport: String!, state: String!, time: String!): GameType
+  gamesBySport(sport: String!): [GameType]
+  gamesByGender(gender: String!): [GameType]
+  gamesBySportGender(sport: String!, gender: String!): [GameType]
   teams: [TeamType]
   team(id: String!): TeamType
   teamByName(name: String!): TeamType
 }
 
 """
-A GraphQL type representing a boxscore.
+A GraphQL type representing a YouTube video.
 
 Attributes:
-
+    - id: The YouTube video ID (optional).
+    - title: The title of the video.
+    - description: The description of the video.
+    - thumbnail: The URL of the video's thumbnail.
+    - url: The URL to the video.
+    - published_at: The date and time the video was published.
 """
-type BoxScore {
-  team: String
-  period: String
-  time: String
-  description: String
-  scorer: String
-  assist: String
-  scoreBy: String
-  corScore: Int
-  oppScore: Int
+type YoutubeVideoType {
+  id: String
+  title: String!
+  description: String!
+  thumbnail: String!
+  url: String!
+  publishedAt: String!
 }
 
 """
@@ -57,11 +64,14 @@ Attributes:
     - `city`: The city of the game.
     - `date`: The date of the game.
     - `gender`: The gender of the game.
-    - `location`: The location of the game.
+    - `location`: The location of the game. (optional)
     - `opponent_id`: The id of the opposing team.
+    - `result`: The result of the game. (optional)
     - `sport`: The sport of the game.
     - `state`: The state of the game.
-    - `time`: The time of the game.
+    - `time`: The time of the game. (optional)
+    - `box_score`: The box score of the game.
+    - `score_breakdown`: The score breakdown of the game.
 """
 type GameType {
   id: String
@@ -74,8 +84,35 @@ type GameType {
   sport: String!
   state: String!
   time: String
-  scoreBreakdown: [[String]]
   boxScore: [BoxScore]
+  scoreBreakdown: [[String]]
+  team: TeamType
+}
+
+"""
+Represents an individual entry in the box score of a game.
+
+Attributes:
+    - `team`: The team involved in the scoring event.
+    - `period`: The period or inning of the event.
+    - `time`: The time of the scoring event.
+    - `description`: A description of the play or scoring event.
+    - `scorer`: The name of the scorer.
+    - `assist`: The name of the assisting player.
+    - `score_by`: Indicates which team scored.
+    - `cor_score`: Cornell's score at the time of the event.
+    - `opp_score`: Opponent's score at the time of the event.
+"""
+type BoxScore {
+  team: String
+  period: String
+  time: String
+  description: String
+  scorer: String
+  assist: String
+  scoreBy: String
+  corScore: Int
+  oppScore: Int
 }
 
 """
@@ -96,10 +133,13 @@ type TeamType {
 
 type Mutation {
   """Creates a new game."""
-  createGame(city: String!, date: String!, gender: String!, location: String, opponentId: String!, result: String, sport: String!, state: String!, time: String!): CreateGame
+  createGame(boxScore: String, city: String!, date: String!, gender: String!, location: String, opponentId: String!, result: String, scoreBreakdown: String, sport: String!, state: String!, time: String!): CreateGame
 
   """Creates a new team."""
   createTeam(color: String!, image: String, name: String!): CreateTeam
+
+  """Creates a new youtube video."""
+  createYoutubeVideo(description: String!, id: String!, publishedAt: String!, thumbnail: String!, title: String!, url: String!): CreateYoutubeVideo
 }
 
 type CreateGame {
@@ -108,4 +148,8 @@ type CreateGame {
 
 type CreateTeam {
   team: TeamType
+}
+
+type CreateYoutubeVideo {
+  youtubeVideo: YoutubeVideoType
 }

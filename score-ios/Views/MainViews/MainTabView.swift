@@ -10,16 +10,16 @@ import SwiftUI
 struct MainTabView: View {
     // MARK: Properties
     @Binding var selection: Int
-    @StateObject private var gamesViewModel = GamesViewModel()
+    @StateObject private var gamesViewModel = GamesViewModel.shared
     
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottom) {
                 if (selection == 0) {
-                    HomeView()
+                    UpcomingGamesView()
                         .environmentObject(gamesViewModel)
                 } else {
-                    PastGameView()
+                    PastGamesView()
                         .environmentObject(gamesViewModel)
                 }
             }

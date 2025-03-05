@@ -7,4 +7,4 @@
 import Foundation
 import Apollo
 
-let apolloClient = ApolloClient(url: URL(string: network_mode.endpoint)!)
+let apolloClient = ApolloClient(url: ScoreEnvironment.baseURL)

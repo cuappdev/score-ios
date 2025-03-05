@@ -44,16 +44,23 @@ struct Constants {
     }
 
     enum Fonts {
+        // Make it poppins
+<<<<<<< HEAD
         static let h1 = Font.custom("Poppins Medium", size: 24)
         static let h2 = Font.custom("Poppins SemiBold", size: 18)
         static let countdownNum = Font.custom("Poppins Medium", size: 36)
         static let gameScore = Font.custom("Poppins SemiBold", size: 18)
+=======
+        static let h1 = Font.custom("Poppins", size: 24)
+        static let gameScore = Font.custom("Poppins Semibold", size: 18)
+>>>>>>> main
         static let gameTitle = Font.custom("Poppins Medium", size: 18)
         static let gameText = Font.custom("Poppins Regular", size: 14)
         static let buttonLabel = Font.custom("Poppins Medium", size: 14)
         static let gameDate = Font.custom("Poppins Regular", size: 12)
         static let sportLabel = Font.custom("Poppins Regular", size: 12)
         static let filterLabel = Font.custom("Poppins Regular", size: 24)
+<<<<<<< HEAD
         static let semibold24 = Font.custom("Poppins SemiBold", size: 24)
         static let semibold18 = Font.custom("Poppins SemiBold", size: 18)
         static let medium14 =  Font.custom("Poppins Medium", size: 14)
@@ -61,6 +68,8 @@ struct Constants {
         static let regular14 = Font.custom("Poppins Regular", size: 14)
         static let bold40 = Font.custom("Poppins Bold", size: 40)
         
+=======
+>>>>>>> main
         static let title = Font.system(size: 36, weight: .bold, design: .default)
         static let header = Font.system(size: 24, weight: .bold, design: .default)
         static let subheader = Font.system(size: 18, weight: .bold, design: .default)

@@ -158,6 +158,7 @@
 		D86347B02CDBFF7C003DD8F6 /* UpcomingGamesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingGamesView.swift; sourceTree = "<group>"; };
 		D86347DE2CE98B3C003DD8F6 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		D86347E02CE98D37003DD8F6 /* TabViewIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewIcon.swift; sourceTree = "<group>"; };
+		D864B5A62D79108100A3A50E /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_clone.sh; sourceTree = "<group>"; };
 		D87787C72CFFAE5200EA79E1 /* GamesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesViewModel.swift; sourceTree = "<group>"; };
 		D87882272CC060FC00421F67 /* GameDetailedScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetailedScoreView.swift; sourceTree = "<group>"; };
 		D89102062CED6A28004CE226 /* schema.graphqls */ = {isa = PBXFileReference; lastKnownFileType = text; path = schema.graphqls; sourceTree = "<group>"; };
@@ -281,6 +282,7 @@
 		CE725D2F2C89120100386943 = {
 			isa = PBXGroup;
 			children = (
+				D864B5A42D79104A00A3A50E /* ci_scripts */,
 				CEA25A972D752C6F00B9837A /* ScoreSecrets */,
 				CE725D3A2C89120200386943 /* score-ios */,
 				CE725D4B2C89120500386943 /* score-iosTests */,
@@ -407,6 +409,14 @@
 				CEA25A962D75292900B9837A /* Keys.xcconfig */,
 			);
 			path = ScoreSecrets;
+			sourceTree = "<group>";
+		};
+		D864B5A42D79104A00A3A50E /* ci_scripts */ = {
+			isa = PBXGroup;
+			children = (
+				D864B5A62D79108100A3A50E /* ci_post_clone.sh */,
+			);
+			path = ci_scripts;
 			sourceTree = "<group>";
 		};
 		D87787C62CFFAE3D00EA79E1 /* ViewModels */ = {

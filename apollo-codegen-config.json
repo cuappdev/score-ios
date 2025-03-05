@@ -7,7 +7,7 @@
   "schemaDownloadConfiguration": {
     "downloadMethod": {
       "introspection": {
-        "endpointURL": "http://localhost:8000/graphql",
+        "endpointURL": "https:/$()/score-dev.cornellappdev.com/graphql",
         "httpMethod": {
           "POST": {}
         },

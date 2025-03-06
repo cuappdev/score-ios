@@ -10,9 +10,9 @@ echo "Downloading Secrets"
 brew install wget
 cd $CI_PRIMARY_REPOSITORY_PATH/ci_scripts
 mkdir ../ScoreSecrets
-wget -O ../score_ios/ScoreSecrets/Keys.xcconfig "$KEYS"
-wget -O ../score_ios/ScoreSecrets/apollo-codegen-config-dev.json "$CODEGEN_DEV"
-wget -O ../score_ios/ScoreSecrets/apollo-codegen-config-prod.json "$CODEGEN_PROD"
+wget -O ../ScoreSecrets/Keys.xcconfig "$KEYS"
+wget -O ../ScoreSecrets/apollo-codegen-config-dev.json "$CODEGEN_DEV"
+wget -O ../ScoreSecrets/apollo-codegen-config-prod.json "$CODEGEN_PROD"
 
 echo "Generating API file"
 ../apollo-ios-cli generate -p "../ScoreSecrets/apollo-codegen-config-prod.json" -f

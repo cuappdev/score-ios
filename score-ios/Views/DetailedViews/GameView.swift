@@ -9,6 +9,7 @@ import SwiftUI
 
 struct GameView : View {
     var game : Game
+    @ObservedObject var viewModel: PastGameViewModel
     @State var viewState: Int = 0
     @State var dayFromNow: Int = 0
     @State var hourFromNow: Int = 0
@@ -17,45 +18,6 @@ struct GameView : View {
     // 0: hasn't started
     // 1: game started (no updates yet)
     // 2: game in progress / game finished
-    
-    private var numberOfRounds: Int {
-        switch game.sport {
-        case .Baseball: return 9
-        case .Basketball, .Soccer, .Volleyball: return 2
-        case .IceHockey: return 3
-        case .FieldHockey, .Football, .Lacrosse, .SprintFootball: return 4
-        default: return 1
-        }
-    }
-    
-    private var cornellTotalScore: Int {
-        if game.timeUpdates.count == numberOfRounds {
-            return game.timeUpdates.reduce(0, { $0 + $1.cornellScore }) // sum up the score for each round
-        } else if game.timeUpdates.count == numberOfRounds + 1 {
-            // the last one is the sum
-            return game.timeUpdates[game.timeUpdates.count-1].cornellScore
-        } else if game.timeUpdates.count > numberOfRounds {
-            var scores = game.timeUpdates[0..<numberOfRounds]
-            return scores.reduce(0, { $0 + $1.cornellScore }) // sum up the score for each round
-        }
-        else {
-            return -1
-        }
-    }
-    
-    private var opponentTotalScore: Int {
-        if game.timeUpdates.count == numberOfRounds {
-            return game.timeUpdates.reduce(0, { $0 + $1.opponentScore })
-        } else if game.timeUpdates.count == numberOfRounds + 1 {
-            // the last one is the sum
-            return game.timeUpdates[game.timeUpdates.count-1].opponentScore
-        } else if game.timeUpdates.count > numberOfRounds {
-            var scores = game.timeUpdates[0..<numberOfRounds]
-            return scores.reduce(0, { $0 + $1.opponentScore }) // sum up the score for each round
-        } else {
-            return -1
-        }
-    }
     
     var body : some View {
         NavigationView {
@@ -130,7 +92,7 @@ extension GameView {
                 .resizable()
                 .frame(width: 72, height: 72)
             Spacer()
-            Text("\(cornellTotalScore) - \(opponentTotalScore)")
+            Text("\(viewModel.cornellTotalScore) - \(viewModel.opponentTotalScore)")
                 .font(Constants.Fonts.bold40)
                 .foregroundColor(Constants.Colors.white)
             Spacer()
@@ -317,7 +279,7 @@ extension GameView {
                     .padding(.top, 24)
                 
                 VStack {
-                    DynamicScoreBox(game: game)
+                    DynamicScoreBox(game: game, viewModel: PastGameViewModel(game: game))
                     
                     summaryTab
                         .padding(.top, 24)
@@ -352,7 +314,7 @@ extension GameView {
                     .padding(.top, 24)
                 
                 VStack {
-                    DynamicScoreBox(game: game)
+                    DynamicScoreBox(game: game, viewModel: PastGameViewModel(game: game))
                         .frame(maxWidth: .infinity, alignment: .leading)
                     summaryTab
                         .padding(.top, 24)
@@ -370,5 +332,5 @@ extension GameView {
 }
 
 #Preview {
-    GameView(game: Game.dummyData[0])
+    GameView(game: Game.dummyData[0], viewModel: PastGameViewModel(game: Game.dummyData[0]))
 }

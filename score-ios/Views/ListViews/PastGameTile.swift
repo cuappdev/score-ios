@@ -9,49 +9,11 @@ import SwiftUI
 
 struct PastGameTile: View {
     var game: Game
-    
-    private var numberOfRounds: Int {
-        switch game.sport {
-        case .Baseball: return 9
-        case .Basketball, .Soccer, .Volleyball: return 2
-        case .IceHockey: return 3
-        case .FieldHockey, .Football, .Lacrosse, .SprintFootball: return 4
-        default: return 1
-        }
-    }
-    
-    private var cornellTotalScore: Int {
-        if game.timeUpdates.count == numberOfRounds {
-            return game.timeUpdates.reduce(0, { $0 + $1.cornellScore }) // sum up the score for each round
-        } else if game.timeUpdates.count == numberOfRounds + 1 {
-            // the last one is the sum
-            return game.timeUpdates[game.timeUpdates.count-1].cornellScore
-        } else if game.timeUpdates.count > numberOfRounds {
-            var scores = game.timeUpdates[0..<numberOfRounds]
-            return scores.reduce(0, { $0 + $1.cornellScore }) // sum up the score for each round
-        }
-        else {
-            return -1
-        }
-    }
-    
-    private var opponentTotalScore: Int {
-        if game.timeUpdates.count == numberOfRounds {
-            return game.timeUpdates.reduce(0, { $0 + $1.opponentScore })
-        } else if game.timeUpdates.count == numberOfRounds + 1 {
-            // the last one is the sum
-            return game.timeUpdates[game.timeUpdates.count-1].opponentScore
-        } else if game.timeUpdates.count > numberOfRounds {
-            var scores = game.timeUpdates[0..<numberOfRounds]
-            return scores.reduce(0, { $0 + $1.opponentScore }) // sum up the score for each round
-        } else {
-            return -1
-        }
-    }
+    @ObservedObject var viewModel: PastGameViewModel
         
     var body: some View {
-        let corWon = cornellTotalScore > opponentTotalScore
-        let tie = cornellTotalScore == opponentTotalScore
+        let corWon = viewModel.cornellTotalScore > viewModel.opponentTotalScore
+        let tie = viewModel.cornellTotalScore == viewModel.opponentTotalScore
         
         HStack {
             // VStack of school names and logos and score
@@ -80,12 +42,12 @@ struct PastGameTile: View {
                         
                         // Opponent Score with Arrow
                         if corWon {
-                            Text(String(opponentTotalScore))
+                            Text(String(viewModel.opponentTotalScore))
                                 .foregroundStyle(Constants.Colors.gray_text)
                                 .font(Constants.Fonts.medium18)
                         } else if !tie {
                             HStack {
-                                Text(String(opponentTotalScore))
+                                Text(String(viewModel.opponentTotalScore))
                                     .font(Constants.Fonts.semibold18)
                                 Image("pastGame_arrow_back")
                                     .resizable()
@@ -93,7 +55,7 @@ struct PastGameTile: View {
                             }
                             .offset(x: 20)
                         } else {
-                            Text(String(opponentTotalScore))
+                            Text(String(viewModel.opponentTotalScore))
                                 .font(Constants.Fonts.semibold18)
                         }
                         
@@ -113,7 +75,7 @@ struct PastGameTile: View {
                         // Cornell Score with Arrow
                         if corWon {
                             HStack {
-                                Text(String(cornellTotalScore))
+                                Text(String(viewModel.cornellTotalScore))
                                     .font(Constants.Fonts.semibold18)
                                 Image("pastGame_arrow_back")
                                     .resizable()
@@ -121,7 +83,7 @@ struct PastGameTile: View {
                             }
                             .offset(x: 20)
                         } else {
-                            Text(String(cornellTotalScore))
+                            Text(String(viewModel.cornellTotalScore))
                                 .foregroundStyle(Constants.Colors.gray_text)
                                 .font(Constants.Fonts.medium18)
                         }
@@ -183,5 +145,5 @@ struct PastGameTile: View {
 }
 
 #Preview {
-    PastGameTile(game: Game.dummyData[7])
+    PastGameTile(game: Game.dummyData[7], viewModel: PastGameViewModel(game: Game.dummyData[7]))
 }

@@ -20,10 +20,10 @@ struct PastGamesView: View {
                     LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
                         CarouselView(games: vm.topPastGames,
                                      cardView: { game in
-                                         PastGameCard(game: game)
+                            PastGameCard(game: game, viewModel: PastGameViewModel(game: game))
                                      },
                                      gameView: { game in
-                                         GameView(game: game)
+                                         GameView(game: game, viewModel: PastGameViewModel(game: game))
                                      })
                             .padding(.leading, paddingMain)
                             .padding(.trailing, paddingMain)
@@ -34,7 +34,7 @@ struct PastGamesView: View {
                                 
                             // List of games
                             GameListView(games: vm.selectedPastGames) { game in
-                                    PastGameTile(game: game)
+                                PastGameTile(game: game, viewModel: PastGameViewModel(game: game))
                                 }
                                 .padding(.leading, paddingMain)
                                 .padding(.trailing, paddingMain)

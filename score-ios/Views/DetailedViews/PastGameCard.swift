@@ -9,6 +9,8 @@ import SwiftUI
 
 struct PastGameCard: View {
     var game: Game
+    @ObservedObject var viewModel: PastGameViewModel
+    
     var body: some View {
         VStack {
             banner
@@ -27,7 +29,7 @@ struct PastGameCard: View {
 }
 
 #Preview {
-    PastGameCard(game: Game.dummyData[7])
+    PastGameCard(game: Game.dummyData[7], viewModel: PastGameViewModel(game: Game.dummyData[7]))
 }
 
 // MARK: Components
@@ -43,7 +45,7 @@ extension PastGameCard {
             Spacer()
             
             HStack {
-                Text(game.gameUpdates.count != 0 ? String(game.gameUpdates[game.gameUpdates.count-1].cornellScore) : "999")
+                Text(String(viewModel.cornellTotalScore))
                     .font(Constants.Fonts.title)
                     .italic()
                     .foregroundStyle(.white)
@@ -54,7 +56,7 @@ extension PastGameCard {
                     .foregroundStyle(.white)
                 
                 // TODO: Change the blur
-                Text(game.gameUpdates.count != 0 ? String(game.gameUpdates[game.gameUpdates.count-1].opponentScore) : "999")
+                Text(String(viewModel.opponentTotalScore))
                     .font(Constants.Fonts.title)
                     .blur(radius: 0.5)
                     .italic()

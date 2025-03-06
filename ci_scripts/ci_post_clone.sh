@@ -5,9 +5,11 @@
 #
 #  Created by Hsia Lu wu on 3/5/25.
 #  
+#
+
 echo "Downloading Secrets"
 brew install wget
-cd SCI_PRIMARY_REPOSITORY_PATH/ci_scripts
+cd $CI_PRIMARY_REPOSITORY_PATH/ci_scripts
 mkdir ../ScoreSecrets
 wget -O ../score_ios/ScoreSecrets/Keys.xcconfig "$KEYS"
 wget -O ../score_ios/ScoreSecrets/apollo-codegen-config-dev.json "$CODEGEN_DEV"

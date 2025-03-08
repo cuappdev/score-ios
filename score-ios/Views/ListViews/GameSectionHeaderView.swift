@@ -16,6 +16,7 @@ struct GameSectionHeaderView: View {
             VStack {
                 Text(headerTitle)
                     .font(Constants.Fonts.semibold24)
+                    .foregroundStyle(Constants.Colors.black)
                     .frame(maxWidth: .infinity, alignment: .leading) // Align to the left
                 PickerView(selectedSex: $vm.selectedSex, selectedIndex: $vm.selectedSexIndex)
                     .padding(.bottom, 12)

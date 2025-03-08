@@ -17,7 +17,6 @@ struct UpcomingGamesView: View {
     var body: some View {
         NavigationView {
             ScrollView (.vertical, showsIndicators: false) {
-                
                 ZStack {
                     LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
                         CarouselView(games: vm.topUpcomingGames,
@@ -29,8 +28,10 @@ struct UpcomingGamesView: View {
                                      })
                             .padding(.leading, paddingMain)
                             .padding(.trailing, paddingMain)
+//                            .background(Color.white)
+//                            .edgesIgnoringSafeArea(.top)
 
-                        Section(header: GameSectionHeaderView(headerTitle: "Upcoming Game Schedule")
+                        Section(header: GameSectionHeaderView(headerTitle: "Game Schedule")
                             .padding(.leading, paddingMain)
                             .padding(.trailing, paddingMain)) {
                                 
@@ -40,15 +41,18 @@ struct UpcomingGamesView: View {
                                     }
                                 .padding(.leading, paddingMain)
                                 .padding(.trailing, paddingMain)
-                        }.background(Color.white)
-                         .edgesIgnoringSafeArea(.top)
+                        }
+                        .background(Color.white)
+                        .edgesIgnoringSafeArea(.top)
                     }
                     .safeAreaInset(edge: .bottom, content: {
                         Color.clear.frame(height: 20)
                     })
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
+                .background(Color.white)
             }
+            .background(Color.white)
         }
         .onAppear {
             vm.fetchGames()

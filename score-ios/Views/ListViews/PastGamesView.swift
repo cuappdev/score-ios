@@ -48,6 +48,7 @@ struct PastGamesView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             }
+            .background(Color.white)
         }
         .onAppear {
             vm.fetchGames()

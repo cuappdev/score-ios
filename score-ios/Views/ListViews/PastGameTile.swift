@@ -34,9 +34,18 @@ struct PastGameTile: View {
                         }
                         .frame(width: 20, height: 20)
 
-                        Text(game.opponent.name)
-                            .font(Constants.Fonts.gameTitle)
-                            .lineLimit(1)
+                        if (corWon) {
+                            Text(game.opponent.name)
+                                .font(Constants.Fonts.gameTitle)
+                                .foregroundStyle(Constants.Colors.gray_text)
+                                .lineLimit(1)
+                        } else {
+                            Text(game.opponent.name)
+                                .font(Constants.Fonts.gameTitle)
+                                .foregroundStyle(Constants.Colors.black)
+                                .lineLimit(1)
+                        }
+                        
                         
                         Spacer()
                         
@@ -49,6 +58,7 @@ struct PastGameTile: View {
                             HStack {
                                 Text(String(viewModel.opponentTotalScore))
                                     .font(Constants.Fonts.semibold18)
+                                    .foregroundStyle(Constants.Colors.gray_text)
                                 Image("pastGame_arrow_back")
                                     .resizable()
                                     .frame(width: 11, height: 14)
@@ -57,6 +67,7 @@ struct PastGameTile: View {
                         } else {
                             Text(String(viewModel.opponentTotalScore))
                                 .font(Constants.Fonts.semibold18)
+                                .foregroundStyle(Constants.Colors.gray_text)
                         }
                         
                     }
@@ -67,8 +78,16 @@ struct PastGameTile: View {
                             .resizable()
                             .frame(width: 20, height: 20)
 
-                        Text("Cornell")
-                            .font(Constants.Fonts.gameTitle)
+                        if (corWon) {
+                            Text("Cornell")
+                                .font(Constants.Fonts.gameTitle)
+                                .foregroundStyle(Constants.Colors.black)
+                        } else {
+                            Text("Cornell")
+                                .font(Constants.Fonts.gameTitle)
+                                .foregroundStyle(Constants.Colors.gray_text)
+                        }
+                        
                         
                         Spacer()
                         
@@ -77,6 +96,7 @@ struct PastGameTile: View {
                             HStack {
                                 Text(String(viewModel.cornellTotalScore))
                                     .font(Constants.Fonts.semibold18)
+                                    .foregroundStyle(Constants.Colors.gray_text)
                                 Image("pastGame_arrow_back")
                                     .resizable()
                                     .frame(width: 11, height: 14)

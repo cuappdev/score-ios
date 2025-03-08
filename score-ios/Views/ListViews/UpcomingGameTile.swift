@@ -27,6 +27,7 @@ struct UpcomingGameTile: View {
 
                     Text(game.opponent.name)
                         .font(Constants.Fonts.gameTitle)
+                        .foregroundStyle(Constants.Colors.black)
                         .lineLimit(1)
                 }
                 .padding(.leading, 20)

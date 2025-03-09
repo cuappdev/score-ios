@@ -19,7 +19,7 @@ struct UpcomingGamesView: View {
             ScrollView (.vertical, showsIndicators: false) {
                 ZStack {
                     LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
-                        CarouselView(games: vm.topUpcomingGames,
+                        CarouselView(games: vm.topUpcomingGames, title: "Upcoming",
                                      cardView: { game in
                                          UpcomingGameCard(game: game)
                                      },

@@ -29,13 +29,18 @@ struct ScoringUpdateCell : View {
             VStack {
                 Text("\("0:00") - \(ordinalNumberString(for: update.timestamp))")
                     .font(Constants.Fonts.regular14)
+                    .foregroundStyle(Constants.Colors.black)
                 
                 if update.isCornell {
                     Text("**\(update.cornellScore)** - \(update.opponentScore)")
                         .font(Constants.Fonts.regular14)
+                        .foregroundStyle(Constants.Colors.black)
+
                 } else {
                     Text("\(update.cornellScore) - **\(update.opponentScore)**")
                         .font(Constants.Fonts.regular14)
+                        .foregroundStyle(Constants.Colors.black)
+
                 }
             }
             .frame(width:72)
@@ -44,6 +49,7 @@ struct ScoringUpdateCell : View {
             
             Text(update.description)
                 .font(Constants.Fonts.regular14)
+                .foregroundStyle(Constants.Colors.black)
                 .frame(width: 217)
             
         }

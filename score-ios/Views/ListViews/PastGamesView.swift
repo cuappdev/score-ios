@@ -18,7 +18,7 @@ struct PastGamesView: View {
             ScrollView(.vertical, showsIndicators: false) {
                 ZStack {
                     LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
-                        CarouselView(games: vm.topPastGames,
+                        CarouselView(games: vm.topPastGames, title: "Latest",
                                      cardView: { game in
                             PastGameCard(game: game, viewModel: PastGameViewModel(game: game))
                                      },
@@ -28,7 +28,7 @@ struct PastGamesView: View {
                             .padding(.leading, paddingMain)
                             .padding(.trailing, paddingMain)
                         
-                        Section(header: GameSectionHeaderView(headerTitle: "Past Scores")
+                        Section(header: GameSectionHeaderView(headerTitle: "All Scores")
                             .padding(.leading, paddingMain)
                             .padding(.trailing, paddingMain)) {
                                 

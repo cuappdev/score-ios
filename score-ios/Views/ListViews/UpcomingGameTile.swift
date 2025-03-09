@@ -35,13 +35,6 @@ struct UpcomingGameTile: View {
                 Spacer()
                 
                 HStack(spacing: 8) {
-//                    // Sport icon
-//                    Image(game.sport.rawValue+"-g")
-//                        .resizable()
-//                        .renderingMode(.template)
-//                        .scaledToFill()
-//                        .frame(width: 19, height: 19)
-//                        .foregroundStyle(Constants.Colors.iconGray)
                         
                     ZStack {
                         Circle()

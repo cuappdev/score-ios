@@ -10,12 +10,13 @@ import SwiftUI
 struct CarouselView<CardView: View, GameView: View>: View {
     @State private var selectedCardIndex: Int = 0
     var games: [Game]
+    var title: String
     let cardView: (Game) -> CardView
     let gameView: (Game) -> GameView
     
     var body: some View {
             VStack (alignment: .center) {
-                Text("Upcoming")
+                Text(title)
                     .font(Constants.Fonts.semibold24)
                     .foregroundStyle(Constants.Colors.black)
                     .frame(maxWidth: .infinity, alignment: .leading) // Align to the left

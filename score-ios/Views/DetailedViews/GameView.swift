@@ -29,6 +29,7 @@ struct GameView : View {
                     default: hasntStartedView
                 }
             }
+            .background(Color.white)
             .onAppear { computeTimeFromNow() }
             .onAppear { updateViewState() }
             .navigationBarTitleDisplayMode(.inline)
@@ -117,8 +118,10 @@ extension GameView {
             VStack(alignment: .leading, spacing: 4) {
                 Text("\(game.sex.description) \(game.sport.description)")
                     .font(Constants.Fonts.subheader)
+                    .foregroundStyle(Constants.Colors.black)
                 Text("Cornell vs. " + game.opponent.name)
                     .font(Constants.Fonts.header)
+                    .foregroundStyle(Constants.Colors.black)
                 
                 HStack(spacing: 10) {
                     HStack {
@@ -149,6 +152,7 @@ extension GameView {
                     .frame(width: 93, height: 118)
                 Text("Time Until Start")
                     .font(Constants.Fonts.h2)
+                    .foregroundStyle(Constants.Colors.black)
                     .padding(.top, 24)
                 
                 HStack {
@@ -164,6 +168,7 @@ extension GameView {
                         .font(Constants.Fonts.countdownNum)
                     Text("minutes")
                 }
+                .foregroundStyle(Constants.Colors.black)
                 .padding(.top, 8)
             }
             .padding(.top, 20)
@@ -179,6 +184,7 @@ extension GameView {
                         .frame(width: 24, height: 24)
                     Text("Add to Calendar")
                         .font(Constants.Fonts.buttonLabel)
+                        .foregroundStyle(Constants.Colors.white)
                 }
                 .foregroundColor(.white)
                 .padding(.horizontal, 16)
@@ -215,16 +221,33 @@ extension GameView {
     
     private var gameSummary: some View {
         VStack {
-            ForEach(Array(game.gameUpdates.prefix(3)).indices, id: \.self) { i in
-                if game.gameUpdates[i].isCornell {
-                    ScoringUpdateCell(update: game.gameUpdates[i], img: "Cornell")
-                } else {
-                    ScoringUpdateCell(update: game.gameUpdates[i], img: game.opponent.image)
+            if (game.gameUpdates.count >= 3) {
+                ForEach(Array(game.gameUpdates.prefix(3)).indices, id: \.self) { i in
+                    if game.gameUpdates[i].isCornell {
+                        ScoringUpdateCell(update: game.gameUpdates[i], img: "Cornell")
+                    } else {
+                        ScoringUpdateCell(update: game.gameUpdates[i], img: game.opponent.image)
+                    }
+                    
+                    // Add a divider except after the last cell
+                    if i < game.gameUpdates.prefix(3).count - 1 {
+                        Divider()
+                    }
                 }
-                
-                // Add a divider except after the last cell
-                if i < game.gameUpdates.prefix(3).count - 1 {
-                    Divider()
+            } else {
+                if (game.gameUpdates.count > 0) {
+                    ForEach(Array(game.gameUpdates.prefix(game.gameUpdates.count)).indices, id: \.self) { i in
+                        if game.gameUpdates[i].isCornell {
+                            ScoringUpdateCell(update: game.gameUpdates[i], img: "Cornell")
+                        } else {
+                            ScoringUpdateCell(update: game.gameUpdates[i], img: game.opponent.image)
+                        }
+                        
+                        // Add a divider except after the last cell
+                        if i < game.gameUpdates.prefix(3).count - 1 {
+                            Divider()
+                        }
+                    }
                 }
             }
         }
@@ -239,18 +262,21 @@ extension GameView {
             
             Text("No Scores Yet.")
                 .font(Constants.Fonts.medium18)
+                .foregroundStyle(Constants.Colors.black)
                 .frame(maxWidth: .infinity, alignment: .center)
-                .multilineTextAlignment(.center)
+                .lineLimit(1)
+//                .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
             
             Text("Check back here later!")
                 .font(Constants.Fonts.regular14)
                 .foregroundStyle(Constants.Colors.gray_text)
                 .frame(maxWidth: .infinity, alignment: .center)
-                .multilineTextAlignment(.center)
+                .lineLimit(1)
+//                .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+//        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
     private var hasntStartedView: some View {

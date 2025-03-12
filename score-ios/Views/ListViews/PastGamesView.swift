@@ -9,10 +9,10 @@ import SwiftUI
 
 struct PastGamesView: View {
     var paddingMain : CGFloat = 20
-    
+
     // State variables
     @StateObject private var vm = GamesViewModel.shared
-    
+
     var body: some View {
         NavigationView {
             ScrollView(.vertical, showsIndicators: false) {
@@ -23,22 +23,19 @@ struct PastGamesView: View {
                             PastGameCard(game: game, viewModel: PastGameViewModel(game: game))
                                      },
                                      gameView: { game in
-                                         GameView(game: game, viewModel: PastGameViewModel(game: game))
-                                     })
-                            .padding(.leading, paddingMain)
-                            .padding(.trailing, paddingMain)
-                        
+                            GameView(game: game, viewModel: PastGameViewModel(game: game))
+                        })
+                        .padding(.horizontal, paddingMain)
+
                         Section(header: GameSectionHeaderView(headerTitle: "All Scores")
-                            .padding(.leading, paddingMain)
-                            .padding(.trailing, paddingMain)) {
-                                
-                            // List of games
-                            GameListView(games: vm.selectedPastGames) { game in
-                                PastGameTile(game: game, viewModel: PastGameViewModel(game: game))
+                            .padding(.horizontal, paddingMain)) {
+
+                                // List of games
+                                GameListView(games: vm.selectedPastGames) { game in
+                                    PastGameTile(game: game, viewModel: PastGameViewModel(game: game))
                                 }
-                                .padding(.leading, paddingMain)
-                                .padding(.trailing, paddingMain)
-                        }
+                                .padding(.horizontal, paddingMain)
+                            }
                             .background(Color.white)
                             .edgesIgnoringSafeArea(.top)
                     }

@@ -8,27 +8,28 @@
 import SwiftUI
 
 struct TabViewIcon: View {
+
     // MARK: - Properties
 
-       @Binding var selectionIndex: Int
+    @Binding var selectionIndex: Int
 
-       let itemIndex: Int
-       private let tabItems = ["schedule", "scoreboard"]
-    
+    let itemIndex: Int
+    private let tabItems = ["schedule", "scoreboard"]
+
     var body: some View {
         Button {
-                selectionIndex = itemIndex
-                } label: {
-                    VStack {
-                        Image(itemIndex == selectionIndex ? "\(tabItems[itemIndex])-selected" : tabItems[itemIndex])
-                            .resizable()
-                            .frame(width: 28, height: 28)
-                            .tint(Constants.Colors.gray_icons)
-                        Text(itemIndex == 0 ? "Schedule" : "Scores")
-                            .font(Constants.Fonts.buttonLabel)
-                            .foregroundStyle(itemIndex == selectionIndex ? Constants.Colors.primary_red : Constants.Colors.unselectedText)
-                    }
-                }
+            selectionIndex = itemIndex
+        } label: {
+            VStack {
+                Image(itemIndex == selectionIndex ? "\(tabItems[itemIndex])-selected" : tabItems[itemIndex])
+                    .resizable()
+                    .frame(width: 28, height: 28)
+                    .tint(Constants.Colors.gray_icons)
+                Text(itemIndex == 0 ? "Schedule" : "Scores")
+                    .font(Constants.Fonts.buttonLabel)
+                    .foregroundStyle(itemIndex == selectionIndex ? Constants.Colors.primary_red : Constants.Colors.unselectedText)
+            }
+        }
     }
 }
 

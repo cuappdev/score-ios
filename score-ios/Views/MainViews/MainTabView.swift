@@ -8,24 +8,23 @@
 import SwiftUI
 
 struct MainTabView: View {
+
     // MARK: Properties
+
     @Binding var selection: Int
     @StateObject private var gamesViewModel = GamesViewModel.shared
-    
+
     var body: some View {
         NavigationStack {
-            VStack {
-                ZStack(alignment: .bottom) {
-                    if (selection == 0) {
-                        UpcomingGamesView()
-                            .environmentObject(gamesViewModel)
-                    } else {
-                        PastGamesView()
-                            .environmentObject(gamesViewModel)
-                    }
+            ZStack(alignment: .bottom) {
+                if (selection == 0) {
+                    UpcomingGamesView()
+                        .environmentObject(gamesViewModel)
+                } else {
+                    PastGamesView()
+                        .environmentObject(gamesViewModel)
                 }
-                
-                
+
                 HStack {
                     ForEach(0..<2, id: \.self) {
                         index in
@@ -37,14 +36,16 @@ struct MainTabView: View {
                         }
                     }
                 }
-                .ignoresSafeArea(edges: .bottom)
-                .padding(.leading, 86)
-                .padding(.trailing, 86)
+                .padding(.horizontal, 86)
+                .padding(.bottom, 40)
                 .frame(maxWidth: .infinity)
-                .background(Color.white)
-                .shadow(radius: 6)
-                
+                .background(
+                    Color.white
+                        .shadow(color: Color.black.opacity(0.25), radius: 10, x: 0, y: -6)
+                )
+
             }
+            .ignoresSafeArea(edges: .bottom)
             .background(Color.white)
         }
     }

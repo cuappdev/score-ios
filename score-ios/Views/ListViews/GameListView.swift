@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct GameListView<TileView: View>: View {
+    
     let games: [Game]
     let tileView: (Game) -> TileView
     

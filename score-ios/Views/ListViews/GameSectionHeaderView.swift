@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct GameSectionHeaderView: View {
+
     @StateObject private var vm = GamesViewModel.shared
     var headerTitle: String
-    
+
     var body: some View {
         VStack {
             VStack {
@@ -24,9 +25,10 @@ struct GameSectionHeaderView: View {
                 SportSelectorView()
             }
             .padding(.bottom, 16)
-            
+
             Divider()
                 .background(.clear)
+                .padding(.bottom, 16)
         }
     }
 }

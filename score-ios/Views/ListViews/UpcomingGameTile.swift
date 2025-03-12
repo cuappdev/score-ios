@@ -8,19 +8,20 @@
 import SwiftUI
 
 struct UpcomingGameTile: View {
-    
+
     var game: Game
-    
+
     var body: some View {
         let liveNow: Bool = game.date == Date.currentDate
-        
-        VStack {
+
+        VStack(spacing: 16) {
             // Opponent Logo, Opponent Name | Sport Icon, Sex Icon
             HStack(spacing: 8) {
                 HStack(spacing: 8) {
                     AsyncImage(url: URL(string: game.opponent.image)) {image in
                         image.resizable()
                     } placeholder: {
+                        // TODO: Make a placeholder image
                         Constants.Colors.gray_icons
                     }
                     .frame(width: 20, height: 20)
@@ -31,11 +32,11 @@ struct UpcomingGameTile: View {
                         .lineLimit(1)
                 }
                 .padding(.leading, 20)
-                
+
                 Spacer()
-                
+
                 HStack(spacing: 8) {
-                        
+
                     ZStack {
                         Circle()
                             .frame(width: 19, height: 19)
@@ -47,7 +48,7 @@ struct UpcomingGameTile: View {
                             .frame(width: 19, height: 19)
                             .foregroundStyle(Constants.Colors.iconGray)
                     }
-                    
+
                     // Sex icon
                     ZStack {
                         Circle()
@@ -59,10 +60,10 @@ struct UpcomingGameTile: View {
                             .frame(width: 19, height: 19)
                             .foregroundStyle(Constants.Colors.white)
                     }
-                }   
+                }
                 .padding(.trailing, 20)
             }
-            
+
             // Location Icon, City, State | Date
             HStack {
                 HStack (spacing: 4) {
@@ -91,14 +92,14 @@ struct UpcomingGameTile: View {
                 }
             }
         }
-            .frame(width: 345, height: 96)
-            .background(Constants.Colors.white)
-            .clipShape(RoundedRectangle(cornerRadius: 12))
-            .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .stroke(Constants.Colors.gray_border, lineWidth: 1)
-                    .shadow(radius: 5)
-            )
+        .padding(.vertical, 16)
+        .background(Constants.Colors.white)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(Constants.Colors.gray_border, lineWidth: 1)
+                .shadow(radius: 5)
+        )
     }
 }
 

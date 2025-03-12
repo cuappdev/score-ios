@@ -109,8 +109,8 @@ struct PastGameTile: View {
                         }
                     }
                 }
-                .padding(.leading, 16)
-                .padding(.trailing, 24)
+                .padding(.vertical, 16)
+                .padding(.horizontal, 20)
                 .frame(maxWidth: .infinity)
             }
             
@@ -153,7 +153,6 @@ struct PastGameTile: View {
             }
             .padding(.leading, 24)
         }
-        .frame(width: 345, height: 96)
         .background(Constants.Colors.white)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .background(

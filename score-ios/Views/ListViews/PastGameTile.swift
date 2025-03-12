@@ -73,10 +73,11 @@ struct PastGameTile: View {
                         .frame(width: 20, height: 20)
 
                         ScrollView(.horizontal, showsIndicators: false){
-                            Text(game.opponent.name)
+                            Text(game.opponent.name.removingUniversityPrefix())
                                 .font(Constants.Fonts.gameTitle)
                                 .lineLimit(1)
                         }
+                        .overlay(TextUtil.trailingFadeWhite(), alignment: .trailing)
                         Spacer()
                         
                         // Opponent Score with Arrow

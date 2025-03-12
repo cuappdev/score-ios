@@ -76,9 +76,10 @@ extension UpcomingGameCard {
                 }
                 .frame(width: 24, height: 24)
                 
-                Text(game.opponent.name)
+                Text(game.opponent.name.removingUniversityPrefix())
                     .font(Constants.Fonts.gameTitle)
                     .foregroundStyle(Color.black)
+                
                 
                 Spacer()
                 

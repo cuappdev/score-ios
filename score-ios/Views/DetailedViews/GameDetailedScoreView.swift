@@ -105,9 +105,10 @@ extension GameDetailedScoreView {
             Text("Men's Football")
                 .font(Constants.Fonts.medium14)
             ScrollView(.horizontal, showsIndicators: false){
-                Text("Cornell vs. " + game.opponent.name)
+                Text("Cornell vs. " + game.opponent.name.removingUniversityPrefix())
                     .font(Constants.Fonts.semibold24)
             }
+            .overlay(TextUtil.trailingFadeWhite(), alignment: .trailing)
             HStack() {
                 Image("Location-g")
                     .resizable()
@@ -246,11 +247,12 @@ extension GameDetailedScoreView {
     private var thirdRow: some View {
         HStack {
             ScrollView(.horizontal, showsIndicators: false){
-                Text(game.opponent.name)
+                Text(game.opponent.name.removingUniversityPrefix())
                     .font(Constants.Fonts.gameText)
                     .foregroundStyle(.gray)
                     .frame(width: 60, alignment: .leading)
             }
+            .overlay(TextUtil.trailingFadeWhite(), alignment: .trailing)
             Text("-")
                 .font(Constants.Fonts.gameText)
                 .foregroundStyle(.gray)

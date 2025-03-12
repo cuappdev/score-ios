@@ -156,9 +156,10 @@ extension GameView {
                 Text("\(game.sex.description) \(game.sport.description)")
                     .font(Constants.Fonts.subheader)
                 ScrollView(.horizontal, showsIndicators: false){
-                    Text("Cornell vs. " + game.opponent.name)
+                    Text("Cornell vs. " + game.opponent.name.removingUniversityPrefix())
                         .font(Constants.Fonts.header)
                 }
+                .overlay(TextUtil.trailingFadeWhite(), alignment: .trailing)
                 HStack(spacing: 10) {
                     HStack {
                         Image("Location-g")

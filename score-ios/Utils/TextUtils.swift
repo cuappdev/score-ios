@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct TextUtil {
+    /// add trailing shadow to long names to indicate scrollable name
     static func trailingFadeWhite(width: CGFloat = 30) -> some View {
         LinearGradient(
             gradient: Gradient(colors: [Color.clear, Color.white]),

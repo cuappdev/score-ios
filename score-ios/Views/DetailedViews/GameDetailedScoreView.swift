@@ -108,7 +108,8 @@ extension GameDetailedScoreView {
                 Text("Cornell vs. " + game.opponent.name.removingUniversityPrefix())
                     .font(Constants.Fonts.semibold24)
             }
-            .overlay(TextUtil.trailingFadeWhite(), alignment: .trailing)
+            .withTrailingFadeGradient()
+
             HStack() {
                 Image("Location-g")
                     .resizable()
@@ -252,7 +253,8 @@ extension GameDetailedScoreView {
                     .foregroundStyle(.gray)
                     .frame(width: 60, alignment: .leading)
             }
-            .overlay(TextUtil.trailingFadeWhite(), alignment: .trailing)
+            .withTrailingFadeGradient()
+
             Text("-")
                 .font(Constants.Fonts.gameText)
                 .foregroundStyle(.gray)

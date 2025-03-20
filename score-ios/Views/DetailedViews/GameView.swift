@@ -159,7 +159,8 @@ extension GameView {
                     Text("Cornell vs. " + game.opponent.name.removingUniversityPrefix())
                         .font(Constants.Fonts.header)
                 }
-                .overlay(TextUtil.trailingFadeWhite(), alignment: .trailing)
+                .withTrailingFadeGradient()
+    
                 HStack(spacing: 10) {
                     HStack {
                         Image("Location-g")

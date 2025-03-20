@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-class GamesViewModel: ObservableObject 
+class GamesViewModel: ObservableObject
 {
     @Published var errorMessage: String?
     @Published var games: [Game] = [] // List of all games
@@ -75,7 +75,7 @@ class GamesViewModel: ObservableObject
                         let isUpcoming = game.date > now
                         let isFinishedToday = game.date < now && game.date >= startOfToday
                         let isFinishedByToday = game.date < startOfToday
-                    
+                        
                         updatedGames.append(game)
                         if isLive {
                             self.allUpcomingGames.insert(game, at: 0)
@@ -105,4 +105,3 @@ class GamesViewModel: ObservableObject
         
     }
 }
-

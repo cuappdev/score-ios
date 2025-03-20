@@ -30,7 +30,7 @@ struct UpcomingGameTile: View {
                             .font(Constants.Fonts.gameTitle)
                             .lineLimit(1)
                     }
-                    .overlay(TextUtil.trailingFadeWhite(), alignment: .trailing)
+                    .withTrailingFadeGradient()
                 }
                 .padding(.leading, 20)
                 

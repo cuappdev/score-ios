@@ -126,11 +126,11 @@ extension DynamicScoreBox {
                 Text(game.opponent.name.removingUniversityPrefix())
                     .lineLimit(1)
                     .font(Constants.Fonts.gameText)
-                    .frame(/*width: 55,*/ alignment: .leading)
+                    .frame(alignment: .leading)
                     .padding(.leading, 5)
-                    
             }
-            .overlay(TextUtil.trailingFadeWhite(width: 5), alignment: .trailing)
+            .withTrailingFadeGradient()
+            
             ForEach(0..<numberOfRounds, id: \..self) { index in
                 Text(game.timeUpdates.indices.contains(index) ? "\(game.timeUpdates[index].opponentScore)" : "-")
                     .frame(minWidth: columnWidth, maxWidth: columnWidth)

@@ -77,7 +77,8 @@ struct PastGameTile: View {
                                 .font(Constants.Fonts.gameTitle)
                                 .lineLimit(1)
                         }
-                        .overlay(TextUtil.trailingFadeWhite(), alignment: .trailing)
+                        .withTrailingFadeGradient()
+         
                         Spacer()
                         
                         // Opponent Score with Arrow

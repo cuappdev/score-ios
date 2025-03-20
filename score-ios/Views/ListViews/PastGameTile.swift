@@ -14,6 +14,8 @@ struct PastGameTile: View {
     var body: some View {
         let corWon = viewModel.cornellTotalScore > viewModel.opponentTotalScore
         let tie = viewModel.cornellTotalScore == viewModel.opponentTotalScore
+        let corScore = (viewModel.cornellTotalScore == -1) ? "-" : "\(viewModel.cornellTotalScore)"
+        let oppScore = (viewModel.opponentTotalScore == -1) ? "-" : "\(viewModel.opponentTotalScore)"
         
         HStack {
             // VStack of school names and logos and score
@@ -51,12 +53,13 @@ struct PastGameTile: View {
                         
                         // Opponent Score with Arrow
                         if corWon {
-                            Text(String(viewModel.opponentTotalScore))
+                            Text(oppScore)
                                 .foregroundStyle(Constants.Colors.gray_text)
                                 .font(Constants.Fonts.medium18)
                         } else if !tie {
+                            // opponent won
                             HStack {
-                                Text(String(viewModel.opponentTotalScore))
+                                Text(oppScore)
                                     .font(Constants.Fonts.semibold18)
                                     .foregroundStyle(Constants.Colors.gray_text)
                                 Image("pastGame_arrow_back")
@@ -65,8 +68,8 @@ struct PastGameTile: View {
                             }
                             .offset(x: 20)
                         } else {
-                            Text(String(viewModel.opponentTotalScore))
-                                .font(Constants.Fonts.semibold18)
+                            Text(oppScore)
+                                .font(Constants.Fonts.medium18)
                                 .foregroundStyle(Constants.Colors.gray_text)
                         }
                         
@@ -91,21 +94,28 @@ struct PastGameTile: View {
                         
                         Spacer()
                         
+                        
                         // Cornell Score with Arrow
                         if corWon {
                             HStack {
-                                Text(String(viewModel.cornellTotalScore))
-                                    .font(Constants.Fonts.semibold18)
+                                Text(corScore)
                                     .foregroundStyle(Constants.Colors.gray_text)
+                                    .font(Constants.Fonts.semibold18)
+                                
                                 Image("pastGame_arrow_back")
                                     .resizable()
                                     .frame(width: 11, height: 14)
                             }
                             .offset(x: 20)
-                        } else {
-                            Text(String(viewModel.cornellTotalScore))
-                                .foregroundStyle(Constants.Colors.gray_text)
+                        } else if !tie {
+                            // opponent won
+                            Text(corScore)
                                 .font(Constants.Fonts.medium18)
+                                .foregroundStyle(Constants.Colors.gray_text)
+                        } else {
+                            Text(corScore)
+                                .font(Constants.Fonts.medium18)
+                                .foregroundStyle(Constants.Colors.gray_text)
                         }
                     }
                 }

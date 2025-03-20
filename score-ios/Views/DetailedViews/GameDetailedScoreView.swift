@@ -20,21 +20,18 @@ struct GameDetailedScoreView: View {
                 // information
                 information
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.leading, 24)
-                    .padding(.trailing, 24)
-                
+                    .padding(.horizontal, 24)
+            
                 if (gameStarted) {
                     VStack {
                         scoreBox
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.leading, 24)
-                    .padding(.trailing, 24)
+                    .padding(.horizontal, 24)
                     
                     summaryTab
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.leading, 24)
-                    .padding(.trailing, 24)
+                    .padding(.horizontal, 24)
                     
                     // score summary
                     if (!game.timeUpdates.isEmpty) {

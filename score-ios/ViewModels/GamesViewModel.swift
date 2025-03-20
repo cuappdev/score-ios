@@ -44,6 +44,7 @@ class GamesViewModel: ObservableObject
             // Return true if both filters are satisfied
             return matchesSex && matchesSport
         }
+        
         self.selectedPastGames = self.allPastGames.filter{ game in
             // Filter by sex
             let matchesSex = (selectedSex == .Both) || (game.sex == selectedSex)
@@ -70,7 +71,7 @@ class GamesViewModel: ObservableObject
                     if Sport.allCases.contains(game.sport) && game.sport != Sport.All {
                         // append the game only if it is upcoming/live
                         let now = Date()
-                        let twoHours: TimeInterval = 2 * 60 * 60
+                        let twoHours: TimeInterval = 2 * 60 * 60 // TODO: How to decide if a game is live
                         let calendar = Calendar.current
                         let startOfToday = calendar.startOfDay(for: now)
                         

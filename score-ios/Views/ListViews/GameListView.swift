@@ -35,5 +35,6 @@ struct GameListView<TileView: View>: View {
                 .frame(height: 96)
             }
         }
+        .padding(.top, 16)
     }
 }

@@ -28,8 +28,7 @@ struct UpcomingGamesView: View {
                             GameView(game: game, viewModel: PastGameViewModel(game: game))
                         })
                         .padding(.horizontal, paddingMain)
-                        //                            .background(Color.white)
-                        //                            .edgesIgnoringSafeArea(.top)
+                       
 
                         Section(header: GameSectionHeaderView(headerTitle: "Game Schedule")
                             .padding(.horizontal, paddingMain)) {

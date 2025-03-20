@@ -51,7 +51,6 @@ struct ScoringUpdateCell : View {
                 .font(Constants.Fonts.regular14)
                 .foregroundStyle(Constants.Colors.black)
                 .frame(width: 217)
-            
         }
         .padding(.horizontal, 24)
         .padding(.vertical, 12)

@@ -93,7 +93,7 @@ extension Game {
             var oppTotal = 0
             if (corScores != nil && oppScores != nil) {
                 corScores!.indices.forEach({ index in
-                    let timeStamp = index+1
+                    let timeStamp = index + 1
                     if (corScores![index] != nil && oppScores![index] != nil) {
                         let corScore = Int(corScores![index]!) ?? 0
                         let oppScore = Int(oppScores![index]!) ?? 0

@@ -40,8 +40,7 @@ struct ScoreSummaryTile: View {
             }
         }
         .frame(width: 345, height: 56)
-        .padding(.leading, 24)
-        .padding(.trailing, 24)
+        .padding(.horizontal, 24)
     }
 }
 

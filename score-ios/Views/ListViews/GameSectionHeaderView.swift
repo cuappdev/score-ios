@@ -28,7 +28,6 @@ struct GameSectionHeaderView: View {
 
             Divider()
                 .background(.clear)
-                .padding(.bottom, 16)
         }
     }
 }

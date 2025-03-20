@@ -41,6 +41,7 @@ struct UpcomingGameTile: View {
                         Circle()
                             .frame(width: 19, height: 19)
                             .foregroundStyle(.white)
+                        
                         Image(game.sport.rawValue+"-g")
                             .resizable()
                             .renderingMode(.template)
@@ -54,6 +55,7 @@ struct UpcomingGameTile: View {
                         Circle()
                             .frame(width: 19, height: 19)
                             .foregroundStyle(.gray)
+                        
                         Image(game.sex.description)
                             .resizable()
                             .renderingMode(.template)
@@ -72,10 +74,12 @@ struct UpcomingGameTile: View {
                         .renderingMode(/*@START_MENU_TOKEN@*/.template/*@END_MENU_TOKEN@*/)
                         .frame(width: 13.7, height: 20)
                         .foregroundStyle(Constants.Colors.iconGray)
-                    Text("\(game.city), \(game.state)")
+                    
+                    Text(gameLocation(city: game.city, state: game.state))
                         .font(Constants.Fonts.gameText)
                         .foregroundStyle(Constants.Colors.gray_text)
-                }   .padding(.leading, 20)
+                }
+                .padding(.leading, 20)
                 
                 Spacer()
                 
@@ -105,4 +109,15 @@ struct UpcomingGameTile: View {
 
 #Preview {
     UpcomingGameTile(game: Game.dummyData[7])
+}
+
+extension UpcomingGameTile {
+    
+    func gameLocation(city: String, state: String) -> String {
+        if city.isEmpty {
+            return "N/A"
+        }
+        return "\(city), \(state)"
+    }
+    
 }

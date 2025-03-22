@@ -128,7 +128,7 @@ extension GameDetailedScoreView {
                 .frame(width: 93, height: 118)
             
             Text("Time Until Start")
-                .font(Constants.Fonts.h2)
+                .font(Constants.Fonts.Header.h2)
                 .padding(.top, 24)
             
             HStack {

@@ -15,19 +15,23 @@ struct ScoringUpdateCell : View {
         HStack {
             if update.isCornell {
                 Image("Cornell")
-                .resizable().frame(width: 32, height: 32)
+                    .resizable()
+                    .frame(width: 32, height: 32)
             } else {
-                AsyncImage(url: URL(string: img)) {image in
-                    image.resizable().frame(width: 32, height: 32)
+                AsyncImage(url: URL(string: img)) { image in
+                    image
+                        .resizable()
+                        .frame(width: 32, height: 32)
                 } placeholder: {
-                    Constants.Colors.gray_icons.frame(width: 32, height: 32)
+                    Constants.Colors.gray_icons
+                        .frame(width: 32, height: 32)
                 }
             }
             
             Spacer()
             
             VStack {
-                Text("\("0:00") - \(ordinalNumberString(for: update.timestamp))")
+                Text("\(update.time) - \(ordinalNumberString(for: update.timestamp))")
                     .font(Constants.Fonts.regular14)
                     .foregroundStyle(Constants.Colors.black)
                 
@@ -57,3 +61,6 @@ struct ScoringUpdateCell : View {
     }
 }
 
+#Preview {
+    ScoringUpdateCell(update: GameUpdate(timestamp: 2, isTotal: false, cornellScore: 10, opponentScore: 7, time: "2:12", isCornell: true, eventParty: EventParty.Cornell, description: "Zhao, Alan field goal attempt from 24 GOOD"), img: "Cornell")
+}

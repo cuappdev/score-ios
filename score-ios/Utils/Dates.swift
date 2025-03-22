@@ -40,33 +40,80 @@ extension Date {
     }
  
     static func parseDate(dateString: String, timeString: String) -> Date {
-        // parse the date without year
+        // Set up date formatter
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM d (EEE)" // Matches "Feb 23 (Fri)"
         dateFormatter.locale = Locale(identifier: "en_US_POSIX") // Ensures consistent parsing
         dateFormatter.timeZone = TimeZone(abbreviation: "UTC") // Adjust timezone if necessary
-        let parsedDate = dateFormatter.date(from: dateString) ?? Date()
-        
-        // parse the time
+
+        // Try to parse with year format first
+        dateFormatter.dateFormat = "MMM d (EEE) yyyy" // Matches "Feb 23 (Fri) 2024"
+        var parsedDate = dateFormatter.date(from: dateString)
+
+        // If that fails, fall back to parsing without year and determine the appropriate year
+        if parsedDate == nil {
+            dateFormatter.dateFormat = "MMM d (EEE)" // Matches "Feb 23 (Fri)"
+            parsedDate = dateFormatter.date(from: dateString)
+
+            if let date = parsedDate {
+                let calendar = Calendar.current
+                let currentDate = Date()
+                let currentYear = calendar.component(.year, from: currentDate)
+                let currentMonth = calendar.component(.month, from: currentDate)
+                let parsedMonth = calendar.component(.month, from: date)
+
+                // Create new date components from the parsed date
+                var dateComponents = calendar.dateComponents([.month, .day], from: date)
+
+                // If month is between current month and January, assign current year
+                // Otherwise assign last year (handles past dates in same year)
+                if parsedMonth >= 1 && parsedMonth <= currentMonth {
+                    dateComponents.year = currentYear
+                } else {
+                    dateComponents.year = currentYear - 1
+                }
+
+                // Update parsedDate with the correct year
+                if let updatedDate = calendar.date(from: dateComponents) {
+                    parsedDate = updatedDate
+                }
+            }
+        }
+
+        // Standardize the time string format
+        var standardizedTimeString = timeString
+        standardizedTimeString = standardizedTimeString.replacingOccurrences(of: "p.m.", with: "PM")
+        standardizedTimeString = standardizedTimeString.replacingOccurrences(of: "a.m.", with: "AM")
+        standardizedTimeString = standardizedTimeString.replacingOccurrences(of: "pm", with: "PM")
+        standardizedTimeString = standardizedTimeString.replacingOccurrences(of: "am", with: "AM")
+
+        // Cut off string after AM/PM
+        if let range = standardizedTimeString.range(of: "AM") {
+            standardizedTimeString = String(standardizedTimeString[..<range.upperBound])
+        } else if let range = standardizedTimeString.range(of: "PM") {
+            standardizedTimeString = String(standardizedTimeString[..<range.upperBound])
+        }
+
+        // Parse the time
         let timeFormatter = DateFormatter()
-        timeFormatter.dateFormat = "h:mm a" // Matches "4:00 p.m."
         timeFormatter.locale = Locale(identifier: "en_US_POSIX")
         timeFormatter.timeZone = TimeZone(abbreviation: "UTC")
-        let parsedTime = timeFormatter.date(from: timeString) ?? Date()
-        
-        // get the current year
+        timeFormatter.dateFormat = "h:mm a" // Matches "4:00 PM"
+        let parsedTime = timeFormatter.date(from: standardizedTimeString)
+
+        // Set up calendar
         let calendar = Calendar.current
-        let currentYear = calendar.component(.year, from: Date())
-        
-        // set the year of the parsed date to the current year
-        // Set the year of the parsed date to the current year
-        var dateComponents = calendar.dateComponents([.month, .day], from: parsedDate)
-        dateComponents.year = currentYear
-        let timeComponents = calendar.dateComponents([.hour, .minute], from: parsedTime)
+
+        // TODO: handle when it fails to parse both better
+        // Extract components from the parsedDate
+        var dateComponents = calendar.dateComponents([.month, .day, .year], from: parsedDate ?? Date())
+
+        // Get time components from parsedTime
+        let timeComponents = calendar.dateComponents([.hour, .minute], from: parsedTime ?? Date())
+
+        // Add time components to date components
         dateComponents.hour = timeComponents.hour
         dateComponents.minute = timeComponents.minute
 
-        // returns the date with the year set to the current year, callback to current date if parsing fails
         return calendar.date(from: dateComponents) ?? Date()
     }
 }

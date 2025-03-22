@@ -14,9 +14,9 @@ class PastGameViewModel: ObservableObject {
     var numberOfRounds: Int {
         switch game.sport {
         case .Baseball: return 9
-        case .Basketball, .Soccer, .Volleyball: return 2
+        case .Soccer: return 2
         case .IceHockey: return 3
-        case .FieldHockey, .Football, .Lacrosse, .SprintFootball: return 4
+        case .FieldHockey, .Football, .Lacrosse: return 4
         default: return 1
         }
     }

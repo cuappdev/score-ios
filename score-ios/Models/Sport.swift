@@ -14,7 +14,7 @@ enum Sport : String, Identifiable, CaseIterable, CustomStringConvertible {
     case All
     
     // Both
-    case Basketball
+//    case Basketball
 //    case CrossCountry
     case IceHockey
     case Lacrosse
@@ -30,8 +30,8 @@ enum Sport : String, Identifiable, CaseIterable, CustomStringConvertible {
 //    case Gymnastics
 //    case Rowing
 //    case Sailing
-    case Softball
-    case Volleyball
+//    case Softball
+//    case Volleyball
     
     // Men
     case Baseball
@@ -39,7 +39,7 @@ enum Sport : String, Identifiable, CaseIterable, CustomStringConvertible {
 //    case Golf
 //    case RowingHeavyweight
 //    case RowingLightweight
-    case SprintFootball
+//    case SprintFootball
 //    case Wrestling
     
     // init from a string from backend (might include spaces)
@@ -60,8 +60,8 @@ enum Sport : String, Identifiable, CaseIterable, CustomStringConvertible {
         switch self {
         case .All:
             return "All"
-        case .Basketball:
-            return "Basketball"
+//        case .Basketball:
+//            return "Basketball"
 //        case .CrossCountry:
 //            return "Cross Country"
         case .IceHockey:
@@ -88,10 +88,10 @@ enum Sport : String, Identifiable, CaseIterable, CustomStringConvertible {
 //            return "Rowing"
 //        case .Sailing:
 //            return "Sailing"
-        case .Softball:
-            return "Softball"
-        case .Volleyball:
-            return "Volleyball"
+//        case .Softball:
+//            return "Softball"
+//        case .Volleyball:
+//            return "Volleyball"
         case .Baseball:
             return "Baseball"
         case .Football:
@@ -102,8 +102,8 @@ enum Sport : String, Identifiable, CaseIterable, CustomStringConvertible {
 //            return "HW Rowing"
 //        case .RowingLightweight:
 //            return "LW Rowing"
-        case .SprintFootball:
-            return "Sprint Football"
+//        case .SprintFootball:
+//            return "Sprint Football"
 //        case .Wrestling:
 //            return "Wrestling"
         }

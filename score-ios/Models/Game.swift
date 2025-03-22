@@ -85,24 +85,24 @@ extension Game {
             // Parse breakdown and map into `TimeUpdate` array
             // [["1", "2"], ["2", "3"]]
         
-        if (breakdown != nil) {
-            let scoreBreakDown = breakdown!
+        if let breakdown {
+            let scoreBreakDown = breakdown
             let corScores = scoreBreakDown[0]
             let oppScores = scoreBreakDown[1]
             var corTotal = 0
             var oppTotal = 0
-            if (corScores != nil && oppScores != nil) {
-                corScores!.indices.forEach({ index in
+            if let corScores, let oppScores {
+                corScores.indices.forEach({ index in
                     let timeStamp = index + 1
-                    if (corScores![index] != nil && oppScores![index] != nil) {
-                        let corScore = Int(corScores![index]!) ?? 0
-                        let oppScore = Int(oppScores![index]!) ?? 0
+                    if let corScore = corScores[index], let oppScore = oppScores[index] {
+                        let corScore = Int(corScore) ?? 0
+                        let oppScore = Int(oppScore) ?? 0
                         let timeUpdate = TimeUpdate(timestamp: timeStamp, isTotal: false, cornellScore: corScore, opponentScore: oppScore)
                         corTotal += corScore
                         oppTotal += oppScore
                         updates.append(timeUpdate)
                     }
-                    if (index == corScores!.count - 1) {
+                    if (index == corScores.count - 1) {
                         let total = TimeUpdate(timestamp: index + 1, isTotal: true, cornellScore: corTotal, opponentScore: oppTotal)
                         updates.append(total)
                     }

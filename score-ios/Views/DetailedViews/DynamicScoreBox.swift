@@ -13,19 +13,18 @@ struct DynamicScoreBox: View {
     
     var body: some View {
         GeometryReader { geometry in
-            let totalWidth = geometry.size.width
-            let boxWidth = totalWidth
+            let boxWidth = geometry.size.width
             let firstColWidth = boxWidth / 5
             let columnWidth = (boxWidth - firstColWidth) / CGFloat((viewModel.numberOfRounds + 1))
-            
+
             VStack(spacing: 0) {
                 firstRow(firstColWidth: firstColWidth, columnWidth: columnWidth)
-                
+
                 secondRow(firstColWidth: firstColWidth, columnWidth: columnWidth)
-                
+
                 Divider()
                     .background(Constants.Colors.primary_red)
-                
+
                 thirdRow(firstColWidth: firstColWidth, columnWidth: columnWidth)
             }
             .background(Constants.Colors.white)
@@ -35,8 +34,8 @@ struct DynamicScoreBox: View {
                     .stroke(Constants.Colors.primary_red, lineWidth: 1)
                     .shadow(radius: 5)
             )
-            
         }
+        .frame(height: 125)
     }
 }
 

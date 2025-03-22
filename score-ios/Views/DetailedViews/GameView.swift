@@ -36,7 +36,7 @@ struct GameView : View {
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     Text("Game Details")
-                    .font(Constants.Fonts.h1)
+                        .font(Constants.Fonts.Header.h1)
                 }
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
@@ -152,7 +152,7 @@ extension GameView {
                 .resizable()
                 .frame(width: 93, height: 118)
             Text("Time Until Start")
-                .font(Constants.Fonts.h2)
+                .font(Constants.Fonts.Header.h2)
                 .foregroundStyle(Constants.Colors.black)
                 .padding(.top, 24)
             
@@ -223,33 +223,16 @@ extension GameView {
     
     private var gameSummary: some View {
         VStack {
-            if (game.gameUpdates.count >= 3) {
-                ForEach(Array(game.gameUpdates.prefix(3)).indices, id: \.self) { i in
-                    if game.gameUpdates[i].isCornell {
-                        ScoringUpdateCell(update: game.gameUpdates[i], img: "Cornell")
-                    } else {
-                        ScoringUpdateCell(update: game.gameUpdates[i], img: game.opponent.image)
-                    }
-                    
-                    // Add a divider except after the last cell
-                    if i < game.gameUpdates.prefix(3).count - 1 {
-                        Divider()
-                    }
+            ForEach(Array(game.gameUpdates.prefix(3)).indices, id: \.self) { i in
+                if game.gameUpdates[i].isCornell {
+                    ScoringUpdateCell(update: game.gameUpdates[i], img: "Cornell")
+                } else {
+                    ScoringUpdateCell(update: game.gameUpdates[i], img: game.opponent.image)
                 }
-            } else {
-                if (game.gameUpdates.count > 0) {
-                    ForEach(Array(game.gameUpdates.prefix(game.gameUpdates.count)).indices, id: \.self) { i in
-                        if game.gameUpdates[i].isCornell {
-                            ScoringUpdateCell(update: game.gameUpdates[i], img: "Cornell")
-                        } else {
-                            ScoringUpdateCell(update: game.gameUpdates[i], img: game.opponent.image)
-                        }
-                        
-                        // Add a divider except after the last cell
-                        if i < game.gameUpdates.prefix(3).count - 1 {
-                            Divider()
-                        }
-                    }
+
+                // Add a divider except after the last cell
+                if i < game.gameUpdates.prefix(3).count - 1 {
+                    Divider()
                 }
             }
         }
@@ -283,66 +266,68 @@ extension GameView {
             // Banner
             banner
             
-//            Spacer()
-            
             // Game information
             gameInfo
                 .padding(.horizontal, 24)
                 .padding(.top, 24)
-            
+
             // Countdown
             countdown
-                .padding(.bottom, 24)
+                .padding(.vertical, 24)
+
+            Spacer()
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
     private var gameStartedView: some View {
         VStack {
             banner
             
-//            Spacer()
-            
             gameInfo
                 .padding(.leading, 24)
                 .padding(.top, 24)
-            
-            Group {
-                DynamicScoreBox(game: game, viewModel: PastGameViewModel(game: game))
-                
-                summaryTab
-            }
-            .padding(.horizontal, 24)
-            .padding(.top, 16)
-            
+
+            DynamicScoreBox(game: game, viewModel: PastGameViewModel(game: game))
+                .padding(.horizontal, 24)
+                .padding(.top, 16)
+
+            summaryTab
+                .padding(.horizontal, 24)
+                .padding(.top, 16)
+
             if (game.gameUpdates.count == 0) {
                 noGameSummary
             } else {
                 gameSummary
             }
+
+            Spacer()
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
     private var gameInProgressView: some View {
         VStack {
             banner
             
-//            Spacer()
-            
             gameInfo
                 .padding(.leading, 24)
                 .padding(.top, 24)
             
-            Group {
-                DynamicScoreBox(game: game, viewModel: PastGameViewModel(game: game))
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                
-                summaryTab
-            }
-            .padding(.horizontal, 24)
-            .padding(.top, 16)
-            
+            DynamicScoreBox(game: game, viewModel: PastGameViewModel(game: game))
+                .padding(.horizontal, 24)
+                .padding(.top, 16)
+
+            summaryTab
+                .padding(.horizontal, 24)
+                .padding(.top, 16)
+
             gameSummary
+
+            Spacer()
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
     

@@ -10,8 +10,25 @@
 
 import SwiftUI
 
-enum ScoreError: Error {
+enum ScoreError: Error, Equatable {
     case invalidInput(String)
-    case networkError(Int)
+    case networkError
+    case emptyData
     case unknownError
+
+    static func == (lhs: ScoreError, rhs: ScoreError) -> Bool {
+        switch (lhs, rhs) {
+        case (.invalidInput(let lhsMessage), .invalidInput(let rhsMessage)):
+            return lhsMessage == rhsMessage
+        case (.networkError, .networkError):
+            return true
+        case (.emptyData, .emptyData):
+            return true
+        case (.unknownError, .unknownError):
+            return true
+        default:
+            return false
+        }
+    }
+    
 }

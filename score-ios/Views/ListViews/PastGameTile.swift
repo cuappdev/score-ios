@@ -21,14 +21,13 @@ struct PastGameTile: View {
             // VStack of school names and logos and score
             ZStack {
                 HStack {
-                    Spacer() // Pushes the rectangle to the right side
                     Spacer()
                     Rectangle()
                         .frame(width: 2, height: 70) // Adjust the thickness of the right border here
                         .foregroundColor(Constants.Colors.gray_liner) // Color of the right border
                 }
                 
-                VStack {
+                VStack(spacing: 16) {
                     // Opponent score
                     HStack {
                         AsyncImage(url: URL(string: game.opponent.image)) { image in
@@ -128,7 +127,7 @@ struct PastGameTile: View {
             
             
             // game info: sport, sex, time
-            VStack {
+            VStack(spacing: 16) {
                 HStack(spacing: 8) {
                     // Sport icon
                     // TODO: frame 24*24
@@ -152,8 +151,7 @@ struct PastGameTile: View {
                     }
                 }
                 .padding(.trailing, 20)
-                .padding(.bottom, 22)
-                
+
                 HStack {
                     Text(Date.dateToString(date: game.date))
                         .font(Constants.Fonts.gameDate)
@@ -163,6 +161,7 @@ struct PastGameTile: View {
             }
             .padding(.leading, 24)
         }
+        .frame(height: 96)
         .background(Constants.Colors.white)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .background(

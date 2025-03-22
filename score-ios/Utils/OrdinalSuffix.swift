@@ -24,5 +24,8 @@ func ordinalSuffix(for number: Int) -> String {
 }
 
 func ordinalNumberString(for number: Int) -> String {
+    if number == -1 {
+        return "--"
+    }
     return "\(number)\(ordinalSuffix(for: number))"
 }

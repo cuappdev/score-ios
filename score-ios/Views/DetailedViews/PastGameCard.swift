@@ -14,17 +14,20 @@ struct PastGameCard: View {
     var body: some View {
         VStack {
             banner
+
             Spacer()
+
             information
-        }.frame(width: 345, height: 192)
-            .background(Constants.Colors.white)
-            .clipShape(RoundedRectangle(cornerRadius: 12))
-            .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .stroke(Constants.Colors.gray_border, lineWidth: 1)
-                    .shadow(radius: 5)
-            )
-            .padding(.vertical, 10)
+        }
+        .frame(width: 345, height: 192)
+        .background(Constants.Colors.white)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(Constants.Colors.gray_border, lineWidth: 1)
+                .shadow(radius: 5)
+        )
+        .padding(.vertical, 10)
     }
 }
 

@@ -52,7 +52,7 @@ struct GameLoadingView: View {
                 .edgesIgnoringSafeArea(.all)
 
             GeometryReader { geometry in
-                VStack(spacing: Layout.verticalSpacing) {
+                VStack(alignment: .center, spacing: Layout.verticalSpacing) {
                     titleSection
                     carouselView
                     sexFilter
@@ -66,7 +66,7 @@ struct GameLoadingView: View {
 
                     Spacer(minLength: 0)
                 }
-                .frame(maxWidth: .infinity, maxHeight: geometry.size.height)
+                .frame(maxWidth: geometry.size.width, maxHeight: geometry.size.height)
                 .padding(.top, 50)
                 .shimmer()
                 .clipped()
@@ -120,10 +120,11 @@ struct GameLoadingView: View {
             ForEach(0..<5) { _ in
                 sportLoadingImage
             }
+            Spacer()
         }
         .padding(.top, 20)
         .padding(.bottom, 10)
-        .padding(.horizontal, Layout.horizontalPadding)
+        .padding(.leading, Layout.horizontalPadding)
     }
 
     private var sportLoadingImage: some View {

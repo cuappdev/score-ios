@@ -46,7 +46,6 @@
 		CE725D4D2C89120500386943 /* score_iosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE725D4C2C89120500386943 /* score_iosTests.swift */; };
 		CE725D572C89120500386943 /* score_iosUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE725D562C89120500386943 /* score_iosUITests.swift */; };
 		CE725D592C89120500386943 /* score_iosUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE725D582C89120500386943 /* score_iosUITestsLaunchTests.swift */; };
-		CE7666812D5C8CA500659A3B /* NetworkEnv.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7666802D5C8CA500659A3B /* NetworkEnv.swift */; };
 		CE7666872D5D108E00659A3B /* ScoringUpdateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7666862D5D108E00659A3B /* ScoringUpdateCell.swift */; };
 		CE8ED4F62D6BF35F00A274DE /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8ED4F52D6BF35F00A274DE /* Team.swift */; };
 		CE8ED4F82D6BF42B00A274DE /* Sport.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8ED4F72D6BF42B00A274DE /* Sport.swift */; };
@@ -59,6 +58,7 @@
 		CE8ED50E2D6C3B8000A274DE /* SportSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8ED50D2D6C3B8000A274DE /* SportSelectorView.swift */; };
 		CE8ED5122D6C3FCB00A274DE /* CarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8ED5112D6C3FCB00A274DE /* CarouselView.swift */; };
 		CE8ED5142D6C42D400A274DE /* GameSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8ED5132D6C42D400A274DE /* GameSectionHeaderView.swift */; };
+		CEA25A932D75279A00B9837A /* ScoreEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA25A922D75279A00B9837A /* ScoreEnvironment.swift */; };
 		D836AD922CB62C8800BD1545 /* NoGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D836AD912CB62C8800BD1545 /* NoGameView.swift */; };
 		D83EE8862CC9917C008B693C /* ScoreSummaryTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83EE8852CC9917C008B693C /* ScoreSummaryTile.swift */; };
 		D85802102D6C38700075B036 /* DynamicScoreBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D858020F2D6C38670075B036 /* DynamicScoreBox.swift */; };
@@ -141,7 +141,6 @@
 		CE725D522C89120500386943 /* score-iosUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "score-iosUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE725D562C89120500386943 /* score_iosUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = score_iosUITests.swift; sourceTree = "<group>"; };
 		CE725D582C89120500386943 /* score_iosUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = score_iosUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		CE7666802D5C8CA500659A3B /* NetworkEnv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkEnv.swift; sourceTree = "<group>"; };
 		CE7666862D5D108E00659A3B /* ScoringUpdateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoringUpdateCell.swift; sourceTree = "<group>"; };
 		CE8ED4F52D6BF35F00A274DE /* Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
 		CE8ED4F72D6BF42B00A274DE /* Sport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sport.swift; sourceTree = "<group>"; };
@@ -154,6 +153,8 @@
 		CE8ED50D2D6C3B8000A274DE /* SportSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportSelectorView.swift; sourceTree = "<group>"; };
 		CE8ED5112D6C3FCB00A274DE /* CarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselView.swift; sourceTree = "<group>"; };
 		CE8ED5132D6C42D400A274DE /* GameSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSectionHeaderView.swift; sourceTree = "<group>"; };
+		CEA25A922D75279A00B9837A /* ScoreEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreEnvironment.swift; sourceTree = "<group>"; };
+		CEA25A962D75292900B9837A /* Keys.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Keys.xcconfig; path = ScoreSecrets/Keys.xcconfig; sourceTree = SOURCE_ROOT; };
 		D836AD912CB62C8800BD1545 /* NoGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoGameView.swift; sourceTree = "<group>"; };
 		D83EE8852CC9917C008B693C /* ScoreSummaryTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreSummaryTile.swift; sourceTree = "<group>"; };
 		D858020F2D6C38670075B036 /* DynamicScoreBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicScoreBox.swift; sourceTree = "<group>"; };
@@ -171,6 +172,7 @@
 		D8B1C9D02CD2CE3C0095E563 /* PastGamesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastGamesView.swift; sourceTree = "<group>"; };
 		D8B1C9D22CD2D20A0095E563 /* PastGameTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastGameTile.swift; sourceTree = "<group>"; };
 		D8DD4E632CFD48E400F2C46E /* Team.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Team.graphql; sourceTree = "<group>"; };
+		FD31F6D22D792E10001458FA /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_clone.sh; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -301,6 +303,8 @@
 		CE725D2F2C89120100386943 = {
 			isa = PBXGroup;
 			children = (
+				FD31F6D12D792DF4001458FA /* ci_scripts */,
+				CEA25A972D752C6F00B9837A /* ScoreSecrets */,
 				CE725D3A2C89120200386943 /* score-ios */,
 				CE725D4B2C89120500386943 /* score-iosTests */,
 				CE725D552C89120500386943 /* score-iosUITests */,
@@ -322,6 +326,7 @@
 		CE725D3A2C89120200386943 /* score-ios */ = {
 			isa = PBXGroup;
 			children = (
+				CEA25A912D75278800B9837A /* Config */,
 				D87787C62CFFAE3D00EA79E1 /* ViewModels */,
 				D891020D2CF0EB88004CE226 /* Networking */,
 				CE528FF32C96A50F00C238B5 /* Info.plist */,
@@ -331,7 +336,6 @@
 				CE335CCE2C9227050037F572 /* Utils */,
 				CE335CCD2C9227000037F572 /* Resources */,
 				CE335CCC2C9226F90037F572 /* Models */,
-				CE335CCA2C9226EB0037F572 /* Configs */,
 			);
 			path = "score-ios";
 			sourceTree = "<group>";
@@ -412,6 +416,22 @@
 			path = ListViews;
 			sourceTree = "<group>";
 		};
+		CEA25A912D75278800B9837A /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				CEA25A922D75279A00B9837A /* ScoreEnvironment.swift */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		CEA25A972D752C6F00B9837A /* ScoreSecrets */ = {
+			isa = PBXGroup;
+			children = (
+				CEA25A962D75292900B9837A /* Keys.xcconfig */,
+			);
+			path = ScoreSecrets;
+			sourceTree = "<group>";
+		};
 		D87787C62CFFAE3D00EA79E1 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
@@ -441,10 +461,17 @@
 			isa = PBXGroup;
 			children = (
 				D89102122CF10CA5004CE226 /* NetworkManager.swift */,
-				CE7666802D5C8CA500659A3B /* NetworkEnv.swift */,
 				D891020F2CF0EBA0004CE226 /* DataCoordinator.swift */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		FD31F6D12D792DF4001458FA /* ci_scripts */ = {
+			isa = PBXGroup;
+			children = (
+				FD31F6D22D792E10001458FA /* ci_post_clone.sh */,
+			);
+			path = ci_scripts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -635,6 +662,7 @@
 				D85802102D6C38700075B036 /* DynamicScoreBox.swift in Sources */,
 				D8B1C9D32CD2D20A0095E563 /* PastGameTile.swift in Sources */,
 				CE528FA22C9651C800C238B5 /* UpcomingGameTile.swift in Sources */,
+				CEA25A932D75279A00B9837A /* ScoreEnvironment.swift in Sources */,
 				CE8ED4FC2D6BF47C00A274DE /* DummyData.swift in Sources */,
 				CE335CD92C9244230037F572 /* Game.swift in Sources */,
 				D89102102CF0EBA4004CE226 /* DataCoordinator.swift in Sources */,
@@ -658,7 +686,6 @@
 				CE528FA42C9653C200C238B5 /* Error.swift in Sources */,
 				CE335CD52C922ECB0037F572 /* Constants.swift in Sources */,
 				CE8ED4FE2D6BF49E00A274DE /* GameUpdate.swift in Sources */,
-				CE7666812D5C8CA500659A3B /* NetworkEnv.swift in Sources */,
 				D86347E12CE98D37003DD8F6 /* TabViewIcon.swift in Sources */,
 				CE3C9C412D010177008BFB4C /* ScoringSummary.swift in Sources */,
 				CE8ED50E2D6C3B8000A274DE /* SportSelectorView.swift in Sources */,
@@ -824,16 +851,18 @@
 		};
 		CE725D5D2C89120500386943 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CEA25A962D75292900B9837A /* Keys.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"score-ios/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = ZGMCXU7X3U;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "score-ios/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Score;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -844,7 +873,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "daniel-chuang.score-ios";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cornellappdev.score-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -854,16 +883,18 @@
 		};
 		CE725D5E2C89120500386943 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CEA25A962D75292900B9837A /* Keys.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"score-ios/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = ZGMCXU7X3U;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "score-ios/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Score;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -874,7 +905,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "daniel-chuang.score-ios";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cornellappdev.score-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

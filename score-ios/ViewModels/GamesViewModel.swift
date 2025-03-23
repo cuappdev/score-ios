@@ -59,6 +59,9 @@ class GamesViewModel: ObservableObject
     // Networking
     func fetchGames() {
         NetworkManager.shared.fetchGames { fetchedGames, error in
+            self.games.removeAll()
+            self.allPastGames.removeAll()
+            self.allUpcomingGames.removeAll()
             if let fetchedGames = fetchedGames {
                 var updatedGames: [Game] = []
                 fetchedGames.indices.forEach { index in
@@ -99,6 +102,7 @@ class GamesViewModel: ObservableObject
             }
             else if let error = error {
                 self.errorMessage = error.localizedDescription
+                print(ScoreEnvironment.baseURL)
                 print("Error in fetchGames: \(self.errorMessage ?? "Unknown error")")
             }
         }

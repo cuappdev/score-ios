@@ -8,14 +8,16 @@
 import SwiftUI
 
 struct GameSectionHeaderView: View {
+
     @StateObject private var vm = GamesViewModel.shared
     var headerTitle: String
-    
+
     var body: some View {
         VStack {
             VStack {
                 Text(headerTitle)
                     .font(Constants.Fonts.semibold24)
+                    .foregroundStyle(Constants.Colors.black)
                     .frame(maxWidth: .infinity, alignment: .leading) // Align to the left
                 PickerView(selectedSex: $vm.selectedSex, selectedIndex: $vm.selectedSexIndex)
                     .padding(.bottom, 12)
@@ -23,7 +25,7 @@ struct GameSectionHeaderView: View {
                 SportSelectorView()
             }
             .padding(.bottom, 16)
-            
+
             Divider()
                 .background(.clear)
         }

@@ -15,6 +15,7 @@ struct NoGameView: View {
                Image("speaker")
                     .resizable()
                     .frame(width: 100, height: 100, alignment: .center)
+                
                 Text("No games yet.")
                     .font(Constants.Fonts.bodyBold)
                     .foregroundStyle(Constants.Colors.gray_text)

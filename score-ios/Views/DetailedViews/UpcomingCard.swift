@@ -23,7 +23,7 @@ struct UpcomingGameCard: View {
         }
         .frame(width: 345, height: 192)
         .background(Constants.Colors.white)
-        .clipShape(RoundedRectangle(cornerRadius: 19))
+        .clipShape(RoundedRectangle(cornerRadius: 12))
         .background(
             RoundedRectangle(cornerRadius: 12)
                 .stroke(Constants.Colors.gray_border, lineWidth: 1)
@@ -105,8 +105,7 @@ extension UpcomingGameCard {
                     .foregroundStyle(.gray)
             }
         }
-        .padding(.leading, 20)
-        .padding(.trailing, 20)
+        .padding(.horizontal, 20)
         .padding(.bottom, 13)
     }
 }

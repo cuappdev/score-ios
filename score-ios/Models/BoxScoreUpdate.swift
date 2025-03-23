@@ -24,7 +24,7 @@ struct BoxScoreItem: Decodable {
         if let item = item {
             self.team = item.team ?? ""
             self.period = item.period ?? ""
-            self.time = item.time ?? ""
+            self.time = item.time ?? "--:--"
             self.description = item.description ?? "N/A"
             self.scorer = item.scorer ?? ""
             self.assist = item.assist ?? ""

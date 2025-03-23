@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct MainTabView: View {
+
     // MARK: Properties
+
     @Binding var selection: Int
     @StateObject private var gamesViewModel = GamesViewModel.shared
-    
+
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottom) {
@@ -22,26 +24,29 @@ struct MainTabView: View {
                     PastGamesView()
                         .environmentObject(gamesViewModel)
                 }
-            }
-            
-            HStack {
-                ForEach(0..<2, id: \.self) {
-                    index in
-                    TabViewIcon(selectionIndex: $selection, itemIndex: index)
-                        .frame(width: 67, height: 45)
-                    if index != 1 {
-                        Spacer()
+
+                HStack {
+                    ForEach(0..<2, id: \.self) {
+                        index in
+                        TabViewIcon(selectionIndex: $selection, itemIndex: index)
+                            .frame(width: 67, height: 45)
+                            .padding(.top, 10)
+                        if index != 1 {
+                            Spacer()
+                        }
                     }
                 }
+                .padding(.horizontal, 86)
+                .padding(.bottom, 40)
+                .frame(maxWidth: .infinity)
+                .background(
+                    Color.white
+                        .shadow(color: Color.black.opacity(0.25), radius: 10, x: 0, y: -6)
+                )
+
             }
             .ignoresSafeArea(edges: .bottom)
-            .padding(.leading, 86)
-            .padding(.trailing, 86)
-            .padding(.top, 10)
-            .frame(maxWidth: .infinity)
-            .background(Constants.Colors.white)
-            .shadow(radius: 6)
-            
+            .background(Color.white)
         }
     }
 }

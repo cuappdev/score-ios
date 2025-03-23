@@ -39,9 +39,8 @@ struct ScoreSummaryTile: View {
                     .font(Constants.Fonts.gameScore)
             }
         }
-        .frame(width: 345, height: 56)
-        .padding(.leading, 24)
-        .padding(.trailing, 24)
+        .frame(height: 56)
+        .padding(.horizontal, 24)
     }
 }
 

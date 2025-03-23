@@ -31,5 +31,5 @@ struct FilterTile : View {
 }
 
 #Preview () {
-    FilterTile(sport: .Basketball, selected: true)
+    FilterTile(sport: .IceHockey, selected: true)
 }

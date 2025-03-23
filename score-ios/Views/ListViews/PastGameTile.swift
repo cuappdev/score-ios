@@ -35,7 +35,7 @@ struct PastGameTile: View {
                         }
                         .frame(width: 20, height: 20)
 
-                        if (corWon) {
+                        if (corWon || tie) {
                             ScrollView(.horizontal, showsIndicators: false){
                                 Text(game.opponent.name.removingUniversityPrefix())
                                     .font(Constants.Fonts.gameTitle)

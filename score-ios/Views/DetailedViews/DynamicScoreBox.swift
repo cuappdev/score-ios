@@ -93,8 +93,8 @@ extension DynamicScoreBox {
                     .font(Constants.Fonts.gameText)
                     .frame(alignment: .leading)
                     .padding(.leading, 5)
-                    .frame(width: firstColWidth, alignment: .leading)
             }
+            .frame(width: firstColWidth, alignment: .leading)
             .withTrailingFadeGradient()
             
             ForEach(0..<viewModel.numberOfRounds, id: \..self) { index in

@@ -36,15 +36,21 @@ struct PastGameTile: View {
                         .frame(width: 20, height: 20)
 
                         if (corWon) {
-                            Text(game.opponent.name)
-                                .font(Constants.Fonts.gameTitle)
-                                .foregroundStyle(Constants.Colors.gray_text)
-                                .lineLimit(1)
+                            ScrollView(.horizontal, showsIndicators: false){
+                                Text(game.opponent.name.removingUniversityPrefix())
+                                    .font(Constants.Fonts.gameTitle)
+                                    .foregroundStyle(Constants.Colors.gray_text)
+                                    .lineLimit(1)
+                            }
+                            .withTrailingFadeGradient()
                         } else {
-                            Text(game.opponent.name)
-                                .font(Constants.Fonts.gameTitle)
-                                .foregroundStyle(Constants.Colors.black)
-                                .lineLimit(1)
+                            ScrollView(.horizontal, showsIndicators: false){
+                                Text(game.opponent.name.removingUniversityPrefix())
+                                    .font(Constants.Fonts.gameTitle)
+                                    .foregroundStyle(Constants.Colors.black)
+                                    .lineLimit(1)
+                            }
+                            .withTrailingFadeGradient()
                         }
                         
                         

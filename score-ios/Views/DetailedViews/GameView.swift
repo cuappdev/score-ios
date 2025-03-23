@@ -117,13 +117,16 @@ extension GameView {
         HStack {
             VStack(alignment: .leading, spacing: 4) {
                 Text("\(game.sex.description) \(game.sport.description)")
-                    .font(Constants.Fonts.medium14)
+                    .font(Constants.Fonts.subheader)
                     .foregroundStyle(Constants.Colors.black)
-                
-                Text("Cornell vs. " + game.opponent.name)
-                    .font(Constants.Fonts.header)
-                    .foregroundStyle(Constants.Colors.black)
-                
+
+                ScrollView(.horizontal, showsIndicators: false){
+                    Text("Cornell vs. " + game.opponent.name.removingUniversityPrefix())
+                        .font(Constants.Fonts.header)
+                        .foregroundStyle(Constants.Colors.black)
+                }
+                .withTrailingFadeGradient()
+    
                 HStack(spacing: 10) {
                     HStack {
                         Image("Location-g")

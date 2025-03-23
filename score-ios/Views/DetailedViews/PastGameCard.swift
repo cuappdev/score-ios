@@ -94,7 +94,7 @@ extension PastGameCard {
                     Constants.Colors.gray_icons
                 }
                 .frame(width: 25, height: 27)
-                Text(game.opponent.name)
+                Text(game.opponent.name.removingUniversityPrefix())
                     .font(Constants.Fonts.gameTitle)
                     .foregroundStyle(Color.black)
                 Spacer()

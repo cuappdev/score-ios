@@ -87,11 +87,15 @@ extension DynamicScoreBox {
     
     private func thirdRow(firstColWidth: CGFloat, columnWidth: CGFloat) -> some View {
         HStack(spacing: 0) {
-            Text(game.opponent.name)
-                .lineLimit(1)
-                .font(Constants.Fonts.gameText)
-                .padding(.leading, 5)
-                .frame(width: firstColWidth, alignment: .leading)
+            ScrollView(.horizontal, showsIndicators: false){
+                Text(game.opponent.name.removingUniversityPrefix())
+                    .lineLimit(1)
+                    .font(Constants.Fonts.gameText)
+                    .frame(alignment: .leading)
+                    .padding(.leading, 5)
+                    .frame(width: firstColWidth, alignment: .leading)
+            }
+            .withTrailingFadeGradient()
             
             ForEach(0..<viewModel.numberOfRounds, id: \..self) { index in
                 Text(game.timeUpdates.indices.contains(index) ? "\(game.timeUpdates[index].opponentScore)" : "-")

@@ -8,44 +8,43 @@
 import SwiftUI
 
 struct UpcomingGameTile: View {
-    
+
     var game: Game
-    
+
     var body: some View {
         let liveNow: Bool = game.date == Date.currentDate
-        
-        VStack {
+
+        VStack(spacing: 16) {
             // Opponent Logo, Opponent Name | Sport Icon, Sex Icon
             HStack(spacing: 8) {
                 HStack(spacing: 8) {
                     AsyncImage(url: URL(string: game.opponent.image)) {image in
                         image.resizable()
                     } placeholder: {
+                        // TODO: Make a placeholder image
                         Constants.Colors.gray_icons
                     }
                     .frame(width: 20, height: 20)
-
-                    Text(game.opponent.name)
-                        .font(Constants.Fonts.gameTitle)
-                        .lineLimit(1)
+                    
+                    ScrollView(.horizontal, showsIndicators: false){
+                        Text(game.opponent.name.removingUniversityPrefix())
+                            .font(Constants.Fonts.gameTitle)
+                            .foregroundStyle(Constants.Colors.black)
+                            .lineLimit(1)
+                    }
+                    .withTrailingFadeGradient()
                 }
                 .padding(.leading, 20)
-                
+
                 Spacer()
-                
+
                 HStack(spacing: 8) {
-//                    // Sport icon
-//                    Image(game.sport.rawValue+"-g")
-//                        .resizable()
-//                        .renderingMode(.template)
-//                        .scaledToFill()
-//                        .frame(width: 19, height: 19)
-//                        .foregroundStyle(Constants.Colors.iconGray)
-                        
+
                     ZStack {
                         Circle()
                             .frame(width: 19, height: 19)
                             .foregroundStyle(.white)
+                        
                         Image(game.sport.rawValue+"-g")
                             .resizable()
                             .renderingMode(.template)
@@ -53,22 +52,23 @@ struct UpcomingGameTile: View {
                             .frame(width: 19, height: 19)
                             .foregroundStyle(Constants.Colors.iconGray)
                     }
-                    
+
                     // Sex icon
                     ZStack {
                         Circle()
                             .frame(width: 19, height: 19)
                             .foregroundStyle(.gray)
+                        
                         Image(game.sex.description)
                             .resizable()
                             .renderingMode(.template)
                             .frame(width: 19, height: 19)
                             .foregroundStyle(Constants.Colors.white)
                     }
-                }   
+                }
                 .padding(.trailing, 20)
             }
-            
+
             // Location Icon, City, State | Date
             HStack {
                 HStack (spacing: 4) {
@@ -77,10 +77,12 @@ struct UpcomingGameTile: View {
                         .renderingMode(/*@START_MENU_TOKEN@*/.template/*@END_MENU_TOKEN@*/)
                         .frame(width: 13.7, height: 20)
                         .foregroundStyle(Constants.Colors.iconGray)
-                    Text("\(game.city), \(game.state)")
+                    
+                    Text(gameLocation(city: game.city, state: game.state))
                         .font(Constants.Fonts.gameText)
                         .foregroundStyle(Constants.Colors.gray_text)
-                }   .padding(.leading, 20)
+                }
+                .padding(.leading, 20)
                 
                 Spacer()
                 
@@ -97,17 +99,28 @@ struct UpcomingGameTile: View {
                 }
             }
         }
-            .frame(width: 345, height: 96)
-            .background(Constants.Colors.white)
-            .clipShape(RoundedRectangle(cornerRadius: 12))
-            .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .stroke(Constants.Colors.gray_border, lineWidth: 1)
-                    .shadow(radius: 5)
-            )
+        .padding(.vertical, 16)
+        .background(Constants.Colors.white)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(Constants.Colors.gray_border, lineWidth: 1)
+                .shadow(radius: 5)
+        )
     }
 }
 
 #Preview {
     UpcomingGameTile(game: Game.dummyData[7])
+}
+
+extension UpcomingGameTile {
+    
+    func gameLocation(city: String, state: String) -> String {
+        if city.isEmpty {
+            return "N/A"
+        }
+        return "\(city), \(state)"
+    }
+    
 }

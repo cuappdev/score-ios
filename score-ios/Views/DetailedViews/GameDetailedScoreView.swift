@@ -20,21 +20,18 @@ struct GameDetailedScoreView: View {
                 // information
                 information
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.leading, 24)
-                    .padding(.trailing, 24)
-                
+                    .padding(.horizontal, 24)
+            
                 if (gameStarted) {
                     VStack {
                         scoreBox
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.leading, 24)
-                    .padding(.trailing, 24)
+                    .padding(.horizontal, 24)
                     
                     summaryTab
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.leading, 24)
-                    .padding(.trailing, 24)
+                    .padding(.horizontal, 24)
                     
                     // score summary
                     if (!game.timeUpdates.isEmpty) {
@@ -104,9 +101,12 @@ extension GameDetailedScoreView {
         VStack(alignment: .leading, spacing: 4) {
             Text("Men's Football")
                 .font(Constants.Fonts.medium14)
-            Text("Cornell vs. " + game.opponent.name)
-                .font(Constants.Fonts.semibold24)
-            
+            ScrollView(.horizontal, showsIndicators: false){
+                Text("Cornell vs. " + game.opponent.name.removingUniversityPrefix())
+                    .font(Constants.Fonts.semibold24)
+            }
+            .withTrailingFadeGradient()
+
             HStack() {
                 Image("Location-g")
                     .resizable()
@@ -131,7 +131,7 @@ extension GameDetailedScoreView {
                 .frame(width: 93, height: 118)
             
             Text("Time Until Start")
-                .font(Constants.Fonts.h2)
+                .font(Constants.Fonts.Header.h2)
                 .padding(.top, 24)
             
             HStack {
@@ -244,10 +244,14 @@ extension GameDetailedScoreView {
     
     private var thirdRow: some View {
         HStack {
-            Text(game.opponent.name)
-                .font(Constants.Fonts.gameText)
-                .foregroundStyle(.gray)
-                .frame(width: 60, alignment: .leading)
+            ScrollView(.horizontal, showsIndicators: false){
+                Text(game.opponent.name.removingUniversityPrefix())
+                    .font(Constants.Fonts.gameText)
+                    .foregroundStyle(.gray)
+                    .frame(width: 60, alignment: .leading)
+            }
+            .withTrailingFadeGradient()
+
             Text("-")
                 .font(Constants.Fonts.gameText)
                 .foregroundStyle(.gray)

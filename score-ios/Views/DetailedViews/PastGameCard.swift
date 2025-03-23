@@ -9,25 +9,30 @@ import SwiftUI
 
 struct PastGameCard: View {
     var game: Game
+    @ObservedObject var viewModel: PastGameViewModel
+    
     var body: some View {
         VStack {
             banner
+
             Spacer()
+
             information
-        }.frame(width: 345, height: 192)
-            .background(Constants.Colors.white)
-            .clipShape(RoundedRectangle(cornerRadius: 19))
-            .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .stroke(Constants.Colors.gray_border, lineWidth: 1)
-                    .shadow(radius: 5)
-            )
-            .padding(.vertical, 10)
+        }
+        .frame(width: 345, height: 192)
+        .background(Constants.Colors.white)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(Constants.Colors.gray_border, lineWidth: 1)
+                .shadow(radius: 5)
+        )
+        .padding(.vertical, 10)
     }
 }
 
 #Preview {
-    PastGameCard(game: Game.dummyData[7])
+    PastGameCard(game: Game.dummyData[7], viewModel: PastGameViewModel(game: Game.dummyData[7]))
 }
 
 // MARK: Components
@@ -43,7 +48,7 @@ extension PastGameCard {
             Spacer()
             
             HStack {
-                Text(game.gameUpdates.count != 0 ? String(game.gameUpdates[game.gameUpdates.count-1].cornellScore) : "999")
+                Text(String(viewModel.cornellTotalScore))
                     .font(Constants.Fonts.title)
                     .italic()
                     .foregroundStyle(.white)
@@ -54,7 +59,7 @@ extension PastGameCard {
                     .foregroundStyle(.white)
                 
                 // TODO: Change the blur
-                Text(game.gameUpdates.count != 0 ? String(game.gameUpdates[game.gameUpdates.count-1].opponentScore) : "999")
+                Text(String(viewModel.opponentTotalScore))
                     .font(Constants.Fonts.title)
                     .blur(radius: 0.5)
                     .italic()
@@ -89,7 +94,7 @@ extension PastGameCard {
                     Constants.Colors.gray_icons
                 }
                 .frame(width: 25, height: 27)
-                Text(game.opponent.name)
+                Text(game.opponent.name.removingUniversityPrefix())
                     .font(Constants.Fonts.gameTitle)
                     .foregroundStyle(Color.black)
                 Spacer()
@@ -114,8 +119,7 @@ extension PastGameCard {
                     .foregroundStyle(.gray)
             }
         }
-        .padding(.leading, 20)
-        .padding(.trailing, 20)
+        .padding(.horizontal, 20)
         .padding(.bottom, 13)
     }
 }

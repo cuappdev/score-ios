@@ -27,6 +27,7 @@ struct ScoringSummary : View {
                 }
             }
         }
+        .background(Color.white)
         .toolbar {
             ToolbarItem(placement: .principal) {
                 Text("Scoring Summary")

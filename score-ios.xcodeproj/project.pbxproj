@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C87865D2D8CD76900EBDF74 /* TrailingFadeGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C87865C2D8CD76900EBDF74 /* TrailingFadeGradient.swift */; };
+		1C87865F2D8CDADC00EBDF74 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C87865E2D8CDADC00EBDF74 /* String+Extension.swift */; };
 		CE335CD32C922E8D0037F572 /* PrimaryColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE335CD22C922E8D0037F572 /* PrimaryColors.swift */; };
 		CE335CD52C922ECB0037F572 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE335CD42C922ECB0037F572 /* Constants.swift */; };
 		CE335CD72C922F390037F572 /* Dates.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE335CD62C922F390037F572 /* Dates.swift */; };
@@ -64,6 +66,7 @@
 		D86347B12CDBFF7C003DD8F6 /* UpcomingGamesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86347B02CDBFF7C003DD8F6 /* UpcomingGamesView.swift */; };
 		D86347DF2CE98B3C003DD8F6 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86347DE2CE98B3C003DD8F6 /* MainTabView.swift */; };
 		D86347E12CE98D37003DD8F6 /* TabViewIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86347E02CE98D37003DD8F6 /* TabViewIcon.swift */; };
+		D864B5AB2D793A7400A3A50E /* PastGameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D864B5AA2D793A7400A3A50E /* PastGameViewModel.swift */; };
 		D87787C82CFFAE5A00EA79E1 /* GamesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87787C72CFFAE5200EA79E1 /* GamesViewModel.swift */; };
 		D87882282CC060FC00421F67 /* GameDetailedScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87882272CC060FC00421F67 /* GameDetailedScoreView.swift */; };
 		D89102042CED69EF004CE226 /* Apollo in Frameworks */ = {isa = PBXBuildFile; productRef = D89102032CED69EF004CE226 /* Apollo */; };
@@ -76,6 +79,9 @@
 		D8B1C9D12CD2CE3D0095E563 /* PastGamesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B1C9D02CD2CE3C0095E563 /* PastGamesView.swift */; };
 		D8B1C9D32CD2D20A0095E563 /* PastGameTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B1C9D22CD2D20A0095E563 /* PastGameTile.swift */; };
 		D8DD4E642CFD48ED00F2C46E /* Team.graphql in Resources */ = {isa = PBXBuildFile; fileRef = D8DD4E632CFD48E400F2C46E /* Team.graphql */; };
+		FD5A38DB2D8F2BDD00CF5E30 /* GameLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5A38DA2D8F2BDD00CF5E30 /* GameLoadingView.swift */; };
+		FD5A38DD2D8F30CC00CF5E30 /* GameErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5A38DC2D8F30CC00CF5E30 /* GameErrorView.swift */; };
+		FD5A38DF2D8F3E1400CF5E30 /* ShimmerModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5A38DE2D8F3E1400CF5E30 /* ShimmerModifier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +102,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1C87865C2D8CD76900EBDF74 /* TrailingFadeGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailingFadeGradient.swift; sourceTree = "<group>"; };
+		1C87865E2D8CDADC00EBDF74 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		CE335CD22C922E8D0037F572 /* PrimaryColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryColors.swift; sourceTree = "<group>"; };
 		CE335CD42C922ECB0037F572 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CE335CD62C922F390037F572 /* Dates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dates.swift; sourceTree = "<group>"; };
@@ -158,6 +166,8 @@
 		D86347B02CDBFF7C003DD8F6 /* UpcomingGamesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingGamesView.swift; sourceTree = "<group>"; };
 		D86347DE2CE98B3C003DD8F6 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		D86347E02CE98D37003DD8F6 /* TabViewIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewIcon.swift; sourceTree = "<group>"; };
+		D864B5A92D79169C00A3A50E /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_clone.sh; sourceTree = "<group>"; };
+		D864B5AA2D793A7400A3A50E /* PastGameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastGameViewModel.swift; sourceTree = "<group>"; };
 		D87787C72CFFAE5200EA79E1 /* GamesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesViewModel.swift; sourceTree = "<group>"; };
 		D87882272CC060FC00421F67 /* GameDetailedScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetailedScoreView.swift; sourceTree = "<group>"; };
 		D89102062CED6A28004CE226 /* schema.graphqls */ = {isa = PBXFileReference; lastKnownFileType = text; path = schema.graphqls; sourceTree = "<group>"; };
@@ -168,7 +178,9 @@
 		D8B1C9D02CD2CE3C0095E563 /* PastGamesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastGamesView.swift; sourceTree = "<group>"; };
 		D8B1C9D22CD2D20A0095E563 /* PastGameTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastGameTile.swift; sourceTree = "<group>"; };
 		D8DD4E632CFD48E400F2C46E /* Team.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Team.graphql; sourceTree = "<group>"; };
-		FD31F6D22D792E10001458FA /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_clone.sh; sourceTree = "<group>"; };
+		FD5A38DA2D8F2BDD00CF5E30 /* GameLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLoadingView.swift; sourceTree = "<group>"; };
+		FD5A38DC2D8F30CC00CF5E30 /* GameErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameErrorView.swift; sourceTree = "<group>"; };
+		FD5A38DE2D8F3E1400CF5E30 /* ShimmerModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerModifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,6 +210,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1C87865B2D8CD73C00EBDF74 /* ViewModifiers */ = {
+			isa = PBXGroup;
+			children = (
+				1C87865C2D8CD76900EBDF74 /* TrailingFadeGradient.swift */,
+			);
+			path = ViewModifiers;
+			sourceTree = "<group>";
+		};
+		CE335CCA2C9226EB0037F572 /* Configs */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Configs;
+			sourceTree = "<group>";
+		};
 		CE335CCC2C9226F90037F572 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -226,11 +253,14 @@
 		CE335CCE2C9227050037F572 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				1C87865B2D8CD73C00EBDF74 /* ViewModifiers */,
 				CE335CD22C922E8D0037F572 /* PrimaryColors.swift */,
 				CE335CD42C922ECB0037F572 /* Constants.swift */,
 				CE335CD62C922F390037F572 /* Dates.swift */,
 				CE528FA32C9653C200C238B5 /* Error.swift */,
 				CE3C9C422D011A23008BFB4C /* OrdinalSuffix.swift */,
+				FD5A38DE2D8F3E1400CF5E30 /* ShimmerModifier.swift */,
+				1C87865E2D8CDADC00EBDF74 /* String+Extension.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -282,7 +312,7 @@
 		CE725D2F2C89120100386943 = {
 			isa = PBXGroup;
 			children = (
-				FD31F6D12D792DF4001458FA /* ci_scripts */,
+				D864B5A82D79168800A3A50E /* ci_scripts */,
 				CEA25A972D752C6F00B9837A /* ScoreSecrets */,
 				CE725D3A2C89120200386943 /* score-ios */,
 				CE725D4B2C89120500386943 /* score-iosTests */,
@@ -391,6 +421,8 @@
 				CE8ED50D2D6C3B8000A274DE /* SportSelectorView.swift */,
 				CE8ED5112D6C3FCB00A274DE /* CarouselView.swift */,
 				CE8ED5132D6C42D400A274DE /* GameSectionHeaderView.swift */,
+				FD5A38DA2D8F2BDD00CF5E30 /* GameLoadingView.swift */,
+				FD5A38DC2D8F30CC00CF5E30 /* GameErrorView.swift */,
 			);
 			path = ListViews;
 			sourceTree = "<group>";
@@ -411,10 +443,19 @@
 			path = ScoreSecrets;
 			sourceTree = "<group>";
 		};
+		D864B5A82D79168800A3A50E /* ci_scripts */ = {
+			isa = PBXGroup;
+			children = (
+				D864B5A92D79169C00A3A50E /* ci_post_clone.sh */,
+			);
+			path = ci_scripts;
+			sourceTree = "<group>";
+		};
 		D87787C62CFFAE3D00EA79E1 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
 				D87787C72CFFAE5200EA79E1 /* GamesViewModel.swift */,
+				D864B5AA2D793A7400A3A50E /* PastGameViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -443,14 +484,6 @@
 				D891020F2CF0EBA0004CE226 /* DataCoordinator.swift */,
 			);
 			path = Networking;
-			sourceTree = "<group>";
-		};
-		FD31F6D12D792DF4001458FA /* ci_scripts */ = {
-			isa = PBXGroup;
-			children = (
-				FD31F6D22D792E10001458FA /* ci_post_clone.sh */,
-			);
-			path = ci_scripts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -518,7 +551,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1510;
-				LastUpgradeCheck = 1510;
+				LastUpgradeCheck = 1620;
 				TargetAttributes = {
 					CE725D372C89120200386943 = {
 						CreatedOnToolsVersion = 15.1;
@@ -641,7 +674,9 @@
 				D85802102D6C38700075B036 /* DynamicScoreBox.swift in Sources */,
 				D8B1C9D32CD2D20A0095E563 /* PastGameTile.swift in Sources */,
 				CE528FA22C9651C800C238B5 /* UpcomingGameTile.swift in Sources */,
+				FD5A38DD2D8F30CC00CF5E30 /* GameErrorView.swift in Sources */,
 				CEA25A932D75279A00B9837A /* ScoreEnvironment.swift in Sources */,
+				FD5A38DB2D8F2BDD00CF5E30 /* GameLoadingView.swift in Sources */,
 				CE8ED4FC2D6BF47C00A274DE /* DummyData.swift in Sources */,
 				CE335CD92C9244230037F572 /* Game.swift in Sources */,
 				D89102102CF0EBA4004CE226 /* DataCoordinator.swift in Sources */,
@@ -650,8 +685,10 @@
 				D86347AF2CDBD2F4003DD8F6 /* PastGameCard.swift in Sources */,
 				CE8ED5122D6C3FCB00A274DE /* CarouselView.swift in Sources */,
 				CE528FF72C979DA000C238B5 /* GameView.swift in Sources */,
+				1C87865D2D8CD76900EBDF74 /* TrailingFadeGradient.swift in Sources */,
 				CE8ED4F82D6BF42B00A274DE /* Sport.swift in Sources */,
 				D87882282CC060FC00421F67 /* GameDetailedScoreView.swift in Sources */,
+				D864B5AB2D793A7400A3A50E /* PastGameViewModel.swift in Sources */,
 				D83EE8862CC9917C008B693C /* ScoreSummaryTile.swift in Sources */,
 				CE8ED5002D6BF4BE00A274DE /* BoxScoreUpdate.swift in Sources */,
 				D89461192CBF393B0010C532 /* UpcomingCard.swift in Sources */,
@@ -660,6 +697,7 @@
 				D8B1C9D12CD2CE3D0095E563 /* PastGamesView.swift in Sources */,
 				CE335CD32C922E8D0037F572 /* PrimaryColors.swift in Sources */,
 				CE725D3C2C89120200386943 /* Home.swift in Sources */,
+				FD5A38DF2D8F3E1400CF5E30 /* ShimmerModifier.swift in Sources */,
 				CE528FA02C96420700C238B5 /* PickerView.swift in Sources */,
 				CE528FA42C9653C200C238B5 /* Error.swift in Sources */,
 				CE335CD52C922ECB0037F572 /* Constants.swift in Sources */,
@@ -671,6 +709,7 @@
 				CE8ED5142D6C42D400A274DE /* GameSectionHeaderView.swift in Sources */,
 				D86347B12CDBFF7C003DD8F6 /* UpcomingGamesView.swift in Sources */,
 				D86347DF2CE98B3C003DD8F6 /* MainTabView.swift in Sources */,
+				1C87865F2D8CDADC00EBDF74 /* String+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -833,18 +872,18 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_ASSET_PATHS = "\"score-ios/Preview Content\"";
 				DEVELOPMENT_TEAM = ZGMCXU7X3U;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "score-ios/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Score;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -852,9 +891,11 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cornellappdev.score-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -865,18 +906,18 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_ASSET_PATHS = "\"score-ios/Preview Content\"";
 				DEVELOPMENT_TEAM = ZGMCXU7X3U;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "score-ios/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Score;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -884,16 +925,17 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cornellappdev.score-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
 		CE725D602C89120500386943 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -913,7 +955,6 @@
 		CE725D612C89120500386943 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -933,7 +974,6 @@
 		CE725D632C89120500386943 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9VB7SD8G8W;
@@ -951,7 +991,6 @@
 		CE725D642C89120500386943 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9VB7SD8G8W;

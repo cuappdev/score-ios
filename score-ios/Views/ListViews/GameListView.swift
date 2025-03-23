@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct GameListView<TileView: View>: View {
+    
     let games: [Game]
     let tileView: (Game) -> TileView
     
@@ -22,7 +23,7 @@ struct GameListView<TileView: View>: View {
                         let isCellCovered = cellGeometry.frame(in: .global).minY < 100
                         if !isCellCovered {
                             NavigationLink {
-                                GameView(game: game)
+                                GameView(game: game, viewModel: PastGameViewModel(game: game))
                                     .navigationBarBackButtonHidden()
                             } label: {
                                 tileView(game)
@@ -34,5 +35,6 @@ struct GameListView<TileView: View>: View {
                 .frame(height: 96)
             }
         }
+        .padding(.top, 16)
     }
 }

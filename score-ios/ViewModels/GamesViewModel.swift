@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-class GamesViewModel: ObservableObject 
+class GamesViewModel: ObservableObject
 {
     @Published var errorMessage: String?
     @Published var games: [Game] = [] // List of all games

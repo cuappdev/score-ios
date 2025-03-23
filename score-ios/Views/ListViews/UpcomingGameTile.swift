@@ -24,10 +24,13 @@ struct UpcomingGameTile: View {
                         Constants.Colors.gray_icons
                     }
                     .frame(width: 20, height: 20)
-
-                    Text(game.opponent.name)
-                        .font(Constants.Fonts.gameTitle)
-                        .lineLimit(1)
+                    
+                    ScrollView(.horizontal, showsIndicators: false){
+                        Text(game.opponent.name.removingUniversityPrefix())
+                            .font(Constants.Fonts.gameTitle)
+                            .lineLimit(1)
+                    }
+                    .withTrailingFadeGradient()
                 }
                 .padding(.leading, 20)
                 

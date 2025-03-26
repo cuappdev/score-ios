@@ -22,6 +22,7 @@ struct Constants {
         static let gray_liner = Color(hex: 0xC2C2C2)
         static let gray_border = Color(hex: 0xEAEAEA)
         static let gray_icons = Color(hex: 0x777777)
+        static let dark_gray_text = Color(hex: 0x333333)
 //        static let graybg = Color(hex: 0xF0F1F2)
 //        static let gray00 = Color(hex: 0xF7F7F7)
 //        static let gray01 = Color(hex: 0xEFF1F4)

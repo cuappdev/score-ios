@@ -12,6 +12,7 @@ struct PastGamesView: View {
 
     // State variables
     @StateObject private var vm = GamesViewModel.shared
+    @State private var showingFilterSheet = false
 
     var body: some View {
         ZStack {
@@ -28,7 +29,7 @@ struct PastGamesView: View {
                             })
                             .padding(.horizontal, paddingMain)
 
-                            Section(header: GameSectionHeaderView(headerTitle: "All Scores")
+                            Section(header: GameSectionHeaderView(showingFiltersheet: $showingFilterSheet, headerTitle: "All Scores")
                                 .padding(.horizontal, paddingMain)) {
 
                                     // List of games

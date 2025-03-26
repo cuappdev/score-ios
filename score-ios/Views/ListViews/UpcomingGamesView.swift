@@ -12,6 +12,10 @@ struct UpcomingGamesView: View {
     // State variables
     var paddingMain: CGFloat = 20
     @State private var selectedCardIndex: Int = 0
+    @State private var showingFilterSheet = false
+    @State private var selectedPrice = ""
+    @State private var selectedLocation = ""
+    @State private var selectedDate = ""
     @StateObject private var vm = GamesViewModel.shared
 
     // Main view
@@ -31,7 +35,7 @@ struct UpcomingGamesView: View {
                             .padding(.horizontal, paddingMain)
                             
                             
-                            Section(header: GameSectionHeaderView(headerTitle: "Game Schedule")
+                            Section(header: GameSectionHeaderView(showingFiltersheet: $showingFilterSheet, headerTitle: "Game Schedule")
                                 .padding(.horizontal, paddingMain)) {
                                     
                                     // List of games
@@ -70,6 +74,11 @@ struct UpcomingGamesView: View {
             if case .error = vm.dataState {
                 GameErrorView(viewModel: vm)
             }
+        }
+        .sheet(isPresented: $showingFilterSheet) {
+            FilterSheetView(selectedPrice: $selectedPrice, selectedLocation: $selectedLocation, selectedDate: $selectedDate)
+                .presentationDetents([.medium])
+                .presentationDragIndicator(.visible)
         }
     }
 }

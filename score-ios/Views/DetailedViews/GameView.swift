@@ -240,10 +240,10 @@ extension GameView {
                     }
                 }
 
-                // Add a divider except after the last cell
-                if i < game.gameUpdates.prefix(3).count - 1 {
-                    Divider()
-                }
+//                // Add a divider except after the last cell
+//                if i < game.gameUpdates.prefix(3).count - 1 {
+//                    Divider()
+//                }
             }
         }
     }

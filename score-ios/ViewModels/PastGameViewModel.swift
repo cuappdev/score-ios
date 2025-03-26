@@ -14,13 +14,14 @@ class PastGameViewModel: ObservableObject {
     var numberOfRounds: Int {
         switch game.sport {
         case .Baseball: return 9
-        case .Basketball, .Soccer, .Volleyball: return 2
+        case .Soccer: return 2
         case .IceHockey: return 3
-        case .FieldHockey, .Football, .Lacrosse, .SprintFootball: return 4
+        case .FieldHockey, .Football, .Lacrosse: return 4
         default: return 1
         }
     }
     
+    // TODO: will be discarded once backend is changed to include a total score in scoreBreakdown for all sports
     var cornellTotalScore: Int {
         if game.timeUpdates.count == numberOfRounds {
             return game.timeUpdates.reduce(0, { $0 + $1.cornellScore }) // sum up the score for each round
@@ -32,7 +33,7 @@ class PastGameViewModel: ObservableObject {
             return scores.reduce(0, { $0 + $1.cornellScore }) // sum up the score for each round
         }
         else {
-            return 0
+            return -1
         }
     }
     
@@ -46,7 +47,7 @@ class PastGameViewModel: ObservableObject {
             let scores = game.timeUpdates[0..<numberOfRounds]
             return scores.reduce(0, { $0 + $1.opponentScore }) // sum up the score for each round
         } else {
-            return 0
+            return -1
         }
     }
     

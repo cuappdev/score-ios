@@ -14,19 +14,20 @@ struct PastGameTile: View {
     var body: some View {
         let corWon = viewModel.cornellTotalScore > viewModel.opponentTotalScore
         let tie = viewModel.cornellTotalScore == viewModel.opponentTotalScore
+        let corScore = (viewModel.cornellTotalScore == -1) ? "-" : "\(viewModel.cornellTotalScore)"
+        let oppScore = (viewModel.opponentTotalScore == -1) ? "-" : "\(viewModel.opponentTotalScore)"
         
         HStack {
             // VStack of school names and logos and score
             ZStack {
                 HStack {
-                    Spacer() // Pushes the rectangle to the right side
                     Spacer()
                     Rectangle()
                         .frame(width: 2, height: 70) // Adjust the thickness of the right border here
                         .foregroundColor(Constants.Colors.gray_liner) // Color of the right border
                 }
                 
-                VStack {
+                VStack(spacing: 16) {
                     // Opponent score
                     HStack {
                         AsyncImage(url: URL(string: game.opponent.image)) { image in
@@ -34,16 +35,22 @@ struct PastGameTile: View {
                         }
                         .frame(width: 20, height: 20)
 
-                        if (corWon) {
-                            Text(game.opponent.name)
-                                .font(Constants.Fonts.gameTitle)
-                                .foregroundStyle(Constants.Colors.gray_text)
-                                .lineLimit(1)
+                        if (corWon || tie) {
+                            ScrollView(.horizontal, showsIndicators: false){
+                                Text(game.opponent.name.removingUniversityPrefix())
+                                    .font(Constants.Fonts.gameTitle)
+                                    .foregroundStyle(Constants.Colors.gray_text)
+                                    .lineLimit(1)
+                            }
+                            .withTrailingFadeGradient()
                         } else {
-                            Text(game.opponent.name)
-                                .font(Constants.Fonts.gameTitle)
-                                .foregroundStyle(Constants.Colors.black)
-                                .lineLimit(1)
+                            ScrollView(.horizontal, showsIndicators: false){
+                                Text(game.opponent.name.removingUniversityPrefix())
+                                    .font(Constants.Fonts.gameTitle)
+                                    .foregroundStyle(Constants.Colors.black)
+                                    .lineLimit(1)
+                            }
+                            .withTrailingFadeGradient()
                         }
                         
                         
@@ -51,12 +58,13 @@ struct PastGameTile: View {
                         
                         // Opponent Score with Arrow
                         if corWon {
-                            Text(String(viewModel.opponentTotalScore))
+                            Text(oppScore)
                                 .foregroundStyle(Constants.Colors.gray_text)
                                 .font(Constants.Fonts.medium18)
                         } else if !tie {
+                            // opponent won
                             HStack {
-                                Text(String(viewModel.opponentTotalScore))
+                                Text(oppScore)
                                     .font(Constants.Fonts.semibold18)
                                     .foregroundStyle(Constants.Colors.gray_text)
                                 Image("pastGame_arrow_back")
@@ -65,8 +73,8 @@ struct PastGameTile: View {
                             }
                             .offset(x: 20)
                         } else {
-                            Text(String(viewModel.opponentTotalScore))
-                                .font(Constants.Fonts.semibold18)
+                            Text(oppScore)
+                                .font(Constants.Fonts.medium18)
                                 .foregroundStyle(Constants.Colors.gray_text)
                         }
                         
@@ -91,21 +99,28 @@ struct PastGameTile: View {
                         
                         Spacer()
                         
+                        
                         // Cornell Score with Arrow
                         if corWon {
                             HStack {
-                                Text(String(viewModel.cornellTotalScore))
-                                    .font(Constants.Fonts.semibold18)
+                                Text(corScore)
                                     .foregroundStyle(Constants.Colors.gray_text)
+                                    .font(Constants.Fonts.semibold18)
+                                
                                 Image("pastGame_arrow_back")
                                     .resizable()
                                     .frame(width: 11, height: 14)
                             }
                             .offset(x: 20)
-                        } else {
-                            Text(String(viewModel.cornellTotalScore))
-                                .foregroundStyle(Constants.Colors.gray_text)
+                        } else if !tie {
+                            // opponent won
+                            Text(corScore)
                                 .font(Constants.Fonts.medium18)
+                                .foregroundStyle(Constants.Colors.gray_text)
+                        } else {
+                            Text(corScore)
+                                .font(Constants.Fonts.medium18)
+                                .foregroundStyle(Constants.Colors.gray_text)
                         }
                     }
                 }
@@ -118,7 +133,7 @@ struct PastGameTile: View {
             
             
             // game info: sport, sex, time
-            VStack {
+            VStack(spacing: 16) {
                 HStack(spacing: 8) {
                     // Sport icon
                     // TODO: frame 24*24
@@ -142,8 +157,7 @@ struct PastGameTile: View {
                     }
                 }
                 .padding(.trailing, 20)
-                .padding(.bottom, 22)
-                
+
                 HStack {
                     Text(Date.dateToString(date: game.date))
                         .font(Constants.Fonts.gameDate)
@@ -153,6 +167,7 @@ struct PastGameTile: View {
             }
             .padding(.leading, 24)
         }
+        .frame(height: 96)
         .background(Constants.Colors.white)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .background(

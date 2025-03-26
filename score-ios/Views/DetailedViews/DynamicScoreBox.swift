@@ -11,57 +11,22 @@ struct DynamicScoreBox: View {
     var game: Game
     @ObservedObject var viewModel: PastGameViewModel
     
-//    private var numberOfRounds: Int {
-//        switch game.sport {
-//        case .Baseball: return 9
-//        case .Basketball, .Soccer, .Volleyball: return 2
-//        case .IceHockey: return 3
-//        case .FieldHockey, .Football, .Lacrosse, .SprintFootball: return 4
-//        default: return 1
-//        }
-//    }
-//    
-//    private var cornellTotalScore: Int {
-//        if game.timeUpdates.count == numberOfRounds {
-//            return game.timeUpdates.reduce(0, { $0 + $1.cornellScore }) // sum up the score for each round
-//        } else if game.timeUpdates.count == numberOfRounds + 1 {
-//            // the last one is the sum
-//            return game.timeUpdates[game.timeUpdates.count-1].cornellScore
-//        } else if game.timeUpdates.count > numberOfRounds {
-//            let scores = game.timeUpdates[0..<numberOfRounds]
-//            return scores.reduce(0, { $0 + $1.cornellScore }) // sum up the score for each round
-//        }
-//        else {
-//            return -1
-//        }
-//    }
-//    
-//    private var opponentTotalScore: Int {
-//        if game.timeUpdates.count == numberOfRounds {
-//            return game.timeUpdates.reduce(0, { $0 + $1.opponentScore })
-//        } else if game.timeUpdates.count == numberOfRounds + 1 {
-//            // the last one is the sum
-//            return game.timeUpdates[game.timeUpdates.count-1].opponentScore
-//        } else if game.timeUpdates.count > numberOfRounds {
-//            var scores = game.timeUpdates[0..<numberOfRounds]
-//            return scores.reduce(0, { $0 + $1.opponentScore }) // sum up the score for each round
-//        } else {
-//            return -1
-//        }
-//    }
-    
     var body: some View {
-        let columnWidth = floor((345 - 100) / CGFloat(viewModel.numberOfRounds))
-            
-            VStack {
-                firstRow(columnWidth: columnWidth)
-                secondRow(columnWidth: columnWidth)
-                Rectangle() // Custom red divider
-                    .fill(Constants.Colors.primary_red)
-                    .frame(height: 0.8)
-                thirdRow(columnWidth: columnWidth)
+        GeometryReader { geometry in
+            let boxWidth = geometry.size.width
+            let firstColWidth = boxWidth / 5
+            let columnWidth = (boxWidth - firstColWidth) / CGFloat((viewModel.numberOfRounds + 1))
+
+            VStack(spacing: 0) {
+                firstRow(firstColWidth: firstColWidth, columnWidth: columnWidth)
+
+                secondRow(firstColWidth: firstColWidth, columnWidth: columnWidth)
+
+                Divider()
+                    .background(Constants.Colors.primary_red)
+
+                thirdRow(firstColWidth: firstColWidth, columnWidth: columnWidth)
             }
-            .frame(width: 345)
             .background(Constants.Colors.white)
             .clipShape(RoundedRectangle(cornerRadius: 8))
             .background(
@@ -69,19 +34,19 @@ struct DynamicScoreBox: View {
                     .stroke(Constants.Colors.primary_red, lineWidth: 1)
                     .shadow(radius: 5)
             )
-     
+        }
+        .frame(height: 125)
     }
 }
 
 
 // MARK: Components
 extension DynamicScoreBox {
-    private func firstRow(columnWidth: CGFloat) -> some View {
+    private func firstRow(firstColWidth: CGFloat, columnWidth: CGFloat) -> some View {
         HStack(spacing: 0) {
             Text("")
                 .font(Constants.Fonts.gameText)
-                .frame(width: 60, alignment: .leading)
-                
+                .frame(width: firstColWidth, alignment: .leading)
             
             ForEach(1...viewModel.numberOfRounds, id: \..self) { round in
                 Text("\(round)")
@@ -91,21 +56,20 @@ extension DynamicScoreBox {
             
             Text("Total")
                 .font(Constants.Fonts.gameText)
-                .frame(width: 36)
                 .padding(.trailing, 3)
-                
+                .frame(width: columnWidth)
         }
-        .frame(width: 345, height: 40)
+        .padding(.vertical, 6)
         .background(Constants.Colors.primary_red)
         .foregroundStyle(Constants.Colors.white)
     }
     
-    private func secondRow(columnWidth: CGFloat) -> some View {
+    private func secondRow(firstColWidth: CGFloat, columnWidth: CGFloat) -> some View {
         HStack(spacing: 0) {
             Text("Cornell")
                 .font(Constants.Fonts.gameText)
-                .frame(width: 55, alignment: .leading)
                 .padding(.leading, 5)
+                .frame(width: firstColWidth, alignment: .leading)
             
             ForEach(0..<viewModel.numberOfRounds, id: \..self) { index in
                 Text(game.timeUpdates.indices.contains(index) ? "\(game.timeUpdates[index].cornellScore)" : "-")
@@ -113,21 +77,25 @@ extension DynamicScoreBox {
             }
             
             Text(viewModel.cornellTotalScore != -1 ? "\(viewModel.cornellTotalScore)" : "-")
-                .frame(width: 36)
                 .padding(.trailing, 3)
-       
+                .frame(width: columnWidth)
+            
         }
-        .frame(width: 345, height: 40)
         .foregroundStyle(.gray)
+        .padding(.vertical, 12)
     }
     
-    private func thirdRow(columnWidth: CGFloat) -> some View {
+    private func thirdRow(firstColWidth: CGFloat, columnWidth: CGFloat) -> some View {
         HStack(spacing: 0) {
-            Text(game.opponent.name)
-                .lineLimit(1)
-                .font(Constants.Fonts.gameText)
-                .frame(width: 55, alignment: .leading)
-                .padding(.leading, 5)
+            ScrollView(.horizontal, showsIndicators: false){
+                Text(game.opponent.name.removingUniversityPrefix())
+                    .lineLimit(1)
+                    .font(Constants.Fonts.gameText)
+                    .frame(alignment: .leading)
+                    .padding(.leading, 5)
+            }
+            .frame(width: firstColWidth, alignment: .leading)
+            .withTrailingFadeGradient()
             
             ForEach(0..<viewModel.numberOfRounds, id: \..self) { index in
                 Text(game.timeUpdates.indices.contains(index) ? "\(game.timeUpdates[index].opponentScore)" : "-")
@@ -135,11 +103,11 @@ extension DynamicScoreBox {
             }
             
             Text(viewModel.opponentTotalScore != -1 ? "\(viewModel.opponentTotalScore)" : "-")
-                .frame(width: 36)
                 .padding(.trailing, 3)
+                .frame(width: columnWidth)
         }
-        .frame(width: 345, height: 40)
         .foregroundStyle(.gray)
+        .padding(.vertical, 12)
     }
 }
 

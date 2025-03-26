@@ -35,6 +35,7 @@ enum Sex : Identifiable, CaseIterable, CustomStringConvertible {
             return "Womens"
         }
     }
+    
     // This is strictly for filtering purposes, all datum should have one of Men or Women
     static func index(of sex: Sex) -> Int? {
         return allCases.firstIndex(of: sex)

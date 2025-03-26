@@ -36,7 +36,7 @@ struct GameView : View {
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     Text("Game Details")
-                    .font(Constants.Fonts.h1)
+                        .font(Constants.Fonts.Header.h1)
                 }
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
@@ -119,10 +119,14 @@ extension GameView {
                 Text("\(game.sex.description) \(game.sport.description)")
                     .font(Constants.Fonts.subheader)
                     .foregroundStyle(Constants.Colors.black)
-                Text("Cornell vs. " + game.opponent.name)
-                    .font(Constants.Fonts.header)
-                    .foregroundStyle(Constants.Colors.black)
-                
+
+                ScrollView(.horizontal, showsIndicators: false){
+                    Text("Cornell vs. " + game.opponent.name.removingUniversityPrefix())
+                        .font(Constants.Fonts.header)
+                        .foregroundStyle(Constants.Colors.black)
+                }
+                .withTrailingFadeGradient()
+    
                 HStack(spacing: 10) {
                     HStack {
                         Image("Location-g")
@@ -145,62 +149,63 @@ extension GameView {
     }
     
     private var countdown: some View {
+//        VStack {
         VStack {
-            VStack {
-                Image("Hourglass")
-                    .resizable()
-                    .frame(width: 93, height: 118)
-                Text("Time Until Start")
-                    .font(Constants.Fonts.h2)
-                    .foregroundStyle(Constants.Colors.black)
-                    .padding(.top, 24)
-                
-                HStack {
-                    Text(String(dayFromNow))
-                        .font(Constants.Fonts.countdownNum)
-                    Text("days")
-                        .font(Constants.Fonts.gameText)
-                    Text(String(hourFromNow))
-                        .font(Constants.Fonts.countdownNum)
-                    Text("hours")
-                        .font(Constants.Fonts.gameText)
-                    Text(String(minuteFromNow))
-                        .font(Constants.Fonts.countdownNum)
-                    Text("minutes")
-                }
+            Image("Hourglass")
+                .resizable()
+                .frame(width: 93, height: 118)
+            Text("Time Until Start")
+                .font(Constants.Fonts.Header.h2)
                 .foregroundStyle(Constants.Colors.black)
-                .padding(.top, 8)
+                .padding(.top, 24)
+            
+            HStack {
+                Text(String(dayFromNow))
+                    .font(Constants.Fonts.countdownNum)
+                Text("days")
+                    .font(Constants.Fonts.gameText)
+                Text(String(hourFromNow))
+                    .font(Constants.Fonts.countdownNum)
+                Text("hours")
+                    .font(Constants.Fonts.gameText)
+                Text(String(minuteFromNow))
+                    .font(Constants.Fonts.countdownNum)
+                Text("minutes")
             }
-            .padding(.top, 20)
+            .foregroundStyle(Constants.Colors.black)
+            .padding(.top, 8)
+        }
+        .padding(.top, 20)
             
             
             // Calendar Button
-            Button(action: {
-                // TODO: action
-            }) {
-                HStack {
-                    Image("Calendar")
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                    Text("Add to Calendar")
-                        .font(Constants.Fonts.buttonLabel)
-                        .foregroundStyle(Constants.Colors.white)
-                }
-                .foregroundColor(.white)
-                .padding(.horizontal, 16)
-                .padding(.vertical, 10)
-                .background(
-                    Constants.Colors.primary_red
-                )
-                .overlay(
-                    RoundedRectangle(cornerRadius: 30)
-                        .stroke(Color.black.opacity(0.1), lineWidth: 1)
-                        .shadow(color: Color.black.opacity(0.25), radius: 5, x: 0, y: 2)
-                )
-                .clipShape(RoundedRectangle(cornerRadius: 30)) // Clip to shape to ensure rounded corners
-            }
-            .padding(.top, 68)
-        }
+            // TODO: make this back when we have login
+//            Button(action: {
+//                // TODO: action
+//            }) {
+//                HStack {
+//                    Image("Calendar")
+//                        .resizable()
+//                        .frame(width: 24, height: 24)
+//                    Text("Add to Calendar")
+//                        .font(Constants.Fonts.buttonLabel)
+//                        .foregroundStyle(Constants.Colors.white)
+//                }
+//                .foregroundColor(.white)
+//                .padding(.horizontal, 16)
+//                .padding(.vertical, 10)
+//                .background(
+//                    Constants.Colors.primary_red
+//                )
+//                .overlay(
+//                    RoundedRectangle(cornerRadius: 30)
+//                        .stroke(Color.black.opacity(0.1), lineWidth: 1)
+//                        .shadow(color: Color.black.opacity(0.25), radius: 5, x: 0, y: 2)
+//                )
+//                .clipShape(RoundedRectangle(cornerRadius: 30)) // Clip to shape to ensure rounded corners
+//            }
+//            .padding(.top, 68)
+//        }
     }
     
     private var summaryTab: some View {
@@ -234,124 +239,105 @@ extension GameView {
                         Divider()
                     }
                 }
-            } else {
-                if (game.gameUpdates.count > 0) {
-                    ForEach(Array(game.gameUpdates.prefix(game.gameUpdates.count)).indices, id: \.self) { i in
-                        if game.gameUpdates[i].isCornell {
-                            ScoringUpdateCell(update: game.gameUpdates[i], img: "Cornell")
-                        } else {
-                            ScoringUpdateCell(update: game.gameUpdates[i], img: game.opponent.image)
-                        }
-                        
-                        // Add a divider except after the last cell
-                        if i < game.gameUpdates.prefix(3).count - 1 {
-                            Divider()
-                        }
-                    }
+
+                // Add a divider except after the last cell
+                if i < game.gameUpdates.prefix(3).count - 1 {
+                    Divider()
                 }
             }
         }
     }
     
     private var noGameSummary: some View {
-        VStack {
+        VStack(alignment: .center) {
             Image("speaker")
                 .resizable()
-                .frame(width: 90, height: 90)
+                .frame(width: 96, height: 96)
                 .padding(.top, 15)
             
             Text("No Scores Yet.")
+                .fixedSize(horizontal: false, vertical: true)
+                .frame(maxWidth: .infinity, alignment: .center)
                 .font(Constants.Fonts.medium18)
                 .foregroundStyle(Constants.Colors.black)
-                .frame(maxWidth: .infinity, alignment: .center)
                 .lineLimit(1)
-//                .multilineTextAlignment(.center)
-                .fixedSize(horizontal: false, vertical: true)
             
             Text("Check back here later!")
                 .font(Constants.Fonts.regular14)
                 .foregroundStyle(Constants.Colors.gray_text)
                 .frame(maxWidth: .infinity, alignment: .center)
                 .lineLimit(1)
-//                .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
         }
-//        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
     private var hasntStartedView: some View {
         VStack {
             // Banner
             banner
-            Spacer()
+            
             // Game information
             gameInfo
-                .padding(.leading, 24)
-                .padding(.trailing, 24)
+                .padding(.horizontal, 24)
                 .padding(.top, 24)
-            
+
             // Countdown
             countdown
-                .padding(.bottom, 36)
+                .padding(.vertical, 24)
+
+            Spacer()
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
     private var gameStartedView: some View {
-        GeometryReader { geometry in
-            VStack {
-                banner
-                gameInfo
-                    .padding(.leading, 24)
-                    .padding(.top, 24)
-                
-                VStack {
-                    DynamicScoreBox(game: game, viewModel: PastGameViewModel(game: game))
-                    
-                    summaryTab
-                        .padding(.top, 24)
-                }
+        VStack {
+            banner
+            
+            gameInfo
                 .padding(.leading, 24)
-                .padding(.trailing, 24)
                 .padding(.top, 24)
-                
+
+            DynamicScoreBox(game: game, viewModel: PastGameViewModel(game: game))
+                .padding(.horizontal, 24)
+                .padding(.top, 16)
+
+            summaryTab
+                .padding(.horizontal, 24)
+                .padding(.top, 16)
+
+            if (game.gameUpdates.count == 0) {
+                noGameSummary
+            } else {
                 gameSummary
-                    .overlay {
-                        if (game.gameUpdates.count < 3) {
-                            noGameSummary
-                                .padding(.top, 150)
-                                .frame(maxWidth: .infinity)
-                    }
-                }
-                .frame(maxWidth: .infinity)
-                
-                Spacer()
             }
+
+            Spacer()
         }
-        
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
     private var gameInProgressView: some View {
-        GeometryReader { geometry in
-            VStack {
-                banner
-                Spacer()
-                gameInfo
-                    .padding(.leading, 24)
-                    .padding(.top, 24)
-                
-                VStack {
-                    DynamicScoreBox(game: game, viewModel: PastGameViewModel(game: game))
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    summaryTab
-                        .padding(.top, 24)
-                }
+        VStack {
+            banner
+            
+            gameInfo
                 .padding(.leading, 24)
-                .padding(.trailing, 24)
                 .padding(.top, 24)
-                
-                gameSummary
-            }
+            
+            DynamicScoreBox(game: game, viewModel: PastGameViewModel(game: game))
+                .padding(.horizontal, 24)
+                .padding(.top, 16)
+
+            summaryTab
+                .padding(.horizontal, 24)
+                .padding(.top, 16)
+
+            gameSummary
+
+            Spacer()
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
     

@@ -14,17 +14,20 @@ struct PastGameCard: View {
     var body: some View {
         VStack {
             banner
+
             Spacer()
+
             information
-        }.frame(width: 345, height: 192)
-            .background(Constants.Colors.white)
-            .clipShape(RoundedRectangle(cornerRadius: 12))
-            .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .stroke(Constants.Colors.gray_border, lineWidth: 1)
-                    .shadow(radius: 5)
-            )
-            .padding(.vertical, 10)
+        }
+        .frame(width: 345, height: 192)
+        .background(Constants.Colors.white)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(Constants.Colors.gray_border, lineWidth: 1)
+                .shadow(radius: 5)
+        )
+        .padding(.vertical, 10)
     }
 }
 
@@ -91,7 +94,7 @@ extension PastGameCard {
                     Constants.Colors.gray_icons
                 }
                 .frame(width: 25, height: 27)
-                Text(game.opponent.name)
+                Text(game.opponent.name.removingUniversityPrefix())
                     .font(Constants.Fonts.gameTitle)
                     .foregroundStyle(Color.black)
                 Spacer()
@@ -116,8 +119,7 @@ extension PastGameCard {
                     .foregroundStyle(.gray)
             }
         }
-        .padding(.leading, 20)
-        .padding(.trailing, 20)
+        .padding(.horizontal, 20)
         .padding(.bottom, 13)
     }
 }

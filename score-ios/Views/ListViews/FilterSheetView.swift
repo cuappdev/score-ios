@@ -27,15 +27,34 @@ struct FilterSheetView: View {
             // date section
             filterSection(sectionName: "Date of Game", options: FilterOptions.dateOptions, isExpanded: $isDateExpanded, selectedOption: $selectedDate)
             
-            // apply and reset buttons
+            // apply button
+            Button {
+                // action: apply filter
+            } label: {
+                Text("Apply")
+                    .font(Constants.Fonts.Body.medium)
+                    .foregroundStyle(Constants.Colors.white)
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 20)
+                            .frame(height: 40)
+                            .foregroundStyle(Constants.Colors.primary_red)
+                            .padding(.horizontal, 16)
+                    }
+            }
+            
+            // reset button
+            Button {
+                // action: reset filter
+                selectedPrice = ""
+                selectedLocation = ""
+                selectedDate = ""
+            } label: {
+                
+            }
             
         }
     }
 }
-
-//#Preview {
-//    FilterSheetView()
-//}
 
 // MARK: Functions
 extension FilterSheetView {

@@ -121,7 +121,7 @@ class GamesViewModel: ObservableObject
                     }
                 }
                 // TODO: do this in a way that requires less copying by sorting at the top
-                self.allPastGames.sort(by: {$0.date < $1.date})
+                self.allPastGames.sort(by: {$0.date > $1.date})
                 self.allUpcomingGames.sort(by: {$0.date < $1.date})
                 self.games = updatedGames.sorted(by: {$0.date < $1.date})
                 self.topUpcomingGames = Array(self.allUpcomingGames.prefix(3))

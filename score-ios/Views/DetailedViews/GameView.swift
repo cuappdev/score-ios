@@ -93,7 +93,7 @@ extension GameView {
                 .resizable()
                 .frame(width: 72, height: 72)
             Spacer()
-            Text("\(viewModel.cornellTotalScore) - \(viewModel.opponentTotalScore)")
+            Text("\(viewModel.corScore) - \(viewModel.oppScore)")
                 .font(Constants.Fonts.bold40)
                 .foregroundColor(Constants.Colors.white)
             Spacer()

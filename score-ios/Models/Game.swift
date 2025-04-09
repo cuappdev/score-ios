@@ -115,6 +115,7 @@ extension Game {
     mutating func parseBoxScore(_ boxScore: [BoxScoreItem]) -> [GameUpdate] {
         var updates: [GameUpdate] = []
         // Parse boxScore and map into `GameUpdate` array
+        let cornellVariants = ["COR", "CORN", "Cornell", "Cornel", "CU"]
         
         for entry in boxScore {
             let team = entry.team
@@ -136,7 +137,7 @@ extension Game {
                 timestamp = -1
             }
             
-            let isCornell = team == "COR"
+            let isCornell = cornellVariants.contains(where: {$0.compare(team, options: .caseInsensitive) == .orderedSame})
             let eventParty = EventParty(team: team)
             
             let gameUpdate = GameUpdate(timestamp: timestamp, isTotal: false, cornellScore: corScore, opponentScore: oppScore, time: time, isCornell: isCornell, eventParty: eventParty, description: description)

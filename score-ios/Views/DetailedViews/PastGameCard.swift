@@ -12,6 +12,7 @@ struct PastGameCard: View {
     @ObservedObject var viewModel: PastGameViewModel
     
     var body: some View {
+        
         VStack {
             banner
 
@@ -38,6 +39,7 @@ struct PastGameCard: View {
 // MARK: Components
 extension PastGameCard {
     private var banner: some View {
+        
         HStack {
             Spacer()
             
@@ -48,7 +50,7 @@ extension PastGameCard {
             Spacer()
             
             HStack {
-                Text(String(viewModel.cornellTotalScore))
+                Text(String(viewModel.corScore))
                     .font(Constants.Fonts.title)
                     .italic()
                     .foregroundStyle(.white)
@@ -59,7 +61,7 @@ extension PastGameCard {
                     .foregroundStyle(.white)
                 
                 // TODO: Change the blur
-                Text(String(viewModel.opponentTotalScore))
+                Text(String(viewModel.oppScore))
                     .font(Constants.Fonts.title)
                     .blur(radius: 0.5)
                     .italic()
@@ -100,6 +102,7 @@ extension PastGameCard {
                 Spacer()
                 Image(game.sport.rawValue + "-g")
                     .resizable()
+                    .tint(Constants.Colors.gray_icons)
                     .frame(width: 30, height: 30)
                 Image(game.sex.description + "-g")
                     .resizable()

@@ -14,8 +14,6 @@ struct PastGameTile: View {
     var body: some View {
         let corWon = viewModel.cornellTotalScore > viewModel.opponentTotalScore
         let tie = viewModel.cornellTotalScore == viewModel.opponentTotalScore
-        let corScore = (viewModel.cornellTotalScore == -1) ? "-" : "\(viewModel.cornellTotalScore)"
-        let oppScore = (viewModel.opponentTotalScore == -1) ? "-" : "\(viewModel.opponentTotalScore)"
         
         HStack {
             // VStack of school names and logos and score
@@ -58,13 +56,13 @@ struct PastGameTile: View {
                         
                         // Opponent Score with Arrow
                         if corWon {
-                            Text(oppScore)
+                            Text(viewModel.oppScore)
                                 .foregroundStyle(Constants.Colors.gray_text)
                                 .font(Constants.Fonts.medium18)
                         } else if !tie {
                             // opponent won
                             HStack {
-                                Text(oppScore)
+                                Text(viewModel.oppScore)
                                     .font(Constants.Fonts.semibold18)
                                     .foregroundStyle(Constants.Colors.gray_text)
                                 Image("pastGame_arrow_back")
@@ -73,7 +71,7 @@ struct PastGameTile: View {
                             }
                             .offset(x: 20)
                         } else {
-                            Text(oppScore)
+                            Text(viewModel.oppScore)
                                 .font(Constants.Fonts.medium18)
                                 .foregroundStyle(Constants.Colors.gray_text)
                         }
@@ -103,7 +101,7 @@ struct PastGameTile: View {
                         // Cornell Score with Arrow
                         if corWon {
                             HStack {
-                                Text(corScore)
+                                Text(viewModel.corScore)
                                     .foregroundStyle(Constants.Colors.gray_text)
                                     .font(Constants.Fonts.semibold18)
                                 
@@ -114,11 +112,11 @@ struct PastGameTile: View {
                             .offset(x: 20)
                         } else if !tie {
                             // opponent won
-                            Text(corScore)
+                            Text(viewModel.corScore)
                                 .font(Constants.Fonts.medium18)
                                 .foregroundStyle(Constants.Colors.gray_text)
                         } else {
-                            Text(corScore)
+                            Text(viewModel.corScore)
                                 .font(Constants.Fonts.medium18)
                                 .foregroundStyle(Constants.Colors.gray_text)
                         }

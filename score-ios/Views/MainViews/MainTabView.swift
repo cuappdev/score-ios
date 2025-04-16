@@ -20,9 +20,13 @@ struct MainTabView: View {
                 if (selection == 0) {
                     UpcomingGamesView()
                         .environmentObject(gamesViewModel)
+                        .toolbar(.hidden)
+                        .navigationBarHidden(true)
                 } else {
                     PastGamesView()
                         .environmentObject(gamesViewModel)
+                        .toolbar(.hidden)
+                        .navigationBarHidden(true)
                 }
 
                 HStack {
@@ -48,6 +52,8 @@ struct MainTabView: View {
             }
             .ignoresSafeArea(edges: .bottom)
             .background(Color.white)
+            .toolbar(.hidden)
+            .navigationBarHidden(true)
         }
     }
 }

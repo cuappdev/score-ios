@@ -20,6 +20,10 @@ struct MainTabView: View {
                 if (selection == 0) {
                     UpcomingGamesView()
                         .environmentObject(gamesViewModel)
+                } else if (selection == 1){
+                    
+                    HighlightsView()
+                        .environmentObject(gamesViewModel)
                 } else {
                     PastGamesView()
                         .environmentObject(gamesViewModel)

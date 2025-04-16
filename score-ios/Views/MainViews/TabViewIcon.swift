@@ -14,13 +14,15 @@ struct TabViewIcon: View {
     @Binding var selectionIndex: Int
 
     let itemIndex: Int
-    private let tabItems = ["schedule", "scoreboard"]
+    private let tabItems = ["schedule", "scoreboard", "highlights"]
 
     var body: some View {
         Button {
             selectionIndex = itemIndex
         } label: {
             VStack {
+                
+                // TODO: Refactor this code to handle more tabs
                 Image(itemIndex == selectionIndex ? "\(tabItems[itemIndex])-selected" : tabItems[itemIndex])
                     .resizable()
                     .frame(width: 28, height: 28)

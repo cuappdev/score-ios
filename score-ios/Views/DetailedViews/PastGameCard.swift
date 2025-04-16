@@ -20,7 +20,6 @@ struct PastGameCard: View {
 
             information
         }
-        .frame(width: 345, height: 192)
         .background(Constants.Colors.white)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .background(
@@ -79,8 +78,7 @@ extension PastGameCard {
             
             Spacer()
         }
-        .padding()
-        .frame(height: 100)
+        .padding(.vertical, 24)
         .background(LinearGradient(gradient: Gradient(colors: [
             Constants.Colors.gradient_red,
             Constants.Colors.gradient_blue
@@ -95,15 +93,22 @@ extension PastGameCard {
                 } placeholder: {
                     Constants.Colors.gray_icons
                 }
-                .frame(width: 25, height: 27)
-                Text(game.opponent.name.removingUniversityPrefix())
-                    .font(Constants.Fonts.gameTitle)
-                    .foregroundStyle(Color.black)
+                .frame(width: 24, height: 24)
+
+                ScrollView(.horizontal, showsIndicators: false){
+                    Text(game.opponent.name.removingUniversityPrefix())
+                        .font(Constants.Fonts.gameTitle)
+                        .foregroundStyle(Color.black)
+                        .lineLimit(1)
+                }
+                .withTrailingFadeGradient()
+
                 Spacer()
+
                 Image(game.sport.rawValue + "-g")
                     .resizable()
-                    .tint(Constants.Colors.gray_icons)
-                    .frame(width: 30, height: 30)
+                    .frame(width: 25, height: 25)
+
                 Image(game.sex.description + "-g")
                     .resizable()
                     .frame(width: 25, height: 25)
@@ -123,6 +128,6 @@ extension PastGameCard {
             }
         }
         .padding(.horizontal, 20)
-        .padding(.bottom, 13)
+        .padding(.vertical, 12)
     }
 }

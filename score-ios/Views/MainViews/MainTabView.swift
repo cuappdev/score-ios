@@ -29,7 +29,7 @@ struct MainTabView: View {
                     ForEach(0..<2, id: \.self) {
                         index in
                         TabViewIcon(selectionIndex: $selection, itemIndex: index)
-                            .frame(width: 67, height: 45)
+                            .frame(height: 45)
                             .padding(.top, 10)
                         if index != 1 {
                             Spacer()
@@ -38,6 +38,7 @@ struct MainTabView: View {
                 }
                 .padding(.horizontal, 86)
                 .padding(.bottom, 40)
+                .padding(.top, 8)
                 .frame(maxWidth: .infinity)
                 .background(
                     Color.white

@@ -82,6 +82,7 @@
 		FD5A38DB2D8F2BDD00CF5E30 /* GameLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5A38DA2D8F2BDD00CF5E30 /* GameLoadingView.swift */; };
 		FD5A38DD2D8F30CC00CF5E30 /* GameErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5A38DC2D8F30CC00CF5E30 /* GameErrorView.swift */; };
 		FD5A38DF2D8F3E1400CF5E30 /* ShimmerModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5A38DE2D8F3E1400CF5E30 /* ShimmerModifier.swift */; };
+		FD5FAB482DB04C2F00A66235 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = FD5FAB472DB04C2F00A66235 /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -181,6 +182,7 @@
 		FD5A38DA2D8F2BDD00CF5E30 /* GameLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLoadingView.swift; sourceTree = "<group>"; };
 		FD5A38DC2D8F30CC00CF5E30 /* GameErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameErrorView.swift; sourceTree = "<group>"; };
 		FD5A38DE2D8F3E1400CF5E30 /* ShimmerModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerModifier.swift; sourceTree = "<group>"; };
+		FD5FAB472DB04C2F00A66235 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -216,13 +218,6 @@
 				1C87865C2D8CD76900EBDF74 /* TrailingFadeGradient.swift */,
 			);
 			path = ViewModifiers;
-			sourceTree = "<group>";
-		};
-		CE335CCA2C9226EB0037F572 /* Configs */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Configs;
 			sourceTree = "<group>";
 		};
 		CE335CCC2C9226F90037F572 /* Models */ = {
@@ -345,6 +340,7 @@
 				CE335CCE2C9227050037F572 /* Utils */,
 				CE335CCD2C9227000037F572 /* Resources */,
 				CE335CCC2C9226F90037F572 /* Models */,
+				FD5FAB472DB04C2F00A66235 /* PrivacyInfo.xcprivacy */,
 			);
 			path = "score-ios";
 			sourceTree = "<group>";
@@ -613,6 +609,7 @@
 				CE528FE62C96A27500C238B5 /* Poppins-SemiBoldItalic.ttf in Resources */,
 				CE528FEA2C96A27500C238B5 /* OFL.txt in Resources */,
 				CE528FEB2C96A27500C238B5 /* Poppins-Regular.ttf in Resources */,
+				FD5FAB482DB04C2F00A66235 /* PrivacyInfo.xcprivacy in Resources */,
 				CE528FE82C96A27500C238B5 /* Poppins-ExtraBold.ttf in Resources */,
 				CE528FE52C96A27500C238B5 /* Poppins-Medium.ttf in Resources */,
 				CE725D432C89120400386943 /* Preview Assets.xcassets in Resources */,

@@ -35,19 +35,13 @@ struct CarouselView<CardView: View, GameView: View>: View {
                     }
                 }
                 .frame(height: 220)
-                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
-                
-                // TODO: make this geometry reader only occur for iPhones with notches? Not sure, will need to check older phones
-                GeometryReader { geometry in
-                    if geometry.frame(in: .global).minY > 30 {
-                        HStack(spacing: 32) {
-                            ForEach(0..<3, id: \.self) { index in
-                                Circle()
-                                    .fill(index == selectedCardIndex ? Constants.Colors.primary_red : Constants.Colors.unselected)
-                                    .frame(width: 10, height: 10)
-                            }
-                        }
-                        .position(x: geometry.frame(in: .local).midX)
+                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+
+                HStack(spacing: 32) {
+                    ForEach(0..<3, id: \.self) { index in
+                        Circle()
+                            .fill(index == selectedCardIndex ? Constants.Colors.primary_red : Constants.Colors.unselected)
+                            .frame(width: 10, height: 10)
                     }
                 }
             }

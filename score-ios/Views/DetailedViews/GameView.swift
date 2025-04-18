@@ -20,7 +20,7 @@ struct GameView : View {
     // 2: game in progress / game finished
     
     var body : some View {
-        NavigationView {
+        NavigationStack {
             ZStack {
                 switch viewState {
                     case 0: hasntStartedView

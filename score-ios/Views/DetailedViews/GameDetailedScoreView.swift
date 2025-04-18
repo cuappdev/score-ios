@@ -12,7 +12,7 @@ struct GameDetailedScoreView: View {
     var gameStarted: Bool
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 // Banner
                 banner

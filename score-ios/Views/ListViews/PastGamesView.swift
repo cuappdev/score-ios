@@ -15,7 +15,7 @@ struct PastGamesView: View {
 
     var body: some View {
         ZStack {
-            NavigationView {
+            NavigationStack {
                 ScrollView(.vertical, showsIndicators: false) {
                     ZStack {
                         LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {

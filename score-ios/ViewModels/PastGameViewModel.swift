@@ -51,6 +51,14 @@ class PastGameViewModel: ObservableObject {
         }
     }
     
+    var corScore: String {
+        return (cornellTotalScore == -1) ? "-" : "\(cornellTotalScore)"
+    }
+    
+    var oppScore: String {
+        return (opponentTotalScore == -1) ? "-" : "\(opponentTotalScore)"
+    }
+    
     init(game: Game) {
         self.game = game
     }

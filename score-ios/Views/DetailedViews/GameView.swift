@@ -20,7 +20,7 @@ struct GameView : View {
     // 2: game in progress / game finished
     
     var body : some View {
-        NavigationView {
+        NavigationStack {
             ZStack {
                 switch viewState {
                     case 0: hasntStartedView
@@ -93,7 +93,7 @@ extension GameView {
                 .resizable()
                 .frame(width: 72, height: 72)
             Spacer()
-            Text("\(viewModel.cornellTotalScore) - \(viewModel.opponentTotalScore)")
+            Text("\(viewModel.corScore) - \(viewModel.oppScore)")
                 .font(Constants.Fonts.bold40)
                 .foregroundColor(Constants.Colors.white)
             Spacer()
@@ -295,13 +295,13 @@ extension GameView {
                 .padding(.horizontal, 24)
                 .padding(.top, 16)
 
-            summaryTab
-                .padding(.horizontal, 24)
-                .padding(.top, 16)
-
             if (game.gameUpdates.count == 0) {
                 noGameSummary
             } else {
+                summaryTab
+                    .padding(.horizontal, 24)
+                    .padding(.top, 16)
+
                 gameSummary
             }
 
@@ -309,7 +309,8 @@ extension GameView {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
-    
+
+    // TODO: Honestly Remove this with gameStartedView this is redundant
     private var gameInProgressView: some View {
         VStack {
             banner

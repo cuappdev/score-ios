@@ -43,12 +43,11 @@ extension Date {
         // Set up date formatter
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_US_POSIX") // Ensures consistent parsing
-        dateFormatter.timeZone = TimeZone(abbreviation: "UTC") // Adjust timezone if necessary
 
         // Try to parse with year format first
         dateFormatter.dateFormat = "MMM d (EEE) yyyy" // Matches "Feb 23 (Fri) 2024"
         var parsedDate = dateFormatter.date(from: dateString)
-
+        
         // If that fails, fall back to parsing without year and determine the appropriate year
         if parsedDate == nil {
             dateFormatter.dateFormat = "MMM d (EEE)" // Matches "Feb 23 (Fri)"
@@ -63,14 +62,7 @@ extension Date {
 
                 // Create new date components from the parsed date
                 var dateComponents = calendar.dateComponents([.month, .day], from: date)
-
-                // If month is between current month and January, assign current year
-                // Otherwise assign last year (handles past dates in same year)
-                if parsedMonth >= 1 && parsedMonth <= currentMonth {
-                    dateComponents.year = currentYear
-                } else {
-                    dateComponents.year = currentYear - 1
-                }
+                dateComponents.year = currentYear
 
                 // Update parsedDate with the correct year
                 if let updatedDate = calendar.date(from: dateComponents) {
@@ -96,7 +88,6 @@ extension Date {
         // Parse the time
         let timeFormatter = DateFormatter()
         timeFormatter.locale = Locale(identifier: "en_US_POSIX")
-        timeFormatter.timeZone = TimeZone(abbreviation: "UTC")
         timeFormatter.dateFormat = "h:mm a" // Matches "4:00 PM"
         let parsedTime = timeFormatter.date(from: standardizedTimeString)
 

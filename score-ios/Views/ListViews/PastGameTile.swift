@@ -10,162 +10,27 @@ import SwiftUI
 struct PastGameTile: View {
     var game: Game
     @ObservedObject var viewModel: PastGameViewModel
-        
+
     var body: some View {
         let corWon = viewModel.cornellTotalScore > viewModel.opponentTotalScore
         let tie = viewModel.cornellTotalScore == viewModel.opponentTotalScore
         
+
         HStack {
-            // VStack of school names and logos and score
-            ZStack {
-                HStack {
-                    Spacer()
-                    Rectangle()
-                        .frame(width: 2, height: 70) // Adjust the thickness of the right border here
-                        .foregroundColor(Constants.Colors.gray_liner) // Color of the right border
-                }
-                
-                VStack(spacing: 16) {
-                    // Opponent score
-                    HStack {
-                        AsyncImage(url: URL(string: game.opponent.image)) { image in
-                            image.image?.resizable()
-                        }
-                        .frame(width: 20, height: 20)
+            VStack(alignment: .leading, spacing: 16) {
+                oppRow(oppWon: !(corWon || tie))
 
-                        if (corWon || tie) {
-                            ScrollView(.horizontal, showsIndicators: false){
-                                Text(game.opponent.name.removingUniversityPrefix())
-                                    .font(Constants.Fonts.gameTitle)
-                                    .foregroundStyle(Constants.Colors.gray_text)
-                                    .lineLimit(1)
-                            }
-                            .withTrailingFadeGradient()
-                        } else {
-                            ScrollView(.horizontal, showsIndicators: false){
-                                Text(game.opponent.name.removingUniversityPrefix())
-                                    .font(Constants.Fonts.gameTitle)
-                                    .foregroundStyle(Constants.Colors.black)
-                                    .lineLimit(1)
-                            }
-                            .withTrailingFadeGradient()
-                        }
-                        
-                        
-                        Spacer()
-                        
-                        // Opponent Score with Arrow
-                        if corWon {
-                            Text(viewModel.oppScore)
-                                .foregroundStyle(Constants.Colors.gray_text)
-                                .font(Constants.Fonts.medium18)
-                        } else if !tie {
-                            // opponent won
-                            HStack {
-                                Text(viewModel.oppScore)
-                                    .font(Constants.Fonts.semibold18)
-                                    .foregroundStyle(Constants.Colors.gray_text)
-                                Image("pastGame_arrow_back")
-                                    .resizable()
-                                    .frame(width: 11, height: 14)
-                            }
-                            .offset(x: 20)
-                        } else {
-                            Text(viewModel.oppScore)
-                                .font(Constants.Fonts.medium18)
-                                .foregroundStyle(Constants.Colors.gray_text)
-                        }
-                        
-                    }
-                    
-                    // Cornell Score
-                    HStack {
-                        Image("Cornell")
-                            .resizable()
-                            .frame(width: 20, height: 20)
-
-                        if (corWon) {
-                            Text("Cornell")
-                                .font(Constants.Fonts.gameTitle)
-                                .foregroundStyle(Constants.Colors.black)
-                        } else {
-                            Text("Cornell")
-                                .font(Constants.Fonts.gameTitle)
-                                .foregroundStyle(Constants.Colors.gray_text)
-                        }
-                        
-                        
-                        Spacer()
-                        
-                        
-                        // Cornell Score with Arrow
-                        if corWon {
-                            HStack {
-                                Text(viewModel.corScore)
-                                    .foregroundStyle(Constants.Colors.gray_text)
-                                    .font(Constants.Fonts.semibold18)
-                                
-                                Image("pastGame_arrow_back")
-                                    .resizable()
-                                    .frame(width: 11, height: 14)
-                            }
-                            .offset(x: 20)
-                        } else if !tie {
-                            // opponent won
-                            Text(viewModel.corScore)
-                                .font(Constants.Fonts.medium18)
-                                .foregroundStyle(Constants.Colors.gray_text)
-                        } else {
-                            Text(viewModel.corScore)
-                                .font(Constants.Fonts.medium18)
-                                .foregroundStyle(Constants.Colors.gray_text)
-                        }
-                    }
-                }
-                .padding(.vertical, 16)
-                .padding(.horizontal, 20)
-                .frame(maxWidth: .infinity)
+                corRow(corWon: corWon)
             }
-            
-            // arrow
-            
-            
-            // game info: sport, sex, time
-            VStack(spacing: 16) {
-                HStack(spacing: 8) {
-                    // Sport icon
-                    // TODO: frame 24*24
-                    Image(game.sport.rawValue+"-g")
-                        .resizable()
-                        .renderingMode(.template)
-                        .frame(width: 19, height: 19)
-                        .foregroundStyle(Constants.Colors.iconGray)
-                    
-                    // Sex icon
-                    ZStack {
-                        Circle()
-                            .frame(width: 19, height: 19)
-                            .foregroundStyle(.gray)
-                        Image(game.sex.description)
-                            .resizable()
-                            .renderingMode(.template)
-                            .frame(width: 19, height: 19)
-                            .foregroundStyle(Constants.Colors.white)
-                        // TODO: location icon ratio
-                    }
-                }
-                .padding(.trailing, 20)
 
-                HStack {
-                    Text(Date.dateToString(date: game.date))
-                        .font(Constants.Fonts.gameDate)
-                        .foregroundStyle(Constants.Colors.gray_text)
-                        .padding(.trailing, 20)
-                }
-            }
-            .padding(.leading, 24)
+            Spacer()
+
+            winIndicator(corWon: corWon, oppWon: !(corWon || tie))
+
+            gameInfo
         }
         .frame(height: 96)
+        .padding(.horizontal, 16)
         .background(Constants.Colors.white)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .background(
@@ -174,8 +39,123 @@ struct PastGameTile: View {
                 .shadow(radius: 5)
         )
     }
+
+    func oppRow(oppWon: Bool) -> some View {
+        HStack {
+            AsyncImage(url: URL(string: game.opponent.image)) { image in
+                image.image?.resizable()
+            }
+            .frame(width: 20, height: 20)
+
+            ScrollView(.horizontal, showsIndicators: false){
+                Text(game.opponent.name.removingUniversityPrefix())
+                    .font(Constants.Fonts.gameTitle)
+                    .foregroundStyle(oppWon ? Constants.Colors.black : Constants.Colors.gray_text)
+                    .lineLimit(1)
+            }
+            .withTrailingFadeGradient()
+
+            Spacer()
+
+            Text(viewModel.oppScore)
+                .font(oppWon ? Constants.Fonts.semibold18 : Constants.Fonts.medium18)
+                .foregroundStyle(Constants.Colors.gray_text)
+        }
+        .frame(maxWidth: .infinity)
+    }
+
+    func corRow(corWon: Bool) -> some View {
+        HStack {
+            Image("Cornell")
+                .resizable()
+                .frame(width: 20, height: 20)
+
+            Text("Cornell")
+                .font(Constants.Fonts.gameTitle)
+                .foregroundStyle(corWon ? Constants.Colors.black: Constants.Colors.gray_text)
+
+            Spacer()
+
+            Text(viewModel.corScore)
+                .font(corWon ? Constants.Fonts.semibold18 : Constants.Fonts.medium18)
+                .foregroundStyle(Constants.Colors.gray_text)
+        }
+        .frame(maxWidth: .infinity)
+    }
+
+    func winIndicator(corWon: Bool, oppWon: Bool) -> some View {
+        ZStack {
+            Rectangle()
+                .frame(width: 2, height: 72)
+                .foregroundColor(Constants.Colors.gray_liner)
+
+            VStack(spacing: 16) {
+                ZStack {
+                    // Invisible frame to maintain the 20x20 space
+                    Rectangle()
+                        .frame(width: 20, height: 20)
+                        .opacity(0)
+
+                    // Actual image at 11x14
+                    Image("pastGame_arrow_back")
+                        .resizable()
+                        .frame(width: 11, height: 14)
+                        .opacity(oppWon ? 1 : 0)
+                        .offset(x: -6)
+                }
+
+                ZStack {
+                    // Invisible frame to maintain the 20x20 space
+                    Rectangle()
+                        .frame(width: 20, height: 20)
+                        .opacity(0)
+
+                    // Actual image at 11x14
+                    Image("pastGame_arrow_back")
+                        .resizable()
+                        .frame(width: 11, height: 14)
+                        .opacity(corWon ? 1 : 0)
+                        .offset(x: -6)
+                }
+            }
+        }
+    }
+
+    var gameInfo: some View {
+        VStack(spacing: 16) {
+            HStack(spacing: 8) {
+                // Sport icon
+                // TODO: frame 24*24
+                Image(game.sport.rawValue+"-g")
+                    .resizable()
+                    .renderingMode(.template)
+                    .frame(width: 19, height: 19)
+                    .foregroundStyle(Constants.Colors.iconGray)
+
+                // Sex icon
+                ZStack {
+                    Circle()
+                        .frame(width: 19, height: 19)
+                        .foregroundStyle(.gray)
+                    Image(game.sex.description)
+                        .resizable()
+                        .renderingMode(.template)
+                        .frame(width: 19, height: 19)
+                        .foregroundStyle(Constants.Colors.white)
+                    // TODO: location icon ratio
+                }
+            }
+
+            Text(Date.dateToString(date: game.date))
+                .font(Constants.Fonts.gameDate)
+                .foregroundStyle(Constants.Colors.gray_text)
+                .lineLimit(1)
+        }
+        .frame(width: 80)
+    }
+
 }
 
 #Preview {
-    PastGameTile(game: Game.dummyData[7], viewModel: PastGameViewModel(game: Game.dummyData[7]))
+    PastGameTile(game: Game.dummyData[6], viewModel: PastGameViewModel(game: Game.dummyData[6]))
 }

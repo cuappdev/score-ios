@@ -21,7 +21,6 @@ struct UpcomingGameCard: View {
             // information
             information
         }
-        .frame(width: 345, height: 192)
         .background(Constants.Colors.white)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .background(
@@ -58,8 +57,7 @@ extension UpcomingGameCard {
             .frame(width: 64, height: 64)
             Spacer()
         }
-        .padding()
-        .frame(height: 100)
+        .padding(.vertical, 24)
         .background(LinearGradient(gradient: Gradient(colors: [
             Constants.Colors.gradient_red,
             Constants.Colors.gradient_blue
@@ -75,15 +73,19 @@ extension UpcomingGameCard {
                     Constants.Colors.gray_icons
                 }
                 .frame(width: 24, height: 24)
-                
-                Text(game.opponent.name.removingUniversityPrefix())
-                    .font(Constants.Fonts.gameTitle)
-                    .foregroundStyle(Color.black)
-                
+
+                ScrollView(.horizontal, showsIndicators: false){
+                    Text(game.opponent.name.removingUniversityPrefix())
+                        .font(Constants.Fonts.gameTitle)
+                        .foregroundStyle(Color.black)
+                        .lineLimit(1)
+                }
+                .withTrailingFadeGradient()
+
                 
                 Spacer()
                 
-                Image(game.sport.rawValue + "-g")
+                Image("Soccer" + "-g")
                     .resizable()
                     .frame(width: 25, height: 25)
                 
@@ -106,6 +108,6 @@ extension UpcomingGameCard {
             }
         }
         .padding(.horizontal, 20)
-        .padding(.bottom, 13)
+        .padding(.vertical, 12)
     }
 }

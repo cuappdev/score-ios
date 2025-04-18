@@ -218,13 +218,6 @@
 			path = ViewModifiers;
 			sourceTree = "<group>";
 		};
-		CE335CCA2C9226EB0037F572 /* Configs */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Configs;
-			sourceTree = "<group>";
-		};
 		CE335CCC2C9226F90037F572 /* Models */ = {
 			isa = PBXGroup;
 			children = (

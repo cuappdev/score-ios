@@ -295,13 +295,13 @@ extension GameView {
                 .padding(.horizontal, 24)
                 .padding(.top, 16)
 
-            summaryTab
-                .padding(.horizontal, 24)
-                .padding(.top, 16)
-
             if (game.gameUpdates.count == 0) {
                 noGameSummary
             } else {
+                summaryTab
+                    .padding(.horizontal, 24)
+                    .padding(.top, 16)
+
                 gameSummary
             }
 
@@ -309,7 +309,8 @@ extension GameView {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
-    
+
+    // TODO: Honestly Remove this with gameStartedView this is redundant
     private var gameInProgressView: some View {
         VStack {
             banner

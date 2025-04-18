@@ -37,7 +37,7 @@ struct GameListView<TileView: View>: View {
                 // Temp Fix So the last cell is not covered by the tab bar
                 Rectangle()
                     .fill(Color.clear)
-                    .frame(height: 40)
+                    .frame(height: 100)
             }
         }
         .padding(.top, 16)

@@ -18,7 +18,7 @@ protocol GameType : Identifiable where ID == UUID {
     var sport: Sport { get }
     var sex: Sex { get }
  
-    // TODO add more, maybe longitude and latitude for Transit integration? Idk
+    // TODO add more, maybe longitude and latitude for Transit integration
     var address: String { get }
     
     var timeUpdates: [TimeUpdate] { get }
@@ -102,10 +102,11 @@ extension Game {
                         oppTotal += oppScore
                         updates.append(timeUpdate)
                     }
-                    if (index == corScores.count - 1) {
-                        let total = TimeUpdate(timestamp: index + 1, isTotal: true, cornellScore: corTotal, opponentScore: oppTotal)
-                        updates.append(total)
-                    }
+                    
+//                    if (index == corScores.count - 1) {
+//                        let total = TimeUpdate(timestamp: index + 1, isTotal: true, cornellScore: corTotal, opponentScore: oppTotal)
+//                        updates.append(total)
+//                    }
                 })
             }
         }

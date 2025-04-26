@@ -13,42 +13,56 @@ class PastGameViewModel: ObservableObject {
     
     var numberOfRounds: Int {
         switch game.sport {
-        case .Baseball: return 9
+        case .Baseball: return game.timeUpdates.count > 3 ? game.timeUpdates.count - 3 : 9
+            // number of innings is not always 9
         case .Soccer: return 2
-        case .IceHockey: return 3
+//        case .IceHockey: return 3
         case .FieldHockey, .Football, .Lacrosse: return 4
         default: return 1
         }
     }
     
-    // TODO: will be discarded once backend is changed to include a total score in scoreBreakdown for all sports
-    var cornellTotalScore: Int {
-        if game.timeUpdates.count == numberOfRounds {
-            return game.timeUpdates.reduce(0, { $0 + $1.cornellScore }) // sum up the score for each round
-        } else if game.timeUpdates.count == numberOfRounds + 1 {
-            // the last one is the sum
-            return game.timeUpdates[game.timeUpdates.count-1].cornellScore
-        } else if game.timeUpdates.count > numberOfRounds {
-            let scores = game.timeUpdates[0..<numberOfRounds]
-            return scores.reduce(0, { $0 + $1.cornellScore }) // sum up the score for each round
-        }
-        else {
-            return -1
+    var numberOfColumns: Int {
+        switch game.sport {
+        case .Baseball: return game.timeUpdates.count > 3 ? game.timeUpdates.count - 2 : 10
+            // the last three columns are total runs, hits, and errors
+            // if backend stores null for scoreBreakdown, display regular score box with 10 columns
+        case .Soccer: return game.timeUpdates.count >= 3 ? game.timeUpdates.count : 3
+//        case .IceHockey: return game.timeUpdates.count
+        case .FieldHockey, .Football, .Lacrosse: return game.timeUpdates.count >= 5 ? game.timeUpdates.count : 5
+        default: return 1
         }
     }
     
-    var opponentTotalScore: Int {
-        if game.timeUpdates.count == numberOfRounds {
-            return game.timeUpdates.reduce(0, { $0 + $1.opponentScore })
-        } else if game.timeUpdates.count == numberOfRounds + 1 {
-            // the last one is the sum
-            return game.timeUpdates[game.timeUpdates.count-1].opponentScore
-        } else if game.timeUpdates.count > numberOfRounds {
-            let scores = game.timeUpdates[0..<numberOfRounds]
-            return scores.reduce(0, { $0 + $1.opponentScore }) // sum up the score for each round
-        } else {
-            return -1
+    var numberOfOvertimes: Int {
+        switch game.sport {
+        case .Baseball: return -1
+        case .Soccer: return game.timeUpdates.count - 3
+//        case .IceHockey: return game.timeUpdates.count - 4
+        case .FieldHockey, .Football, .Lacrosse: return game.timeUpdates.count - 5
+        default: return -1
         }
+    }
+    
+    
+    var cornellTotalScore: Int {
+        // TODO: Get this back when backend fixes the boxScore (make sure the last entry reflects total score correctly)
+//        return game.gameUpdates.count > 0 ? game.gameUpdates[game.gameUpdates.count - 1].cornellScore : -1
+        if game.sport == .Baseball {
+            return game.gameUpdates.count > 0 ? game.gameUpdates[game.gameUpdates.count - 1].cornellScore : -1
+        }
+        
+        return game.timeUpdates.count > 0 ? game.timeUpdates[game.timeUpdates.count - 1].cornellScore : -1
+    }
+    
+    var opponentTotalScore: Int {
+        // TODO: Get this back when backend fixes the boxScore (make sure the last entry reflects total score correctly)
+//        return game.gameUpdates.count > 0 ? game.gameUpdates[game.gameUpdates.count - 1].opponentScore : -1
+        if game.sport == .Baseball {
+            return game.gameUpdates.count > 0 ? game.gameUpdates[game.gameUpdates.count - 1].opponentScore : -1
+        }
+        
+        return game.timeUpdates.count > 0 ? game.timeUpdates[game.timeUpdates.count - 1].opponentScore : -1
     }
     
     var corScore: String {
@@ -62,5 +76,4 @@ class PastGameViewModel: ObservableObject {
     init(game: Game) {
         self.game = game
     }
-    
 }

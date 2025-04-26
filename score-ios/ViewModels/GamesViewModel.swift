@@ -125,7 +125,7 @@ class GamesViewModel: ObservableObject
                 self.allUpcomingGames.sort(by: {$0.date < $1.date})
                 self.games = updatedGames.sorted(by: {$0.date < $1.date})
                 self.topUpcomingGames = Array(self.allUpcomingGames.prefix(3))
-                self.topPastGames = Array(self.allPastGames.suffix(3))
+                self.topPastGames = Array(self.allPastGames.prefix(3))
                 self.filter()
 
                 // Update state to success

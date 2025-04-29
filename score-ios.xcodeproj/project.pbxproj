@@ -79,6 +79,7 @@
 		D8B1C9D12CD2CE3D0095E563 /* PastGamesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B1C9D02CD2CE3C0095E563 /* PastGamesView.swift */; };
 		D8B1C9D32CD2D20A0095E563 /* PastGameTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B1C9D22CD2D20A0095E563 /* PastGameTile.swift */; };
 		D8DD4E642CFD48ED00F2C46E /* Team.graphql in Resources */ = {isa = PBXBuildFile; fileRef = D8DD4E632CFD48E400F2C46E /* Team.graphql */; };
+		FD27F4232DC0A68900CC172E /* GamesCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD27F4222DC0A68900CC172E /* GamesCacheManager.swift */; };
 		FD5A38DB2D8F2BDD00CF5E30 /* GameLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5A38DA2D8F2BDD00CF5E30 /* GameLoadingView.swift */; };
 		FD5A38DD2D8F30CC00CF5E30 /* GameErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5A38DC2D8F30CC00CF5E30 /* GameErrorView.swift */; };
 		FD5A38DF2D8F3E1400CF5E30 /* ShimmerModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5A38DE2D8F3E1400CF5E30 /* ShimmerModifier.swift */; };
@@ -178,6 +179,7 @@
 		D8B1C9D02CD2CE3C0095E563 /* PastGamesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastGamesView.swift; sourceTree = "<group>"; };
 		D8B1C9D22CD2D20A0095E563 /* PastGameTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastGameTile.swift; sourceTree = "<group>"; };
 		D8DD4E632CFD48E400F2C46E /* Team.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Team.graphql; sourceTree = "<group>"; };
+		FD27F4222DC0A68900CC172E /* GamesCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesCacheManager.swift; sourceTree = "<group>"; };
 		FD5A38DA2D8F2BDD00CF5E30 /* GameLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLoadingView.swift; sourceTree = "<group>"; };
 		FD5A38DC2D8F30CC00CF5E30 /* GameErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameErrorView.swift; sourceTree = "<group>"; };
 		FD5A38DE2D8F3E1400CF5E30 /* ShimmerModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerModifier.swift; sourceTree = "<group>"; };
@@ -475,6 +477,7 @@
 			children = (
 				D89102122CF10CA5004CE226 /* NetworkManager.swift */,
 				D891020F2CF0EBA0004CE226 /* DataCoordinator.swift */,
+				FD27F4222DC0A68900CC172E /* GamesCacheManager.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -570,7 +573,7 @@
 			mainGroup = CE725D2F2C89120100386943;
 			packageReferences = (
 				D89102012CED68D9004CE226 /* XCRemoteSwiftPackageReference "apollo-ios" */,
-				D89102162CF151DD004CE226 /* XCLocalSwiftPackageReference "gameAPI" */,
+				FD602E2D2DC11D4A002711BE /* XCLocalSwiftPackageReference "GameAPI" */,
 			);
 			productRefGroup = CE725D392C89120200386943 /* Products */;
 			projectDirPath = "";
@@ -689,6 +692,7 @@
 				CE8ED4FA2D6BF46300A274DE /* Sex.swift in Sources */,
 				D8B1C9D12CD2CE3D0095E563 /* PastGamesView.swift in Sources */,
 				CE335CD32C922E8D0037F572 /* PrimaryColors.swift in Sources */,
+				FD27F4232DC0A68900CC172E /* GamesCacheManager.swift in Sources */,
 				CE725D3C2C89120200386943 /* Home.swift in Sources */,
 				FD5A38DF2D8F3E1400CF5E30 /* ShimmerModifier.swift in Sources */,
 				CE528FA02C96420700C238B5 /* PickerView.swift in Sources */,
@@ -1040,9 +1044,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		D89102162CF151DD004CE226 /* XCLocalSwiftPackageReference "gameAPI" */ = {
+		FD602E2D2DC11D4A002711BE /* XCLocalSwiftPackageReference "GameAPI" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = gameAPI;
+			relativePath = GameAPI;
 		};
 /* End XCLocalSwiftPackageReference section */
 

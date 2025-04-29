@@ -1,32 +1,45 @@
-query Games {
-    games {
-        id
-        city
-        date
-        gender
-        location
-        opponentId
-        result
-        sport
-        state
-        time
-        scoreBreakdown
-        team {
-          id
-          color
-          image
-          name
-        }
-        boxScore {
-            team
-            period
-            time
-            description
-            scorer
-            assist
-            scoreBy
-            corScore
-            oppScore
-        }
-    }
+fragment TeamFragment on TeamType {
+  id
+  color
+  image
+  name
+}
+
+fragment BoxScoreEntryFragment on BoxScoreEntryType {
+  team
+  period
+  time
+  description
+  scorer
+  assist
+  scoreBy
+  corScore
+  oppScore
+}
+
+fragment GameFragment on GameType {
+  id
+  city
+  date
+  gender
+  location
+  opponentId
+  result
+  sport
+  state
+  time
+  scoreBreakdown
+  utcDate
+  team {
+    ...TeamFragment
+  }
+  boxScore {
+    ...BoxScoreEntryFragment
+  }
+}
+
+query Games($limit: Int = 100, $offset: Int = 0) {
+  games(limit: $limit, offset: $offset) {
+    ...GameFragment
+  }
 }

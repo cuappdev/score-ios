@@ -18,7 +18,7 @@ protocol GameType : Identifiable where ID == UUID {
     var sport: Sport { get }
     var sex: Sex { get }
  
-    // TODO add more, maybe longitude and latitude for Transit integration? Idk
+    // TODO add more, maybe longitude and latitude for Transit integration
     var address: String { get }
     
     var timeUpdates: [TimeUpdate] { get }
@@ -27,6 +27,7 @@ protocol GameType : Identifiable where ID == UUID {
 
 struct Game : GameType, Identifiable {
     var id: UUID = UUID()
+    var serverId: String?
     var opponent: Team
     var city: String
     var state: String
@@ -43,6 +44,7 @@ struct Game : GameType, Identifiable {
     }
     
     init(game: GamesQuery.Data.Game) {
+        self.serverId = game.id
         self.city = game.city
         self.state = game.state
         self.date = Date.parseDate(dateString: game.date, timeString: game.time ?? "12:00 p.m.")
@@ -102,10 +104,11 @@ extension Game {
                         oppTotal += oppScore
                         updates.append(timeUpdate)
                     }
-                    if (index == corScores.count - 1) {
-                        let total = TimeUpdate(timestamp: index + 1, isTotal: true, cornellScore: corTotal, opponentScore: oppTotal)
-                        updates.append(total)
-                    }
+                    
+//                    if (index == corScores.count - 1) {
+//                        let total = TimeUpdate(timestamp: index + 1, isTotal: true, cornellScore: corTotal, opponentScore: oppTotal)
+//                        updates.append(total)
+//                    }
                 })
             }
         }

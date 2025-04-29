@@ -15,7 +15,7 @@ struct DynamicScoreBox: View {
         GeometryReader { geometry in
             let boxWidth = geometry.size.width
             let firstColWidth = boxWidth / 5
-            let columnWidth = (boxWidth - firstColWidth) / CGFloat((viewModel.numberOfRounds + 1))
+            let columnWidth = (boxWidth - firstColWidth) / CGFloat(viewModel.numberOfColumns)
 
             VStack(spacing: 0) {
                 firstRow(firstColWidth: firstColWidth, columnWidth: columnWidth)
@@ -54,6 +54,14 @@ extension DynamicScoreBox {
             }
             .font(Constants.Fonts.gameText)
             
+            if (viewModel.numberOfOvertimes >= 1) {
+                ForEach(1...viewModel.numberOfOvertimes, id: \..self) { ot in
+                    Text("OT \(ot)")
+                        .frame(width: columnWidth)
+                }
+                .font(Constants.Fonts.gameText)
+            }
+            
             Text("Total")
                 .font(Constants.Fonts.gameText)
                 .padding(.trailing, 3)
@@ -71,7 +79,7 @@ extension DynamicScoreBox {
                 .padding(.leading, 5)
                 .frame(width: firstColWidth, alignment: .leading)
             
-            ForEach(0..<viewModel.numberOfRounds, id: \..self) { index in
+            ForEach(0..<(viewModel.numberOfColumns - 1), id: \..self) { index in
                 Text(game.timeUpdates.indices.contains(index) ? "\(game.timeUpdates[index].cornellScore)" : "-")
                     .frame(minWidth: columnWidth, maxWidth: columnWidth)
             }
@@ -97,7 +105,7 @@ extension DynamicScoreBox {
             .frame(width: firstColWidth, alignment: .leading)
             .withTrailingFadeGradient()
             
-            ForEach(0..<viewModel.numberOfRounds, id: \..self) { index in
+            ForEach(0..<(viewModel.numberOfColumns - 1), id: \..self) { index in
                 Text(game.timeUpdates.indices.contains(index) ? "\(game.timeUpdates[index].opponentScore)" : "-")
                     .frame(minWidth: columnWidth, maxWidth: columnWidth)
             }

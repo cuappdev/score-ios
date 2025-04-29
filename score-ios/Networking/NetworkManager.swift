@@ -10,11 +10,12 @@ import Apollo
 import GameAPI
 
 class NetworkManager {
+
     static let shared = NetworkManager()
     let apolloClient = ApolloClient(url: ScoreEnvironment.baseURL)
-    
-    func fetchGames(completion: @escaping ([GamesQuery.Data.Game]?, Error?) -> Void) {
-        apolloClient.fetch(query: GamesQuery()) { result in
+
+    func fetchGames(limit: Int, offset: Int, completion: @escaping ([GamesQuery.Data.Game]?, Error?) -> Void) {
+        apolloClient.fetch(query: GamesQuery(limit: limit, offset: offset)) { result in
             switch result {
             case .success(let graphQLResult):
                 if let gamesData = graphQLResult.data?.games?.compactMap({ $0 }) {
@@ -28,10 +29,10 @@ class NetworkManager {
             }
         }
     }
-    
+
     func fetchTeamById(by id: String, completion: @escaping (GetTeamByIdQuery.Data.Team?, Error?) -> Void) {
         let query = GetTeamByIdQuery(id: id)
-        
+
         apolloClient.fetch(query: query) { result in
             switch result {
             case .success(let graphQLResult):
@@ -45,5 +46,5 @@ class NetworkManager {
             }
         }
     }
-    
+
 }

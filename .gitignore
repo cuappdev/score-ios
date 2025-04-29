@@ -6,6 +6,9 @@
 ## Secrets
 ScoreSecrets/*
 
+## API
+GameAPI/**
+
 ## User settings
 xcuserdata/
 

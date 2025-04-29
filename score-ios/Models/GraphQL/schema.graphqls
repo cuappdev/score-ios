@@ -25,7 +25,13 @@ directive @defer(
 type Query {
   youtubeVideos: [YoutubeVideoType]
   youtubeVideo(id: String!): YoutubeVideoType
-  games: [GameType]
+  games(
+    """Number of games to return"""
+    limit: Int = 100
+
+    """Number of games to skip"""
+    offset: Int = 0
+  ): [GameType]
   game(id: String!): GameType
   gameByData(city: String!, date: String!, gender: String!, location: String, opponentId: String!, sport: String!, state: String!, time: String!): GameType
   gamesBySport(sport: String!): [GameType]
@@ -52,6 +58,7 @@ type YoutubeVideoType {
   title: String!
   description: String!
   thumbnail: String!
+  b64Thumbnail: String!
   url: String!
   publishedAt: String!
 }
@@ -84,9 +91,10 @@ type GameType {
   sport: String!
   state: String!
   time: String
-  boxScore: [BoxScore]
+  boxScore: [BoxScoreEntryType]
   scoreBreakdown: [[String]]
   team: TeamType
+  utcDate: String
 }
 
 """
@@ -103,7 +111,7 @@ Attributes:
     - `cor_score`: Cornell's score at the time of the event.
     - `opp_score`: Opponent's score at the time of the event.
 """
-type BoxScore {
+type BoxScoreEntryType {
   team: String
   period: String
   time: String
@@ -122,24 +130,26 @@ Attributes:
     - `id`: The ID of the team (optional).
     - `color`: The color of the team.
     - `image`: The image of the team (optional).
+    - `b64_image`: The base64 encoded image of the team (optional).
     - `name`: The name of the team.
 """
 type TeamType {
   id: String
   color: String!
   image: String
+  b64Image: String
   name: String!
 }
 
 type Mutation {
   """Creates a new game."""
-  createGame(boxScore: String, city: String!, date: String!, gender: String!, location: String, opponentId: String!, result: String, scoreBreakdown: String, sport: String!, state: String!, time: String!): CreateGame
+  createGame(boxScore: String, city: String!, date: String!, gender: String!, location: String, opponentId: String!, result: String, scoreBreakdown: String, sport: String!, state: String!, time: String!, utcDate: String): CreateGame
 
   """Creates a new team."""
-  createTeam(color: String!, image: String, name: String!): CreateTeam
+  createTeam(b64Image: String, color: String!, image: String, name: String!): CreateTeam
 
   """Creates a new youtube video."""
-  createYoutubeVideo(description: String!, id: String!, publishedAt: String!, thumbnail: String!, title: String!, url: String!): CreateYoutubeVideo
+  createYoutubeVideo(b64Thumbnail: String!, description: String!, id: String!, publishedAt: String!, thumbnail: String!, title: String!, url: String!): CreateYoutubeVideo
 }
 
 type CreateGame {

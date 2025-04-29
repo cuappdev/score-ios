@@ -38,7 +38,7 @@ fragment GameFragment on GameType {
   }
 }
 
-query Games($limit: Int = 100, $offset: Int = 0) {
+query Games($limit: Int!, $offset: Int!) {
   games(limit: $limit, offset: $offset) {
     ...GameFragment
   }

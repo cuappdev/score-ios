@@ -86,7 +86,7 @@ extension UpcomingGameCard {
                 
                 Spacer()
                 
-                Image("Soccer" + "-g")
+                Image(game.sport.rawValue + "-g")
                     .resizable()
                     .frame(width: 25, height: 25)
                 

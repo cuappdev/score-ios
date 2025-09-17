@@ -126,7 +126,6 @@ class GamesCacheManager {
             var newUpcomingGames: [GamesQuery.Data.Game] = []
 
             for game in games {
-                // TODO: make utc date not optional on backend
                 if let gameDate = self.parseDate(from: game.date) {
                     // Check if game is live (started but within 2 hours)
                     let isLive = gameDate < now && now.timeIntervalSince(gameDate) <= twoHours

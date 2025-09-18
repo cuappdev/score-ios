@@ -588,8 +588,7 @@
 			mainGroup = CE725D2F2C89120100386943;
 			packageReferences = (
 				D89102012CED68D9004CE226 /* XCRemoteSwiftPackageReference "apollo-ios" */,
-				2CBC5B0A2E722C31006C1167 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				2C1375BB2E722CB70089EBC7 /* XCLocalSwiftPackageReference "../../../Downloads/GameAPI" */,
+				FD602E2D2DC11D4A002711BE /* XCLocalSwiftPackageReference "GameAPI" */,
 			);
 			productRefGroup = CE725D392C89120200386943 /* Products */;
 			projectDirPath = "";
@@ -886,7 +885,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 26;
 				DEVELOPMENT_ASSET_PATHS = "\"score-ios/Preview Content\"";
 				DEVELOPMENT_TEAM = W7U2WA4D54;
 				ENABLE_PREVIEWS = YES;
@@ -902,7 +901,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cornellappdev.score-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -920,7 +919,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 26;
 				DEVELOPMENT_ASSET_PATHS = "\"score-ios/Preview Content\"";
 				DEVELOPMENT_TEAM = W7U2WA4D54;
 				ENABLE_PREVIEWS = YES;
@@ -936,7 +935,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cornellappdev.score-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1061,9 +1060,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		2C1375BB2E722CB70089EBC7 /* XCLocalSwiftPackageReference "../../../Downloads/GameAPI" */ = {
+		FD602E2D2DC11D4A002711BE /* XCLocalSwiftPackageReference "GameAPI" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = ../../../Downloads/GameAPI;
+			relativePath = GameAPI;
 		};
 /* End XCLocalSwiftPackageReference section */
 

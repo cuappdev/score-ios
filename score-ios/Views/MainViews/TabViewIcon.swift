@@ -14,8 +14,9 @@ struct TabViewIcon: View {
     @Binding var selectionIndex: Int
 
     let itemIndex: Int
-    private let tabItems = ["schedule", "scoreboard"]
-
+    private let tabItems = ["schedule", "highlight", "scoreboard"]
+    private let tabText = ["Schedule", "Highlights", "Scores"]
+        
     var body: some View {
         Button {
             selectionIndex = itemIndex
@@ -25,7 +26,7 @@ struct TabViewIcon: View {
                     .resizable()
                     .frame(width: 28, height: 28)
                     .tint(Constants.Colors.gray_icons)
-                Text(itemIndex == 0 ? "Schedule" : "Scores")
+                Text(tabText[itemIndex])
                     .font(Constants.Fonts.buttonLabel)
                     .foregroundStyle(itemIndex == selectionIndex ? Constants.Colors.primary_red : Constants.Colors.unselectedText)
             }
@@ -34,5 +35,5 @@ struct TabViewIcon: View {
 }
 
 #Preview {
-    TabViewIcon(selectionIndex: .constant(0), itemIndex: 0)
+    TabViewIcon(selectionIndex: .constant(0), itemIndex: 1)
 }

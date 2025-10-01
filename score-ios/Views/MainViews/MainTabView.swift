@@ -30,17 +30,17 @@ struct MainTabView: View {
                 }
 
                 HStack {
-                    ForEach(0..<2, id: \.self) {
+                    ForEach(0...2, id: \.self) {
                         index in
                         TabViewIcon(selectionIndex: $selection, itemIndex: index)
                             .frame(height: 45)
                             .padding(.top, 10)
-                        if index != 1 {
+                        if index != 2 {
                             Spacer()
                         }
                     }
                 }
-                .padding(.horizontal, 86)
+                .padding(.horizontal, 48)
                 .padding(.bottom, 40)
                 .padding(.top, 8)
                 .frame(maxWidth: .infinity)

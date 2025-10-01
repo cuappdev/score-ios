@@ -9,6 +9,13 @@
 /* Begin PBXBuildFile section */
 		1C87865D2D8CD76900EBDF74 /* TrailingFadeGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C87865C2D8CD76900EBDF74 /* TrailingFadeGradient.swift */; };
 		1C87865F2D8CDADC00EBDF74 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C87865E2D8CDADC00EBDF74 /* String+Extension.swift */; };
+		2C1375BD2E722CB70089EBC7 /* GameAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 2C1375BC2E722CB70089EBC7 /* GameAPI */; };
+		2C1375BF2E7230250089EBC7 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 2C1375BE2E7230250089EBC7 /* FirebaseAnalytics */; };
+		2C1375C12E7230250089EBC7 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 2C1375C02E7230250089EBC7 /* FirebaseCore */; };
+		2C1375C32E7230250089EBC7 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 2C1375C22E7230250089EBC7 /* FirebaseCrashlytics */; };
+		2C1375C52E7230630089EBC7 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 2C1375C42E7230630089EBC7 /* FirebaseAnalytics */; };
+		2C1375C72E7230630089EBC7 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 2C1375C62E7230630089EBC7 /* FirebaseCore */; };
+		2C1375CB2E7233390089EBC7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C1375CA2E7233390089EBC7 /* GoogleService-Info.plist */; };
 		CE335CD32C922E8D0037F572 /* PrimaryColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE335CD22C922E8D0037F572 /* PrimaryColors.swift */; };
 		CE335CD52C922ECB0037F572 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE335CD42C922ECB0037F572 /* Constants.swift */; };
 		CE335CD72C922F390037F572 /* Dates.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE335CD62C922F390037F572 /* Dates.swift */; };
@@ -105,6 +112,7 @@
 /* Begin PBXFileReference section */
 		1C87865C2D8CD76900EBDF74 /* TrailingFadeGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailingFadeGradient.swift; sourceTree = "<group>"; };
 		1C87865E2D8CDADC00EBDF74 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
+		2C1375CA2E7233390089EBC7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CE335CD22C922E8D0037F572 /* PrimaryColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryColors.swift; sourceTree = "<group>"; };
 		CE335CD42C922ECB0037F572 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CE335CD62C922F390037F572 /* Dates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dates.swift; sourceTree = "<group>"; };
@@ -190,7 +198,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C1375C52E7230630089EBC7 /* FirebaseAnalytics in Frameworks */,
+				2C1375BD2E722CB70089EBC7 /* GameAPI in Frameworks */,
+				2C1375C12E7230250089EBC7 /* FirebaseCore in Frameworks */,
 				D89102042CED69EF004CE226 /* Apollo in Frameworks */,
+				2C1375C32E7230250089EBC7 /* FirebaseCrashlytics in Frameworks */,
+				2C1375BF2E7230250089EBC7 /* FirebaseAnalytics in Frameworks */,
+				2C1375C72E7230630089EBC7 /* FirebaseCore in Frameworks */,
 				D89102182CF151DD004CE226 /* GameAPI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -433,6 +447,7 @@
 		CEA25A972D752C6F00B9837A /* ScoreSecrets */ = {
 			isa = PBXGroup;
 			children = (
+				2C1375CA2E7233390089EBC7 /* GoogleService-Info.plist */,
 				CEA25A962D75292900B9837A /* Keys.xcconfig */,
 			);
 			path = ScoreSecrets;
@@ -593,6 +608,7 @@
 			files = (
 				D8DD4E642CFD48ED00F2C46E /* Team.graphql in Resources */,
 				D891020B2CED6A8E004CE226 /* Game.graphql in Resources */,
+				2C1375CB2E7233390089EBC7 /* GoogleService-Info.plist in Resources */,
 				CE528FE42C96A27500C238B5 /* Poppins-Light.ttf in Resources */,
 				CE528FEE2C96A27500C238B5 /* Poppins-Black.ttf in Resources */,
 				CE528FEC2C96A27500C238B5 /* Poppins-LightItalic.ttf in Resources */,
@@ -871,7 +887,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 26;
 				DEVELOPMENT_ASSET_PATHS = "\"score-ios/Preview Content\"";
-				DEVELOPMENT_TEAM = ZGMCXU7X3U;
+				DEVELOPMENT_TEAM = W7U2WA4D54;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "score-ios/Info.plist";
@@ -885,7 +901,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cornellappdev.score-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -905,7 +921,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 26;
 				DEVELOPMENT_ASSET_PATHS = "\"score-ios/Preview Content\"";
-				DEVELOPMENT_TEAM = ZGMCXU7X3U;
+				DEVELOPMENT_TEAM = W7U2WA4D54;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "score-ios/Info.plist";
@@ -919,7 +935,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cornellappdev.score-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1051,6 +1067,14 @@
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		2CBC5B0A2E722C31006C1167 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.2.0;
+			};
+		};
 		D89102012CED68D9004CE226 /* XCRemoteSwiftPackageReference "apollo-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apollographql/apollo-ios.git";
@@ -1062,6 +1086,35 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		2C1375BC2E722CB70089EBC7 /* GameAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = GameAPI;
+		};
+		2C1375BE2E7230250089EBC7 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2CBC5B0A2E722C31006C1167 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		2C1375C02E7230250089EBC7 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2CBC5B0A2E722C31006C1167 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		2C1375C22E7230250089EBC7 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2CBC5B0A2E722C31006C1167 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		2C1375C42E7230630089EBC7 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2CBC5B0A2E722C31006C1167 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		2C1375C62E7230630089EBC7 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2CBC5B0A2E722C31006C1167 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
 		D89102032CED69EF004CE226 /* Apollo */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D89102012CED68D9004CE226 /* XCRemoteSwiftPackageReference "apollo-ios" */;

@@ -83,6 +83,7 @@ extension UpcomingGameCard {
                 .withTrailingFadeGradient()
 
                 
+                
                 Spacer()
                 
                 Image(game.sport.rawValue + "-g")

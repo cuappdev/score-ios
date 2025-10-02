@@ -66,6 +66,9 @@
 		CE8ED5122D6C3FCB00A274DE /* CarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8ED5112D6C3FCB00A274DE /* CarouselView.swift */; };
 		CE8ED5142D6C42D400A274DE /* GameSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8ED5132D6C42D400A274DE /* GameSectionHeaderView.swift */; };
 		CEA25A932D75279A00B9837A /* ScoreEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA25A922D75279A00B9837A /* ScoreEnvironment.swift */; };
+		D0A904F52E8DDD990008194B /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = D0A904F42E8DDD990008194B /* FirebaseAnalytics */; };
+		D0A904F72E8DDD990008194B /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = D0A904F62E8DDD990008194B /* FirebaseCore */; };
+		D0A904F92E8DDD990008194B /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = D0A904F82E8DDD990008194B /* FirebaseCrashlytics */; };
 		D836AD922CB62C8800BD1545 /* NoGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D836AD912CB62C8800BD1545 /* NoGameView.swift */; };
 		D83EE8862CC9917C008B693C /* ScoreSummaryTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83EE8852CC9917C008B693C /* ScoreSummaryTile.swift */; };
 		D85802102D6C38700075B036 /* DynamicScoreBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D858020F2D6C38670075B036 /* DynamicScoreBox.swift */; };
@@ -203,9 +206,12 @@
 				2C1375C12E7230250089EBC7 /* FirebaseCore in Frameworks */,
 				D89102042CED69EF004CE226 /* Apollo in Frameworks */,
 				2C1375C32E7230250089EBC7 /* FirebaseCrashlytics in Frameworks */,
+				D0A904F92E8DDD990008194B /* FirebaseCrashlytics in Frameworks */,
 				2C1375BF2E7230250089EBC7 /* FirebaseAnalytics in Frameworks */,
+				D0A904F72E8DDD990008194B /* FirebaseCore in Frameworks */,
 				2C1375C72E7230630089EBC7 /* FirebaseCore in Frameworks */,
 				D89102182CF151DD004CE226 /* GameAPI in Frameworks */,
+				D0A904F52E8DDD990008194B /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -588,8 +594,8 @@
 			mainGroup = CE725D2F2C89120100386943;
 			packageReferences = (
 				D89102012CED68D9004CE226 /* XCRemoteSwiftPackageReference "apollo-ios" */,
-				2CBC5B0A2E722C31006C1167 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				2C1375BB2E722CB70089EBC7 /* XCLocalSwiftPackageReference "../../../Downloads/GameAPI" */,
+				FD602E2D2DC11D4A002711BE /* XCLocalSwiftPackageReference "GameAPI" */,
+				D0A904F32E8DDD990008194B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = CE725D392C89120200386943 /* Products */;
 			projectDirPath = "";
@@ -886,7 +892,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 26;
 				DEVELOPMENT_ASSET_PATHS = "\"score-ios/Preview Content\"";
 				DEVELOPMENT_TEAM = W7U2WA4D54;
 				ENABLE_PREVIEWS = YES;
@@ -902,7 +908,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cornellappdev.score-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -920,7 +926,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 26;
 				DEVELOPMENT_ASSET_PATHS = "\"score-ios/Preview Content\"";
 				DEVELOPMENT_TEAM = W7U2WA4D54;
 				ENABLE_PREVIEWS = YES;
@@ -936,7 +942,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cornellappdev.score-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1061,9 +1067,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		2C1375BB2E722CB70089EBC7 /* XCLocalSwiftPackageReference "../../../Downloads/GameAPI" */ = {
+		FD602E2D2DC11D4A002711BE /* XCLocalSwiftPackageReference "GameAPI" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = ../../../Downloads/GameAPI;
+			relativePath = GameAPI;
 		};
 /* End XCLocalSwiftPackageReference section */
 
@@ -1074,6 +1080,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 12.2.0;
+			};
+		};
+		D0A904F32E8DDD990008194B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.3.0;
 			};
 		};
 		D89102012CED68D9004CE226 /* XCRemoteSwiftPackageReference "apollo-ios" */ = {
@@ -1115,6 +1129,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2CBC5B0A2E722C31006C1167 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCore;
+		};
+		D0A904F42E8DDD990008194B /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D0A904F32E8DDD990008194B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		D0A904F62E8DDD990008194B /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D0A904F32E8DDD990008194B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		D0A904F82E8DDD990008194B /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D0A904F32E8DDD990008194B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
 		};
 		D89102032CED69EF004CE226 /* Apollo */ = {
 			isa = XCSwiftPackageProductDependency;

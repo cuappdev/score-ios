@@ -11,6 +11,7 @@ echo "Downloading Secrets"
 brew install wget
 cd $CI_PRIMARY_REPOSITORY_PATH/ci_scripts
 mkdir ../ScoreSecrets
+wget -O ../ScoreSecrets/GoogleService-Info.plist "$GOOGLE_SERVICE_INFO"
 wget -O ../ScoreSecrets/Keys.xcconfig "$KEYS"
 wget -O ../ScoreSecrets/apollo-codegen-config-dev.json "$CODEGEN_DEV"
 wget -O ../ScoreSecrets/apollo-codegen-config-prod.json "$CODEGEN_PROD"

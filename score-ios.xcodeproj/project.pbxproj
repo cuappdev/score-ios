@@ -1067,10 +1067,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		2C1375BB2E722CB70089EBC7 /* XCLocalSwiftPackageReference "../../../Downloads/GameAPI" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ../../../Downloads/GameAPI;
-		};
+        FD602E2D2DC11D4A002711BE /* XCLocalSwiftPackageReference "GameAPI" */ = {
+            isa = XCLocalSwiftPackageReference;
+            relativePath = GameAPI;
+        };
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */

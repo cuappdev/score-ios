@@ -40,7 +40,8 @@ struct MainTabView: View {
                         }
                     }
                 }
-                .padding(.horizontal, 48)
+                .padding(.trailing, 48)
+                .padding(.leading, 38)
                 .padding(.bottom, 40)
                 .padding(.top, 8)
                 .frame(maxWidth: .infinity)

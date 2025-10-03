@@ -18,7 +18,7 @@ struct HighlightTile: View {
                 case .empty:
                     // While loading
                     Rectangle()
-                        .fill(Color.gray.opacity(0.2))
+                        .fill(Constants.Colors.gray_icons.opacity(0.2))
                 case .success(let image):
                     image
                         .resizable()
@@ -29,7 +29,6 @@ struct HighlightTile: View {
                         .resizable()
                         .scaledToFit()
                         .foregroundColor(.gray)
-                        .padding(20)
                 @unknown default:
                     EmptyView()
                 }
@@ -38,13 +37,20 @@ struct HighlightTile: View {
             .clipped()
             .overlay(
                 // Duration placeholder (if you add it later)
-                Text("1:25")
-                    .font(.caption2)
+                HStack(spacing: 2){
+                    Image(systemName: "play.fill")
+                        .font(.caption2)
+                                        
+                    Text("1:25")
+                        .font(.caption)
+                }
+                    .fontWeight(.heavy)
+                    .foregroundStyle(.white)
+                    
                     .padding(6)
-                    .foregroundColor(.white)
-                    .background(Color.black.opacity(0.6))
-                    .clipShape(RoundedRectangle(cornerRadius: 4)),
+                .clipShape(RoundedRectangle(cornerRadius: 4)),
                 alignment: .bottomLeading
+               
             )
             .cornerRadius(12, corners: [.topLeft, .topRight])
 

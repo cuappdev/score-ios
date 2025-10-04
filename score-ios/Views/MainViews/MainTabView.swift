@@ -22,7 +22,13 @@ struct MainTabView: View {
                         .environmentObject(gamesViewModel)
                         .toolbar(.hidden)
                         .navigationBarHidden(true)
-                } else {
+                } else if(selection == 1){
+                    HighlightView()
+                        .environmentObject(gamesViewModel)
+                        .toolbar(.hidden)
+                        .navigationBarHidden(true)
+                }
+                else if (selection == 2){
                     PastGamesView()
                         .environmentObject(gamesViewModel)
                         .toolbar(.hidden)

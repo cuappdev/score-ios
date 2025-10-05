@@ -18,10 +18,13 @@ struct MainTabView: View {
         NavigationStack {
             ZStack(alignment: .bottom) {
                 if (selection == 0) {
-                    UpcomingGamesView()
-                        .environmentObject(gamesViewModel)
-                        .toolbar(.hidden)
-                        .navigationBarHidden(true)
+//                    if !gamesViewModel.allUpcomingGames.isEmpty {
+                        // Only shows upcoming game carousel if there are upcoming games
+                        UpcomingGamesView()
+                            .environmentObject(gamesViewModel)
+                            .toolbar(.hidden)
+                            .navigationBarHidden(true)
+//                    }
                 } else {
                     PastGamesView()
                         .environmentObject(gamesViewModel)
@@ -33,17 +36,13 @@ struct MainTabView: View {
                     ForEach(0..<2, id: \.self) {
                         index in
                         TabViewIcon(selectionIndex: $selection, itemIndex: index)
-                            .frame(height: 45)
-                            .padding(.top, 10)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
                         if index != 1 {
                             Spacer()
                         }
                     }
                 }
-                .padding(.horizontal, 86)
-                .padding(.bottom, 40)
-                .padding(.top, 8)
-                .frame(maxWidth: .infinity)
+                .frame(height: 88)
                 .background(
                     Color.white
                         .shadow(color: Color.black.opacity(0.25), radius: 10, x: 0, y: -6)

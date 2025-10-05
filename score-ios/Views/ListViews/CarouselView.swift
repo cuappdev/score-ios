@@ -30,6 +30,7 @@ struct CarouselView<CardView: View, GameView: View>: View {
                                 .navigationBarBackButtonHidden()
                         } label: {
                             cardView(games[index])
+                                .padding(.horizontal, 20)
                                 .tag(index)
                         }
                     }

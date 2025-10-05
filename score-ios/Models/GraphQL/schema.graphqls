@@ -23,6 +23,7 @@ directive @defer(
 ) on FRAGMENT_SPREAD | INLINE_FRAGMENT
 
 type Query {
+  articles(sportsType: String): [ArticleType]
   youtubeVideos: [YoutubeVideoType]
   youtubeVideo(id: String!): YoutubeVideoType
   games(
@@ -40,6 +41,25 @@ type Query {
   teams: [TeamType]
   team(id: String!): TeamType
   teamByName(name: String!): TeamType
+}
+
+"""
+A GraphQL type representing a news article.
+
+Attributes:
+    - title: The title of the article
+    - image: The filename of the article's main image
+    - sports_type: The specific sport category
+    - published_at: The publication date
+    - url: The URL to the full article
+"""
+type ArticleType {
+  id: String
+  title: String!
+  image: String
+  sportsType: String!
+  publishedAt: String!
+  url: String!
 }
 
 """
@@ -150,6 +170,9 @@ type Mutation {
 
   """Creates a new youtube video."""
   createYoutubeVideo(b64Thumbnail: String!, description: String!, id: String!, publishedAt: String!, thumbnail: String!, title: String!, url: String!): CreateYoutubeVideo
+
+  """Creates a new article."""
+  createArticle(image: String, publishedAt: String!, slug: String!, sportsType: String!, title: String!, url: String!): CreateArticle
 }
 
 type CreateGame {
@@ -162,4 +185,8 @@ type CreateTeam {
 
 type CreateYoutubeVideo {
   youtubeVideo: YoutubeVideoType
+}
+
+type CreateArticle {
+  article: ArticleType
 }

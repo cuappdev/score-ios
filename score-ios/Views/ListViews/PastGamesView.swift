@@ -19,14 +19,20 @@ struct PastGamesView: View {
                 ScrollView(.vertical, showsIndicators: false) {
                     ZStack {
                         LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
-                            CarouselView(games: vm.topPastGames, title: "Latest",
-                                         cardView: { game in
+                            
+                            Text("Latest")
+                                .font(Constants.Fonts.semibold24)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(.horizontal, paddingMain)
+                                .padding(.top, paddingMain)
+                                .padding(.bottom, 1.5 * -paddingMain) // Negates carousel required title padding
+                            
+                            CarouselView(games: vm.topPastGames, title: "", cardView: { game in
                                 PastGameCard(game: game, viewModel: PastGameViewModel(game: game))
                             },
                                          gameView: { game in
                                 GameView(game: game, viewModel: PastGameViewModel(game: game))
                             })
-                            .padding(.horizontal, paddingMain)
 
                             Section(header: GameSectionHeaderView(headerTitle: "All Scores")
                                 .padding(.horizontal, paddingMain)) {

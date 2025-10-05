@@ -21,15 +21,20 @@ struct UpcomingGamesView: View {
                 ScrollView (.vertical, showsIndicators: false) {
                     ZStack {
                         LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
-                            CarouselView(games: vm.topUpcomingGames, title: "Upcoming",
-                                         cardView: { game in
+                            
+                            Text("Upcoming")
+                                .font(Constants.Fonts.semibold24)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(.horizontal, paddingMain)
+                                .padding(.top, paddingMain)
+                                .padding(.bottom, 1.5 * -paddingMain) // Negates carousel required title padding
+                            
+                            CarouselView(games: vm.topUpcomingGames, title: "", cardView: { game in
                                 UpcomingGameCard(game: game)
                             },
                                          gameView: { game in
                                 GameView(game: game, viewModel: PastGameViewModel(game: game))
                             })
-                            .padding(.horizontal, paddingMain)
-                            
                             
                             Section(header: GameSectionHeaderView(headerTitle: "Game Schedule")
                                 .padding(.horizontal, paddingMain)) {

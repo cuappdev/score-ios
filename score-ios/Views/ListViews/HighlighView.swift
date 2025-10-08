@@ -16,8 +16,15 @@ struct HighlightView: View {
                     .font(Constants.Fonts.semibold24)
                     .foregroundStyle(Constants.Colors.black)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal)
+                    .padding(.horizontal,24)
+                
+                SearchView()
+                    .frame(alignment: .center)
+                    .padding(.horizontal,24)
+                
+                    
                 SportSelectorView()
+                    .padding(.leading,24)
                    
                 
                 // Today's Highlights
@@ -26,7 +33,7 @@ struct HighlightView: View {
                         .font(Constants.Fonts.medium18)
                         .foregroundStyle(Constants.Colors.black)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal)
+                        .padding(.horizontal, 24)
                     
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 24) {
@@ -41,7 +48,7 @@ struct HighlightView: View {
                                     publishedAt: "2024-11-09T00:00:00Z"
                                 ))
                             }
-                        }.padding(.horizontal)
+                        }.padding(.horizontal, 24)
                     }
                 }
                 
@@ -51,7 +58,7 @@ struct HighlightView: View {
                         .font(Constants.Fonts.medium18)
                         .foregroundStyle(Constants.Colors.black)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal)
+                        .padding(.horizontal, 24)
                             
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 24) {
@@ -67,7 +74,7 @@ struct HighlightView: View {
                                     )
                                 )
                             }
-                        }.padding(.horizontal)
+                        }.padding(.horizontal, 24)
                     }
                 }
             }

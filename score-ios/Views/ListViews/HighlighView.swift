@@ -26,16 +26,29 @@ struct HighlightView: View {
 
                 
                 SportSelectorView()
-                    .padding(.leading, 24)
                     .padding(.bottom, 6)
 
                 
                 // Today's Highlights
-                Text("Today")
-                    .font(Constants.Fonts.subheader)
-                    .foregroundStyle(Constants.Colors.black)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal, 24)
+                HStack(){
+                    Text("Today")
+                        .font(Constants.Fonts.subheader)
+                        .foregroundStyle(Constants.Colors.black)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.leading, 24)
+                    
+                    Spacer()
+                    
+                    Text("\(highlights.count) results")
+                        .font(Constants.Fonts.body)
+                        .foregroundStyle(Constants.Colors.gray_text)
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                    Image(systemName: "chevron.right")
+                        .font(Constants.Fonts.body)
+                        .padding(.trailing, 24)
+                        .foregroundStyle(Constants.Colors.gray_text)
+                }
+               
 
                 
                 ScrollView(.horizontal, showsIndicators: false) {
@@ -52,11 +65,24 @@ struct HighlightView: View {
                 
                 
                 // Past three days
-                Text("Past 3 days")
-                    .font(Constants.Fonts.subheader)
-                    .foregroundStyle(Constants.Colors.black)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal, 24)
+                HStack(){
+                    Text("Past 3 days")
+                        .font(Constants.Fonts.subheader)
+                        .foregroundStyle(Constants.Colors.black)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.leading, 24)
+                    
+                    Spacer()
+                    
+                    Text("\(highlights.count) results")
+                        .font(Constants.Fonts.body)
+                        .foregroundStyle(Constants.Colors.gray_text)
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                    Image(systemName: "chevron.right")
+                        .font(Constants.Fonts.body)
+                        .padding(.trailing, 24)
+                        .foregroundStyle(Constants.Colors.gray_text)
+                }
                 
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 24) {
@@ -66,10 +92,14 @@ struct HighlightView: View {
                     }
                     .padding(.horizontal, 24)
                 }
-                .padding(.bottom, 12)
 
             }
+            .safeAreaInset(edge: .bottom, content: {
+                Color.clear.frame(height: 200)
+            })
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
+        
     }
 }
 
@@ -93,7 +123,7 @@ struct HighlightView: View {
                 id: "1",
                 title: "Cornell Daily Sun Reports Historic Win",
                 summary: "Cornell’s offense shines in a big win.",
-                image: "https://example.com/article.jpg",
+                image: "https://snworksceo.imgix.net/cds/2f1df221-010c-4a5b-94cc-ec7a100b7aa1.sized-1000x1000.jpg?w=1000&dpr=2",
                 url: "https://cornellsun.com/article",
                 source: "Cornell Daily Sun",
                 publishedAt: "2025-10-02T00:00:00Z"

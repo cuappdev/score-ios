@@ -23,7 +23,7 @@ struct MainTabView: View {
                         .toolbar(.hidden)
                         .navigationBarHidden(true)
                 } else if(selection == 1){
-                    HighlightView()
+                    HighlightView(highlights: [])
                         .environmentObject(gamesViewModel)
                         .toolbar(.hidden)
                         .navigationBarHidden(true)

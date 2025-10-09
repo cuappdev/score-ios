@@ -9,97 +9,95 @@ import SwiftUI
 
 struct HighlightView: View {
     var highlights: [Highlight]
-
+    
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            VStack(alignment: .leading, spacing: 24) {
-                
-                // Section title
-                Text("Highlights")
-                    .font(Constants.Fonts.Header.h1)
-                    .foregroundStyle(Constants.Colors.black)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal, 24)
-                
-                SearchView()
-                    .padding(.horizontal, 24)
-
-                
-                SportSelectorView()
-                    .padding(.bottom, 6)
-
-                
-                // Today's Highlights
-                HStack(){
-                    Text("Today")
-                        .font(Constants.Fonts.subheader)
+        NavigationStack {
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack(alignment: .leading, spacing: 24) {
+                    
+                    // Section title
+                    Text("Highlights")
+                        .font(Constants.Fonts.Header.h1)
                         .foregroundStyle(Constants.Colors.black)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.leading, 24)
+                        .padding(.horizontal, 24)
                     
-                    Spacer()
+                    SearchView()
+                        .padding(.horizontal, 24)
                     
-                    Text("\(highlights.count) results")
-                        .font(Constants.Fonts.body)
-                        .foregroundStyle(Constants.Colors.gray_text)
-                        .frame(maxWidth: .infinity, alignment: .trailing)
-                    Image(systemName: "chevron.right")
-                        .font(Constants.Fonts.body)
-                        .padding(.trailing, 24)
-                        .foregroundStyle(Constants.Colors.gray_text)
-                }
-               
-
-                
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 24) {
-                        ForEach(highlights) { highlight in
-                            HighlightTile(highlight: highlight)
+                    SportSelectorView()
+                        .padding(.bottom, 6)
+                    
+                    // ✅ Today Section
+                    NavigationLink(destination: DetailedHighlightsView(
+                        title: "Today",
+                        highlights: highlights // later you can filter here
+                    )) {
+                        HStack {
+                            Text("Today")
+                                .font(Constants.Fonts.subheader)
+                                .foregroundStyle(Constants.Colors.black)
+                            
+                            Spacer()
+                            
+                            Text("\(highlights.count) results")
+                                .font(Constants.Fonts.body)
+                                .foregroundStyle(Constants.Colors.gray_text)
+                            
+                            Image(systemName: "chevron.right")
+                                .font(Constants.Fonts.body)
+                                .foregroundStyle(Constants.Colors.gray_text)
                         }
+                        .padding(.horizontal, 24)
                     }
-                    .padding(.horizontal, 24)
 
-                }
-                .padding(.bottom, 12)
-
-                
-                
-                // Past three days
-                HStack(){
-                    Text("Past 3 days")
-                        .font(Constants.Fonts.subheader)
-                        .foregroundStyle(Constants.Colors.black)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.leading, 24)
-                    
-                    Spacer()
-                    
-                    Text("\(highlights.count) results")
-                        .font(Constants.Fonts.body)
-                        .foregroundStyle(Constants.Colors.gray_text)
-                        .frame(maxWidth: .infinity, alignment: .trailing)
-                    Image(systemName: "chevron.right")
-                        .font(Constants.Fonts.body)
-                        .padding(.trailing, 24)
-                        .foregroundStyle(Constants.Colors.gray_text)
-                }
-                
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 24) {
-                        ForEach(highlights) { highlight in
-                            HighlightTile(highlight: highlight)
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 24) {
+                            ForEach(highlights) { highlight in
+                                HighlightTile(highlight: highlight, width: 241)
+                            }
                         }
+                        .padding(.horizontal, 24)
                     }
-                    .padding(.horizontal, 24)
+                    .padding(.bottom, 12)
+                    
+                    // ✅ Past 3 days Section
+                    NavigationLink(destination: DetailedHighlightsView(
+                        title: "Past 3 Days",
+                        highlights: highlights // again, filter here later
+                    )) {
+                        HStack {
+                            Text("Past 3 Days")
+                                .font(Constants.Fonts.subheader)
+                                .foregroundStyle(Constants.Colors.black)
+                            
+                            Spacer()
+                            
+                            Text("\(highlights.count) results")
+                                .font(Constants.Fonts.body)
+                                .foregroundStyle(Constants.Colors.gray_text)
+                            
+                            Image(systemName: "chevron.right")
+                                .font(Constants.Fonts.body)
+                                .foregroundStyle(Constants.Colors.gray_text)
+                        }
+                        .padding(.horizontal, 24)
+                    }
+                    
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 24) {
+                            ForEach(highlights) { highlight in
+                                HighlightTile(highlight: highlight, width: 241)
+                            }
+                        }
+                        .padding(.horizontal, 24)
+                    }
                 }
-
+                .safeAreaInset(edge: .bottom) {
+                    Color.clear.frame(height: 200)
+                }
             }
-            .safeAreaInset(edge: .bottom, content: {
-                Color.clear.frame(height: 200)
-            })
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
-        
     }
 }
 

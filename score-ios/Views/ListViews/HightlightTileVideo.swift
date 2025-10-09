@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HighlightTileVideo: View {
     var video: YoutubeVideo
+    var width: CGFloat
     
     var body: some View {
         
@@ -36,7 +37,7 @@ struct HighlightTileVideo: View {
                             EmptyView()
                         }
                     }
-                    .frame(width: 241, height: 117)
+                    .frame(width: width, height: 117)
                     .clipped()
                     .overlay(
                         // Duration placeholder (if you add it later)
@@ -92,7 +93,7 @@ struct HighlightTileVideo: View {
                                 .foregroundColor(.gray)
                         }
                     }.padding(.horizontal, 12.0)
-                    .frame(width: 241, height: 75)
+                    .frame(width: width, height: 75)
                    
                 }
                 
@@ -137,5 +138,5 @@ struct YoutubeVideo: Identifiable {
         b64Thumbnail: nil,
         url: "https://youtube.com/watch?v=QGHb9heJAco",
         publishedAt: "2024-11-09T00:00:00Z"
-    ))
+    ), width: 241)
 }

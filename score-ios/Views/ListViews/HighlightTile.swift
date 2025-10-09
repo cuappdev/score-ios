@@ -23,13 +23,14 @@ enum Highlight: Identifiable {
 
 struct HighlightTile: View {
     var highlight: Highlight
+    var width: CGFloat
     
     var body: some View {
         switch highlight {
         case .video(let video):
-            HighlightTileVideo(video: video)
+            HighlightTileVideo(video: video, width:width)
         case .article(let article):
-            HighlightTileArticle(article: article)
+            HighlightTileArticle(article: article, width:width)
         }
     }
 }

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HighlightTileArticle: View {
     var article: Article
+    var width: CGFloat
     
     var body: some View {
         if let url = URL(string: article.url) {
@@ -42,7 +43,7 @@ struct HighlightTileArticle: View {
                             EmptyView()
                         }
                     }
-                    .frame(width: 241, height: 192)
+                    .frame(width: width, height: 192)
                     .clipped()
                     .cornerRadius(12)
                     
@@ -54,7 +55,9 @@ struct HighlightTileArticle: View {
                             .fontWeight(.bold)
                             .foregroundColor(.white)
                             .lineLimit(3)
-                            .padding([.top, .horizontal], 12)
+                            .multilineTextAlignment(.leading) // ✅ makes text align fully left
+                            .padding(.top, 12)
+                            .padding(.horizontal, 24)
                         
                         Spacer()
                         
@@ -78,7 +81,7 @@ struct HighlightTileArticle: View {
                         }
                         .padding([.horizontal, .bottom], 12)
                     }
-                    .frame(width: 241, height: 192, alignment: .topLeading)
+                    .frame(width: width, height: 192, alignment: .topLeading)
 
                 }
                 .background(
@@ -125,6 +128,6 @@ struct Article: Identifiable {
         url: "https://cornellbigred.com/news/2025/10/08/article",
         source: "Cornell Daily Sun",
         publishedAt: "2025-10-08T00:00:00Z"
-    ))
+    ), width: 345)
 }
 

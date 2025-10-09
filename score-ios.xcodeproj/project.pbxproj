@@ -613,7 +613,7 @@
 			packageReferences = (
 				D89102012CED68D9004CE226 /* XCRemoteSwiftPackageReference "apollo-ios" */,
 				D0A904F32E8DDD990008194B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				7626AD6D2E973DC8002149CD /* XCLocalSwiftPackageReference "../gameAPI" */,
+				76101F682E9743EC006D6EDD /* XCLocalSwiftPackageReference "gameAPI" */,
 			);
 			productRefGroup = CE725D392C89120200386943 /* Products */;
 			projectDirPath = "";
@@ -1091,9 +1091,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		7626AD6D2E973DC8002149CD /* XCLocalSwiftPackageReference "../gameAPI" */ = {
+		76101F682E9743EC006D6EDD /* XCLocalSwiftPackageReference "gameAPI" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = ../gameAPI;
+			relativePath = gameAPI;
 		};
 /* End XCLocalSwiftPackageReference section */
 

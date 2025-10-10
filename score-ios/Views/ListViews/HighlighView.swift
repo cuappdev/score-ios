@@ -11,11 +11,23 @@ struct HighlightView: View {
     var highlights: [Highlight]
     
     var body: some View {
+        let todayHighlights = highlights.filter {
+            if let date = Date.fullDateFormatter.date(from: $0.publishedAt) {
+                return Date.isToday(date)
+            }
+            return false
+        }
+
+        let pastThreeDaysHighlights = highlights.filter {
+            if let date = Date.fullDateFormatter.date(from: $0.publishedAt) {
+                return Date.isWithinPastDays(date, days: 3)
+            }
+            return false
+        }
+
         NavigationStack {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 24) {
-                    
-                    // Section title
                     Text("Highlights")
                         .font(Constants.Fonts.Header.h1)
                         .foregroundStyle(Constants.Colors.black)
@@ -29,74 +41,76 @@ struct HighlightView: View {
                         .padding(.bottom, 6)
                     
                     // ✅ Today Section
-                    NavigationLink(destination: DetailedHighlightsView(
-                        title: "Today",
-                        highlights: highlights // later you can filter here
-                    )) {
-                        HStack {
-                            Text("Today")
-                                .font(Constants.Fonts.subheader)
-                                .foregroundStyle(Constants.Colors.black)
-                            
-                            Spacer()
-                            
-                            Text("\(highlights.count) results")
-                                .font(Constants.Fonts.body)
-                                .foregroundStyle(Constants.Colors.gray_text)
-                            
-                            Image(systemName: "chevron.right")
-                                .font(Constants.Fonts.body)
-                                .foregroundStyle(Constants.Colors.gray_text)
-                        }
-                        .padding(.horizontal, 24)
-                    }
-
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 24) {
-                            ForEach(highlights) { highlight in
-                                HighlightTile(highlight: highlight, width: 241)
-                            }
-                        }
-                        .padding(.horizontal, 24)
-                    }
-                    .padding(.bottom, 12)
+                    HighlightSectionView(title: "Today", highlights: todayHighlights)
                     
-                    // ✅ Past 3 days Section
-                    NavigationLink(destination: DetailedHighlightsView(
-                        title: "Past 3 Days",
-                        highlights: highlights // again, filter here later
-                    )) {
-                        HStack {
-                            Text("Past 3 Days")
-                                .font(Constants.Fonts.subheader)
-                                .foregroundStyle(Constants.Colors.black)
-                            
-                            Spacer()
-                            
-                            Text("\(highlights.count) results")
-                                .font(Constants.Fonts.body)
-                                .foregroundStyle(Constants.Colors.gray_text)
-                            
-                            Image(systemName: "chevron.right")
-                                .font(Constants.Fonts.body)
-                                .foregroundStyle(Constants.Colors.gray_text)
-                        }
-                        .padding(.horizontal, 24)
-                    }
-                    
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 24) {
-                            ForEach(highlights) { highlight in
-                                HighlightTile(highlight: highlight, width: 241)
-                            }
-                        }
-                        .padding(.horizontal, 24)
-                    }
+                    // ✅ Past 3 Days Section
+                    HighlightSectionView(title: "Past 3 Days", highlights: pastThreeDaysHighlights)
                 }
                 .safeAreaInset(edge: .bottom) {
                     Color.clear.frame(height: 200)
                 }
             }
+        }
+    }
+}
+
+struct HighlightSectionView: View {
+    let title: String
+    let highlights: [Highlight]
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            NavigationLink(destination: DetailedHighlightsView(title: title, highlights: highlights)) {
+                HStack {
+                    Text(title)
+                        .font(Constants.Fonts.subheader)
+                        .foregroundStyle(Constants.Colors.black)
+                    
+                    Spacer()
+                    
+                    Text("\(highlights.count) results")
+                        .font(Constants.Fonts.body)
+                        .foregroundStyle(Constants.Colors.gray_text)
+                    
+                    Image(systemName: "chevron.right")
+                        .font(Constants.Fonts.body)
+                        .foregroundStyle(Constants.Colors.gray_text)
+                }
+                .padding(.horizontal, 24)
+            }
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 24) {
+                    ForEach(highlights) { highlight in
+                        HighlightTile(highlight: highlight, width: 241)
+                    }
+                }
+                .padding(.horizontal, 24)
+            }
+        }
+    }
+}
+
+// MARK: - Model
+enum Highlight: Identifiable {
+    case video(YoutubeVideo)
+    case article(Article)
+    
+    var id: String {
+        switch self {
+        case .video(let video):
+            return video.id
+        case .article(let article):
+            return article.id
+        }
+    }
+
+    var publishedAt: String {
+        switch self {
+        case .video(let video):
+            return video.publishedAt
+        case .article(let article):
+            return article.publishedAt
         }
     }
 }
@@ -113,7 +127,7 @@ struct HighlightView: View {
                 thumbnail: "https://i.ytimg.com/vi/QGHb9heJAco/hqdefault.jpg",
                 b64Thumbnail: nil,
                 url: "https://youtube.com/watch?v=QGHb9heJAco",
-                publishedAt: "2024-11-09T00:00:00Z"
+                publishedAt: "2025-10-09T00:00:00Z"
             )
         ),
         .article(
@@ -124,7 +138,7 @@ struct HighlightView: View {
                 image: "https://snworksceo.imgix.net/cds/2f1df221-010c-4a5b-94cc-ec7a100b7aa1.sized-1000x1000.jpg?w=1000&dpr=2",
                 url: "https://cornellsun.com/article",
                 source: "Cornell Daily Sun",
-                publishedAt: "2025-10-02T00:00:00Z"
+                publishedAt: "2025-10-011T00:00:00Z"
             )
         )
     ])

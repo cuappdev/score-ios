@@ -7,20 +7,6 @@
 
 import SwiftUI
 
-enum Highlight: Identifiable {
-    case video(YoutubeVideo)
-    case article(Article)
-    
-    var id: String {
-        switch self {
-        case .video(let video):
-            return video.id
-        case .article(let article):
-            return article.id
-        }
-    }
-}
-
 struct HighlightTile: View {
     var highlight: Highlight
     var width: CGFloat

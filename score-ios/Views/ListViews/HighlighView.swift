@@ -13,16 +13,14 @@ struct HighlightView: View {
     var body: some View {
         let todayHighlights = highlights.filter {
             if let date = Date.fullDateFormatter.date(from: $0.publishedAt) {
-                return Date.isToday(date)
+                return Date.isWithinPastDays(date, days: 1)
             }
             return false
         }
 
         let pastThreeDaysHighlights = highlights.filter {
-            if let date = Date.fullDateFormatter.date(from: $0.publishedAt) {
-                return Date.isWithinPastDays(date, days: 3)
-            }
-            return false
+            guard let date = Date.fullDateFormatter.date(from: $0.publishedAt) else { return false }
+            return !Date.isWithinPastDays(date, days: 1) && Date.isWithinPastDays(date, days: 3)
         }
 
         NavigationStack {
@@ -40,10 +38,8 @@ struct HighlightView: View {
                     SportSelectorView()
                         .padding(.bottom, 6)
                     
-                    // ✅ Today Section
                     HighlightSectionView(title: "Today", highlights: todayHighlights)
                     
-                    // ✅ Past 3 Days Section
                     HighlightSectionView(title: "Past 3 Days", highlights: pastThreeDaysHighlights)
                 }
                 .safeAreaInset(edge: .bottom) {
@@ -138,7 +134,7 @@ enum Highlight: Identifiable {
                 image: "https://snworksceo.imgix.net/cds/2f1df221-010c-4a5b-94cc-ec7a100b7aa1.sized-1000x1000.jpg?w=1000&dpr=2",
                 url: "https://cornellsun.com/article",
                 source: "Cornell Daily Sun",
-                publishedAt: "2025-10-011T00:00:00Z"
+                publishedAt: "2025-10-010T00:00:00Z"
             )
         )
     ])

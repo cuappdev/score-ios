@@ -11,6 +11,7 @@ struct HighlightView: View {
     var highlights: [Highlight]
     
     var body: some View {
+        // Filter highlights
         let todayHighlights = highlights.filter {
             if let date = Date.fullDateFormatter.date(from: $0.publishedAt) {
                 return Date.isWithinPastDays(date, days: 1)
@@ -23,27 +24,29 @@ struct HighlightView: View {
             return !Date.isWithinPastDays(date, days: 1) && Date.isWithinPastDays(date, days: 3)
         }
 
-        NavigationStack {
-            ScrollView(.vertical, showsIndicators: false) {
-                VStack(alignment: .leading, spacing: 24) {
+        ScrollView(showsIndicators: false) {
+            LazyVStack(alignment: .leading, pinnedViews: [.sectionHeaders]) {
+                
+                VStack(alignment: .leading, spacing: 4) {
                     Text("Highlights")
-                        .font(Constants.Fonts.Header.h1)
-                        .foregroundStyle(Constants.Colors.black)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
                         .padding(.horizontal, 24)
+                        .padding(.vertical, 12)
                     
                     SearchView()
                         .padding(.horizontal, 24)
-                    
+                        .padding(.bottom, 12)
                     SportSelectorView()
-                        .padding(.bottom, 6)
+                        .padding(.bottom, 12)
                     
-                    HighlightSectionView(title: "Today", highlights: todayHighlights)
+                    if !todayHighlights.isEmpty {
+                        HighlightSectionView(title: "Today", highlights: todayHighlights)
+                    }
                     
-                    HighlightSectionView(title: "Past 3 Days", highlights: pastThreeDaysHighlights)
-                }
-                .safeAreaInset(edge: .bottom) {
-                    Color.clear.frame(height: 200)
+                    if !pastThreeDaysHighlights.isEmpty {
+                        HighlightSectionView(title: "Past 3 Days", highlights: pastThreeDaysHighlights)
+                    }
                 }
             }
         }
@@ -111,10 +114,8 @@ enum Highlight: Identifiable {
     }
 }
 
-// MARK: - Preview
-
-#Preview {
-    HighlightView(highlights: [
+extension Highlight{
+    static let dummydata: [Highlight] = [
         .video(
             YoutubeVideo(
                 id: "QGHb9heJAco",
@@ -136,6 +137,56 @@ enum Highlight: Identifiable {
                 source: "Cornell Daily Sun",
                 publishedAt: "2025-10-010T00:00:00Z"
             )
+        ),
+        .video(
+            YoutubeVideo(
+                id: "QGHb9heJAco",
+                title: "Cornell Celebrates Coach Mike Schafer '86",
+                description: "Cornell Celebrates Coach Mike Schafer '86 Narrated by Jeremy Schaap '91.",
+                thumbnail: "https://i.ytimg.com/vi/QGHb9heJAco/hqdefault.jpg",
+                b64Thumbnail: nil,
+                url: "https://youtube.com/watch?v=QGHb9heJAco",
+                publishedAt: "2025-10-08T00:00:00Z"
+            )
+        ),
+        .article(
+            Article(
+                id: "1",
+                title: "Cornell Daily Sun Reports Historic Win",
+                summary: "Cornell’s offense shines in a big win.",
+                image: "https://snworksceo.imgix.net/cds/2f1df221-010c-4a5b-94cc-ec7a100b7aa1.sized-1000x1000.jpg?w=1000&dpr=2",
+                url: "https://cornellsun.com/article",
+                source: "Cornell Daily Sun",
+                publishedAt: "2025-10-09T00:00:00Z"
+            )
+        ),
+        .video(
+            YoutubeVideo(
+                id: "QGHb9heJAco",
+                title: "Cornell Celebrates Coach Mike Schafer '86",
+                description: "Cornell Celebrates Coach Mike Schafer '86 Narrated by Jeremy Schaap '91.",
+                thumbnail: "https://i.ytimg.com/vi/QGHb9heJAco/hqdefault.jpg",
+                b64Thumbnail: nil,
+                url: "https://youtube.com/watch?v=QGHb9heJAco",
+                publishedAt: "2025-10-010T00:00:00Z"
+            )
+        ),
+        .article(
+            Article(
+                id: "1",
+                title: "Cornell Daily Sun Reports Historic Win",
+                summary: "Cornell’s offense shines in a big win.",
+                image: "https://snworksceo.imgix.net/cds/2f1df221-010c-4a5b-94cc-ec7a100b7aa1.sized-1000x1000.jpg?w=1000&dpr=2",
+                url: "https://cornellsun.com/article",
+                source: "Cornell Daily Sun",
+                publishedAt: "2025-10-010T00:00:00Z"
+            )
         )
-    ])
+    ]
+}
+
+// MARK: - Preview
+
+#Preview {
+    HighlightView(highlights: Highlight.dummydata)
 }

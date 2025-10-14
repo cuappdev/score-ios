@@ -107,36 +107,7 @@ struct HighlightTileVideo: View {
         }
 }
 
-// MARK: - Model
-
-struct YoutubeVideo: Identifiable {
-    var id: String
-    var title: String
-    var description: String
-    var thumbnail: String
-    var b64Thumbnail: String?
-    var url: String
-    var publishedAt: String
-    
-    // Format publishedAt -> MM/dd or similar
-    var formattedDate: String {
-        if let date = ISO8601DateFormatter().date(from: publishedAt) {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "MM/dd"
-            return formatter.string(from: date)
-        }
-        return publishedAt
-    }
-}
 
 #Preview {
-    HighlightTileVideo(video: YoutubeVideo(
-        id: "QGHb9heJAco",
-        title: "Cornell Celebrates Coach Mike Schafer '86",
-        description: "Cornell Celebrates Coach Mike Schafer '86 Narrated by Jeremy Schaap '91.",
-        thumbnail: "https://i.ytimg.com/vi/QGHb9heJAco/hqdefault.jpg",
-        b64Thumbnail: nil,
-        url: "https://youtube.com/watch?v=QGHb9heJAco",
-        publishedAt: "2024-11-09T00:00:00Z"
-    ), width: 241)
+    HighlightTileVideo(video: YoutubeVideo.dummyData[0], width: 241)
 }

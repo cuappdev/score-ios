@@ -96,38 +96,10 @@ struct HighlightTileArticle: View {
     }
 }
 
-// MARK: - Model
-
-struct Article: Identifiable {
-    var id: String
-    var title: String
-    var summary: String
-    var image: String
-    var url: String
-    var source: String
-    var publishedAt: String
-    
-    var formattedDate: String {
-        if let date = ISO8601DateFormatter().date(from: publishedAt) {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "MM/dd"
-            return formatter.string(from: date)
-        }
-        return publishedAt
-    }
-}
 
 // MARK: - Preview
 
 #Preview {
-    HighlightTileArticle(article: Article(
-        id: "1",
-        title: "Cornell Upsets Rival in Thrilling Overtime Victory",
-        summary: "Cornell’s offense exploded late in the fourth quarter to secure a dramatic win.",
-        image: "https://snworksceo.imgix.net/cds/2f1df221-010c-4a5b-94cc-ec7a100b7aa1.sized-1000x1000.jpg?w=1000&dpr=2",
-        url: "https://cornellbigred.com/news/2025/10/08/article",
-        source: "Cornell Daily Sun",
-        publishedAt: "2025-10-08T00:00:00Z"
-    ), width: 345)
+    HighlightTileArticle(article: Article.dummyData[0], width: 345)
 }
 

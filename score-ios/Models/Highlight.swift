@@ -28,6 +28,15 @@ enum Highlight: Identifiable {
             return article.publishedAt
         }
     }
+    
+    var title: String{
+        switch self{
+        case .article(let article):
+            return article.title
+        case .video(let video):
+            return video.title
+        }
+    }
 }
 
 // MARK: - Dummy Data
@@ -41,7 +50,7 @@ extension Highlight {
                 thumbnail: "https://i.ytimg.com/vi/QGHb9heJAco/hqdefault.jpg",
                 b64Thumbnail: nil,
                 url: "https://youtube.com/watch?v=QGHb9heJAco",
-                publishedAt: "2025-10-09T00:00:00Z"
+                publishedAt: "2025-10-014T00:00:00Z"
             )
         ),
         .article(
@@ -52,7 +61,7 @@ extension Highlight {
                 image: "https://snworksceo.imgix.net/cds/2f1df221-010c-4a5b-94cc-ec7a100b7aa1.sized-1000x1000.jpg?w=1000&dpr=2",
                 url: "https://cornellsun.com/article",
                 source: "Cornell Daily Sun",
-                publishedAt: "2025-10-10T00:00:00Z"
+                publishedAt: "2025-10-14T00:00:00Z"
             )
         ),
         .video(
@@ -63,7 +72,7 @@ extension Highlight {
                 thumbnail: "https://i.ytimg.com/vi/ABC123def/hqdefault.jpg",
                 b64Thumbnail: nil,
                 url: "https://youtube.com/watch?v=ABC123def",
-                publishedAt: "2025-10-08T00:00:00Z"
+                publishedAt: "2025-10-013T00:00:00Z"
             )
         ),
         .article(
@@ -74,7 +83,7 @@ extension Highlight {
                 image: "https://snworksceo.imgix.net/cds/2f1df221-010c-4a5b-94cc-ec7a100b7aa1.sized-1000x1000.jpg?w=1000&dpr=2",
                 url: "https://cornellbigred.com/news/2025/10/08/article",
                 source: "Cornell Daily Sun",
-                publishedAt: "2025-10-08T00:00:00Z"
+                publishedAt: "2025-10-14T00:00:00Z"
             )
         ),
         .video(
@@ -85,7 +94,7 @@ extension Highlight {
                 thumbnail: "https://i.ytimg.com/vi/XYZ789ghi/hqdefault.jpg",
                 b64Thumbnail: nil,
                 url: "https://youtube.com/watch?v=XYZ789ghi",
-                publishedAt: "2025-10-10T00:00:00Z"
+                publishedAt: "2025-10-14T00:00:00Z"
             )
         ),
         .article(
@@ -96,7 +105,7 @@ extension Highlight {
                 image: "https://snworksceo.imgix.net/cds/2f1df221-010c-4a5b-94cc-ec7a100b7aa1.sized-1000x1000.jpg?w=1000&dpr=2",
                 url: "https://cornellsun.com/basketball-championship",
                 source: "Cornell Daily Sun",
-                publishedAt: "2025-10-11T00:00:00Z"
+                publishedAt: "2025-10-13T00:00:00Z"
             )
         )
     ]

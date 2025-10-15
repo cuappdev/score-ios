@@ -37,8 +37,9 @@ struct DetailedHighlightsView: View {
                 
                 VStack(alignment: .leading, spacing: 24) {
                     
-                    SearchView()
-                        .padding(.horizontal, 24)
+                    SearchView(highlights: highlights, title: "Search \(title)")
+                    .padding(.horizontal, 24)
+                    .padding(.bottom, 12)
                     
                     SportSelectorView()
                         .padding(.bottom, 6)

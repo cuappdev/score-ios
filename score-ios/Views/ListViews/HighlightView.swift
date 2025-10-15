@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HighlightView: View {
-    var highlights: [Highlight]
+    @State var highlights: [Highlight]
     
     var body: some View {
         // Filter highlights
@@ -34,11 +34,14 @@ struct HighlightView: View {
                         .padding(.horizontal, 24)
                         .padding(.vertical, 12)
                     
-                    SearchView()
-                        .padding(.horizontal, 24)
-                        .padding(.bottom, 12)
+                        
+                    SearchView(highlights: highlights, title: "Search All Highlights")
+                    .padding(.horizontal, 24)
+                    .padding(.bottom, 12)
+                    
                     SportSelectorView()
                         .padding(.bottom, 12)
+                    
                     
                     if !todayHighlights.isEmpty {
                         HighlightSectionView(title: "Today", highlights: todayHighlights)

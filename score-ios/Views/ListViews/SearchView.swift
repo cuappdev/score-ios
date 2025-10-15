@@ -8,38 +8,33 @@
 import SwiftUI
 
 struct SearchView: View {
-    @State private var searchText = ""
+    @State private var showSearch = false
+    var highlights: [Highlight]
+    let title: String
 
     var body: some View {
-        VStack {
+        Button(action: { showSearch = true }) {
             HStack {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(Constants.Colors.gray_text)
-
-                TextField("Search keywords", text: $searchText)
+                Text("Search keywords")
                     .foregroundColor(Constants.Colors.gray_text)
-                    .autocorrectionDisabled()
-                    .textInputAutocapitalization(.never)
-                
-                if !searchText.isEmpty {
-                    Button(action: {
-                        self.searchText = ""
-                    }) {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundColor(Constants.Colors.gray_text)
-                    }
-                }
+                Spacer()
             }
             .padding(8)
             .overlay(
                 RoundedRectangle(cornerRadius: 30)
                     .stroke(Constants.Colors.gray_border, lineWidth: 1)
             )
-            
+        }
+        .buttonStyle(PlainButtonStyle())
+        .fullScreenCover(isPresented: $showSearch) {
+                    SearchViewFullScreen(title: title, allHighlights: highlights)
         }
     }
 }
 
+
 #Preview {
-    SearchView()
+    SearchView(highlights: Highlight.dummyData, title: "Search All Highlights")
 }

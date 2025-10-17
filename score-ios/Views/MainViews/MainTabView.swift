@@ -22,7 +22,13 @@ struct MainTabView: View {
                         .environmentObject(gamesViewModel)
                         .toolbar(.hidden)
                         .navigationBarHidden(true)
-                } else {
+                } else if(selection == 1){
+                    HighlightView(highlights: Highlight.dummyData)
+                        .environmentObject(gamesViewModel)
+                        .toolbar(.hidden)
+                        .navigationBarHidden(true)
+                }
+                else if (selection == 2){
                     PastGamesView()
                         .environmentObject(gamesViewModel)
                         .toolbar(.hidden)
@@ -30,17 +36,18 @@ struct MainTabView: View {
                 }
 
                 HStack {
-                    ForEach(0..<2, id: \.self) {
+                    ForEach(0...2, id: \.self) {
                         index in
                         TabViewIcon(selectionIndex: $selection, itemIndex: index)
                             .frame(height: 45)
                             .padding(.top, 10)
-                        if index != 1 {
+                        if index != 2 {
                             Spacer()
                         }
                     }
                 }
-                .padding(.horizontal, 86)
+                .padding(.trailing, 48)
+                .padding(.leading, 38)
                 .padding(.bottom, 40)
                 .padding(.top, 8)
                 .frame(maxWidth: .infinity)

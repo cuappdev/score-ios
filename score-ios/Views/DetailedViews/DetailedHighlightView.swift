@@ -4,6 +4,7 @@
 //
 //  Created by Zain Bilal on 10/9/25.
 //
+
 import SwiftUI
 
 struct DetailedHighlightsView: View {
@@ -15,20 +16,18 @@ struct DetailedHighlightsView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 
-                // ✅ Custom top bar
                 ZStack {
-                   // Centered title
                    Text(title)
                        .font(Constants.Fonts.Header.h1)
                        .foregroundStyle(Constants.Colors.black)
                    
-                   // Left chevron
                    HStack {
                        Button(action: { dismiss() }) {
                            Image(systemName: "chevron.left")
                                .font(Constants.Fonts.header)
                                .foregroundStyle(Constants.Colors.black)
                        }
+                       
                        Spacer()
                    }
                }
@@ -36,7 +35,6 @@ struct DetailedHighlightsView: View {
                .padding(.vertical, 8)
                 
                 VStack(alignment: .leading, spacing: 24) {
-                    
                     SearchView(highlights: highlights, title: "Search \(title)")
                     .padding(.horizontal, 24)
                     .padding(.bottom, 12)
@@ -44,7 +42,6 @@ struct DetailedHighlightsView: View {
                     SportSelectorView()
                         .padding(.bottom, 6)
                     
-                    // ✅ Highlights list
                     ForEach(highlights) { highlight in
                         HighlightTile(highlight: highlight, width:  345)
                             .padding(.horizontal, 24)

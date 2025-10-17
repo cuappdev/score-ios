@@ -26,14 +26,12 @@ struct HighlightView: View {
 
         ScrollView(showsIndicators: false) {
             LazyVStack(alignment: .leading, pinnedViews: [.sectionHeaders]) {
-                
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Highlights")
                         .font(.largeTitle)
                         .fontWeight(.bold)
                         .padding(.horizontal, 24)
                         .padding(.vertical, 12)
-                    
                         
                     SearchView(highlights: highlights, title: "Search All Highlights")
                     .padding(.horizontal, 24)
@@ -41,7 +39,6 @@ struct HighlightView: View {
                     
                     SportSelectorView()
                         .padding(.bottom, 12)
-                    
                     
                     if !todayHighlights.isEmpty {
                         HighlightSectionView(title: "Today", highlights: todayHighlights)

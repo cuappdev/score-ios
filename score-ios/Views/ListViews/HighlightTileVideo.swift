@@ -40,24 +40,19 @@ struct HighlightTileVideo: View {
                     .frame(width: width, height: 117)
                     .clipped()
                     .overlay(
-                        // Duration placeholder (if you add it later)
-                        HStack(spacing: 2){
+                        HStack(spacing: 2) {
                             Image(systemName: "play.fill")
                                 .font(.caption2)
                                                 
                             Text("1:25")
                                 .font(.caption)
                         }
-                            .fontWeight(.heavy)
-                            .foregroundStyle(.white)
-                            
-                            .padding(6)
-                        .clipShape(RoundedRectangle(cornerRadius: 4)),
-                        alignment: .bottomLeading
-                       
+                        .fontWeight(.heavy)
+                        .foregroundStyle(.white)
+                        .padding(6)
+                        .clipShape(RoundedRectangle(cornerRadius: 4)), alignment: .bottomLeading
                     )
                     .cornerRadius(12, corners: [.topLeft, .topRight])
-
                     
                     VStack(alignment: .leading, spacing: 8){
                         // Title
@@ -65,7 +60,6 @@ struct HighlightTileVideo: View {
                             .font(.headline)
                             .foregroundColor(.black)
                             .lineLimit(1)
-                        
                         
                         // Youtube + Date
                         HStack(spacing: 8) {
@@ -82,7 +76,6 @@ struct HighlightTileVideo: View {
                                             .foregroundStyle(Constants.Colors.primary_red)
                                             .fontWeight(.bold)
                                     }
-                                   
                                 }
                             }
                             
@@ -92,9 +85,9 @@ struct HighlightTileVideo: View {
                                 .font(.caption)
                                 .foregroundColor(.gray)
                         }
-                    }.padding(.horizontal, 12.0)
+                    }
+                    .padding(.horizontal, 12.0)
                     .frame(width: width, height: 75)
-                   
                 }
                 
                 .background(
@@ -103,8 +96,8 @@ struct HighlightTileVideo: View {
                         .shadow(radius: 5)
                 )
             }
-            }
         }
+    }
 }
 
 

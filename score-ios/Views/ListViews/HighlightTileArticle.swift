@@ -22,7 +22,6 @@ struct HighlightTileArticle: View {
                             Rectangle()
                                 .fill(Constants.Colors.gray_icons.opacity(0.2))
                                 .overlay(Color.black.opacity(0.60)) // dark tint
-
                         case .success(let image):
                             image
                                 .resizable()
@@ -55,7 +54,7 @@ struct HighlightTileArticle: View {
                             .fontWeight(.bold)
                             .foregroundColor(.white)
                             .lineLimit(3)
-                            .multilineTextAlignment(.leading) // ✅ makes text align fully left
+                            .multilineTextAlignment(.leading)
                             .padding(.top, 12)
                             .padding(.horizontal, 24)
                         

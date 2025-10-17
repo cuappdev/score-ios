@@ -19,6 +19,7 @@ struct SearchView: View {
                     .foregroundColor(Constants.Colors.gray_text)
                 Text("Search keywords")
                     .foregroundColor(Constants.Colors.gray_text)
+                
                 Spacer()
             }
             .padding(8)
@@ -29,7 +30,7 @@ struct SearchView: View {
         }
         .buttonStyle(PlainButtonStyle())
         .fullScreenCover(isPresented: $showSearch) {
-                    SearchViewFullScreen(title: title, allHighlights: highlights)
+            SearchViewFullScreen(title: title, allHighlights: highlights)
         }
     }
 }

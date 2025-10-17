@@ -4,6 +4,7 @@
 //
 //  Created by Zain Bilal on 10/14/25.
 //
+
 import SwiftUI
 
 struct SearchViewFullScreen: View {
@@ -31,6 +32,7 @@ struct SearchViewFullScreen: View {
                     .padding(.horizontal, 24)
                     .font(Constants.Fonts.subheader)
                     .foregroundStyle(Constants.Colors.black)
+                
                 Spacer()
             }
             
@@ -48,7 +50,6 @@ struct SearchViewFullScreen: View {
                         }
                         .focused($isSearchFieldFocused)
 
-                    
                     if !searchText.isEmpty {
                         Button(action: { searchText = "" }) {
                             Image(systemName: "xmark.circle.fill")
@@ -77,9 +78,11 @@ struct SearchViewFullScreen: View {
             } else if isLoading {
                 VStack {
                     Spacer()
+                    
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle())
                         .scaleEffect(1.2)
+                    
                     Spacer()
                 }
             } else if filteredHighlights.isEmpty {
@@ -94,8 +97,10 @@ struct SearchViewFullScreen: View {
                             .padding(.horizontal, 24)
                             .font(Constants.Fonts.subheader)
                             .foregroundStyle(Constants.Colors.gray_text)
+                        
                         Spacer()
                     }
+                    
                     LazyVStack(alignment: .leading, spacing: 24) {
                         ForEach(filteredHighlights) { highlight in
                             HighlightTile(highlight: highlight, width: 345)
@@ -109,14 +114,13 @@ struct SearchViewFullScreen: View {
         .onAppear {
             filteredHighlights = allHighlights
             isSearchFieldFocused = true
-            
         }
     }
     
     // MARK: - Debounce
     private func debounceSearch(_ text: String) {
         debounceWorkItem?.cancel()
-        isLoading = true // 👈 start loading
+        isLoading = true
         
         let workItem = DispatchWorkItem {
             DispatchQueue.main.async {
@@ -129,7 +133,8 @@ struct SearchViewFullScreen: View {
                         highlightTitle(highlight).localizedCaseInsensitiveContains(trimmed)
                     }
                 }
-                isLoading = false // 👈 stop loading after results ready
+                
+                isLoading = false
             }
         }
         

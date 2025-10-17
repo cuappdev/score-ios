@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct YoutubeVideo: Identifiable {
+struct YouTubeVideo: Identifiable {
     var id: String
     var title: String
     var description: String
@@ -28,9 +28,9 @@ struct YoutubeVideo: Identifiable {
 }
 
 // MARK: - Dummy Data
-extension YoutubeVideo {
-    static let dummyData: [YoutubeVideo] = [
-        YoutubeVideo(
+extension YouTubeVideo {
+    static let dummyData: [YouTubeVideo] = [
+        YouTubeVideo(
             id: "QGHb9heJAco",
             title: "Cornell Celebrates Coach Mike Schafer '86",
             description: "Cornell Celebrates Coach Mike Schafer '86 Narrated by Jeremy Schaap '91.",
@@ -39,7 +39,7 @@ extension YoutubeVideo {
             url: "https://youtube.com/watch?v=QGHb9heJAco",
             publishedAt: "2025-10-09T00:00:00Z"
         ),
-        YoutubeVideo(
+        YouTubeVideo(
             id: "ABC123def",
             title: "Cornell Basketball Highlights - Championship Game",
             description: "Watch the best moments from Cornell's championship victory.",
@@ -48,7 +48,7 @@ extension YoutubeVideo {
             url: "https://youtube.com/watch?v=ABC123def",
             publishedAt: "2025-10-08T00:00:00Z"
         ),
-        YoutubeVideo(
+        YouTubeVideo(
             id: "XYZ789ghi",
             title: "Cornell Hockey Rivalry Game Recap",
             description: "Complete recap of the intense rivalry game between Cornell and their arch-rivals.",
@@ -57,7 +57,7 @@ extension YoutubeVideo {
             url: "https://youtube.com/watch?v=XYZ789ghi",
             publishedAt: "2025-10-10T00:00:00Z"
         ),
-        YoutubeVideo(
+        YouTubeVideo(
             id: "DEF456jkl",
             title: "Cornell Football Season Highlights",
             description: "Best plays and moments from Cornell's football season.",

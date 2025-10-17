@@ -68,7 +68,7 @@ struct DetailedHighlightsView: View {
         title: "Today",
         highlights: [
             .video(
-                YoutubeVideo(
+                YouTubeVideo(
                     id: "QGHb9heJAco",
                     title: "Cornell Celebrates Coach Mike Schafer '86",
                     description: "Cornell Celebrates Coach Mike Schafer '86 Narrated by Jeremy Schaap '91.",

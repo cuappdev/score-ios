@@ -8,7 +8,7 @@
 import Foundation
 
 enum Highlight: Identifiable {
-    case video(YoutubeVideo)
+    case video(YouTubeVideo)
     case article(Article)
     
     var id: String {
@@ -43,7 +43,7 @@ enum Highlight: Identifiable {
 extension Highlight {
     static let dummyData: [Highlight] = [
         .video(
-            YoutubeVideo(
+            YouTubeVideo(
                 id: "QGHb9heJAco",
                 title: "Cornell Celebrates Coach Mike Schafer '86",
                 description: "Cornell Celebrates Coach Mike Schafer '86 Narrated by Jeremy Schaap '91.",
@@ -65,7 +65,7 @@ extension Highlight {
             )
         ),
         .video(
-            YoutubeVideo(
+            YouTubeVideo(
                 id: "ABC123def",
                 title: "Cornell Basketball Highlights - Championship Game",
                 description: "Watch the best moments from Cornell's championship victory.",
@@ -87,7 +87,7 @@ extension Highlight {
             )
         ),
         .video(
-            YoutubeVideo(
+            YouTubeVideo(
                 id: "XYZ789ghi",
                 title: "Cornell Hockey Rivalry Game Recap",
                 description: "Complete recap of the intense rivalry game between Cornell and their arch-rivals.",

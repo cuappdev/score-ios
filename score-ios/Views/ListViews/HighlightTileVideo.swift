@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HighlightTileVideo: View {
-    var video: YoutubeVideo
+    var video: YouTubeVideo
     var width: CGFloat
     
     var body: some View {
@@ -109,5 +109,5 @@ struct HighlightTileVideo: View {
 
 
 #Preview {
-    HighlightTileVideo(video: YoutubeVideo.dummyData[0], width: 241)
+    HighlightTileVideo(video: YouTubeVideo.dummyData[0], width: 241)
 }

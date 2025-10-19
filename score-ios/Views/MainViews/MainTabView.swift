@@ -37,6 +37,7 @@ struct MainTabView: View {
                         if tab != .scores { Spacer() }
                     }
                 }
+                // Different paddings to balance text lengths
                 .padding(.trailing, 48)
                 .padding(.leading, 38)
                 .padding(.bottom, 40)

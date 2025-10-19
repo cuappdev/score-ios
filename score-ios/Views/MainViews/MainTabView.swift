@@ -11,39 +11,30 @@ struct MainTabView: View {
 
     // MARK: Properties
 
-    @Binding var selection: Int
+    @Binding var selectedTab: MainTab
     @StateObject private var gamesViewModel = GamesViewModel.shared
 
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottom) {
-                if (selection == 0) {
-                    UpcomingGamesView()
-                        .environmentObject(gamesViewModel)
-                        .toolbar(.hidden)
-                        .navigationBarHidden(true)
-                } else if(selection == 1){
-                    HighlightView(highlights: Highlight.dummyData)
-                        .environmentObject(gamesViewModel)
-                        .toolbar(.hidden)
-                        .navigationBarHidden(true)
-                }
-                else if (selection == 2){
-                    PastGamesView()
-                        .environmentObject(gamesViewModel)
-                        .toolbar(.hidden)
-                        .navigationBarHidden(true)
+                switch selectedTab {
+                    case .schedule:
+                        UpcomingGamesView()
+                            .environmentObject(gamesViewModel)
+                    case .highlights:
+                        HighlightView(highlights: Highlight.dummyData)
+                            .environmentObject(gamesViewModel)
+                    case .scores:
+                        PastGamesView()
+                            .environmentObject(gamesViewModel)
                 }
 
                 HStack {
-                    ForEach(0...2, id: \.self) {
-                        index in
-                        TabViewIcon(selectionIndex: $selection, itemIndex: index)
+                    ForEach(MainTab.allCases) { tab in
+                        TabViewIcon(selectedTab: $selectedTab, tab: tab)
                             .frame(height: 45)
                             .padding(.top, 10)
-                        if index != 2 {
-                            Spacer()
-                        }
+                        if tab != .scores { Spacer() }
                     }
                 }
                 .padding(.trailing, 48)
@@ -66,5 +57,5 @@ struct MainTabView: View {
 }
 
 #Preview {
-    MainTabView(selection: .constant(0))
+    MainTabView(selectedTab: .constant(.schedule))
 }

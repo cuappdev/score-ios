@@ -7,33 +7,44 @@
 
 import SwiftUI
 
+enum MainTab: String, CaseIterable, Identifiable {
+    case schedule = "Schedule"
+    case highlights = "Highlights"
+    case scores = "Scores"
+    
+    var id: Self { self }
+    
+    var imageName: String {
+        switch self {
+        case .schedule: return "schedule"
+        case .highlights: return "highlight"
+        case .scores: return "scoreboard"
+        }
+    }
+}
+
 struct TabViewIcon: View {
-
-    // MARK: - Properties
-
-    @Binding var selectionIndex: Int
-
-    let itemIndex: Int
-    private let tabItems = ["schedule", "highlight", "scoreboard"]
-    private let tabText = ["Schedule", "Highlights", "Scores"]
-        
+    @Binding var selectedTab: MainTab
+    let tab: MainTab
+    
     var body: some View {
         Button {
-            selectionIndex = itemIndex
+            selectedTab = tab
         } label: {
             VStack {
-                Image(itemIndex == selectionIndex ? "\(tabItems[itemIndex])-selected" : tabItems[itemIndex])
+                Image(selectedTab == tab ? "\(tab.imageName)-selected" : tab.imageName)
                     .resizable()
                     .frame(width: 28, height: 28)
                     .tint(Constants.Colors.gray_icons)
-                Text(tabText[itemIndex])
+                
+                Text(tab.rawValue)
                     .font(Constants.Fonts.buttonLabel)
-                    .foregroundStyle(itemIndex == selectionIndex ? Constants.Colors.primary_red : Constants.Colors.unselectedText)
+                    .foregroundStyle(selectedTab == tab ? Constants.Colors.primary_red : Constants.Colors.unselectedText)
             }
         }
     }
 }
 
 #Preview {
-    TabViewIcon(selectionIndex: .constant(0), itemIndex: 1)
+    TabViewIcon(selectedTab: .constant(.schedule), tab: .schedule)
 }

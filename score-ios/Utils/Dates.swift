@@ -42,6 +42,7 @@ extension Date {
     // Return true if 'date' is within 'days' from today
     static func isWithinPastDays(_ date: Date, days: Int) -> Bool {
         guard let pastDate = Calendar.current.date(byAdding: .day, value: -days, to: Date()) else { return false }
+        
         return date >= pastDate && date < Calendar.current.startOfDay(for: Date())
     }
  

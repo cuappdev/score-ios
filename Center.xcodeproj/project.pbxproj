@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1CEA1F282EA6C4A500E28EC3 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 1CEA1F272EA6C4A500E28EC3 /* ComposableArchitecture */; };
 		D0DDB57C2E722AA000165825 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = D0DDB57B2E722AA000165825 /* FirebaseAnalytics */; };
 		D0DDB57E2E722AA000165825 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D0DDB57D2E722AA000165825 /* FirebaseAuth */; };
 		D0DDB5802E722AA000165825 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = D0DDB57F2E722AA000165825 /* FirebaseCore */; };
@@ -19,9 +20,22 @@
 		D0DDB55E2E7227AB00165825 /* Center.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Center.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		1CEA1F2A2EA6C71100E28EC3 /* Exceptions for "Center" folder in "Center" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Supporting/Info.plist,
+			);
+			target = D0DDB55D2E7227AB00165825 /* Center */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		D0DDB5602E7227AB00165825 /* Center */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				1CEA1F2A2EA6C71100E28EC3 /* Exceptions for "Center" folder in "Center" target */,
+			);
 			path = Center;
 			sourceTree = "<group>";
 		};
@@ -34,6 +48,7 @@
 			files = (
 				D0DDB5852E722ABB00165825 /* GoogleSignIn in Frameworks */,
 				D0DDB5822E722AA000165825 /* FirebaseMessaging in Frameworks */,
+				1CEA1F282EA6C4A500E28EC3 /* ComposableArchitecture in Frameworks */,
 				D0DDB57C2E722AA000165825 /* FirebaseAnalytics in Frameworks */,
 				D0DDB5872E722ABB00165825 /* GoogleSignInSwift in Frameworks */,
 				D0DDB5802E722AA000165825 /* FirebaseCore in Frameworks */,
@@ -86,6 +101,7 @@
 				D0DDB5812E722AA000165825 /* FirebaseMessaging */,
 				D0DDB5842E722ABB00165825 /* GoogleSignIn */,
 				D0DDB5862E722ABB00165825 /* GoogleSignInSwift */,
+				1CEA1F272EA6C4A500E28EC3 /* ComposableArchitecture */,
 			);
 			productName = Center;
 			productReference = D0DDB55E2E7227AB00165825 /* Center.app */;
@@ -118,6 +134,7 @@
 			packageReferences = (
 				D0DDB57A2E722AA000165825 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				D0DDB5832E722ABB00165825 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				1CEA1F262EA6C4A500E28EC3 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D0DDB55F2E7227AB00165825 /* Products */;
@@ -280,6 +297,7 @@
 				DEVELOPMENT_TEAM = ZGMCXU7X3U;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Center/Supporting/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -290,7 +308,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.cornellappdev.center;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = com.cornellappdev.hustle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -309,6 +328,7 @@
 				DEVELOPMENT_TEAM = ZGMCXU7X3U;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Center/Supporting/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -319,7 +339,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.cornellappdev.center;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = com.cornellappdev.hustle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -351,6 +372,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		1CEA1F262EA6C4A500E28EC3 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.23.0;
+			};
+		};
 		D0DDB57A2E722AA000165825 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
@@ -370,6 +399,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		1CEA1F272EA6C4A500E28EC3 /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1CEA1F262EA6C4A500E28EC3 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
 		D0DDB57B2E722AA000165825 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D0DDB57A2E722AA000165825 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

@@ -6,12 +6,19 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 @main
 struct CenterApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    
+    let store = Store(initialState: AppFeature.State()) {
+        AppFeature()
+    }
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainView(store: store)
         }
     }
 }

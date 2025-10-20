@@ -22,6 +22,8 @@ struct NoGameView: View {
                 Text("Check back here later")
                     .font(Constants.Fonts.caption)
                     .foregroundStyle(Constants.Colors.gray_text)
+                    .padding(.bottom, 100)
+
 //                    .padding(.top, 2)
             }
             Spacer()

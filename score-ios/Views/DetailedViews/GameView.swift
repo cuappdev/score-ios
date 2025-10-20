@@ -149,37 +149,38 @@ extension GameView {
     }
     
     private var countdown: some View {
-//        VStack {
-        VStack {
-            Image("Hourglass")
-                .resizable()
-                .frame(width: 93, height: 118)
-            Text("Time Until Start")
-                .font(Constants.Fonts.Header.h2)
+        //        VStack {
+        return VStack {
+            VStack {
+                Image("Hourglass")
+                    .resizable()
+                    .frame(width: 88, height: 110)
+                Text("Time Until Start")
+                    .font(Constants.Fonts.Header.h2)
+                    .foregroundStyle(Constants.Colors.black)
+                    .padding(.top, 24)
+                
+                HStack {
+                    Text(String(dayFromNow))
+                        .font(Constants.Fonts.countdownNum)
+                    Text("days")
+                        .font(Constants.Fonts.gameText)
+                    Text(String(hourFromNow))
+                        .font(Constants.Fonts.countdownNum)
+                    Text("hours")
+                        .font(Constants.Fonts.gameText)
+                    Text(String(minuteFromNow))
+                        .font(Constants.Fonts.countdownNum)
+                    Text("minutes")
+                }
                 .foregroundStyle(Constants.Colors.black)
-                .padding(.top, 24)
-            
-            HStack {
-                Text(String(dayFromNow))
-                    .font(Constants.Fonts.countdownNum)
-                Text("days")
-                    .font(Constants.Fonts.gameText)
-                Text(String(hourFromNow))
-                    .font(Constants.Fonts.countdownNum)
-                Text("hours")
-                    .font(Constants.Fonts.gameText)
-                Text(String(minuteFromNow))
-                    .font(Constants.Fonts.countdownNum)
-                Text("minutes")
+                .padding(.top, 8)
             }
-            .foregroundStyle(Constants.Colors.black)
-            .padding(.top, 8)
-        }
-        .padding(.top, 20)
+            .padding(.top, 20)
             
             
-            // Calendar Button
-            // TODO: make this back when we have login
+            //             Calendar Button
+            //             TODO: make this back when we have login
 //            Button(action: {
 //                // TODO: action
 //            }) {
@@ -205,7 +206,8 @@ extension GameView {
 //                .clipShape(RoundedRectangle(cornerRadius: 30)) // Clip to shape to ensure rounded corners
 //            }
 //            .padding(.top, 68)
-//        }
+            //        }
+        }
     }
     
     private var summaryTab: some View {
@@ -261,6 +263,7 @@ extension GameView {
                 .frame(maxWidth: .infinity, alignment: .center)
                 .lineLimit(1)
                 .fixedSize(horizontal: false, vertical: true)
+                .padding(.bottom, 900)
         }
     }
     

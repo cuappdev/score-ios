@@ -16,7 +16,7 @@ class PastGameViewModel: ObservableObject {
         case .Baseball: return game.timeUpdates.count > 3 ? game.timeUpdates.count - 3 : 9
             // number of innings is not always 9
         case .Soccer: return 2
-//        case .IceHockey: return 3
+        case .IceHockey: return 3
         case .FieldHockey, .Football, .Lacrosse: return 4
         default: return 1
         }
@@ -28,7 +28,7 @@ class PastGameViewModel: ObservableObject {
             // the last three columns are total runs, hits, and errors
             // if backend stores null for scoreBreakdown, display regular score box with 10 columns
         case .Soccer: return game.timeUpdates.count >= 3 ? game.timeUpdates.count : 3
-//        case .IceHockey: return game.timeUpdates.count
+        case .IceHockey: return game.timeUpdates.count
         case .FieldHockey, .Football, .Lacrosse: return game.timeUpdates.count >= 5 ? game.timeUpdates.count : 5
         default: return 1
         }
@@ -38,7 +38,7 @@ class PastGameViewModel: ObservableObject {
         switch game.sport {
         case .Baseball: return -1
         case .Soccer: return game.timeUpdates.count - 3
-//        case .IceHockey: return game.timeUpdates.count - 4
+        case .IceHockey: return game.timeUpdates.count - 4
         case .FieldHockey, .Football, .Lacrosse: return game.timeUpdates.count - 5
         default: return -1
         }

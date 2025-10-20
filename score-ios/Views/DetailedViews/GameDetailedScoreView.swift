@@ -128,7 +128,7 @@ extension GameDetailedScoreView {
         VStack {
             Image("Hourglass")
                 .resizable()
-                .frame(width: 93, height: 118)
+                .frame(width: 70, height: 100)
             
             Text("Time Until Start")
                 .font(Constants.Fonts.Header.h2)
@@ -339,6 +339,6 @@ extension GameDetailedScoreView {
                 .foregroundStyle(Constants.Colors.gray_text)
         }
         .padding(.top, 40)
-        .padding(.bottom, 50)
+        .padding(.bottom, 100)
     }
 }

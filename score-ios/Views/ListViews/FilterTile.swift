@@ -20,7 +20,6 @@ struct FilterTile : View {
                 .resizable()
                 .renderingMode(.original)
                 .frame(width: 32, height: 32)
-//                .foregroundStyle(selected ? Constants.Colors.selected : Constants.Colors.iconGray)
             
             Text(sport.description)
                 .foregroundStyle(selected ? Constants.Colors.selected : Constants.Colors.iconGray)

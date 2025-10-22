@@ -17,6 +17,7 @@ struct SearchView: View {
             HStack {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(Constants.Colors.gray_text)
+                
                 Text("Search keywords")
                     .foregroundColor(Constants.Colors.gray_text)
                 

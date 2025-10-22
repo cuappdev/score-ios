@@ -11,6 +11,7 @@ struct NoHighlightView: View {
     var body: some View {
         VStack {
             Spacer()
+            
             VStack {
                 // TODO: make this image better (higher quality and more accurate colors)
                 Image("highlight")

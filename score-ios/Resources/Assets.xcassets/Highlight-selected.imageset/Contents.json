@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "highlight-selected.svg",
+      "filename" : "highlight-selected.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "highlight-selectedx2.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "highlight-selectedx3.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -28,17 +28,19 @@ struct HighlightView: View {
             LazyVStack(alignment: .leading, pinnedViews: [.sectionHeaders]) {
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Highlights")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
+                        .font(Constants.Fonts.semibold24)
+                        .foregroundStyle(Constants.Colors.black)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.top, 24)
                         .padding(.horizontal, 24)
-                        .padding(.vertical, 12)
                         
                     SearchView(highlights: highlights, title: "Search All Highlights")
-                    .padding(.horizontal, 24)
-                    .padding(.bottom, 12)
+                    .padding(.horizontal, 20)
+                    .padding(.top, 12)
                     
                     SportSelectorView()
-                        .padding(.bottom, 12)
+                        .padding(.horizontal, 20)
+                        .padding(.top, 12)
                     
                     if !todayHighlights.isEmpty {
                         HighlightSectionView(title: "Today", highlights: todayHighlights)
@@ -58,12 +60,13 @@ struct HighlightSectionView: View {
     let highlights: [Highlight]
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 0) {
             NavigationLink(destination: DetailedHighlightsView(title: title, highlights: highlights)) {
                 HStack {
                     Text(title)
                         .font(Constants.Fonts.subheader)
                         .foregroundStyle(Constants.Colors.black)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                     
                     Spacer()
                     
@@ -75,6 +78,7 @@ struct HighlightSectionView: View {
                         .font(Constants.Fonts.body)
                         .foregroundStyle(Constants.Colors.gray_text)
                 }
+                .padding(.top, 20)
                 .padding(.horizontal, 24)
             }
             
@@ -84,6 +88,7 @@ struct HighlightSectionView: View {
                         HighlightTile(highlight: highlight, width: 241)
                     }
                 }
+                .padding(.top, 20)
                 .padding(.horizontal, 24)
             }
         }

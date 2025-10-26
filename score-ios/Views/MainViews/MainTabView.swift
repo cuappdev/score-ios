@@ -11,36 +11,35 @@ struct MainTabView: View {
 
     // MARK: Properties
 
-    @Binding var selection: Int
+    @Binding var selectedTab: MainTab
     @StateObject private var gamesViewModel = GamesViewModel.shared
 
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottom) {
-                if (selection == 0) {
-                    UpcomingGamesView()
-                        .environmentObject(gamesViewModel)
-                        .toolbar(.hidden)
-                        .navigationBarHidden(true)
-                } else {
-                    PastGamesView()
-                        .environmentObject(gamesViewModel)
-                        .toolbar(.hidden)
-                        .navigationBarHidden(true)
+                switch selectedTab {
+                    case .schedule:
+                        UpcomingGamesView()
+                            .environmentObject(gamesViewModel)
+                    case .highlights:
+                        HighlightView(highlights: Highlight.dummyData)
+                            .environmentObject(gamesViewModel)
+                    case .scores:
+                        PastGamesView()
+                            .environmentObject(gamesViewModel)
                 }
 
                 HStack {
-                    ForEach(0..<2, id: \.self) {
-                        index in
-                        TabViewIcon(selectionIndex: $selection, itemIndex: index)
+                    ForEach(MainTab.allCases) { tab in
+                        TabViewIcon(selectedTab: $selectedTab, tab: tab)
                             .frame(height: 45)
                             .padding(.top, 10)
-                        if index != 1 {
-                            Spacer()
-                        }
+                        if tab != .scores { Spacer() }
                     }
                 }
-                .padding(.horizontal, 86)
+                // Different paddings to balance text lengths
+                .padding(.trailing, 48)
+                .padding(.leading, 38)
                 .padding(.bottom, 40)
                 .padding(.top, 8)
                 .frame(maxWidth: .infinity)
@@ -59,5 +58,5 @@ struct MainTabView: View {
 }
 
 #Preview {
-    MainTabView(selection: .constant(0))
+    MainTabView(selectedTab: .constant(.schedule))
 }

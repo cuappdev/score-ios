@@ -11,13 +11,13 @@ import GameAPI
 /// Main View of the app
 struct ContentView: View {
     
-    @State private var selectedTab: Int = 0
+    @State private var selectedTab: MainTab = .schedule
     @State private var games: [GamesQuery.Data.Game] = []
     @State private var errorMessage: String?
     
     
     var body: some View {
-        MainTabView(selection: $selectedTab)
+        MainTabView(selectedTab: $selectedTab)
     }
 }
 
@@ -26,9 +26,9 @@ struct ContentView: View {
 }
 
 struct StateWrapper: View {
-    @State private var selectedTab: Int = 0
+    @State private var selectedTab: MainTab = .schedule
     
     var body: some View {
-        MainTabView(selection: $selectedTab)
+        MainTabView(selectedTab: $selectedTab)
     }
 }

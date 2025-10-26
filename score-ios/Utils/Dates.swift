@@ -38,6 +38,13 @@ extension Date {
         let calendar = Calendar.current
         return calendar.date(from: components) ?? Date()
     }
+
+    // Return true if 'date' is within 'days' from today
+    static func isWithinPastDays(_ date: Date, days: Int) -> Bool {
+        guard let pastDate = Calendar.current.date(byAdding: .day, value: -days, to: Date()) else { return false }
+        
+        return date >= pastDate && date < Calendar.current.startOfDay(for: Date())
+    }
  
     static func parseDate(dateString: String, timeString: String) -> Date {
         // Set up date formatter

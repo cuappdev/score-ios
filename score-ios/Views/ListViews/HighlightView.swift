@@ -8,22 +8,9 @@
 import SwiftUI
 
 struct HighlightView: View {
-    @State var highlights: [Highlight]
+    @ObservedObject private var viewModel = HighlightsViewModel.shared
     
     var body: some View {
-        // Filter highlights
-        let todayHighlights = highlights.filter {
-            if let date = Date.fullDateFormatter.date(from: $0.publishedAt) {
-                return Date.isWithinPastDays(date, days: 1)
-            }
-            return false
-        }
-
-        let pastThreeDaysHighlights = highlights.filter {
-            guard let date = Date.fullDateFormatter.date(from: $0.publishedAt) else { return false }
-            return !Date.isWithinPastDays(date, days: 1) && Date.isWithinPastDays(date, days: 3)
-        }
-
         ScrollView(showsIndicators: false) {
             LazyVStack(alignment: .leading, pinnedViews: [.sectionHeaders]) {
                 VStack(alignment: .leading, spacing: 4) {
@@ -34,7 +21,7 @@ struct HighlightView: View {
                         .padding(.top, 24)
                         .padding(.horizontal, 24)
                         
-                    SearchView(highlights: highlights, title: "Search All Highlights")
+                    SearchView(title: "Search All Highlights")
                     .padding(.horizontal, 20)
                     .padding(.top, 12)
                     
@@ -42,14 +29,20 @@ struct HighlightView: View {
                         .padding(.horizontal, 20)
                         .padding(.top, 12)
                     
-                    if !todayHighlights.isEmpty {
-                        HighlightSectionView(title: "Today", highlights: todayHighlights)
+                    if viewModel.hasTodayHighlights {
+                        HighlightSectionView(title: "Today", highlights: viewModel.todayHighlights)
                     }
                     
-                    if !pastThreeDaysHighlights.isEmpty {
-                        HighlightSectionView(title: "Past 3 Days", highlights: pastThreeDaysHighlights)
+                    if viewModel.hasPastThreeDaysHighlights {
+                        HighlightSectionView(title: "Past 3 Days", highlights: viewModel.pastThreeDaysHighlights)
                     }
                 }
+            }
+        }
+        .environmentObject(viewModel)
+        .onAppear {
+            if viewModel.hasNotFetchedYet {
+                viewModel.loadHighlights()
             }
         }
     }
@@ -99,5 +92,5 @@ struct HighlightSectionView: View {
 // MARK: - Preview
 
 #Preview {
-    HighlightView(highlights: Highlight.dummyData)
+    HighlightView()
 }

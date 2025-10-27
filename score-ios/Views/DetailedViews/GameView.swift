@@ -38,19 +38,19 @@ struct GameView : View {
                     Text("Game Details")
                         .font(Constants.Fonts.Header.h1)
                 }
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        presentationMode.wrappedValue.dismiss()
-                    } label: {
-                        Image("arrow_back_ios")
-                            .resizable()
-                            .frame(width: 9.87, height: 18.57)
-                    }
-                }
+//                ToolbarItem(placement: .navigationBarLeading) {
+//                    Button {
+//                        presentationMode.wrappedValue.dismiss()
+//                    } label: {
+//                        Image("arrow_back_ios")
+//                            .resizable()
+//                            .frame(width: 9.87, height: 18.57)
+//                    }
+//                }
             }
-            .navigationBarBackButtonHidden()
+//            .navigationBarBackButtonHidden()
             .toolbarBackground(Color.white, for: .navigationBar)
-            .toolbarBackground(.visible, for: .navigationBar)
+//            .toolbarBackground(.visible, for: .navigationBar)
         }
     }
 }

@@ -38,7 +38,7 @@ class PastGameViewModel: ObservableObject {
         switch game.sport {
         case .Baseball: return -1
         case .Soccer: return game.timeUpdates.count - 3
-        case .IceHockey: return game.timeUpdates.count - 4
+        case .IceHockey: return game.timeUpdates.count - 3
         case .FieldHockey, .Football, .Lacrosse: return game.timeUpdates.count - 5
         default: return -1
         }

@@ -280,20 +280,12 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		CE335CCF2C92270C0037F572 /* Services */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Services;
-			sourceTree = "<group>";
-		};
 		CE335CD12C9227170037F572 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				CE8ED50C2D6C388E00A274DE /* ListViews */,
 				CE8ED50B2D6C386B00A274DE /* DetailedViews */,
 				CE8ED50A2D6C385E00A274DE /* MainViews */,
-				CE8ED5092D6C384C00A274DE /* Screens */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -356,7 +348,6 @@
 				CE528FF32C96A50F00C238B5 /* Info.plist */,
 				CE725D412C89120400386943 /* Preview Content */,
 				CE335CD12C9227170037F572 /* Views */,
-				CE335CCF2C92270C0037F572 /* Services */,
 				CE335CCE2C9227050037F572 /* Utils */,
 				CE335CCD2C9227000037F572 /* Resources */,
 				CE335CCC2C9226F90037F572 /* Models */,
@@ -387,13 +378,6 @@
 				CE725D582C89120500386943 /* score_iosUITestsLaunchTests.swift */,
 			);
 			path = "score-iosUITests";
-			sourceTree = "<group>";
-		};
-		CE8ED5092D6C384C00A274DE /* Screens */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Screens;
 			sourceTree = "<group>";
 		};
 		CE8ED50A2D6C385E00A274DE /* MainViews */ = {

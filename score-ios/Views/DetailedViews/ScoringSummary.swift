@@ -11,8 +11,16 @@ struct ScoringSummary : View {
     
     @Environment(\.presentationMode) var presentationMode
     var game: Game
+    var paddingMain: CGFloat = 20
     
     var body : some View {
+        
+//        Text("Scoring Summary")
+//            .font(Constants.Fonts.semibold24)
+//            .frame(maxWidth: .infinity, alignment: .leading)
+//            .padding(.horizontal, paddingMain)
+////            .padding(.top, paddingMain)
+//            .padding(.bottom, 1.5 * -paddingMain) // Negates carousel required title padding
         
         ScrollView (.vertical) {
             ForEach(game.gameUpdates.indices, id: \.self) { i in
@@ -31,19 +39,22 @@ struct ScoringSummary : View {
         .toolbar {
             ToolbarItem(placement: .principal) {
                 Text("Scoring Summary")
-                .font(.system(size: 27, weight: .regular))
+                .font(.system(size: 24, weight: .bold))
+                .padding(.vertical, paddingMain)
             }
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button {
-                    presentationMode.wrappedValue.dismiss()
-                } label: {
-                    Image("arrow_back_ios")
-                        .resizable()
-                        .frame(width: 9.87, height: 18.57)
-                }
-            }
+            
+            // Commented out to enable swipe navigation
+//            ToolbarItem(placement: .navigationBarLeading) {
+//                Button {
+//                    presentationMode.wrappedValue.dismiss()
+//                } label: {
+//                    Image("arrow_back_ios")
+//                        .resizable()
+//                        .frame(width: 9.87, height: 18.57)
+//                }
+//            }
         }
-        .navigationBarBackButtonHidden()
+//        .navigationBarBackButtonHidden()
         .toolbarBackground(Color.white, for: .navigationBar)
         .toolbarBackground(.visible, for: .navigationBar)
     }

@@ -38,7 +38,7 @@ struct DetailedHighlightsView: View {
                     .background(.clear)
                 
                 VStack(alignment: .leading, spacing: 0) {
-                    SearchView(highlights: highlights, title: "Search \(title)")
+                    SearchView(title: "Search \(title)")
                     .padding(.horizontal, 24)
                     .padding(.top, 20)
                     
@@ -72,4 +72,5 @@ struct DetailedHighlightsView: View {
         title: "Today",
         highlights: Highlight.dummyData
     )
+    .environmentObject(HighlightsViewModel.shared)
 }

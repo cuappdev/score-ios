@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct SearchView: View {
+    @ObservedObject private var viewModel = HighlightsViewModel.shared
     @State private var showSearch = false
-    var highlights: [Highlight]
     let title: String
 
     var body: some View {
@@ -31,12 +31,13 @@ struct SearchView: View {
         }
         .buttonStyle(PlainButtonStyle())
         .fullScreenCover(isPresented: $showSearch) {
-            SearchViewFullScreen(title: title, allHighlights: highlights)
+            SearchViewFullScreen(title: title)
+                .environmentObject(viewModel)
         }
     }
 }
 
 
 #Preview {
-    SearchView(highlights: Highlight.dummyData, title: "Search All Highlights")
+    SearchView(title: "Search All Highlights")
 }

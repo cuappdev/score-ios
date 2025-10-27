@@ -22,7 +22,7 @@ struct MainTabView: View {
                         UpcomingGamesView()
                             .environmentObject(gamesViewModel)
                     case .highlights:
-                        HighlightView(highlights: Highlight.dummyData)
+                        HighlightView()
                             .environmentObject(gamesViewModel)
                     case .scores:
                         PastGamesView()

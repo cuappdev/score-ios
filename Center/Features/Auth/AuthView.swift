@@ -43,13 +43,6 @@ struct AuthView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(DesignConstants.Colors.hustleGreen)
-        .alert("Error", isPresented: .constant(store.errorMessage != nil)) {
-            Button("OK") {
-                store.send(.errorDismissed)
-            }
-        } message: {
-            Text(store.errorMessage ?? "")
-        }
     }
     
 }

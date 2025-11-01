@@ -29,11 +29,6 @@ struct AuthView: View {
             
             Button(action: { store.send(.signInButtonTapped) }) {
                 HStack {
-                    if store.isLoading {
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                            .scaleEffect(0.8)
-                    }
                     Text("Log in with NetID")
                         .foregroundColor(DesignConstants.Colors.hustleGreen)
                         .font(DesignConstants.Fonts.title1)

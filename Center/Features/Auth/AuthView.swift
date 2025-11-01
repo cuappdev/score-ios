@@ -15,6 +15,18 @@ struct AuthView: View {
         VStack{
             Spacer()
             
+            Image("AppLogo")
+            
+            Text("Welcome to Hustle")
+                .foregroundColor(DesignConstants.Colors.white)
+                .font(DesignConstants.Fonts.h1)
+            
+            Text("Browse. Buy. Book")
+                .foregroundColor(DesignConstants.Colors.white)
+                .font(DesignConstants.Fonts.title1)
+            
+            Spacer()
+            
             Button(action: { store.send(.signInButtonTapped) }) {
                 HStack {
                     if store.isLoading {
@@ -23,17 +35,19 @@ struct AuthView: View {
                             .scaleEffect(0.8)
                     }
                     Text("Log in with NetID")
-                        .foregroundColor(.white)
+                        .foregroundColor(DesignConstants.Colors.hustleGreen)
+                        .font(DesignConstants.Fonts.title1)
                 }
-                .frame(width: 200, height: 50)
-                .background(Color.blue)
-                .cornerRadius(12)
+                .frame(width: 326, height: 51)
+                .background(DesignConstants.Colors.accentGreen)
+                .cornerRadius(15)
             }
             .disabled(store.isLoading)
             
             Spacer()
         }
-        .padding()
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(DesignConstants.Colors.hustleGreen)
         .alert("Error", isPresented: .constant(store.errorMessage != nil)) {
             Button("OK") {
                 store.send(.errorDismissed)
@@ -42,4 +56,5 @@ struct AuthView: View {
             Text(store.errorMessage ?? "")
         }
     }
+    
 }

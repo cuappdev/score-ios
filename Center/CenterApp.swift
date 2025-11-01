@@ -16,6 +16,13 @@ struct CenterApp: App {
         AppFeature()
     }
     
+    init() {
+        UIFont.familyNames.sorted().forEach { family in
+            print("family:", family)
+            UIFont.fontNames(forFamilyName: family).forEach { print(" →", $0) }
+        }
+    }
+    
     var body: some Scene {
         WindowGroup {
             MainView(store: store)

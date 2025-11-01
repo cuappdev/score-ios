@@ -21,7 +21,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		1CEA1F2A2EA6C71100E28EC3 /* Exceptions for "Center" folder in "Center" target */ = {
+		691751ED2EB5763100711F05 /* Exceptions for "Center" folder in "Center" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Supporting/Info.plist,
@@ -34,7 +34,7 @@
 		D0DDB5602E7227AB00165825 /* Center */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				1CEA1F2A2EA6C71100E28EC3 /* Exceptions for "Center" folder in "Center" target */,
+				691751ED2EB5763100711F05 /* Exceptions for "Center" folder in "Center" target */,
 			);
 			path = Center;
 			sourceTree = "<group>";

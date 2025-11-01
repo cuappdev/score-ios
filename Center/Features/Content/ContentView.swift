@@ -17,6 +17,7 @@ struct ContentView: View {
                 .imageScale(.large)
                 .foregroundStyle(.tint)
             Text("Hello World!!!")
+                .background(DesignConstants.Colors.hustleGreen)
             
             Button("Sign out") {
                 store.send(.signOutbuttonTapped)

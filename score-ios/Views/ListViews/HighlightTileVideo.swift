@@ -99,8 +99,3 @@ struct HighlightTileVideo: View {
         }
     }
 }
-
-
-#Preview {
-    HighlightTileVideo(video: YouTubeVideo.dummyData[0], width: 241)
-}

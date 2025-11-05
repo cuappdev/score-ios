@@ -11,6 +11,7 @@ struct SearchView: View {
     @ObservedObject private var viewModel = HighlightsViewModel.shared
     @State private var showSearch = false
     let title: String
+    let scope: HighlightsScope
 
     var body: some View {
         Button(action: { showSearch = true }) {
@@ -31,13 +32,16 @@ struct SearchView: View {
         }
         .buttonStyle(PlainButtonStyle())
         .fullScreenCover(isPresented: $showSearch) {
-            SearchViewFullScreen(title: title)
+            SearchViewFullScreen(title: title, scope: scope)
                 .environmentObject(viewModel)
+                .onAppear {
+                    viewModel.clearSearch()
+                }
         }
     }
 }
 
 
 #Preview {
-    SearchView(title: "Search All Highlights")
+    SearchView(title: "Search All Highlights", scope: .all)
 }

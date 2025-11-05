@@ -10,6 +10,7 @@ import SwiftUI
 struct SearchViewFullScreen: View {
     @EnvironmentObject private var viewModel: HighlightsViewModel
     let title: String
+    var scope: HighlightsScope
     
     @Environment(\.dismiss) private var dismiss
     
@@ -19,6 +20,20 @@ struct SearchViewFullScreen: View {
     @FocusState private var isSearchFieldFocused: Bool
     
     private let debounceDelay: TimeInterval = 0.8
+    
+    private var searchResults: [Highlight] {
+        let model = viewModel // avoid dynamicMemberLookup confusion
+        
+        switch scope {
+        case .today:
+            return model.mainTodayHighlights
+        case .pastThreeDays:
+            return model.mainPastThreeDaysHighlights
+        default:
+            return model.allHighlights
+        }
+    }
+
     
     var body: some View {
         VStack(spacing: 0) {
@@ -76,33 +91,22 @@ struct SearchViewFullScreen: View {
             if searchText.isEmpty {
                 Spacer()
             } else if viewModel.isLoading {
+                Spacer()
+            } else if searchResults.isEmpty {
                 VStack {
-                    Spacer()
-                    
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle())
-                        .scaleEffect(1.2)
-                    
-                    Spacer()
-                }
-            } else if viewModel.filteredHighlights.isEmpty {
-                VStack {
-                   NoHighlightView()
+                    NoHighlightView()
                 }
             } else {
                 ScrollView {
                     HStack {
-                        Text("\(viewModel.filteredCount) results")
+                        Text("\(searchResults.count) results")
                             .padding(.top, 12)
-                            .padding(.horizontal, 24)
-                            .font(Constants.Fonts.subheader)
-                            .foregroundStyle(Constants.Colors.gray_text)
                         
                         Spacer()
                     }
                     
                     LazyVStack(alignment: .leading, spacing: 24) {
-                        ForEach(viewModel.filteredHighlights) { highlight in
+                        ForEach(searchResults) { highlight in
                             HighlightTile(highlight: highlight, width: 360)
                                 .padding(.horizontal, 24)
                         }
@@ -113,8 +117,14 @@ struct SearchViewFullScreen: View {
         }
         .onAppear {
             isSearchFieldFocused = true
+            searchText = viewModel.searchQuery
+            viewModel.filter()
+        }
+        .onDisappear {
+            viewModel.clearSearch()
         }
     }
+
     
     // MARK: - Debounce
     private func debounceSearch(_ text: String) {
@@ -124,6 +134,7 @@ struct SearchViewFullScreen: View {
             DispatchQueue.main.async {
                 let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
                 viewModel.filterBySearch(trimmed)
+                viewModel.filter()
             }
         }
         
@@ -134,6 +145,6 @@ struct SearchViewFullScreen: View {
 
 // MARK: - Preview
 #Preview {
-    SearchViewFullScreen(title: "Search All Highlights")
+    SearchViewFullScreen(title: "Search All Highlights", scope: .pastThreeDays)
         .environmentObject(HighlightsViewModel.shared)
 }

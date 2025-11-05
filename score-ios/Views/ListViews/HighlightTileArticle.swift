@@ -94,11 +94,3 @@ struct HighlightTileArticle: View {
         
     }
 }
-
-
-// MARK: - Preview
-
-#Preview {
-    HighlightTileArticle(article: Article.dummyData[0], width: 345)
-}
-

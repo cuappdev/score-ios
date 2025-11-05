@@ -20,41 +20,68 @@ struct HighlightView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.top, 24)
                         .padding(.horizontal, 24)
-                        
-                    SearchView(title: "Search All Highlights")
-                    .padding(.horizontal, 20)
-                    .padding(.top, 12)
+                    
+                    SearchView(title: "Search All Highlights", scope: .all)
+                        .padding(.horizontal, 20)
+                        .padding(.top, 12)
                     
                     SportSelectorView()
                         .padding(.horizontal, 20)
                         .padding(.top, 12)
                     
-                    if viewModel.hasTodayHighlights {
-                        HighlightSectionView(title: "Today", highlights: viewModel.todayHighlights)
+                    if !viewModel.mainTodayHighlights.isEmpty {
+                        HighlightSectionView(
+                            title: "Today",
+                            scope: .today
+                        )
                     }
                     
-                    if viewModel.hasPastThreeDaysHighlights {
-                        HighlightSectionView(title: "Past 3 Days", highlights: viewModel.pastThreeDaysHighlights)
+                    if !viewModel.mainPastThreeDaysHighlights.isEmpty {
+                        HighlightSectionView(
+                            title: "Past 3 Days",
+                            scope: .pastThreeDays
+                        )
                     }
                 }
             }
-        }
-        .environmentObject(viewModel)
-        .onAppear {
-            if viewModel.hasNotFetchedYet {
-                viewModel.loadHighlights()
+            .environmentObject(viewModel)
+            .onAppear {
+                if viewModel.hasNotFetchedYet {
+                    viewModel.loadHighlights()
+                }
+                
+                viewModel.clearSearch()
+            }
+            .onChange(of: viewModel.selectedSport) { _, _ in
+                viewModel.filter()
             }
         }
     }
 }
 
 struct HighlightSectionView: View {
-    let title: String
-    let highlights: [Highlight]
+    @EnvironmentObject var viewModel: HighlightsViewModel
     
+    let title: String
+    let scope: HighlightsScope
+    
+    private var highlights: [Highlight] {
+        switch scope {
+        case .today:
+            return viewModel.mainTodayHighlights
+        case .pastThreeDays:
+            return viewModel.mainPastThreeDaysHighlights
+        default:
+            return [] // Should not happen on this screen
+        }
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            NavigationLink(destination: DetailedHighlightsView(title: title, highlights: highlights)) {
+            NavigationLink(destination:
+                DetailedHighlightsView(title: title, highlightScope: .today)
+                .environmentObject(viewModel))
+            {
                 HStack {
                     Text(title)
                         .font(Constants.Fonts.subheader)

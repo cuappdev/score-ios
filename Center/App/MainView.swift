@@ -14,8 +14,6 @@ struct MainView: View {
     var body: some View {
         Group {
             switch store.auth.authState{
-            case .undefined:
-                ProgressView()
             case .authenticated:
                 ContentView(store: store.scope(state: \.auth, action: \.auth))
             case .notAuthenticated:

@@ -15,29 +15,34 @@ struct AuthView: View {
         VStack{
             Spacer()
             
-            Image("AppLogo")
-            
-            Text("Welcome to Hustle")
-                .foregroundColor(DesignConstants.Colors.white)
-                .font(DesignConstants.Fonts.h1)
-            
-            Text("Browse. Buy. Book")
-                .foregroundColor(DesignConstants.Colors.white)
-                .font(DesignConstants.Fonts.title1)
-            
-            Spacer()
-            
-            Button(action: { store.send(.signInButtonTapped) }) {
-                HStack {
-                    Text("Log in with NetID")
-                        .foregroundColor(DesignConstants.Colors.hustleGreen)
-                        .font(DesignConstants.Fonts.title1)
+            Group{
+                Image("AppLogo")
+                
+                Text("Welcome to \(Text("Hustle").bold())")
+                    .foregroundColor(DesignConstants.Colors.white)
+                    .font(DesignConstants.Fonts.h1)
+                
+                Text("Browse. Buy. Book")
+                    .foregroundColor(DesignConstants.Colors.white)
+                    .font(DesignConstants.Fonts.title1)
+                
+                
+                Spacer()
+                    .frame(height: 90)
+                
+                Button(action: { store.send(.signInButtonTapped) }) {
+                    HStack {
+                        Text("Log in with NetID")
+                            .foregroundColor(DesignConstants.Colors.hustleGreen)
+                            .font(DesignConstants.Fonts.title1Bold)
+                    }
+                    .frame(width: 326, height: 51)
+                    .background(DesignConstants.Colors.accentGreen)
+                    .cornerRadius(15)
                 }
-                .frame(width: 326, height: 51)
-                .background(DesignConstants.Colors.accentGreen)
-                .cornerRadius(15)
+                .disabled(store.isLoading)
             }
-            .disabled(store.isLoading)
+            .padding(.horizontal, 48)
             
             Spacer()
         }

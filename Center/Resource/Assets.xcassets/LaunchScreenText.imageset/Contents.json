@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "lightning bolt.svg",
+      "filename" : "ustle.svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "lightning bolt 2.svg",
+      "filename" : "ustle 1.svg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "lightning bolt 1.svg",
+      "filename" : "ustle 2.svg",
       "idiom" : "universal",
       "scale" : "3x"
     }

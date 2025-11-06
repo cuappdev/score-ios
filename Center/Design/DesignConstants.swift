@@ -38,7 +38,8 @@ struct DesignConstants {
         static let body2 = Font.custom("InstrumentSans-Regular", size: 16)
 
         //Title
-        static let title1 = Font.custom("HelveticaNeue-Bold", size: 24)
+        static let title1Bold = Font.custom("HelveticaNeue-Bold", size: 24)
+        static let title1 = Font.custom("HelveticaNeue", size: 24)
         static let title2 = Font.custom("HelveticaNeue-Medium", size: 16)
         static let title3 = Font.custom("HelveticaNeue-Medium", size: 14)
         static let title4 = Font.custom("HelveticaNeue", size: 14)

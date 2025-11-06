@@ -10,14 +10,14 @@ import FirebaseAuth
 import GoogleSignIn
 
 public enum AuthState {
-    case undefined, authenticated, notAuthenticated
+    case authenticated, notAuthenticated
 }
 
 @Reducer
 struct AuthFeature {
     @ObservableState
     struct State: Equatable {
-        var authState: AuthState = .undefined
+        var authState: AuthState = .notAuthenticated
         var user: FirebaseAuth.User?
         var isLoading = false
         var errorMessage: String?

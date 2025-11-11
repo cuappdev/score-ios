@@ -88,7 +88,7 @@ struct HighlightSectionView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             NavigationLink(destination:
-                DetailedHighlightsView(title: title, highlightScope: .today)
+                DetailedHighlightsView(title: title, highlightScope: scope)
                 .environmentObject(viewModel))
             {
                 HStack {
@@ -129,4 +129,5 @@ struct HighlightSectionView: View {
 
 #Preview {
     HighlightView()
+        .environmentObject(HighlightsViewModel.shared)
 }

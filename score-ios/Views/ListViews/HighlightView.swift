@@ -12,50 +12,59 @@ struct HighlightView: View {
     
     var body: some View {
         ScrollView(showsIndicators: false) {
-            LazyVStack(alignment: .leading, pinnedViews: [.sectionHeaders]) {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Highlights")
-                        .font(Constants.Fonts.semibold24)
-                        .foregroundStyle(Constants.Colors.black)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.top, 24)
-                        .padding(.horizontal, 24)
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Highlights")
+                    .font(Constants.Fonts.semibold24)
+                    .foregroundStyle(Constants.Colors.black)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.top, 24)
+                    .padding(.horizontal, 24)
+                
+                SearchView(title: "Search All Highlights", scope: .all)
+                    .padding(.horizontal, 20)
+                    .padding(.top, 12)
+                
+                SportSelectorView()
+                    .padding(.horizontal, 20)
+                    .padding(.top, 12)
+                
+                if viewModel.mainPastThreeDaysHighlights.isEmpty && viewModel.mainTodayHighlights.isEmpty {
+                    NoHighlightView()
+                        .frame(maxWidth: .infinity)
+                        .frame(minHeight: UIScreen.main.bounds.height - 350)
+                        // push view to the middle of the screen
                     
-                    SearchView(title: "Search All Highlights", scope: .all)
-                        .padding(.horizontal, 20)
-                        .padding(.top, 12)
-                    
-                    SportSelectorView()
-                        .padding(.horizontal, 20)
-                        .padding(.top, 12)
-                    
-                    if !viewModel.mainTodayHighlights.isEmpty {
-                        HighlightSectionView(
-                            title: "Today",
-                            scope: .today
-                        )
-                    }
-                    
-                    if !viewModel.mainPastThreeDaysHighlights.isEmpty {
-                        HighlightSectionView(
-                            title: "Past 3 Days",
-                            scope: .pastThreeDays
-                        )
-                    }
-                }
-            }
-            .environmentObject(viewModel)
-            .onAppear {
-                if viewModel.hasNotFetchedYet {
-                    viewModel.loadHighlights()
                 }
                 
-                viewModel.clearSearch()
-            }
-            .onChange(of: viewModel.selectedSport) { _, _ in
-                viewModel.filter()
+                if !viewModel.mainTodayHighlights.isEmpty {
+                    HighlightSectionView(
+                        title: "Today",
+                        scope: .today
+                    )
+                }
+                
+                if !viewModel.mainPastThreeDaysHighlights.isEmpty {
+                    HighlightSectionView(
+                        title: "Past 3 Days",
+                        scope: .pastThreeDays
+                    )
+                }
+                
+                
             }
         }
+        .environmentObject(viewModel)
+        .onAppear {
+            if viewModel.hasNotFetchedYet {
+                viewModel.loadHighlights()
+            }
+            
+            viewModel.clearSearch()
+        }
+        .onChange(of: viewModel.selectedSport) { _, _ in
+            viewModel.filter()
+        }
+        
     }
 }
 

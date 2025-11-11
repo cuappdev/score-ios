@@ -46,15 +46,22 @@ struct DetailedHighlightsView: View {
                     SportSelectorView()
                         .padding(.top, 20)
                     
-                    // Highlights list
-                    VStack {
-                        ForEach(highlightsForScope, id: \.id) { highlight in
-                            HighlightTile(highlight: highlight, width: 360)
-                                .padding(.horizontal, 24)
-                                .padding(.top, 12)
-                        }
+                    if(highlightsForScope.isEmpty) {
+                        NoHighlightView()
+                            .frame(maxWidth: .infinity)
+                            .frame(minHeight: UIScreen.main.bounds.height - 350)
+                            // push view to the middle of the screen
                     }
-                    .padding(.top, 20)
+                    else{
+                        VStack {
+                            ForEach(highlightsForScope, id: \.id) { highlight in
+                                HighlightTile(highlight: highlight, width: 360)
+                                    .padding(.horizontal, 24)
+                                    .padding(.top, 12)
+                            }
+                        }
+                        .padding(.top, 20)
+                    }
                 }
             }
         }

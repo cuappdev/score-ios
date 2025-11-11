@@ -26,11 +26,11 @@ struct SearchViewFullScreen: View {
         
         switch scope {
         case .today:
-            return model.mainTodayHighlights
+            return model.detailedTodayHighlights
         case .pastThreeDays:
-            return model.mainPastThreeDaysHighlights
+            return model.detailedPastThreeDaysHighlights
         default:
-            return model.allHighlights
+            return model.allHighlightsSearchResults
         }
     }
 
@@ -87,20 +87,26 @@ struct SearchViewFullScreen: View {
             .padding()
             .padding(.horizontal, 6)
             
+            SportSelectorView()
+                .padding(.horizontal, 20)
+                .padding(.top, 12)
+            
             // MARK: Results
-            if searchText.isEmpty {
-                Spacer()
-            } else if viewModel.isLoading {
-                Spacer()
-            } else if searchResults.isEmpty {
-                VStack {
-                    NoHighlightView()
-                }
+            if viewModel.isLoading {
+                
+            } else if !searchText.isEmpty && searchResults.isEmpty {
+                NoHighlightView()
+                    .frame(maxWidth: .infinity)
+                    .frame(minHeight: UIScreen.main.bounds.height - 350)
+                    // push view to the middle of the screen
             } else {
                 ScrollView {
                     HStack {
                         Text("\(searchResults.count) results")
                             .padding(.top, 12)
+                            .padding(.horizontal, 24)
+                            .font(Constants.Fonts.subheader)
+                            .foregroundStyle(Constants.Colors.gray_text)
                         
                         Spacer()
                     }

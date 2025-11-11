@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HighlightView: View {
-    @ObservedObject private var viewModel = HighlightsViewModel.shared
+    @EnvironmentObject var viewModel: HighlightsViewModel
     
     var body: some View {
         ScrollView(showsIndicators: false) {

@@ -59,7 +59,7 @@ extension Highlight {
                 thumbnail: "https://i.ytimg.com/vi/QGHb9heJAco/hqdefault.jpg",
                 b64Thumbnail: nil,
                 url: "https://youtube.com/watch?v=QGHb9heJAco",
-                publishedAt: "2025-11-05T00:00:00Z",
+                publishedAt: "2025-11-11T00:00:00Z",
                 sport: .All
             )
         ),
@@ -71,7 +71,7 @@ extension Highlight {
                 image: "https://snworksceo.imgix.net/cds/2f1df221-010c-4a5b-94cc-ec7a100b7aa1.sized-1000x1000.jpg?w=1000&dpr=2",
                 url: "https://cornellsun.com/article",
                 source: "Cornell Daily Sun",
-                publishedAt: "2025-11-05T00:00:00Z",
+                publishedAt: "2025-11-11T00:00:00Z",
                 sport: .FieldHockey
             )
         ),
@@ -83,7 +83,7 @@ extension Highlight {
                 thumbnail: "https://i.ytimg.com/vi/ABC123def/hqdefault.jpg",
                 b64Thumbnail: nil,
                 url: "https://youtube.com/watch?v=ABC123def",
-                publishedAt: "2025-11-05T00:00:00Z",
+                publishedAt: "2025-11-11T00:00:00Z",
                 sport: .Baseball
             )
         ),
@@ -95,7 +95,7 @@ extension Highlight {
                 image: "https://snworksceo.imgix.net/cds/2f1df221-010c-4a5b-94cc-ec7a100b7aa1.sized-1000x1000.jpg?w=1000&dpr=2",
                 url: "https://cornellbigred.com/news/2025/10/08/article",
                 source: "Cornell Daily Sun",
-                publishedAt: "2025-11-05T00:00:00Z",
+                publishedAt: "2025-11-10T00:00:00Z",
                 sport: .Football
             )
         ),
@@ -107,7 +107,7 @@ extension Highlight {
                 thumbnail: "https://i.ytimg.com/vi/XYZ789ghi/hqdefault.jpg",
                 b64Thumbnail: nil,
                 url: "https://youtube.com/watch?v=XYZ789ghi",
-                publishedAt: "2025-11-04T00:00:00Z",
+                publishedAt: "2025-11-10T00:00:00Z",
                 sport: .FieldHockey
             )
         ),
@@ -119,7 +119,7 @@ extension Highlight {
                 image: "https://snworksceo.imgix.net/cds/2f1df221-010c-4a5b-94cc-ec7a100b7aa1.sized-1000x1000.jpg?w=1000&dpr=2",
                 url: "https://cornellsun.com/basketball-championship",
                 source: "Cornell Daily Sun",
-                publishedAt: "2025-11-04T00:00:00Z",
+                publishedAt: "2025-11-11T00:00:00Z",
                 sport: .Baseball
             )
         )

@@ -16,7 +16,7 @@ struct DetailedHighlightsView: View {
     
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
+            LazyVStack(alignment: .leading, spacing: 16, pinnedViews: [.sectionHeaders]) {
                 
                 // Custom header
                 ZStack {
@@ -38,31 +38,39 @@ struct DetailedHighlightsView: View {
                 
                 Divider().background(.clear)
                 
-                VStack(alignment: .leading, spacing: 0) {
-                    SearchView(title: "Search \(title)", scope: highlightScope)
-                        .padding(.horizontal, 24)
-                        .padding(.top, 20)
-                    
-                    SportSelectorView()
-                        .padding(.top, 20)
-                    
-                    if(highlightsForScope.isEmpty) {
-                        NoHighlightView()
-                            .frame(maxWidth: .infinity)
-                            .frame(minHeight: UIScreen.main.bounds.height - 350)
-                            // push view to the middle of the screen
-                    }
-                    else{
-                        VStack {
-                            ForEach(highlightsForScope, id: \.id) { highlight in
-                                HighlightTile(highlight: highlight, width: 360)
-                                    .padding(.horizontal, 24)
-                                    .padding(.top, 12)
+                Section(
+                    header:
+                        VStack(alignment: .leading, spacing: 0) {
+                            SearchView(title: "Search \(title)", scope: highlightScope)
+                                .padding(.horizontal, 24)
+                                .padding(.top, 20)
+                            
+                            SportSelectorView()
+                                .padding(.top, 20)
+                        }
+                        .padding(.bottom, 20)
+                        .background(Color.white)
+                    ,
+                    content: {
+                        VStack(alignment: .leading, spacing: 0) {
+                            if(highlightsForScope.isEmpty) {
+                                NoHighlightView()
+                                    .frame(maxWidth: .infinity)
+                                    .frame(minHeight: UIScreen.main.bounds.height - 350)
+                                    // push view to the middle of the screen
+                            }
+                            else{
+                                LazyVStack {
+                                    ForEach(highlightsForScope, id: \.id) { highlight in
+                                        HighlightTile(highlight: highlight, width: 360)
+                                            .padding(.horizontal, 24)
+                                            .padding(.top, 12)
+                                    }
+                                }
                             }
                         }
-                        .padding(.top, 20)
                     }
-                }
+                )
             }
         }
         .navigationBarBackButtonHidden(true)
@@ -87,9 +95,11 @@ struct DetailedHighlightsView: View {
     private var highlightsForScope: [Highlight] {
        switch highlightScope {
        case .today:
-           return viewModel.mainTodayHighlights
+           return viewModel.detailedTodayHighlights
+       case .pastThreeDays:
+           return viewModel.detailedPastThreeDaysHighlights
        default:
-           return viewModel.mainPastThreeDaysHighlights
+           return viewModel.allHighlights
        }
    }
 }
@@ -97,7 +107,7 @@ struct DetailedHighlightsView: View {
 #Preview {
     DetailedHighlightsView(
         title: "Today",
-        highlightScope: .today
+        highlightScope: .pastThreeDays
     )
     .environmentObject(HighlightsViewModel.shared)
 }

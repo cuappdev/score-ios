@@ -27,6 +27,8 @@
 		7626AD6F2E973E08002149CD /* View+CornerRadius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7626AD6E2E973E08002149CD /* View+CornerRadius.swift */; };
 		7665A4072EB00531004A9903 /* HighlightsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7665A4062EB00528004A9903 /* HighlightsViewModel.swift */; };
 		7675D0932EBC0F1D00940292 /* NoHighlightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7675D0922EBC0F1700940292 /* NoHighlightView.swift */; };
+		76AED8512EC50B7F00694C0B /* YoutubeVideo.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 76AED8502EC50B7100694C0B /* YoutubeVideo.graphql */; };
+		76AED8532EC50C2700694C0B /* Article.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 76AED8522EC50C2100694C0B /* Article.graphql */; };
 		76D998E92E9F1AF900713EE5 /* SearchViewFullScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D998E82E9F1AF300713EE5 /* SearchViewFullScreen.swift */; };
 		B136701ECD164EE9AC64667F /* Article.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB4DBAE237D47AB882D4EBC /* Article.swift */; };
 		CE335CD32C922E8D0037F572 /* PrimaryColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE335CD22C922E8D0037F572 /* PrimaryColors.swift */; };
@@ -140,6 +142,8 @@
 		7626AD6E2E973E08002149CD /* View+CornerRadius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+CornerRadius.swift"; sourceTree = "<group>"; };
 		7665A4062EB00528004A9903 /* HighlightsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightsViewModel.swift; sourceTree = "<group>"; };
 		7675D0922EBC0F1700940292 /* NoHighlightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoHighlightView.swift; sourceTree = "<group>"; };
+		76AED8502EC50B7100694C0B /* YoutubeVideo.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = YoutubeVideo.graphql; sourceTree = "<group>"; };
+		76AED8522EC50C2100694C0B /* Article.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Article.graphql; sourceTree = "<group>"; };
 		76D998E82E9F1AF300713EE5 /* SearchViewFullScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewFullScreen.swift; sourceTree = "<group>"; };
 		840304A20FA141C291346BA8 /* Highlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Highlight.swift; sourceTree = "<group>"; };
 		CE335CD22C922E8D0037F572 /* PrimaryColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryColors.swift; sourceTree = "<group>"; };
@@ -527,6 +531,8 @@
 			children = (
 				D8DD4E632CFD48E400F2C46E /* Team.graphql */,
 				D891020A2CED6A86004CE226 /* Game.graphql */,
+				76AED8522EC50C2100694C0B /* Article.graphql */,
+				76AED8502EC50B7100694C0B /* YoutubeVideo.graphql */,
 				D89102062CED6A28004CE226 /* schema.graphqls */,
 			);
 			path = GraphQL;
@@ -634,7 +640,7 @@
 			packageReferences = (
 				D89102012CED68D9004CE226 /* XCRemoteSwiftPackageReference "apollo-ios" */,
 				D0A904F32E8DDD990008194B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				76101F682E9743EC006D6EDD /* XCLocalSwiftPackageReference "gameAPI" */,
+				761050E32EC50DCC00FD73F8 /* XCLocalSwiftPackageReference "gameAPI" */,
 			);
 			productRefGroup = CE725D392C89120200386943 /* Products */;
 			projectDirPath = "";
@@ -655,9 +661,11 @@
 				D8DD4E642CFD48ED00F2C46E /* Team.graphql in Resources */,
 				D891020B2CED6A8E004CE226 /* Game.graphql in Resources */,
 				2C1375CB2E7233390089EBC7 /* GoogleService-Info.plist in Resources */,
+				76AED8512EC50B7F00694C0B /* YoutubeVideo.graphql in Resources */,
 				CE528FE42C96A27500C238B5 /* Poppins-Light.ttf in Resources */,
 				CE528FEE2C96A27500C238B5 /* Poppins-Black.ttf in Resources */,
 				CE528FEC2C96A27500C238B5 /* Poppins-LightItalic.ttf in Resources */,
+				76AED8532EC50C2700694C0B /* Article.graphql in Resources */,
 				CE528FEF2C96A27500C238B5 /* Poppins-Thin.ttf in Resources */,
 				CE528FE02C96A27500C238B5 /* Poppins-ExtraLight.ttf in Resources */,
 				CE528FF02C96A27500C238B5 /* Poppins-SemiBold.ttf in Resources */,
@@ -1119,7 +1127,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		76101F682E9743EC006D6EDD /* XCLocalSwiftPackageReference "gameAPI" */ = {
+		761050E32EC50DCC00FD73F8 /* XCLocalSwiftPackageReference "gameAPI" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = gameAPI;
 		};

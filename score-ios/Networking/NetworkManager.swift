@@ -46,5 +46,21 @@ class NetworkManager {
             }
         }
     }
-
+    func fetchArticles(completion: @escaping ([ArticlesQuery.Data.Article]?, Error?) -> Void) {
+        let query = ArticlesQuery(sportsType: nil)
+        
+        apolloClient.fetch(query: query) { result in
+            switch result {
+            case .success(let graphQLResult):
+                if let articlesData = graphQLResult.data?.articles?.compactMap({ $0 }) {
+                    completion(articlesData, nil)
+                } else if let errors = graphQLResult.errors {
+                    let errorDescription = errors.map { $0.localizedDescription }.joined(separator: "\n")
+                    completion(nil, NSError(domain: "GraphQL", code: 0, userInfo: [NSLocalizedDescriptionKey: errorDescription]))
+                }
+            case .failure(let error):
+                completion(nil, error)
+            }
+        }
+    }
 }

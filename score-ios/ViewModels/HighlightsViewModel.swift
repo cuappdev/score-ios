@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import GameAPI
 
 class HighlightsViewModel: ObservableObject {
     // MARK: - Published Properties
@@ -24,6 +25,9 @@ class HighlightsViewModel: ObservableObject {
     @Published var selectedSport: Sport = .All
     @Published var sportSelectorOffset: CGFloat = 0
     @Published var currentScope: HighlightsScope = .main
+    
+    // MARK: - Private Properties
+    private var privateAllHighlights: [Highlight] = []
 
     // MARK: - Singleton
     static let shared = HighlightsViewModel()
@@ -34,19 +38,76 @@ class HighlightsViewModel: ObservableObject {
 
     // MARK: - Loading
     func loadHighlights() {
-        dataState = .loading
-        isLoading = true
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.allHighlights = Highlight.dummyData
-            self.filter()
-            self.dataState = .success
-            self.isLoading = false
+            dataState = .loading
+            isLoading = true
+            
+            self.allHighlights.removeAll()
+            self.mainTodayHighlights.removeAll()
+            self.mainPastThreeDaysHighlights.removeAll()
+            self.detailedTodayHighlights.removeAll()
+            self.detailedPastThreeDaysHighlights.removeAll()
+            self.allHighlightsSearchResults.removeAll()
+            
+            print("calling network manager")
+            NetworkManager.shared.fetchArticles() { [weak self] networkArticles, error in
+                guard let self = self else { return }
+                
+                    DispatchQueue.main.async {
+                    self.isLoading = false
+                    
+                    if let error = error {
+                        print("Error in fetchArticles: \(error.localizedDescription)")
+                        self.handleError(.networkError)
+                        return
+                    }
+                    
+                    guard let networkArticles = networkArticles, !networkArticles.isEmpty else {
+                        self.handleError(ScoreError.emptyData)
+                        return
+                    }
+                    
+                    print("processing higlights")
+                    self.processHighlights(networkArticles)
+                }
+            }
         }
+    
+    func retryFetch() {
+        loadHighlights()
     }
     
-    func refreshHighlights() {
-        loadHighlights()
+    /**
+     * Converts network data to local models, sorts, and filters.
+     */
+    private func processHighlights(_ articleDataArray: [ArticlesQuery.Data.Article]) {
+        let localArticles = articleDataArray.map { Article(from: $0) }
+        self.privateAllHighlights = localArticles.map { Highlight.article($0) }
+        self.allHighlights = self.uniqueHighlights(from: self.privateAllHighlights)
+        self.allHighlights.sort(by: { $0.publishedAt > $1.publishedAt })
+        self.filter()
+        self.dataState = .success
+        print(allHighlights)
+        print("processed higlights")
+    }
+    
+    /**
+     * Function to filter out duplicate highlights by ID.
+     */
+    private func uniqueHighlights(from highlights: [Highlight]) -> [Highlight] {
+        var uniqueHighlights: [Highlight] = []
+        var seenIDs: Set<String> = []
+
+        for highlight in highlights {
+            if case .article(let article) = highlight {
+                if !seenIDs.contains(article.id) {
+                    uniqueHighlights.append(highlight)
+                    seenIDs.insert(article.id)
+                }
+            }
+            // TODO: Add case for .video when ready
+        }
+
+        return uniqueHighlights
     }
 
     // MARK: - Filtering
@@ -68,26 +129,25 @@ class HighlightsViewModel: ObservableObject {
             }
         }
 
-        // --- Main Page Filters (by sport only)
         mainTodayHighlights = filteredBySport.filter {
-            guard let date = Date.fullDateFormatter.date(from: $0.publishedAt) else { return false }
-            return Date.isWithinPastDays(date, days: 1)
+            guard let date = Date.articleDateFormatter.date(from: $0.publishedAt) else { return false }
+            return Date.isToday(date)
         }
 
         mainPastThreeDaysHighlights = filteredBySport.filter {
-            guard let date = Date.fullDateFormatter.date(from: $0.publishedAt) else { return false }
-            return !Date.isWithinPastDays(date, days: 1) && Date.isWithinPastDays(date, days: 3)
+            guard let date = Date.articleDateFormatter.date(from: $0.publishedAt) else { return false }
+            return Date.isWithinPastDays(date, days: 3)
         }
 
         // --- Detailed Page Filters (by sport + search)
         detailedTodayHighlights = filteredBySearch.filter {
-            guard let date = Date.fullDateFormatter.date(from: $0.publishedAt) else { return false }
-            return Date.isWithinPastDays(date, days: 1)
+            guard let date = Date.articleDateFormatter.date(from: $0.publishedAt) else { return false }
+            return Date.isToday(date)
         }
 
         detailedPastThreeDaysHighlights = filteredBySearch.filter {
-            guard let date = Date.fullDateFormatter.date(from: $0.publishedAt) else { return false }
-            return !Date.isWithinPastDays(date, days: 1) && Date.isWithinPastDays(date, days: 3)
+            guard let date = Date.articleDateFormatter.date(from: $0.publishedAt) else { return false }
+            return Date.isWithinPastDays(date, days: 3)
         }
 
         // --- “Search All” Page
@@ -123,19 +183,6 @@ class HighlightsViewModel: ObservableObject {
             self.dataState = .error(error: error)
             self.isLoading = false
         }
-    }
-}
-
-// MARK: - DataState Extension
-extension DataState {
-    var isError: Bool {
-        if case .error = self { return true }
-        return false
-    }
-
-    var error: ScoreError? {
-        if case .error(let err) = self { return err }
-        return nil
     }
 }
 

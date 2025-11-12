@@ -22,7 +22,7 @@ Score is Cornell’s all-in-one sports discovery hub that makes Cornell sports 
    ./apollo-ios-cli generate -p "ScoreSecrets/apollo-codegen-config-prod.json" -f
    ```
    
-5. Build the project and you should be good to go! Select the `score-ios` schema to use our development server and `score-ios-prod` to use our production server.
+4. Build the project and you should be good to go! Select the `score-ios` schema to use our development server and `score-ios-prod` to use our production server.
 
 ## Common Issues
 

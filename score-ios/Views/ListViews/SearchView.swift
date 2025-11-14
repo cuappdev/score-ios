@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SearchView: View {
-    @ObservedObject private var viewModel = HighlightsViewModel.shared
+    @EnvironmentObject private var viewModel: HighlightsViewModel
     @State private var showSearch = false
     let title: String
     let scope: HighlightsScope
@@ -38,6 +38,7 @@ struct SearchView: View {
                     viewModel.clearSearch()
                 }
         }
+        .environmentObject(viewModel)
     }
 }
 

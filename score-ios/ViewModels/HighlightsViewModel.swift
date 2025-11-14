@@ -48,7 +48,6 @@ class HighlightsViewModel: ObservableObject {
             self.detailedPastThreeDaysHighlights.removeAll()
             self.allHighlightsSearchResults.removeAll()
             
-            print("calling network manager")
             NetworkManager.shared.fetchArticles() { [weak self] networkArticles, error in
                 guard let self = self else { return }
                 
@@ -66,11 +65,31 @@ class HighlightsViewModel: ObservableObject {
                         return
                     }
                     
-                    print("processing higlights")
-                    self.processHighlights(networkArticles)
+                    self.processHighlights(networkArticles, [])
                 }
             }
+        
+            NetworkManager.shared.fetchYouTubeVideos() { [weak self] networkYouTubeVideos, error in
+                guard let self = self else { return }
+            
+                DispatchQueue.main.async {
+                self.isLoading = false
+                
+                if let error = error {
+                    print("Error in fetchArticles: \(error.localizedDescription)")
+                    self.handleError(.networkError)
+                    return
+                }
+                
+                guard let networkYouTubeVideos = networkYouTubeVideos, !networkYouTubeVideos.isEmpty else {
+                    self.handleError(ScoreError.emptyData)
+                    return
+                }
+                
+                self.processHighlights([], networkYouTubeVideos)
+            }
         }
+    }
     
     func retryFetch() {
         loadHighlights()
@@ -79,15 +98,15 @@ class HighlightsViewModel: ObservableObject {
     /**
      * Converts network data to local models, sorts, and filters.
      */
-    private func processHighlights(_ articleDataArray: [ArticlesQuery.Data.Article]) {
+    private func processHighlights(_ articleDataArray: [ArticlesQuery.Data.Article], _ youTubeVideoDataArray: [YoutubeVideosQuery.Data.YoutubeVideo]) {
         let localArticles = articleDataArray.map { Article(from: $0) }
-        self.privateAllHighlights = localArticles.map { Highlight.article($0) }
+        let localYouTubeVideos = youTubeVideoDataArray.map {YouTubeVideo(from: $0)}
+                
+        self.privateAllHighlights += localArticles.map { Highlight.article($0) } + localYouTubeVideos.map { Highlight.video($0) }
         self.allHighlights = self.uniqueHighlights(from: self.privateAllHighlights)
         self.allHighlights.sort(by: { $0.publishedAt > $1.publishedAt })
         self.filter()
         self.dataState = .success
-        print(allHighlights)
-        print("processed higlights")
     }
     
     /**
@@ -95,16 +114,22 @@ class HighlightsViewModel: ObservableObject {
      */
     private func uniqueHighlights(from highlights: [Highlight]) -> [Highlight] {
         var uniqueHighlights: [Highlight] = []
-        var seenIDs: Set<String> = []
+        var seenArticleIDs: Set<String> = []
+        var seenVideoIDs: Set<String> = []
 
         for highlight in highlights {
             if case .article(let article) = highlight {
-                if !seenIDs.contains(article.id) {
+                if !seenArticleIDs.contains(article.id) {
                     uniqueHighlights.append(highlight)
-                    seenIDs.insert(article.id)
+                    seenArticleIDs.insert(article.id)
                 }
             }
-            // TODO: Add case for .video when ready
+            if case .video(let video) = highlight {
+                if !seenVideoIDs.contains(video.id) {
+                    uniqueHighlights.append(highlight)
+                    seenVideoIDs.insert(video.id)
+                }
+            }
         }
 
         return uniqueHighlights

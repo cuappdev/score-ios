@@ -49,7 +49,7 @@ struct DetailedHighlightsView: View {
                                 .padding(.top, 20)
                         }
                         .padding(.bottom, 20)
-                        .background(Color.white)
+                        .cornerRadius(12, corners: [.bottomLeft, .bottomRight])
                     ,
                     content: {
                         VStack(alignment: .leading, spacing: 0) {
@@ -71,6 +71,8 @@ struct DetailedHighlightsView: View {
                         }
                     }
                 )
+                .background(Color.white)
+                .edgesIgnoringSafeArea(.top)
             }
         }
         .navigationBarBackButtonHidden(true)

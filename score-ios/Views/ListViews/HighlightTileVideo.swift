@@ -43,9 +43,10 @@ struct HighlightTileVideo: View {
                         HStack(spacing: 2) {
                             Image(systemName: "play.fill")
                                 .font(.caption2)
-                                                
-                            Text("1:25")
-                                .font(.caption)
+                            if let duration = video.duration{
+                                Text(duration)
+                                    .font(.caption)
+                            }
                         }
                         .fontWeight(.heavy)
                         .foregroundStyle(.white)

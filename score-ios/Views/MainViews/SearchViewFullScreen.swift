@@ -90,6 +90,8 @@ struct SearchViewFullScreen: View {
             SportSelectorView()
                 .padding(.horizontal, 20)
                 .padding(.top, 12)
+                .padding(.bottom, 20)
+                .cornerRadius(12, corners: [.bottomLeft, .bottomRight])
             
             // MARK: Results
             if viewModel.isLoading {
@@ -103,7 +105,6 @@ struct SearchViewFullScreen: View {
                 ScrollView {
                     HStack {
                         Text("\(searchResults.count) results")
-                            .padding(.top, 12)
                             .padding(.horizontal, 24)
                             .font(Constants.Fonts.subheader)
                             .foregroundStyle(Constants.Colors.gray_text)

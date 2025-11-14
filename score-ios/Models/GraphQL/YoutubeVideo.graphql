@@ -7,5 +7,6 @@ query YoutubeVideos {
     b64Thumbnail
     url
     publishedAt
+    duration
   }
 }

@@ -62,11 +62,11 @@ struct HighlightTileArticle: View {
                         
                         // Source and date at bottom
                         HStack {
-                            Text(article.source)
-                                .font(.subheadline)
-                                .fontWeight(.bold)
-                                .foregroundColor(Constants.Colors.white)
-                                .underline()
+//                            Text(article.source)
+//                                .font(.subheadline)
+//                                .fontWeight(.bold)
+//                                .foregroundColor(Constants.Colors.white)
+//                                .underline()
                             
                             Image(systemName: "arrow.up.right")
                                 .foregroundStyle(Constants.Colors.white)
@@ -94,11 +94,3 @@ struct HighlightTileArticle: View {
         
     }
 }
-
-
-// MARK: - Preview
-
-#Preview {
-    HighlightTileArticle(article: Article.dummyData[0], width: 345)
-}
-

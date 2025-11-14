@@ -46,5 +46,64 @@ class NetworkManager {
             }
         }
     }
+    
+    func fetchArticles(completion: @escaping ([ArticlesQuery.Data.Article]?, Error?) -> Void) {
+        let query = ArticlesQuery(sportsType: nil)
+        
+        apolloClient.fetch(query: query) { result in
+            switch result {
+            case .success(let graphQLResult):
+                if let articlesData = graphQLResult.data?.articles?.compactMap({ $0 }) {
+                    completion(articlesData, nil)
+                } else if let errors = graphQLResult.errors {
+                    let errorDescription = errors.map { $0.localizedDescription }.joined(separator: "\n")
+                    completion(nil, NSError(domain: "GraphQL", code: 0, userInfo: [NSLocalizedDescriptionKey: errorDescription]))
+                }
+            case .failure(let error):
+                completion(nil, error)
+            }
+        }
+    }
+    
+    func fetchYouTubeVideos(completion: @escaping ([YoutubeVideosQuery.Data.YoutubeVideo]?, Error?) -> Void) {
+        let query = YoutubeVideosQuery()
+        
+        apolloClient.fetch(query: query) { result in
+            switch result {
+            case .success(let graphQLResult):
+                if let youTubeVideoData = graphQLResult.data?.youtubeVideos?.compactMap({ $0 }) {
+                    completion(youTubeVideoData, nil)
+                } else if let errors = graphQLResult.errors {
+                    let errorDescription = errors.map { $0.localizedDescription }.joined(separator: "\n")
+                    completion(nil, NSError(domain: "GraphQL", code: 0, userInfo: [NSLocalizedDescriptionKey: errorDescription]))
+                }
+            case .failure(let error):
+                completion(nil, error)
+            }
+        }
+    }
+    
+    func fetchArticles() async throws -> [ArticlesQuery.Data.Article] {
+        try await withCheckedThrowingContinuation { continuation in
+            fetchArticles { articles, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume(returning: articles ?? [])
+                }
+            }
+        }
+    }
 
+    func fetchYouTubeVideos() async throws -> [YoutubeVideosQuery.Data.YoutubeVideo] {
+        try await withCheckedThrowingContinuation { continuation in
+            fetchYouTubeVideos { videos, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume(returning: videos ?? [])
+                }
+            }
+        }
+    }
 }

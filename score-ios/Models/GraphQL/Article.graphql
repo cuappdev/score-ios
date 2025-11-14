@@ -1,0 +1,10 @@
+query Articles($sportsType: String) {
+  articles(sportsType: $sportsType) {
+    id
+    title
+    image
+    sportsType
+    publishedAt
+    url
+  }
+}

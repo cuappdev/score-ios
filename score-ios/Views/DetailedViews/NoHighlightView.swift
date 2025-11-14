@@ -2,7 +2,7 @@
 //  NoHighlightView.swift
 //  score-ios
 //
-//  Created by Zain Bilal on 10/15/25.
+//  Created by Zain Bilal on 11/5/25.
 //
 
 import SwiftUI
@@ -11,13 +11,10 @@ struct NoHighlightView: View {
     var body: some View {
         VStack {
             Spacer()
-            
             VStack {
-                // TODO: make this image better (higher quality and more accurate colors)
-                Image("highlight")
+               Image("HighlightStar")
                     .resizable()
                     .frame(width: 100, height: 100, alignment: .center)
-                    .tint(Constants.Colors.gray_icons)
                 
                 Text("No results yet.")
                     .font(Constants.Fonts.bodyBold)
@@ -27,7 +24,6 @@ struct NoHighlightView: View {
                     .font(Constants.Fonts.caption)
                     .foregroundStyle(Constants.Colors.gray_text)
             }
-            
             Spacer()
         }
     }
@@ -36,4 +32,3 @@ struct NoHighlightView: View {
 #Preview {
     NoHighlightView()
 }
-

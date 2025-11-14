@@ -38,6 +38,7 @@ type Query {
   gamesBySport(sport: String!): [GameType]
   gamesByGender(gender: String!): [GameType]
   gamesBySportGender(sport: String!, gender: String!): [GameType]
+  gamesByDate(startDate: DateTime!, endDate: DateTime!): [GameType]
   teams: [TeamType]
   team(id: String!): TeamType
   teamByName(name: String!): TeamType
@@ -72,6 +73,7 @@ Attributes:
     - thumbnail: The URL of the video's thumbnail.
     - url: The URL to the video.
     - published_at: The date and time the video was published.
+    - duration: The duration of the video (optional).
 """
 type YoutubeVideoType {
   id: String
@@ -81,6 +83,7 @@ type YoutubeVideoType {
   b64Thumbnail: String!
   url: String!
   publishedAt: String!
+  duration: String
 }
 
 """
@@ -163,6 +166,13 @@ type TeamType {
   name: String!
 }
 
+"""
+The `DateTime` scalar type represents a DateTime
+value as specified by
+[iso8601](https://en.wikipedia.org/wiki/ISO_8601).
+"""
+scalar DateTime
+
 type Mutation {
   """Creates a new game."""
   createGame(boxScore: String, city: String!, date: String!, gender: String!, location: String, opponentId: String!, result: String, scoreBreakdown: String, sport: String!, state: String!, ticketLink: String, time: String!, utcDate: String): CreateGame
@@ -171,7 +181,7 @@ type Mutation {
   createTeam(b64Image: String, color: String!, image: String, name: String!): CreateTeam
 
   """Creates a new youtube video."""
-  createYoutubeVideo(b64Thumbnail: String!, description: String!, id: String!, publishedAt: String!, thumbnail: String!, title: String!, url: String!): CreateYoutubeVideo
+  createYoutubeVideo(b64Thumbnail: String!, description: String!, duration: String!, id: String!, publishedAt: String!, thumbnail: String!, title: String!, url: String!): CreateYoutubeVideo
 
   """Creates a new article."""
   createArticle(image: String, publishedAt: String!, slug: String!, sportsType: String!, title: String!, url: String!): CreateArticle

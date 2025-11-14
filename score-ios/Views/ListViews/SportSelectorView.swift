@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SportSelectorView: View {
-    @ObservedObject private var vm = GamesViewModel.shared
+    @ObservedObject private var vm = HighlightsViewModel.shared
     @State private var scrollOffset: CGFloat = 0
     
     var body: some View {

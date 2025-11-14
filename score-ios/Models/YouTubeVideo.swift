@@ -39,6 +39,5 @@ struct YouTubeVideo: Identifiable {
         self.publishedAt = gqlYouTubeVideo.publishedAt
         self.sport = .All
         self.duration = gqlYouTubeVideo.duration
-        print(publishedAt)
     }
 }

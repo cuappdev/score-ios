@@ -94,7 +94,7 @@ struct SearchViewFullScreen: View {
                 .cornerRadius(12, corners: [.bottomLeft, .bottomRight])
             
             // MARK: Results
-            if viewModel.isLoading {
+            if viewModel.dataState == .loading {
                 
             } else if !searchText.isEmpty && searchResults.isEmpty {
                 NoHighlightView()

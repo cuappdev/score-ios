@@ -9,10 +9,10 @@ import Foundation
 import SwiftUI
 import GameAPI
 
+@MainActor
 class HighlightsViewModel: ObservableObject {
     // MARK: - Published Properties
     @Published var dataState: DataState = .idle
-    @Published var isLoading: Bool = false
     
     @Published var allHighlights: [Highlight] = []
     @Published var mainTodayHighlights: [Highlight] = []
@@ -38,55 +38,25 @@ class HighlightsViewModel: ObservableObject {
 
     // MARK: - Loading
     func loadHighlights() {
-            dataState = .loading
-            isLoading = true
-            
-            self.allHighlights.removeAll()
-            self.mainTodayHighlights.removeAll()
-            self.mainPastThreeDaysHighlights.removeAll()
-            self.detailedTodayHighlights.removeAll()
-            self.detailedPastThreeDaysHighlights.removeAll()
-            self.allHighlightsSearchResults.removeAll()
-            
-            NetworkManager.shared.fetchArticles() { [weak self] networkArticles, error in
-                guard let self = self else { return }
-                
-                    DispatchQueue.main.async {
-                    self.isLoading = false
-                    
-                    if let error = error {
-                        print("Error in fetchArticles: \(error.localizedDescription)")
-                        self.handleError(.networkError)
-                        return
-                    }
-                    
-                    guard let networkArticles = networkArticles, !networkArticles.isEmpty else {
-                        self.handleError(ScoreError.emptyData)
-                        return
-                    }
-                    
-                    self.processHighlights(networkArticles, [])
-                }
-            }
+        dataState = .loading
         
-            NetworkManager.shared.fetchYouTubeVideos() { [weak self] networkYouTubeVideos, error in
-                guard let self = self else { return }
-            
-                DispatchQueue.main.async {
-                self.isLoading = false
-                
-                if let error = error {
-                    print("Error in fetchArticles: \(error.localizedDescription)")
-                    self.handleError(.networkError)
-                    return
-                }
-                
-                guard let networkYouTubeVideos = networkYouTubeVideos, !networkYouTubeVideos.isEmpty else {
-                    self.handleError(ScoreError.emptyData)
-                    return
-                }
-                
-                self.processHighlights([], networkYouTubeVideos)
+        self.allHighlights.removeAll()
+        self.mainTodayHighlights.removeAll()
+        self.mainPastThreeDaysHighlights.removeAll()
+        self.detailedTodayHighlights.removeAll()
+        self.detailedPastThreeDaysHighlights.removeAll()
+        self.allHighlightsSearchResults.removeAll()
+        
+        Task {
+            do {
+                async let articles = NetworkManager.shared.fetchArticles()
+                async let videos = NetworkManager.shared.fetchYouTubeVideos()
+
+                let (articleData, videoData) = try await (articles, videos)
+
+                processHighlights(articleData, videoData)
+            } catch {
+                handleError(.networkError)
             }
         }
     }
@@ -131,7 +101,6 @@ class HighlightsViewModel: ObservableObject {
                 }
             }
         }
-
         return uniqueHighlights
     }
 
@@ -206,7 +175,6 @@ class HighlightsViewModel: ObservableObject {
     func handleError(_ error: ScoreError) {
         DispatchQueue.main.async {
             self.dataState = .error(error: error)
-            self.isLoading = false
         }
     }
 }

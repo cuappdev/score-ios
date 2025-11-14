@@ -82,4 +82,28 @@ class NetworkManager {
             }
         }
     }
+    
+    func fetchArticles() async throws -> [ArticlesQuery.Data.Article] {
+        try await withCheckedThrowingContinuation { continuation in
+            fetchArticles { articles, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume(returning: articles ?? [])
+                }
+            }
+        }
+    }
+
+    func fetchYouTubeVideos() async throws -> [YoutubeVideosQuery.Data.YoutubeVideo] {
+        try await withCheckedThrowingContinuation { continuation in
+            fetchYouTubeVideos { videos, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume(returning: videos ?? [])
+                }
+            }
+        }
+    }
 }

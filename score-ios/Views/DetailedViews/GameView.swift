@@ -177,7 +177,6 @@ extension GameView {
             }
             .padding(.top, 20)
             
-            
             // Ticketing Link Button
             if let link = game.ticketLink,
                let url = URL(string: link) {
@@ -239,7 +238,6 @@ extension GameView {
 //            }
         }
     }
-
     
     private var summaryTab: some View {
         NavigationLink(destination: ScoringSummary(game: game)) {

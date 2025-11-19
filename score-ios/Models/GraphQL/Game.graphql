@@ -30,6 +30,7 @@ fragment GameFragment on GameType {
   time
   scoreBreakdown
   utcDate
+  ticketLink
   team {
     ...TeamFragment
   }

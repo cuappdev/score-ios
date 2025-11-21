@@ -149,63 +149,94 @@ extension GameView {
     }
     
     private var countdown: some View {
-//        VStack {
         VStack {
-            Image("Hourglass")
-                .resizable()
-                .frame(width: 93, height: 118)
-            Text("Time Until Start")
-                .font(Constants.Fonts.Header.h2)
+            VStack {
+                Image("Hourglass")
+                    .resizable()
+                    .frame(width: 93, height: 118)
+                Text("Time Until Start")
+                    .font(Constants.Fonts.Header.h2)
+                    .foregroundStyle(Constants.Colors.black)
+                    .padding(.top, 24)
+                
+                HStack {
+                    Text(String(dayFromNow))
+                        .font(Constants.Fonts.countdownNum)
+                    Text("days")
+                        .font(Constants.Fonts.gameText)
+                    Text(String(hourFromNow))
+                        .font(Constants.Fonts.countdownNum)
+                    Text("hours")
+                        .font(Constants.Fonts.gameText)
+                    Text(String(minuteFromNow))
+                        .font(Constants.Fonts.countdownNum)
+                    Text("minutes")
+                }
                 .foregroundStyle(Constants.Colors.black)
-                .padding(.top, 24)
-            
-            HStack {
-                Text(String(dayFromNow))
-                    .font(Constants.Fonts.countdownNum)
-                Text("days")
-                    .font(Constants.Fonts.gameText)
-                Text(String(hourFromNow))
-                    .font(Constants.Fonts.countdownNum)
-                Text("hours")
-                    .font(Constants.Fonts.gameText)
-                Text(String(minuteFromNow))
-                    .font(Constants.Fonts.countdownNum)
-                Text("minutes")
+                .padding(.top, 8)
             }
-            .foregroundStyle(Constants.Colors.black)
-            .padding(.top, 8)
-        }
-        .padding(.top, 20)
+            .padding(.top, 20)
             
+            // Ticketing Link Button
+            if let link = game.ticketLink,
+               let url = URL(string: link) {
+                Button(action: {
+                    UIApplication.shared.open(url)
+                }) {
+                    HStack {
+                        Image("Ticket")
+                            .resizable()
+                            .frame(width: 25, height: 25)
+                        Text("Buy Tickets")
+                            .foregroundStyle(Constants.Colors.white)
+                            .font(.system(size: 16, weight: .medium))
+                            .font(Constants.Fonts.buttonLabel)
+                    }
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 15)
+                    .background(
+                        Constants.Colors.primary_red
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 30)
+                            .stroke(Color.black.opacity(0.1), lineWidth: 1)
+                            .shadow(color: Color.black.opacity(0.25), radius: 5, x: 0, y: 2)
+                    )
+                    .clipShape(RoundedRectangle(cornerRadius: 30)) // Clip to shape to ensure rounded corners
+                }
+                .padding(.top, 80)
+            }
             
             // Calendar Button
-            // TODO: make this back when we have login
-//            Button(action: {
-//                // TODO: action
-//            }) {
-//                HStack {
-//                    Image("Calendar")
-//                        .resizable()
-//                        .frame(width: 24, height: 24)
-//                    Text("Add to Calendar")
-//                        .font(Constants.Fonts.buttonLabel)
-//                        .foregroundStyle(Constants.Colors.white)
+//             TODO: make this back when we have login
+//                Button(action: {
+//                    // TODO: action
+//                }) {
+//                    HStack {
+//                        Image("Calendar")
+//                            .resizable()
+//                            .frame(width: 24, height: 24)
+//                        Text("Add to Calendar")
+//                            .font(Constants.Fonts.buttonLabel)
+//                            .foregroundStyle(Constants.Colors.white)
+//                    }
+//                    .foregroundColor(.white)
+//                    .padding(.horizontal, 16)
+//                    .padding(.vertical, 10)
+//                    .background(
+//                        Constants.Colors.primary_red
+//                    )
+//                    .overlay(
+//                        RoundedRectangle(cornerRadius: 30)
+//                            .stroke(Color.black.opacity(0.1), lineWidth: 1)
+//                            .shadow(color: Color.black.opacity(0.25), radius: 5, x: 0, y: 2)
+//                    )
+//                    .clipShape(RoundedRectangle(cornerRadius: 30)) // Clip to shape to ensure rounded corners
 //                }
-//                .foregroundColor(.white)
-//                .padding(.horizontal, 16)
-//                .padding(.vertical, 10)
-//                .background(
-//                    Constants.Colors.primary_red
-//                )
-//                .overlay(
-//                    RoundedRectangle(cornerRadius: 30)
-//                        .stroke(Color.black.opacity(0.1), lineWidth: 1)
-//                        .shadow(color: Color.black.opacity(0.25), radius: 5, x: 0, y: 2)
-//                )
-//                .clipShape(RoundedRectangle(cornerRadius: 30)) // Clip to shape to ensure rounded corners
+//                .padding(.top, 68)
 //            }
-//            .padding(.top, 68)
-//        }
+        }
     }
     
     private var summaryTab: some View {

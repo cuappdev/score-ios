@@ -13,6 +13,7 @@ struct MainTabView: View {
 
     @Binding var selectedTab: MainTab
     @StateObject private var gamesViewModel = GamesViewModel.shared
+    @StateObject private var highlightViewModel = HighlightsViewModel.shared
 
     var body: some View {
         NavigationStack {
@@ -22,8 +23,8 @@ struct MainTabView: View {
                         UpcomingGamesView()
                             .environmentObject(gamesViewModel)
                     case .highlights:
-                        HighlightView(highlights: Highlight.dummyData)
-                            .environmentObject(gamesViewModel)
+                        HighlightView()
+                            .environmentObject(highlightViewModel)
                     case .scores:
                         PastGamesView()
                             .environmentObject(gamesViewModel)

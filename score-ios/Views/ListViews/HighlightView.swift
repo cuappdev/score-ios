@@ -8,60 +8,89 @@
 import SwiftUI
 
 struct HighlightView: View {
-    @State var highlights: [Highlight]
+    @EnvironmentObject var viewModel: HighlightsViewModel
     
     var body: some View {
-        // Filter highlights
-        let todayHighlights = highlights.filter {
-            if let date = Date.fullDateFormatter.date(from: $0.publishedAt) {
-                return Date.isWithinPastDays(date, days: 1)
-            }
-            return false
-        }
-
-        let pastThreeDaysHighlights = highlights.filter {
-            guard let date = Date.fullDateFormatter.date(from: $0.publishedAt) else { return false }
-            return !Date.isWithinPastDays(date, days: 1) && Date.isWithinPastDays(date, days: 3)
-        }
-
         ScrollView(showsIndicators: false) {
-            LazyVStack(alignment: .leading, pinnedViews: [.sectionHeaders]) {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Highlights")
-                        .font(Constants.Fonts.semibold24)
-                        .foregroundStyle(Constants.Colors.black)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.top, 24)
-                        .padding(.horizontal, 24)
-                        
-                    SearchView(highlights: highlights, title: "Search All Highlights")
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Highlights")
+                    .font(Constants.Fonts.semibold24)
+                    .foregroundStyle(Constants.Colors.black)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.top, 24)
+                    .padding(.horizontal, 24)
+                
+                SearchView(title: "Search All Highlights", scope: .all)
                     .padding(.horizontal, 20)
                     .padding(.top, 12)
+                
+                SportSelectorView()
+                    .padding(.horizontal, 20)
+                    .padding(.top, 12)
+                
+                if viewModel.mainPastThreeDaysHighlights.isEmpty && viewModel.mainTodayHighlights.isEmpty {
+                    NoHighlightView()
+                        .frame(maxWidth: .infinity)
+                        .frame(minHeight: UIScreen.main.bounds.height - 350)
+                        // push view to the middle of the screen
                     
-                    SportSelectorView()
-                        .padding(.horizontal, 20)
-                        .padding(.top, 12)
-                    
-                    if !todayHighlights.isEmpty {
-                        HighlightSectionView(title: "Today", highlights: todayHighlights)
-                    }
-                    
-                    if !pastThreeDaysHighlights.isEmpty {
-                        HighlightSectionView(title: "Past 3 Days", highlights: pastThreeDaysHighlights)
-                    }
                 }
+                
+                if !viewModel.mainTodayHighlights.isEmpty {
+                    HighlightSectionView(
+                        title: "Today",
+                        scope: .today
+                    )
+                }
+                
+                if !viewModel.mainPastThreeDaysHighlights.isEmpty {
+                    HighlightSectionView(
+                        title: "Past 3 Days",
+                        scope: .pastThreeDays
+                    )
+                }
+                
+                
             }
         }
+        .environmentObject(viewModel)
+        .onAppear {
+            if viewModel.hasNotFetchedYet {
+                viewModel.loadHighlights()
+            }
+            
+            viewModel.clearSearch()
+        }
+        .onChange(of: viewModel.selectedSport) { _, _ in
+            viewModel.filter()
+        }
+        
     }
 }
 
 struct HighlightSectionView: View {
-    let title: String
-    let highlights: [Highlight]
+    @EnvironmentObject var viewModel: HighlightsViewModel
     
+    let title: String
+    let scope: HighlightsScope
+    
+    private var highlights: [Highlight] {
+        switch scope {
+        case .today:
+            return viewModel.mainTodayHighlights
+        case .pastThreeDays:
+            return viewModel.mainPastThreeDaysHighlights
+        default:
+            return [] // Should not happen on this screen
+        }
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            NavigationLink(destination: DetailedHighlightsView(title: title, highlights: highlights)) {
+            NavigationLink(destination:
+                DetailedHighlightsView(title: title, highlightScope: scope)
+                .environmentObject(viewModel))
+            {
                 HStack {
                     Text(title)
                         .font(Constants.Fonts.subheader)
@@ -99,5 +128,6 @@ struct HighlightSectionView: View {
 // MARK: - Preview
 
 #Preview {
-    HighlightView(highlights: Highlight.dummyData)
+    HighlightView()
+        .environmentObject(HighlightsViewModel.shared)
 }

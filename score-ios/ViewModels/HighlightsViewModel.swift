@@ -76,6 +76,9 @@ class HighlightsViewModel: ObservableObject {
         self.allHighlights = self.uniqueHighlights(from: self.privateAllHighlights)
         self.allHighlights.sort(by: { $0.publishedAt > $1.publishedAt })
         self.filter()
+        
+        print(localArticles.map{$0.publishedAt})
+        print(localYouTubeVideos.map{$0.publishedAt})
         self.dataState = .success
     }
     
@@ -124,23 +127,23 @@ class HighlightsViewModel: ObservableObject {
         }
 
         mainTodayHighlights = filteredBySport.filter {
-            guard let date = Date.articleDateFormatter.date(from: $0.publishedAt) else { return false }
+            guard let date = Date.highlightDateFormatter.date(from: $0.publishedAt) else { return false }
             return Date.isToday(date)
         }
 
         mainPastThreeDaysHighlights = filteredBySport.filter {
-            guard let date = Date.articleDateFormatter.date(from: $0.publishedAt) else { return false }
+            guard let date = Date.highlightDateFormatter.date(from: $0.publishedAt) else { return false }
             return Date.isWithinPastDays(date, days: 3)
         }
 
         // --- Detailed Page Filters (by sport + search)
         detailedTodayHighlights = filteredBySearch.filter {
-            guard let date = Date.articleDateFormatter.date(from: $0.publishedAt) else { return false }
+            guard let date = Date.highlightDateFormatter.date(from: $0.publishedAt) else { return false }
             return Date.isToday(date)
         }
 
         detailedPastThreeDaysHighlights = filteredBySearch.filter {
-            guard let date = Date.articleDateFormatter.date(from: $0.publishedAt) else { return false }
+            guard let date = Date.highlightDateFormatter.date(from: $0.publishedAt) else { return false }
             return Date.isWithinPastDays(date, days: 3)
         }
 

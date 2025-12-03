@@ -39,29 +39,32 @@ extension Date {
         return calendar.date(from: components) ?? Date()
     }
 
-    /// Formatter for "yyyy-MM-dd HH:mm:ss" strings
-    static var articleDateFormatter: DateFormatter = {
+    /// Formatter for "yyyy-MM-dd'T'HH:mm:ssXXXXX" strings
+    static var highlightDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXXXX" // ISO 8601 format
         formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.timeZone = .current // Assumes dates are in local time
+        formatter.timeZone = .current
         return formatter
     }()
     
     /// Checks if a date is any time today.
     static func isToday(_ date: Date) -> Bool {
-        return Calendar.current.isDateInToday(date)
+        Calendar.current.isDateInToday(date)
     }
 
     // Return true if 'date' is within 'days' from today
     static func isWithinPastDays(_ date: Date, days: Int) -> Bool {
         let calendar = Calendar.current
         let startOfToday = calendar.startOfDay(for: Date())
-        guard let pastDate = calendar.date(byAdding: .day, value: -days, to: startOfToday) else { return false }
+        
+        guard let pastDate = calendar.date(byAdding: .day, value: -days, to: startOfToday) else {
+            return false
+        }
         
         return date >= pastDate && date < startOfToday
     }
- 
+    
     static func parseDate(dateString: String, timeString: String) -> Date {
         // Set up date formatter
         let dateFormatter = DateFormatter()

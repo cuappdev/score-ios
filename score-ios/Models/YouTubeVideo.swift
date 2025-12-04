@@ -37,7 +37,7 @@ struct YouTubeVideo: Identifiable {
         self.b64Thumbnail = gqlYouTubeVideo.b64Thumbnail
         self.url = gqlYouTubeVideo.url
         self.publishedAt = gqlYouTubeVideo.publishedAt
-        self.sport = .All
+        self.sport = Sport(normalizedValue: gqlYouTubeVideo.sportsType ?? "All") ?? .All
         self.duration = gqlYouTubeVideo.duration
     }
 }

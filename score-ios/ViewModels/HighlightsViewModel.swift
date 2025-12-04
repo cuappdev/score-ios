@@ -77,8 +77,6 @@ class HighlightsViewModel: ObservableObject {
         self.allHighlights.sort(by: { $0.publishedAt > $1.publishedAt })
         self.filter()
         
-        print(localArticles.map{$0.publishedAt})
-        print(localYouTubeVideos.map{$0.publishedAt})
         self.dataState = .success
     }
     

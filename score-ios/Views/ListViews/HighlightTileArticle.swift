@@ -48,7 +48,6 @@ struct HighlightTileArticle: View {
                     
                     // Text overlay
                     VStack(alignment: .leading, spacing: 0) {
-                        // Title at top left
                         Text(article.title)
                             .font(.title3)
                             .fontWeight(.bold)
@@ -60,14 +59,7 @@ struct HighlightTileArticle: View {
                         
                         Spacer()
                         
-                        // Source and date at bottom
                         HStack {
-//                            Text(article.source)
-//                                .font(.subheadline)
-//                                .fontWeight(.bold)
-//                                .foregroundColor(Constants.Colors.white)
-//                                .underline()
-                            
                             Image(systemName: "arrow.up.right")
                                 .foregroundStyle(Constants.Colors.white)
                                 .fontWeight(.bold)
@@ -90,7 +82,5 @@ struct HighlightTileArticle: View {
                 )
             }
         }
-                
-        
     }
 }

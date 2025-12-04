@@ -10,7 +10,9 @@ import SwiftUI
 struct NoHighlightView: View {
     var body: some View {
         VStack {
+            
             Spacer()
+            
             VStack {
                Image("HighlightStar")
                     .resizable()
@@ -24,6 +26,7 @@ struct NoHighlightView: View {
                     .font(Constants.Fonts.caption)
                     .foregroundStyle(Constants.Colors.gray_text)
             }
+            
             Spacer()
         }
     }

@@ -49,8 +49,6 @@ struct HighlightView: View {
                         scope: .pastThreeDays
                     )
                 }
-                
-                
             }
         }
         .environmentObject(viewModel)
@@ -64,7 +62,6 @@ struct HighlightView: View {
         .onChange(of: viewModel.selectedSport) { _, _ in
             viewModel.filter()
         }
-        
     }
 }
 
@@ -89,8 +86,7 @@ struct HighlightSectionView: View {
         VStack(alignment: .leading, spacing: 0) {
             NavigationLink(destination:
                 DetailedHighlightsView(title: title, highlightScope: scope)
-                .environmentObject(viewModel))
-            {
+                .environmentObject(viewModel)) {
                 HStack {
                     Text(title)
                         .font(Constants.Fonts.subheader)

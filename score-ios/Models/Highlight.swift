@@ -29,8 +29,8 @@ enum Highlight: Identifiable {
         }
     }
     
-    var title: String{
-        switch self{
+    var title: String {
+        switch self {
         case .article(let article):
             return article.title
         case .video(let video):
@@ -38,8 +38,8 @@ enum Highlight: Identifiable {
         }
     }
     
-    var sport: Sport{
-        switch self{
+    var sport: Sport {
+        switch self {
         case .article(let article):
             return article.sport
         case .video(let video):

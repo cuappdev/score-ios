@@ -30,6 +30,7 @@ struct DetailedHighlightsView: View {
                                 .resizable()
                                 .frame(width: 9.87, height: 18.57)
                         }
+                        
                         Spacer()
                     }
                 }

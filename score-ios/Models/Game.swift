@@ -37,9 +37,10 @@ struct Game : GameType, Identifiable {
     var sex: Sex
     var timeUpdates: [TimeUpdate] = []
     var gameUpdates: [GameUpdate] = []
+    var ticketLink: String?
     
     enum CodingKeys: String, CodingKey {
-        case id, city, state, date, sport, gender, location, opponentId, result, time, scoreBreakdown, boxScore
+        case id, city, state, date, sport, gender, location, opponentId, result, time, scoreBreakdown, boxScore, ticketLink
         case opponent = "team"
     }
     
@@ -54,6 +55,7 @@ struct Game : GameType, Identifiable {
         self.address = game.location ?? "N/A"
         self.timeUpdates = parseScoreBreakdown(game.scoreBreakdown)
         self.gameUpdates = parseBoxScore(decodeBoxScoreArray(boxScores: game.boxScore))
+        self.ticketLink = game.ticketLink
     }
     
     init(

@@ -11,6 +11,31 @@ struct HighlightView: View {
     @EnvironmentObject var viewModel: HighlightsViewModel
     
     var body: some View {
+        Group{
+            switch viewModel.dataState {
+            case .idle, .loading:
+                HighlightLoadingView()
+            default:
+                HighlightContentView()
+            }
+        }
+        .onAppear {
+            if viewModel.dataState == .idle {
+                viewModel.loadHighlights()
+            }
+            viewModel.clearSearch()
+        }
+        .onChange(of: viewModel.selectedSport) { _, _ in
+            viewModel.filter()
+        }
+    }
+}
+
+struct HighlightContentView: View {
+    @EnvironmentObject var viewModel: HighlightsViewModel
+    
+    var body: some View {
+        
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: 4) {
                 Text("Highlights")
@@ -32,7 +57,7 @@ struct HighlightView: View {
                     NoHighlightView()
                         .frame(maxWidth: .infinity)
                         .frame(minHeight: UIScreen.main.bounds.height - 350)
-                        // push view to the middle of the screen
+                    // push view to the middle of the screen
                     
                 }
                 
@@ -50,17 +75,6 @@ struct HighlightView: View {
                     )
                 }
             }
-        }
-        .environmentObject(viewModel)
-        .onAppear {
-            if viewModel.hasNotFetchedYet {
-                viewModel.loadHighlights()
-            }
-            
-            viewModel.clearSearch()
-        }
-        .onChange(of: viewModel.selectedSport) { _, _ in
-            viewModel.filter()
         }
     }
 }

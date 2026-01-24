@@ -16,6 +16,7 @@ struct SearchViewFullScreen: View {
     
     @State private var searchText = ""
     @State private var debounceWorkItem: DispatchWorkItem?
+    @State private var isLoading: Bool = false
     
     @FocusState private var isSearchFieldFocused: Bool
     
@@ -94,8 +95,10 @@ struct SearchViewFullScreen: View {
                 .cornerRadius(12, corners: [.bottomLeft, .bottomRight])
             
             // MARK: Results
-            if viewModel.dataState == .loading {
-                
+            if isLoading {
+                ScrollView{
+                    HighlightSearchLoadingView()
+                }
             } else if !searchText.isEmpty && searchResults.isEmpty {
                 NoHighlightView()
                     .frame(maxWidth: .infinity)
@@ -136,12 +139,14 @@ struct SearchViewFullScreen: View {
     // MARK: - Debounce
     private func debounceSearch(_ text: String) {
         debounceWorkItem?.cancel()
+        isLoading = true
         
         let workItem = DispatchWorkItem {
             DispatchQueue.main.async {
                 let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
                 viewModel.filterBySearch(trimmed)
                 viewModel.filter()
+                isLoading = false
             }
         }
         

@@ -15,72 +15,63 @@ struct DetailedHighlightsView: View {
     var highlightScope: HighlightsScope
     
     var body: some View {
-        ScrollView {
-            LazyVStack(alignment: .leading, spacing: 16, pinnedViews: [.sectionHeaders]) {
+        VStack(alignment: .leading, spacing: 16) {
+            // Custom header
+            ZStack {
+                Text(title)
+                    .font(Constants.Fonts.header)
+                    .foregroundStyle(Constants.Colors.black)
                 
-                // Custom header
-                ZStack {
-                    Text(title)
-                        .font(Constants.Fonts.header)
-                        .foregroundStyle(Constants.Colors.black)
+                HStack {
+                    Button(action: { dismiss() }) {
+                        Image("arrow_back_ios")
+                            .resizable()
+                            .frame(width: 9.87, height: 18.57)
+                    }
                     
-                    HStack {
-                        Button(action: { dismiss() }) {
-                            Image("arrow_back_ios")
-                                .resizable()
-                                .frame(width: 9.87, height: 18.57)
+                    Spacer()
+                }
+            }
+            .padding(.top, 24)
+            .padding(.horizontal, 24)
+            
+            Divider().background(.clear)
+            
+            VStack(alignment: .leading, spacing: 0) {
+                SearchView(title: "Search \(title)", scope: highlightScope)
+                    .padding(.horizontal, 24)
+                    .padding(.top, 20)
+                
+                SportSelectorView()
+                    .padding(.top, 20)
+            }
+            .cornerRadius(12, corners: [.bottomLeft, .bottomRight])
+            
+            VStack(alignment: .leading, spacing: 0) {
+                if(highlightsForScope.isEmpty) {
+                    NoHighlightView()
+                        .frame(maxWidth: .infinity)
+                }
+                else{
+                    ScrollView{
+                        LazyVStack {
+                            ForEach(highlightsForScope, id: \.id) { highlight in
+                                HighlightTile(highlight: highlight, width: 360)
+                                    .padding(.horizontal, 24)
+                                    .padding(.top, 12)
+                            }
                         }
-                        
-                        Spacer()
                     }
                 }
-                .padding(.top, 24)
-                .padding(.horizontal, 24)
-                
-                Divider().background(.clear)
-                
-                Section(
-                    header:
-                        VStack(alignment: .leading, spacing: 0) {
-                            SearchView(title: "Search \(title)", scope: highlightScope)
-                                .padding(.horizontal, 24)
-                                .padding(.top, 20)
-                            
-                            SportSelectorView()
-                                .padding(.top, 20)
-                        }
-                        .padding(.bottom, 20)
-                        .cornerRadius(12, corners: [.bottomLeft, .bottomRight])
-                    ,
-                    content: {
-                        VStack(alignment: .leading, spacing: 0) {
-                            if(highlightsForScope.isEmpty) {
-                                NoHighlightView()
-                                    .frame(maxWidth: .infinity)
-                                    .frame(minHeight: UIScreen.main.bounds.height - 350)
-                                    // push view to the middle of the screen
-                            }
-                            else{
-                                LazyVStack {
-                                    ForEach(highlightsForScope, id: \.id) { highlight in
-                                        HighlightTile(highlight: highlight, width: 360)
-                                            .padding(.horizontal, 24)
-                                            .padding(.top, 12)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                )
-                .background(Color.white)
-                .edgesIgnoringSafeArea(.top)
             }
         }
-        .navigationBarBackButtonHidden(true)
-        .navigationBarTitleDisplayMode(.inline)
         .safeAreaInset(edge: .bottom) {
             Color.clear.frame(height: 200)
         }
+        
+        .navigationBarBackButtonHidden(true)
+        .navigationBarTitleDisplayMode(.inline)
+        
         .environmentObject(viewModel)
         .onAppear {
             if viewModel.hasNotFetchedYet {

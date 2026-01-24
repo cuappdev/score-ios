@@ -51,7 +51,6 @@ struct HighlightLoadingView: View {
                 .padding(.horizontal, 24)
             Spacer()
         }
-        
     }
 
     private var searchBar: some View {

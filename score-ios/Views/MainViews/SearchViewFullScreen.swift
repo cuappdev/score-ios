@@ -99,7 +99,7 @@ struct SearchViewFullScreen: View {
                 ScrollView{
                     HighlightSearchLoadingView()
                 }
-            } else if !searchText.isEmpty && searchResults.isEmpty {
+            } else if searchResults.isEmpty {
                 NoHighlightView()
                     .frame(maxWidth: .infinity)
                     .frame(minHeight: UIScreen.main.bounds.height - 350)

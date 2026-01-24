@@ -57,7 +57,7 @@ struct HighlightContentView: View {
                     NoHighlightView()
                         .frame(maxWidth: .infinity)
                         .frame(minHeight: UIScreen.main.bounds.height - 350)
-                    // push view to the middle of the screen
+                        // push view to the middle of the screen
                     
                 }
                 
@@ -122,7 +122,7 @@ struct HighlightSectionView: View {
             }
             
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 24) {
+                LazyHStack(spacing: 24) {
                     ForEach(highlights) { highlight in
                         HighlightTile(highlight: highlight, width: 241)
                     }

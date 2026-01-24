@@ -12,7 +12,6 @@ struct HighlightTileVideo: View {
     var width: CGFloat
     
     var body: some View {
-        
         if let url = URL(string: video.url) {
             Link(destination: url) {
                 VStack(alignment: .leading, spacing: 1) {

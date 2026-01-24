@@ -56,7 +56,7 @@ struct DetailedHighlightsView: View {
                     ScrollView{
                         LazyVStack(alignment: .center) {
                             ForEach(highlightsForScope, id: \.id) { highlight in
-                                HighlightTile(highlight: highlight, width: 360)
+                                HighlightTile(highlight: highlight, isVertical: true)
                                     .padding(.horizontal, 24)
                                     .padding(.top, 12)
                             }

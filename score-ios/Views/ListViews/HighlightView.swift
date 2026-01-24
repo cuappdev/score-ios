@@ -124,7 +124,7 @@ struct HighlightSectionView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHStack(spacing: 24) {
                     ForEach(highlights) { highlight in
-                        HighlightTile(highlight: highlight, width: 241)
+                        HighlightTile(highlight: highlight, isVertical: false)
                     }
                 }
                 .padding(.top, 20)

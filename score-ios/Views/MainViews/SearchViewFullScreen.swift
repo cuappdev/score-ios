@@ -114,7 +114,7 @@ struct SearchViewFullScreen: View {
                         
                         LazyVStack(alignment: .center, spacing: 24) {
                             ForEach(searchResults) { highlight in
-                                HighlightTile(highlight: highlight, width: 360)
+                                HighlightTile(highlight: highlight, isVertical: true)
                                     .padding(.horizontal, 24)
                             }
                         }

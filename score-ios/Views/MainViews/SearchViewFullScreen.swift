@@ -95,34 +95,32 @@ struct SearchViewFullScreen: View {
                 .cornerRadius(12, corners: [.bottomLeft, .bottomRight])
             
             // MARK: Results
-            if isLoading {
-                ScrollView{
+            VStack(alignment: .leading, spacing: 0)
+            {
+                if isLoading {
                     HighlightSearchLoadingView()
-                }
-            } else if searchResults.isEmpty {
-                NoHighlightView()
-                    .frame(maxWidth: .infinity)
-                    .frame(minHeight: UIScreen.main.bounds.height - 350)
-                    // push view to the middle of the screen
-            } else {
-                ScrollView {
-                    HStack {
-                        Text("\(searchResults.count) results")
-                            .padding(.horizontal, 24)
-                            .font(Constants.Fonts.subheader)
-                            .foregroundStyle(Constants.Colors.gray_text)
-                        
-                        Spacer()
-                    }
-                    
-                    LazyVStack(alignment: .leading, spacing: 24) {
-                        ForEach(searchResults) { highlight in
-                            HighlightTile(highlight: highlight, width: 360)
+                } else if searchResults.isEmpty {
+                    NoHighlightView()
+                } else {
+                    ScrollView {
+                        HStack {
+                            Text("\(searchResults.count) results")
                                 .padding(.horizontal, 24)
+                                .font(Constants.Fonts.subheader)
+                                .foregroundStyle(Constants.Colors.gray_text)
+                            
+                            Spacer()
+                        }
+                        
+                        LazyVStack(alignment: .center, spacing: 24) {
+                            ForEach(searchResults) { highlight in
+                                HighlightTile(highlight: highlight, width: 360)
+                                    .padding(.horizontal, 24)
+                            }
                         }
                     }
+                    .transition(.opacity)
                 }
-                .transition(.opacity)
             }
         }
         .onAppear {

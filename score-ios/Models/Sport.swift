@@ -14,9 +14,9 @@ enum Sport : String, Identifiable, CaseIterable, CustomStringConvertible {
     case All
     
     // Both
-//    case Basketball
+    case Basketball
 //    case CrossCountry
-//    case IceHockey
+    case IceHockey
     case Lacrosse
     case Soccer
 //    case Squash
@@ -60,12 +60,12 @@ enum Sport : String, Identifiable, CaseIterable, CustomStringConvertible {
         switch self {
         case .All:
             return "All"
-//        case .Basketball:
-//            return "Basketball"
+        case .Basketball:
+            return "Basketball"
 //        case .CrossCountry:
 //            return "Cross Country"
-//        case .IceHockey:
-//            return "Ice Hockey"
+        case .IceHockey:
+            return "Ice Hockey"
         case .Lacrosse:
             return "Lacrosse"
         case .Soccer:

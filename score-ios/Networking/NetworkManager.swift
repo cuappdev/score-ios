@@ -15,7 +15,7 @@ class NetworkManager {
     let apolloClient = ApolloClient(url: ScoreEnvironment.baseURL)
 
     func fetchGames(limit: Int, offset: Int, completion: @escaping ([GamesQuery.Data.Game]?, Error?) -> Void) {
-        apolloClient.fetch(query: GamesQuery(limit: limit, offset: offset)) { result in
+        apolloClient.fetch(query: GamesQuery()) { result in
             switch result {
             case .success(let graphQLResult):
                 if let gamesData = graphQLResult.data?.games?.compactMap({ $0 }) {

@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 /// The page types for loading states
-enum LoadingPage: Equatable {
+enum GameLoadingPage: Equatable {
     case upcoming
     case past
 
@@ -32,7 +32,7 @@ enum LoadingPage: Equatable {
 /// Used for both the upcoming games and past games tabs
 struct GameLoadingView: View {
 
-    let page: LoadingPage
+    let page: GameLoadingPage
 
     // Layout constants
     private enum Layout {

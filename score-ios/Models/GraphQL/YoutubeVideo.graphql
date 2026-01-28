@@ -1,0 +1,13 @@
+query YoutubeVideos {
+  youtubeVideos {
+    id
+    title
+    description
+    thumbnail
+    b64Thumbnail
+    url
+    publishedAt
+    duration
+    sportsType
+  }
+}

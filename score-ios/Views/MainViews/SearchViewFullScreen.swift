@@ -8,20 +8,33 @@
 import SwiftUI
 
 struct SearchViewFullScreen: View {
+    @EnvironmentObject private var viewModel: HighlightsViewModel
     let title: String
-    let allHighlights: [Highlight]
+    var scope: HighlightsScope
     
     @Environment(\.dismiss) private var dismiss
     
     @State private var searchText = ""
-    @State private var filteredHighlights: [Highlight] = []
-    @State private var debouncedText = ""
     @State private var debounceWorkItem: DispatchWorkItem?
-    @State private var isLoading = false
+    @State private var isLoading: Bool = false
     
     @FocusState private var isSearchFieldFocused: Bool
     
     private let debounceDelay: TimeInterval = 0.8
+    
+    private var searchResults: [Highlight] {
+        let model = viewModel // avoid dynamicMemberLookup confusion
+        
+        switch scope {
+        case .today:
+            return model.detailedTodayHighlights
+        case .pastThreeDays:
+            return model.detailedPastThreeDaysHighlights
+        default:
+            return model.allHighlightsSearchResults
+        }
+    }
+
     
     var body: some View {
         VStack(spacing: 0) {
@@ -51,7 +64,10 @@ struct SearchViewFullScreen: View {
                         .focused($isSearchFieldFocused)
 
                     if !searchText.isEmpty {
-                        Button(action: { searchText = "" }) {
+                        Button(action: { 
+                            searchText = ""
+                            viewModel.clearSearch()
+                        }) {
                             Image(systemName: "xmark.circle.fill")
                                 .foregroundColor(Constants.Colors.gray_text)
                         }
@@ -72,50 +88,51 @@ struct SearchViewFullScreen: View {
             .padding()
             .padding(.horizontal, 6)
             
+            SportSelectorView()
+                .padding(.horizontal, 20)
+                .padding(.top, 12)
+                .padding(.bottom, 20)
+                .cornerRadius(12, corners: [.bottomLeft, .bottomRight])
+            
             // MARK: Results
-            if searchText.isEmpty {
-                Spacer()
-            } else if isLoading {
-                VStack {
-                    Spacer()
-                    
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle())
-                        .scaleEffect(1.2)
-                    
-                    Spacer()
-                }
-            } else if filteredHighlights.isEmpty {
-                VStack {
-                   NoHighlightView()
-                }
-            } else {
-                ScrollView {
-                    HStack {
-                        Text("\(filteredHighlights.count) results")
-                            .padding(.top, 12)
-                            .padding(.horizontal, 24)
-                            .font(Constants.Fonts.subheader)
-                            .foregroundStyle(Constants.Colors.gray_text)
-                        
-                        Spacer()
-                    }
-                    
-                    LazyVStack(alignment: .leading, spacing: 24) {
-                        ForEach(filteredHighlights) { highlight in
-                            HighlightTile(highlight: highlight, width: 360)
+            VStack(alignment: .leading, spacing: 0)
+            {
+                if isLoading {
+                    HighlightSearchLoadingView()
+                } else if searchResults.isEmpty {
+                    NoHighlightView()
+                } else {
+                    ScrollView {
+                        HStack {
+                            Text("\(searchResults.count) results")
                                 .padding(.horizontal, 24)
+                                .font(Constants.Fonts.subheader)
+                                .foregroundStyle(Constants.Colors.gray_text)
+                            
+                            Spacer()
+                        }
+                        
+                        LazyVStack(alignment: .center, spacing: 24) {
+                            ForEach(searchResults) { highlight in
+                                HighlightTile(highlight: highlight, isVertical: true)
+                                    .padding(.horizontal, 24)
+                            }
                         }
                     }
+                    .transition(.opacity)
                 }
-                .transition(.opacity)
             }
         }
         .onAppear {
-            filteredHighlights = allHighlights
             isSearchFieldFocused = true
+            searchText = viewModel.searchQuery
+            viewModel.filter()
+        }
+        .onDisappear {
+            viewModel.clearSearch()
         }
     }
+
     
     // MARK: - Debounce
     private func debounceSearch(_ text: String) {
@@ -125,15 +142,8 @@ struct SearchViewFullScreen: View {
         let workItem = DispatchWorkItem {
             DispatchQueue.main.async {
                 let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
-                debouncedText = trimmed
-                if trimmed.isEmpty {
-                    filteredHighlights = allHighlights
-                } else {
-                    filteredHighlights = allHighlights.filter { highlight in
-                        highlightTitle(highlight).localizedCaseInsensitiveContains(trimmed)
-                    }
-                }
-                
+                viewModel.filterBySearch(trimmed)
+                viewModel.filter()
                 isLoading = false
             }
         }
@@ -141,16 +151,10 @@ struct SearchViewFullScreen: View {
         debounceWorkItem = workItem
         DispatchQueue.main.asyncAfter(deadline: .now() + debounceDelay, execute: workItem)
     }
-    
-    private func highlightTitle(_ highlight: Highlight) -> String {
-        switch highlight {
-        case .video(let video): return video.title
-        case .article(let article): return article.title
-        }
-    }
 }
 
 // MARK: - Preview
 #Preview {
-    SearchViewFullScreen(title: "Search All Highlights", allHighlights: Highlight.dummyData)
+    SearchViewFullScreen(title: "Search All Highlights", scope: .pastThreeDays)
+        .environmentObject(HighlightsViewModel.shared)
 }

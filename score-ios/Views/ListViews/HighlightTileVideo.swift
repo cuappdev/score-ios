@@ -12,7 +12,6 @@ struct HighlightTileVideo: View {
     var width: CGFloat
     
     var body: some View {
-        
         if let url = URL(string: video.url) {
             Link(destination: url) {
                 VStack(alignment: .leading, spacing: 1) {
@@ -43,9 +42,10 @@ struct HighlightTileVideo: View {
                         HStack(spacing: 2) {
                             Image(systemName: "play.fill")
                                 .font(.caption2)
-                                                
-                            Text("1:25")
-                                .font(.caption)
+                            if let duration = video.duration{
+                                Text(duration)
+                                    .font(.caption)
+                            }
                         }
                         .fontWeight(.heavy)
                         .foregroundStyle(.white)
@@ -98,9 +98,4 @@ struct HighlightTileVideo: View {
             }
         }
     }
-}
-
-
-#Preview {
-    HighlightTileVideo(video: YouTubeVideo.dummyData[0], width: 241)
 }

@@ -74,6 +74,7 @@ Attributes:
     - url: The URL to the video.
     - published_at: The date and time the video was published.
     - duration: The duration of the video (optional).
+    - sportsType: The sport type extracted from the video title.
 """
 type YoutubeVideoType {
   id: String
@@ -84,6 +85,7 @@ type YoutubeVideoType {
   url: String!
   publishedAt: String!
   duration: String
+  sportsType: String
 }
 
 """

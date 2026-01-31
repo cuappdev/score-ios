@@ -62,6 +62,9 @@ struct DetailedHighlightsView: View {
                             }
                         }
                     }
+                    .refreshable {
+                        viewModel.loadHighlights()
+                    }
                 }
             }
         }

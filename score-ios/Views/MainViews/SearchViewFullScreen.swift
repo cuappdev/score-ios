@@ -119,11 +119,17 @@ struct SearchViewFullScreen: View {
                             }
                         }
                     }
+                    .refreshable {
+                        viewModel.loadHighlights()
+                    }
                     .transition(.opacity)
                 }
             }
         }
         .onAppear {
+            if viewModel.hasNotFetchedYet{
+                viewModel.loadHighlights()
+            }
             isSearchFieldFocused = true
             searchText = viewModel.searchQuery
             viewModel.filter()

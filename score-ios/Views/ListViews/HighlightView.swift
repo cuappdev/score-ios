@@ -76,6 +76,9 @@ struct HighlightContentView: View {
                 }
             }
         }
+        .refreshable {
+            viewModel.loadHighlights()
+        }
     }
 }
 

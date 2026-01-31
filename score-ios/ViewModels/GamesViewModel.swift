@@ -12,7 +12,8 @@ import GameAPI
 // State enum to track the loading state
 enum DataState {
     case idle        // Initial state, nothing has been fetched yet
-    case loading     // Fetch in progress
+    case loading     // Initial fetch in progress
+    case refreshing     // Refreshing in progress
     case success     // Fetch completed successfully
     case error(error: ScoreError) // Fetch failed with an error message
 }

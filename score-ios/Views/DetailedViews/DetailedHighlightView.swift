@@ -15,58 +15,31 @@ struct DetailedHighlightsView: View {
     var highlightScope: HighlightsScope
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            // Custom header
-            ZStack {
-                Text(title)
-                    .font(Constants.Fonts.header)
-                    .foregroundStyle(Constants.Colors.black)
-                
-                HStack {
-                    Button(action: { dismiss() }) {
-                        Image("arrow_back_ios")
-                            .resizable()
-                            .frame(width: 9.87, height: 18.57)
-                    }
-                    
-                    Spacer()
-                }
-            }
-            .padding(.top, 24)
-            .padding(.horizontal, 24)
-            
-            Divider().background(.clear)
-            
-            VStack(alignment: .leading, spacing: 0) {
-                SearchView(title: "Search \(title)", scope: highlightScope)
-                    .padding(.horizontal, 24)
-                    .padding(.top, 20)
-                
-                SportSelectorView()
-                    .padding(.top, 20)
-            }
-            .cornerRadius(12, corners: [.bottomLeft, .bottomRight])
-            
-            VStack(alignment: .leading, spacing: 0) {
+        ScrollView {
+            LazyVStack(alignment: .leading, spacing: 16) {
                 if(highlightsForScope.isEmpty) {
                     NoHighlightView()
                         .frame(maxWidth: .infinity)
+                        .frame(minHeight: UIScreen.main.bounds.height - 350)
+                    // push view to the middle of the screen
                 }
                 else{
-                    ScrollView{
-                        LazyVStack(alignment: .center) {
-                            ForEach(highlightsForScope, id: \.id) { highlight in
-                                HighlightTile(highlight: highlight, isVertical: true)
-                                    .padding(.horizontal, 24)
-                                    .padding(.top, 12)
-                            }
+                    LazyVStack(alignment: .center) {
+                        ForEach(highlightsForScope, id: \.id) { highlight in
+                            HighlightTile(highlight: highlight, isVertical: true)
+                                .padding(.horizontal, 24)
+                                .padding(.top, 12)
                         }
-                    }
-                    .refreshable {
-                        viewModel.loadHighlights()
                     }
                 }
             }
+        }
+        .safeAreaInset(edge: .top, spacing: 0) {
+            headerView
+        }
+        .background(Constants.Colors.white.ignoresSafeArea())
+        .refreshable {
+            viewModel.loadHighlights()
         }
         .safeAreaInset(edge: .bottom) {
             Color.clear.frame(height: 200)
@@ -99,12 +72,50 @@ struct DetailedHighlightsView: View {
            return viewModel.allHighlights
        }
    }
+    
+    private var headerView: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            // Custom header
+            ZStack {
+                Text(title)
+                    .font(Constants.Fonts.header)
+                    .foregroundStyle(Constants.Colors.black)
+                
+                HStack {
+                    Button(action: { dismiss() }) {
+                        Image("arrow_back_ios")
+                            .resizable()
+                            .frame(width: 9.87, height: 18.57)
+                    }
+                    
+                    Spacer()
+                }
+            }
+            .padding(.top, 24)
+            .padding(.horizontal, 24)
+            
+            Divider().background(.clear)
+            
+            VStack(alignment: .leading, spacing: 0) {
+                SearchView(title: "Search \(title)", scope: highlightScope)
+                    .padding(.horizontal, 24)
+                    .padding(.top, 20)
+                
+                SportSelectorView()
+                    .padding(.top, 20)
+            }
+            .cornerRadius(12, corners: [.bottomLeft, .bottomRight])
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.bottom, 12)
+        .background(Constants.Colors.white)
+    }
 }
 
 #Preview {
     DetailedHighlightsView(
         title: "Today",
-        highlightScope: .pastThreeDays
+        highlightScope: .today
     )
     .environmentObject(HighlightsViewModel.shared)
 }

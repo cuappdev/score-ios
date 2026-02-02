@@ -53,6 +53,9 @@ struct PastGamesView: View {
                     vm.fetchGames()
                 }
             }
+            .refreshable {
+                vm.fetchGames()
+            }
             .onChange(of: vm.selectedSport) {
                 vm.filter()
             }

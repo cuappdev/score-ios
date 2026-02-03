@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct SportSelectorView: View {
-    @ObservedObject private var vm = HighlightsViewModel.shared
+    @ObservedObject private var highlightsVM = HighlightsViewModel.shared
+    @ObservedObject private var gamesVM = GamesViewModel.shared
     @State private var scrollOffset: CGFloat = 0
     
     var body: some View {
@@ -17,12 +18,13 @@ struct SportSelectorView: View {
                 HStack {
                     ForEach(Sport.allCases) { sport in
                         Button {
-                            vm.selectedSport = sport
+                            highlightsVM.selectedSport = sport
+                            gamesVM.selectedSport = sport
                             withAnimation {
                                 proxy.scrollTo(sport.id, anchor: .center)
                             }
                         } label: {
-                            FilterTile(sport: sport, selected: sport == vm.selectedSport)
+                            FilterTile(sport: sport, selected: sport == highlightsVM.selectedSport)
                         }
                         .id(sport.id)
                     }
@@ -32,12 +34,12 @@ struct SportSelectorView: View {
                         .preference(key: ScrollOffsetKey.self, value: geometry.frame(in: .global).minX)
                 })
                 .onPreferenceChange(ScrollOffsetKey.self) { value in
-                    vm.sportSelectorOffset = value // Save scroll position in ViewModel
+                    highlightsVM.sportSelectorOffset = value // Save scroll position in ViewModel
                 }
             }
             .onAppear {
                 DispatchQueue.main.async {
-                    proxy.scrollTo(vm.selectedSport.id, anchor: .center)
+                    proxy.scrollTo(highlightsVM.selectedSport.id, anchor: .center)
                 }
             }
         }

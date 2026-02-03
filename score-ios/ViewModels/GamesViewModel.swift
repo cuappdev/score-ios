@@ -146,6 +146,9 @@ class GamesViewModel: ObservableObject
         // Set loading state before fetch
         dataState = (hasNotFetchedYet ? .loading : .refreshing)
 
+        self.privateUpcomingGames.removeAll()
+        self.privatePastGames.removeAll()
+
         // Start fetching from the first page
         fetchGamesRecursively(limit: 50, offset: 0, accumulatedGames: [])
     }
@@ -269,7 +272,7 @@ class GamesViewModel: ObservableObject
         // Sort all the collections
         self.allPastGames.sort(by: {$0.date > $1.date})
         self.allUpcomingGames.sort(by: {$0.date < $1.date})
-        self.games = updatedGames.sorted(by: {$0.date < $1.date})
+        self.games.sort(by: {$0.date < $1.date})
         self.topUpcomingGames = Array(self.allUpcomingGames.prefix(3))
         self.topPastGames = Array(self.allPastGames.prefix(3))
         self.filter()

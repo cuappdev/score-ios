@@ -15,39 +15,39 @@ struct DetailedHighlightsView: View {
     var highlightScope: HighlightsScope
     
     var body: some View {
-        ScrollView {
-            LazyVStack(alignment: .leading, spacing: 16) {
-                if(highlightsForScope.isEmpty) {
-                    NoHighlightView()
-                        .frame(maxWidth: .infinity)
-                        .frame(minHeight: UIScreen.main.bounds.height - 350)
-                    // push view to the middle of the screen
-                }
-                else{
-                    LazyVStack(alignment: .center) {
-                        ForEach(highlightsForScope, id: \.id) { highlight in
-                            HighlightTile(highlight: highlight, isVertical: true)
-                                .padding(.horizontal, 24)
-                                .padding(.top, 12)
+        VStack{
+            headerView
+            
+            ScrollView {
+                LazyVStack(alignment: .leading, spacing: 16) {
+                    if(highlightsForScope.isEmpty) {
+                        NoHighlightView()
+                            .frame(maxWidth: .infinity)
+                            .frame(minHeight: UIScreen.main.bounds.height - 350)
+                        // push view to the middle of the screen
+                    }
+                    else{
+                        LazyVStack(alignment: .center) {
+                            ForEach(highlightsForScope, id: \.id) { highlight in
+                                HighlightTile(highlight: highlight, isVertical: true)
+                                    .padding(.horizontal, 24)
+                                    .padding(.top, 12)
+                            }
                         }
                     }
                 }
             }
+            .background(Constants.Colors.white.ignoresSafeArea())
+            .refreshable {
+                viewModel.loadHighlights()
+            }
+            .safeAreaInset(edge: .bottom) {
+                Color.clear.frame(height: 200)
+            }
+            
+            .navigationBarBackButtonHidden(true)
+            .navigationBarTitleDisplayMode(.inline)
         }
-        .safeAreaInset(edge: .top, spacing: 0) {
-            headerView
-        }
-        .background(Constants.Colors.white.ignoresSafeArea())
-        .refreshable {
-            viewModel.loadHighlights()
-        }
-        .safeAreaInset(edge: .bottom) {
-            Color.clear.frame(height: 200)
-        }
-        
-        .navigationBarBackButtonHidden(true)
-        .navigationBarTitleDisplayMode(.inline)
-        
         .environmentObject(viewModel)
         .onAppear {
             if viewModel.hasNotFetchedYet {

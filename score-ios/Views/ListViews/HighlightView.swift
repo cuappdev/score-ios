@@ -11,12 +11,18 @@ struct HighlightView: View {
     @EnvironmentObject var viewModel: HighlightsViewModel
     
     var body: some View {
+        
         Group{
             switch viewModel.dataState {
             case .idle, .loading:
                 HighlightLoadingView()
+                
             default:
-                HighlightContentView()
+                VStack{
+                    headerView
+                    
+                    HighlightContentView()
+                }
             }
         }
         .onAppear {
@@ -29,30 +35,36 @@ struct HighlightView: View {
             viewModel.filter()
         }
     }
+    
+    var headerView: some View {
+        VStack {
+            Text("Highlights")
+                .font(Constants.Fonts.semibold24)
+                .foregroundStyle(Constants.Colors.black)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.top, 24)
+                .padding(.horizontal, 24)
+            
+            SearchView(title: "Search All Highlights", scope: .all)
+                .padding(.horizontal, 20)
+                .padding(.top, 12)
+            
+            SportSelectorView()
+                .padding(.horizontal, 20)
+                .padding(.top, 12)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.bottom, 12)
+        .background(Constants.Colors.white)
+    }
 }
 
 struct HighlightContentView: View {
     @EnvironmentObject var viewModel: HighlightsViewModel
     
     var body: some View {
-        
         ScrollView(showsIndicators: false) {
-            VStack(alignment: .leading, spacing: 4) {
-                Text("Highlights")
-                    .font(Constants.Fonts.semibold24)
-                    .foregroundStyle(Constants.Colors.black)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.top, 24)
-                    .padding(.horizontal, 24)
-                
-                SearchView(title: "Search All Highlights", scope: .all)
-                    .padding(.horizontal, 20)
-                    .padding(.top, 12)
-                
-                SportSelectorView()
-                    .padding(.horizontal, 20)
-                    .padding(.top, 12)
-                
+            LazyVStack(alignment: .leading, spacing: 4) {
                 if viewModel.mainPastThreeDaysHighlights.isEmpty && viewModel.mainTodayHighlights.isEmpty {
                     NoHighlightView()
                         .frame(maxWidth: .infinity)
@@ -75,6 +87,9 @@ struct HighlightContentView: View {
                     )
                 }
             }
+        }
+        .refreshable {
+            viewModel.loadHighlights()
         }
     }
 }

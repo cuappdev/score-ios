@@ -37,6 +37,56 @@ struct SearchViewFullScreen: View {
 
     
     var body: some View {
+        VStack{
+            headerView
+            
+            ScrollView {
+                LazyVStack(alignment: .leading, spacing: 0) {
+                    // MARK: Results
+                    if isLoading {
+                        HighlightSearchLoadingView()
+                    } else if searchResults.isEmpty {
+                        NoHighlightView()
+                            .frame(maxWidth: .infinity)
+                            .frame(minHeight: UIScreen.main.bounds.height - 350)
+                        // push view to the middle of the screen
+                    } else {
+                        Text("\(searchResults.count) results")
+                        .padding(.horizontal, 20)
+                        .font(Constants.Fonts.subheader)
+                        .foregroundStyle(Constants.Colors.gray_text)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+
+
+                        
+                        LazyVStack(alignment: .center, spacing: 24) {
+                            ForEach(searchResults) { highlight in
+                                HighlightTile(highlight: highlight, isVertical: true)
+                                    .padding(.horizontal, 24)
+                            }
+                        }
+                        .padding(.top, 12)
+                    }
+                }
+            }
+            .refreshable {
+                viewModel.loadHighlights()
+            }
+        }
+        .onAppear {
+            if viewModel.hasNotFetchedYet{
+                viewModel.loadHighlights()
+            }
+            isSearchFieldFocused = true
+            searchText = viewModel.searchQuery
+            viewModel.filter()
+        }
+        .onDisappear {
+            viewModel.clearSearch()
+        }
+    }
+
+    private var headerView: some View {
         VStack(spacing: 0) {
             // MARK: Header
             HStack {
@@ -91,46 +141,11 @@ struct SearchViewFullScreen: View {
             SportSelectorView()
                 .padding(.horizontal, 20)
                 .padding(.top, 12)
-                .padding(.bottom, 20)
                 .cornerRadius(12, corners: [.bottomLeft, .bottomRight])
-            
-            // MARK: Results
-            VStack(alignment: .leading, spacing: 0)
-            {
-                if isLoading {
-                    HighlightSearchLoadingView()
-                } else if searchResults.isEmpty {
-                    NoHighlightView()
-                } else {
-                    ScrollView {
-                        HStack {
-                            Text("\(searchResults.count) results")
-                                .padding(.horizontal, 24)
-                                .font(Constants.Fonts.subheader)
-                                .foregroundStyle(Constants.Colors.gray_text)
-                            
-                            Spacer()
-                        }
-                        
-                        LazyVStack(alignment: .center, spacing: 24) {
-                            ForEach(searchResults) { highlight in
-                                HighlightTile(highlight: highlight, isVertical: true)
-                                    .padding(.horizontal, 24)
-                            }
-                        }
-                    }
-                    .transition(.opacity)
-                }
-            }
         }
-        .onAppear {
-            isSearchFieldFocused = true
-            searchText = viewModel.searchQuery
-            viewModel.filter()
-        }
-        .onDisappear {
-            viewModel.clearSearch()
-        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.bottom, 12)
+        .background(Constants.Colors.white)
     }
 
     

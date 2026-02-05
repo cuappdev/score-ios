@@ -12,7 +12,8 @@ import GameAPI
 // State enum to track the loading state
 enum DataState {
     case idle        // Initial state, nothing has been fetched yet
-    case loading     // Fetch in progress
+    case loading     // Initial fetch in progress
+    case refreshing     // Refreshing in progress
     case success     // Fetch completed successfully
     case error(error: ScoreError) // Fetch failed with an error message
 }
@@ -143,11 +144,10 @@ class GamesViewModel: ObservableObject
     // TODO: Remove once backend is has implemented pagination with sorted dates and pages by game type
     func fetchGames() {
         // Set loading state before fetch
-        dataState = .loading
-        // Clear the current arrays
-        self.games.removeAll()
-        self.allPastGames.removeAll()
-        self.allUpcomingGames.removeAll()
+        dataState = (hasNotFetchedYet ? .loading : .refreshing)
+
+        self.privateUpcomingGames.removeAll()
+        self.privatePastGames.removeAll()
 
         // Start fetching from the first page
         fetchGamesRecursively(limit: 50, offset: 0, accumulatedGames: [])
@@ -272,7 +272,7 @@ class GamesViewModel: ObservableObject
         // Sort all the collections
         self.allPastGames.sort(by: {$0.date > $1.date})
         self.allUpcomingGames.sort(by: {$0.date < $1.date})
-        self.games = updatedGames.sorted(by: {$0.date < $1.date})
+        self.games.sort(by: {$0.date < $1.date})
         self.topUpcomingGames = Array(self.allUpcomingGames.prefix(3))
         self.topPastGames = Array(self.allPastGames.prefix(3))
         self.filter()

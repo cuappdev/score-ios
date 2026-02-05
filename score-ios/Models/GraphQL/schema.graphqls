@@ -34,7 +34,7 @@ type Query {
     offset: Int = 0
   ): [GameType]
   game(id: String!): GameType
-  gameByData(city: String!, date: String!, gender: String!, location: String, opponentId: String!, sport: String!, state: String!, time: String!, ticketLink: String): GameType
+  gameByData(city: String!, date: String!, gender: String!, location: String, opponentId: String!, sport: String!, state: String!, time: String!): GameType
   gamesBySport(sport: String!): [GameType]
   gamesByGender(gender: String!): [GameType]
   gamesBySportGender(sport: String!, gender: String!): [GameType]
@@ -70,7 +70,7 @@ Attributes:
     - id: The YouTube video ID (optional).
     - title: The title of the video.
     - description: The description of the video.
-    - thumbnail: The URL of the video's thumbnail.
+    - thumbnail: The URL of the video's thumbnail. (optional)
     - url: The URL to the video.
     - published_at: The date and time the video was published.
     - duration: The duration of the video (optional).
@@ -81,7 +81,7 @@ type YoutubeVideoType {
   title: String!
   description: String!
   thumbnail: String!
-  b64Thumbnail: String!
+  b64Thumbnail: String
   url: String!
   publishedAt: String!
   duration: String
@@ -183,7 +183,7 @@ type Mutation {
   createTeam(b64Image: String, color: String!, image: String, name: String!): CreateTeam
 
   """Creates a new youtube video."""
-  createYoutubeVideo(b64Thumbnail: String!, description: String!, duration: String!, id: String!, publishedAt: String!, thumbnail: String!, title: String!, url: String!): CreateYoutubeVideo
+  createYoutubeVideo(b64Thumbnail: String, description: String!, duration: String!, id: String!, publishedAt: String!, thumbnail: String!, title: String!, url: String!): CreateYoutubeVideo
 
   """Creates a new article."""
   createArticle(image: String, publishedAt: String!, slug: String!, sportsType: String!, title: String!, url: String!): CreateArticle

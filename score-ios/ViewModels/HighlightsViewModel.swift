@@ -38,14 +38,7 @@ class HighlightsViewModel: ObservableObject {
 
     // MARK: - Loading
     func loadHighlights() {
-        dataState = .loading
-        
-        self.allHighlights.removeAll()
-        self.mainTodayHighlights.removeAll()
-        self.mainPastThreeDaysHighlights.removeAll()
-        self.detailedTodayHighlights.removeAll()
-        self.detailedPastThreeDaysHighlights.removeAll()
-        self.allHighlightsSearchResults.removeAll()
+        dataState = (hasNotFetchedYet ? .loading : .refreshing)
         
         Task {
             do {
@@ -61,7 +54,7 @@ class HighlightsViewModel: ObservableObject {
         }
     }
     
-    func retryFetch() {
+    func retryFetch(isRefresh: Bool) {
         loadHighlights()
     }
     
@@ -71,8 +64,8 @@ class HighlightsViewModel: ObservableObject {
     private func processHighlights(_ articleDataArray: [ArticlesQuery.Data.Article], _ youTubeVideoDataArray: [YoutubeVideosQuery.Data.YoutubeVideo]) {
         let localArticles = articleDataArray.map { Article(from: $0) }
         let localYouTubeVideos = youTubeVideoDataArray.map {YouTubeVideo(from: $0)}
-                
-        self.privateAllHighlights += localArticles.map { Highlight.article($0) } + localYouTubeVideos.map { Highlight.video($0) }
+        
+        self.privateAllHighlights = localArticles.map { Highlight.article($0) } + localYouTubeVideos.map { Highlight.video($0) }
         self.allHighlights = self.uniqueHighlights(from: self.privateAllHighlights)
         self.allHighlights.sort(by: { $0.publishedAt > $1.publishedAt })
         self.filter()

@@ -34,7 +34,7 @@ type Query {
     offset: Int = 0
   ): [GameType]
   game(id: String!): GameType
-  gameByData(city: String!, date: String!, gender: String!, location: String, opponentId: String!, sport: String!, state: String!, time: String!, ticketLink: String): GameType
+  gameByData(city: String!, date: String!, gender: String!, location: String, opponentId: String!, sport: String!, state: String!, time: String!): GameType
   gamesBySport(sport: String!): [GameType]
   gamesByGender(gender: String!): [GameType]
   gamesBySportGender(sport: String!, gender: String!): [GameType]

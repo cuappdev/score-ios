@@ -14,7 +14,6 @@ struct HighlightView: View {
         
         Group{
             switch viewModel.dataState {
-                
             case .idle, .loading:
                 HighlightLoadingView()
                 

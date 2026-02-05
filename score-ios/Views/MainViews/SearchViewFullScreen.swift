@@ -51,14 +51,13 @@ struct SearchViewFullScreen: View {
                             .frame(minHeight: UIScreen.main.bounds.height - 350)
                         // push view to the middle of the screen
                     } else {
-                        HStack {
-                            Text("\(searchResults.count) results")
-                                .padding(.horizontal, 24)
-                                .font(Constants.Fonts.subheader)
-                                .foregroundStyle(Constants.Colors.gray_text)
-                            
-                            Spacer()
-                        }
+                        Text("\(searchResults.count) results")
+                        .padding(.horizontal, 20)
+                        .font(Constants.Fonts.subheader)
+                        .foregroundStyle(Constants.Colors.gray_text)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+
+
                         
                         LazyVStack(alignment: .center, spacing: 24) {
                             ForEach(searchResults) { highlight in

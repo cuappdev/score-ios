@@ -10,7 +10,8 @@ import SwiftUI
 
 struct GameErrorView: View {
 
-    @ObservedObject var viewModel: GamesViewModel
+    let message: String
+    let onRetry: () -> Void
 
     var body: some View {
         ZStack {
@@ -25,7 +26,7 @@ struct GameErrorView: View {
                     .frame(width: 64, height: 64)
                     .padding(.bottom, 16)
 
-                Text("Oops! Schedules failed to load.")
+                Text("Oops! \(message) failed to load.")
                     .font(Constants.Fonts.Header.h2)
                     .padding(.bottom, 8)
 
@@ -35,7 +36,7 @@ struct GameErrorView: View {
                 Spacer()
 
                 Button {
-                    viewModel.fetchGames()
+                    onRetry()
                 } label: {
                     HStack {
                         Image(systemName: "arrow.trianglehead.2.clockwise")

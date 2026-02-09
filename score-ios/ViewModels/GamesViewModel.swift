@@ -144,7 +144,7 @@ class GamesViewModel: ObservableObject
     // TODO: Remove once backend is has implemented pagination with sorted dates and pages by game type
     func fetchGames() {
         // Set loading state before fetch
-        dataState = (hasNotFetchedYet ? .loading : .refreshing)
+        dataState = (dataState == .success ? .refreshing : .loading)
 
         self.privateUpcomingGames.removeAll()
         self.privatePastGames.removeAll()

@@ -10,6 +10,7 @@ import SwiftUI
 struct GameView : View {
     var game : Game
     @ObservedObject var viewModel: PastGameViewModel
+    @StateObject var calendarViewModel = CalendarViewModel.shared
     @State var viewState: Int = 0
     @State var dayFromNow: Int = 0
     @State var hourFromNow: Int = 0
@@ -119,14 +120,14 @@ extension GameView {
                 Text("\(game.sex.description) \(game.sport.description)")
                     .font(Constants.Fonts.subheader)
                     .foregroundStyle(Constants.Colors.black)
-
+                
                 ScrollView(.horizontal, showsIndicators: false){
                     Text("Cornell vs. " + game.opponent.name.removingUniversityPrefix())
                         .font(Constants.Fonts.header)
                         .foregroundStyle(Constants.Colors.black)
                 }
                 .withTrailingFadeGradient()
-    
+                
                 HStack(spacing: 10) {
                     HStack {
                         Image("Location-g")
@@ -176,25 +177,50 @@ extension GameView {
                 .padding(.top, 8)
             }
             .padding(.top, 20)
-            
-            // Ticketing Link Button
-            if let link = game.ticketLink,
-               let url = URL(string: link) {
+            HStack (spacing: 16){
+                // Ticketing Link Button
+                if let link = game.ticketLink,
+                   let url = URL(string: link) {
+                    Button(action: {
+                        UIApplication.shared.open(url)
+                    }) {
+                        HStack (spacing: 9){
+                            Image("Ticket")
+                                .resizable()
+                                .frame(width: 22, height: 22)
+                            Text("Buy Tickets")
+                                .foregroundStyle(Constants.Colors.white)
+                                .font(.system(size: 16, weight: .medium))
+                                .font(Constants.Fonts.buttonLabel)
+                        }
+                        .foregroundColor(.white)
+                        .padding(12)
+                        .background(
+                            Constants.Colors.primary_red
+                        )
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 30)
+                                .stroke(Color.black.opacity(0.1), lineWidth: 1)
+                                .shadow(color: Color.black.opacity(0.25), radius: 5, x: 0, y: 2)
+                        )
+                        .clipShape(RoundedRectangle(cornerRadius: 30))
+                    }
+                }
+                
+                // Calendar Button
                 Button(action: {
-                    UIApplication.shared.open(url)
+                    calendarViewModel.requestAccessandAdd(event:game)
                 }) {
-                    HStack {
-                        Image("Ticket")
+                    HStack (spacing: 8){
+                        Image("Calendar")
                             .resizable()
-                            .frame(width: 25, height: 25)
-                        Text("Buy Tickets")
-                            .foregroundStyle(Constants.Colors.white)
-                            .font(.system(size: 16, weight: .medium))
+                            .frame(width: 24, height: 24)
+                        Text("Add to Calendar")
                             .font(Constants.Fonts.buttonLabel)
+                            .foregroundStyle(Constants.Colors.white)
                     }
                     .foregroundColor(.white)
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 15)
+                    .padding(12)
                     .background(
                         Constants.Colors.primary_red
                     )
@@ -203,41 +229,17 @@ extension GameView {
                             .stroke(Color.black.opacity(0.1), lineWidth: 1)
                             .shadow(color: Color.black.opacity(0.25), radius: 5, x: 0, y: 2)
                     )
-                    .clipShape(RoundedRectangle(cornerRadius: 30)) // Clip to shape to ensure rounded corners
+                    .clipShape(RoundedRectangle(cornerRadius: 30))
                 }
-                .padding(.top, 80)
+                .alert(isPresented: $calendarViewModel.showAlert) {
+                    Alert(title: Text(calendarViewModel.alertTitle), message: Text(calendarViewModel.alertMessage))
+                }
             }
-            
-            // Calendar Button
-//             TODO: make this back when we have login
-//                Button(action: {
-//                    // TODO: action
-//                }) {
-//                    HStack {
-//                        Image("Calendar")
-//                            .resizable()
-//                            .frame(width: 24, height: 24)
-//                        Text("Add to Calendar")
-//                            .font(Constants.Fonts.buttonLabel)
-//                            .foregroundStyle(Constants.Colors.white)
-//                    }
-//                    .foregroundColor(.white)
-//                    .padding(.horizontal, 16)
-//                    .padding(.vertical, 10)
-//                    .background(
-//                        Constants.Colors.primary_red
-//                    )
-//                    .overlay(
-//                        RoundedRectangle(cornerRadius: 30)
-//                            .stroke(Color.black.opacity(0.1), lineWidth: 1)
-//                            .shadow(color: Color.black.opacity(0.25), radius: 5, x: 0, y: 2)
-//                    )
-//                    .clipShape(RoundedRectangle(cornerRadius: 30)) // Clip to shape to ensure rounded corners
-//                }
-//                .padding(.top, 68)
-//            }
+            .padding(.top, 80)
         }
+
     }
+
     
     private var summaryTab: some View {
         NavigationLink(destination: ScoringSummary(game: game)) {

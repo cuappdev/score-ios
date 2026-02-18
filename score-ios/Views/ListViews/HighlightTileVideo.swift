@@ -18,22 +18,15 @@ struct HighlightTileVideo: View {
                     // Thumbnail
                     AsyncImage(url: URL(string: video.thumbnail)) { phase in
                         switch phase {
-                        case .empty:
-                            // While loading
-                            Rectangle()
-                                .fill(Constants.Colors.gray_icons.opacity(0.2))
                         case .success(let image):
                             image
                                 .resizable()
                                 .scaledToFill()
-                        case .failure(_):
-                            // If loading fails
-                            Image(systemName: "photo")
-                                .resizable()
-                                .scaledToFit()
-                                .foregroundColor(.gray)
-                        @unknown default:
-                            EmptyView()
+                                .overlay(Color.black.opacity(0.60)) // dark tint
+                        default:
+                            Rectangle()
+                                .fill(Constants.Colors.gray_icons.opacity(0.2))
+                                .overlay(Color.black.opacity(0.60)) // dark tint
                         }
                     }
                     .frame(width: width, height: 117)

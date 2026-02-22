@@ -10,7 +10,7 @@ import SwiftUI
 struct GameView : View {
     var game : Game
     @ObservedObject var viewModel: PastGameViewModel
-    @StateObject var calendarViewModel = CalendarViewModel.shared
+    @ObservedObject var calendarViewModel = CalendarViewModel.shared
     @State var viewState: Int = 0
     @State var dayFromNow: Int = 0
     @State var hourFromNow: Int = 0
@@ -232,7 +232,24 @@ extension GameView {
                     .clipShape(RoundedRectangle(cornerRadius: 30))
                 }
                 .alert(isPresented: $calendarViewModel.showAlert) {
-                    Alert(title: Text(calendarViewModel.alertTitle), message: Text(calendarViewModel.alertMessage))
+                    if calendarViewModel.openSettings {
+                        Alert(
+                            title: Text(calendarViewModel.alertTitle),
+                            message: Text(calendarViewModel.alertMessage),
+                            primaryButton: .default(Text("Go to settings")) {
+                                if let url = URL(string: UIApplication.openSettingsURLString) {
+                                    UIApplication.shared.open(url)
+                                }
+                            },
+                            secondaryButton: .cancel()
+                        )
+                    }
+                    else {
+                        Alert(
+                            title: Text(calendarViewModel.alertTitle),
+                            message: Text(calendarViewModel.alertMessage)
+                        )
+                    }
                 }
             }
             .padding(.top, 80)

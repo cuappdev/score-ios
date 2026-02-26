@@ -231,11 +231,11 @@ extension GameView {
                     )
                     .clipShape(RoundedRectangle(cornerRadius: 30))
                 }
-                .alert(isPresented: $calendarViewModel.showAlert) {
-                    if calendarViewModel.openSettings {
-                        Alert(
-                            title: Text(calendarViewModel.alertTitle),
-                            message: Text(calendarViewModel.alertMessage),
+                .alert(item: $calendarViewModel.eachAlert) { alert in
+                    if alert.openSettings {
+                        return Alert (
+                            title: Text(alert.alertTitle),
+                            message: Text(alert.alertMessage),
                             primaryButton: .default(Text("Go to settings")) {
                                 if let url = URL(string: UIApplication.openSettingsURLString) {
                                     UIApplication.shared.open(url)
@@ -243,11 +243,10 @@ extension GameView {
                             },
                             secondaryButton: .cancel()
                         )
-                    }
-                    else {
-                        Alert(
-                            title: Text(calendarViewModel.alertTitle),
-                            message: Text(calendarViewModel.alertMessage)
+                    } else {
+                        return Alert (
+                            title: Text(alert.alertTitle),
+                            message: Text(alert.alertMessage)
                         )
                     }
                 }

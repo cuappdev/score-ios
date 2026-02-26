@@ -12,12 +12,16 @@ import UIKit
 final class CalendarViewModel: ObservableObject{
     static let shared = CalendarViewModel()
     private let eventStore = EKEventStore()
-    @Published var showAlert: Bool = false
-    @Published var openSettings: Bool = false
-    @Published var alertTitle: String = ""
-    @Published var alertMessage: String = ""
+    @Published var eachAlert: Alert?
     
     private init() {}
+    
+    struct Alert: Identifiable {
+        let id = UUID()
+        let alertTitle: String
+        let alertMessage: String
+        let openSettings: Bool
+    }
     
     func requestAccessandAdd(event: Game) {
         eventStore.requestFullAccessToEvents{ [weak self] (granted, error) in
@@ -34,9 +38,10 @@ final class CalendarViewModel: ObservableObject{
                 
                 if existingEvents.contains(where: { $0.title == title && $0.startDate == event.date }) {
                     DispatchQueue.main.async {
-                        self.alertTitle = "Game already added."
-                        self.alertMessage = "This game is already added to your calendar."
-                        self.showAlert = true
+                        self.showCalendarAlert (
+                            alertTitle: "Game already added.",
+                            alertMessage: "This game is already added to your calendar."
+                        )
                     }
                     return
                 }
@@ -57,19 +62,33 @@ final class CalendarViewModel: ObservableObject{
                     }
                 } catch {
                     DispatchQueue.main.async {
-                        self.alertTitle = "Game can't be added."
-                        self.alertMessage = "There was an error adding Cornell vs. \(event.opponent.name) to your calendar."
-                        self.showAlert = true
+                        self.showCalendarAlert (
+                            alertTitle: "Game can't be added.",
+                            alertMessage: "There was an error adding Cornell vs. \(event.opponent.name) to your calendar."
+                        )
                     }
                 }
             } else {
                 DispatchQueue.main.async {
-                    self.alertTitle = "Game can't be added."
-                    self.alertMessage = "Calendar access denied. Please enable full calendar access in Settings."
-                    self.showAlert = true
-                    self.openSettings = true
+                    self.showCalendarAlert (
+                        alertTitle: "Game can't be added.",
+                        alertMessage: "Calendar access denied. Please enable full calendar access in Settings.",
+                        openSettings: true
+                    )
                 }
             }
         }
+    }
+    
+    private func showCalendarAlert(
+        alertTitle: String,
+        alertMessage: String,
+        openSettings: Bool = false
+    ) {
+        self.eachAlert = Alert(
+            alertTitle: alertTitle,
+            alertMessage: alertMessage,
+            openSettings: openSettings
+        )
     }
 }

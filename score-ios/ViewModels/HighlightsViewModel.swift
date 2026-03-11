@@ -38,7 +38,7 @@ class HighlightsViewModel: ObservableObject {
 
     // MARK: - Loading
     func loadHighlights() {
-        dataState = (hasNotFetchedYet ? .loading : .refreshing)
+        dataState = (dataState == .success ? .refreshing : .loading)
         
         Task {
             do {

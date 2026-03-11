@@ -144,7 +144,7 @@ class GamesViewModel: ObservableObject
     // TODO: Remove once backend is has implemented pagination with sorted dates and pages by game type
     func fetchGames() {
         // Set loading state before fetch
-        dataState = (hasNotFetchedYet ? .loading : .refreshing)
+        dataState = (dataState == .success ? .refreshing : .loading)
 
         self.privateUpcomingGames.removeAll()
         self.privatePastGames.removeAll()
@@ -209,13 +209,12 @@ class GamesViewModel: ObservableObject
                 }
 
                 guard let fetchedGames = fetchedGames, !fetchedGames.isEmpty else {
-                    // If this is the first fetch and no games, show empty data error
                     if offset == 0 {
+                        // First page returned empty —> no games
                         self.dataState = .error(error: .emptyData)
                     } else {
-//                        // Otherwise process all accumulated games
-//                        self.processGames(accumulatedGames)
-                        self.dataState = .error(error: .networkError)
+                        // Process what we have
+                        self.processGames(accumulatedGames)
                     }
                     return
                 }

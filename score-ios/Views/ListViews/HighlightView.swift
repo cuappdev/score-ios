@@ -16,7 +16,10 @@ struct HighlightView: View {
             switch viewModel.dataState {
             case .idle, .loading:
                 HighlightLoadingView()
-                
+
+            case .error:
+                GameErrorView(message: "Highlights", onRetry: { viewModel.loadHighlights() })
+
             default:
                 VStack{
                     headerView

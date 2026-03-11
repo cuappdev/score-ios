@@ -68,7 +68,7 @@ struct PastGamesView: View {
             }
 
             if case .error = vm.dataState {
-                GameErrorView(message: "Schedules", onRetry: { vm.fetchGames() })
+                GameErrorView(message: "Scores", onRetry: { vm.fetchGames() })
             }
         }
     }

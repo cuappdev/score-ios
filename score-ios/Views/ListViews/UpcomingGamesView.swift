@@ -11,6 +11,7 @@ struct UpcomingGamesView: View {
 
     // State variables
     var paddingMain: CGFloat = 20
+    @Binding var showProfile: Bool
     @State private var selectedCardIndex: Int = 0
     @StateObject private var vm = GamesViewModel.shared
 
@@ -22,7 +23,7 @@ struct UpcomingGamesView: View {
                     ZStack {
                         LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
                             if !vm.topUpcomingGames.isEmpty {
-                                CarouselView(games: vm.topUpcomingGames, title: "Upcoming",
+                                CarouselView(showProfile: $showProfile, games: vm.topUpcomingGames, title: "Upcoming",
                                              cardView: { game in
                                     UpcomingGameCard(game: game)
                                 },
@@ -78,5 +79,5 @@ struct UpcomingGamesView: View {
 }
 
 #Preview {
-    UpcomingGamesView()
+    UpcomingGamesView(showProfile: .constant(false))
 }

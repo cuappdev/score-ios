@@ -12,6 +12,7 @@ struct PastGamesView: View {
 
     // State variables
     @StateObject private var vm = GamesViewModel.shared
+    @Binding var showProfile: Bool
 
     var body: some View {
         ZStack {
@@ -19,7 +20,7 @@ struct PastGamesView: View {
                 ScrollView(.vertical, showsIndicators: false) {
                     ZStack {
                         LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
-                            CarouselView(games: vm.topPastGames, title: "Latest",
+                            CarouselView(showProfile: $showProfile, games: vm.topPastGames, title: "Latest",
                                          cardView: { game in
                                 PastGameCard(game: game, viewModel: PastGameViewModel(game: game))
                             },
@@ -75,5 +76,5 @@ struct PastGamesView: View {
 }
 
 #Preview {
-    PastGamesView()
+    PastGamesView(showProfile: .constant(false))
 }

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HighlightView: View {
     @EnvironmentObject var viewModel: HighlightsViewModel
+    @Binding var showProfile: Bool
     
     var body: some View {
         
@@ -38,13 +39,13 @@ struct HighlightView: View {
     
     var headerView: some View {
         VStack {
-            Text("Highlights")
-                .font(Constants.Fonts.semibold24)
-                .foregroundStyle(Constants.Colors.black)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.top, 24)
-                .padding(.horizontal, 24)
-            
+            TopHeader(
+                title: "Highlights",
+                onProfileTap: {
+                    showProfile = true
+                }
+            )
+            .padding(.horizontal, 20)
             SearchView(title: "Search All Highlights", scope: .all)
                 .padding(.horizontal, 20)
                 .padding(.top, 12)
@@ -153,6 +154,6 @@ struct HighlightSectionView: View {
 // MARK: - Preview
 
 #Preview {
-    HighlightView()
+    HighlightView(showProfile: .constant(false))
         .environmentObject(HighlightsViewModel.shared)
 }

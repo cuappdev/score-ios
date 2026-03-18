@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CarouselView<CardView: View, GameView: View>: View {
+    @Binding var showProfile: Bool
     @State private var selectedCardIndex: Int = 0
     var games: [Game]
     var title: String
@@ -16,11 +17,12 @@ struct CarouselView<CardView: View, GameView: View>: View {
     
     var body: some View {
             VStack (alignment: .center) {
-                Text(title)
-                    .font(Constants.Fonts.semibold24)
-                    .foregroundStyle(Constants.Colors.black)
-                    .frame(maxWidth: .infinity, alignment: .leading) // Align to the left
-                    .padding(.top, 24)
+                TopHeader(
+                    title: title,
+                    onProfileTap: {
+                        showProfile = true
+                    }
+                )
                 
                 // Carousel
                 TabView(selection: $selectedCardIndex) {

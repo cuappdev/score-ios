@@ -12,6 +12,7 @@ struct MainTabView: View {
     // MARK: Properties
 
     @Binding var selectedTab: MainTab
+    @State private var showProfile = false
     @StateObject private var gamesViewModel = GamesViewModel.shared
     @StateObject private var highlightViewModel = HighlightsViewModel.shared
 
@@ -19,16 +20,16 @@ struct MainTabView: View {
         NavigationStack {
             ZStack(alignment: .bottom) {
                 switch selectedTab {
-                    case .schedule:
-                        UpcomingGamesView()
-                            .environmentObject(gamesViewModel)
-                    case .highlights:
-                        HighlightView()
-                            .environmentObject(highlightViewModel)
-                    case .scores:
-                        PastGamesView()
-                            .environmentObject(gamesViewModel)
-                }
+                case .schedule:
+                    UpcomingGamesView(showProfile: $showProfile)
+                        .environmentObject(gamesViewModel)
+                case .highlights:
+                    HighlightView(showProfile: $showProfile)
+                        .environmentObject(highlightViewModel)
+                case .scores:
+                    PastGamesView(showProfile: $showProfile)
+                        .environmentObject(gamesViewModel)
+               }
 
                 HStack {
                     ForEach(MainTab.allCases) { tab in
@@ -49,6 +50,9 @@ struct MainTabView: View {
                         .shadow(color: Color.black.opacity(0.25), radius: 10, x: 0, y: -6)
                 )
 
+            }
+            .navigationDestination(isPresented: $showProfile) {
+                ProfileView()
             }
             .ignoresSafeArea(edges: .bottom)
             .background(Color.white)

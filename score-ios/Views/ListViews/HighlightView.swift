@@ -64,29 +64,35 @@ struct HighlightContentView: View {
     
     var body: some View {
         ScrollView(showsIndicators: false) {
-            LazyVStack(alignment: .leading, spacing: 4) {
-                if viewModel.mainPastThreeDaysHighlights.isEmpty && viewModel.mainTodayHighlights.isEmpty {
-                    NoHighlightView()
-                        .frame(maxWidth: .infinity)
-                        .frame(minHeight: UIScreen.main.bounds.height - 350)
-                        // push view to the middle of the screen
+            ZStack {
+                LazyVStack(alignment: .leading, spacing: 4) {
+                    if viewModel.mainPastThreeDaysHighlights.isEmpty && viewModel.mainTodayHighlights.isEmpty {
+                        NoHighlightView()
+                            .frame(maxWidth: .infinity)
+                            .frame(minHeight: UIScreen.main.bounds.height - 350)
+                            // push view to the middle of the screen
+                        
+                    }
                     
-                }
-                
-                if !viewModel.mainTodayHighlights.isEmpty {
-                    HighlightSectionView(
-                        title: "Today",
-                        scope: .today
-                    )
-                }
-                
-                if !viewModel.mainPastThreeDaysHighlights.isEmpty {
-                    HighlightSectionView(
-                        title: "Past 3 Days",
-                        scope: .pastThreeDays
-                    )
+                    if !viewModel.mainTodayHighlights.isEmpty {
+                        HighlightSectionView(
+                            title: "Today",
+                            scope: .today
+                        )
+                    }
+                    
+                    if !viewModel.mainPastThreeDaysHighlights.isEmpty {
+                        HighlightSectionView(
+                            title: "Past 3 Days",
+                            scope: .pastThreeDays
+                        )
+                    }
                 }
             }
+            .safeAreaInset(edge: .bottom, content: {
+                Color.clear.frame(height: 120)
+            })
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .refreshable {
             viewModel.loadHighlights()

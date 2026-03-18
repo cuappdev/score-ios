@@ -25,16 +25,22 @@ struct HighlightLoadingView: View {
                 .ignoresSafeArea()
 
             ScrollView(showsIndicators: false) {
-                VStack(alignment: .leading, spacing: 4) {
+                ZStack {
+                    VStack(alignment: .leading, spacing: 4) {
 
-                    titleSection
-                    searchBar
-                    sportSelector
+                        titleSection
+                        searchBar
+                        sportSelector
 
-                    highlightSection(title: "Today")
-                    highlightSection(title: "Past 3 Days")
+                        highlightSection(title: "Today")
+                        highlightSection(title: "Past 3 Days")
+                    }
+                    .shimmer()
                 }
-                .shimmer()
+                .safeAreaInset(edge: .bottom, content: {
+                    Color.clear.frame(height: 120)
+                })
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
     }

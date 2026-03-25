@@ -300,6 +300,31 @@ class GamesViewModel: ObservableObject
     func retryFetch() {
         fetchGames()
     }
+    
+    func orderSportsByUpcoming(sports: [Sport]) -> [Sport] {
+        let allOtherSports = Sport.allCases.filter { $0 != .All }
+        let (withGames, withoutGames) = allOtherSports.reduce(into: ([Sport](), [Sport]())) { acc, sport in
+            if allUpcomingGames.contains(where: { $0.sport == sport }) {
+                acc.0.append(sport)
+            } else {
+                acc.1.append(sport)
+            }
+        }
+        let nextGameBySport: [Sport: Date] = Dictionary(uniqueKeysWithValues:
+            withGames.map { sport in
+                let nextDate = allUpcomingGames
+                    .filter { $0.sport == sport }
+                    .map { $0.date }
+                    .min() ?? Date.distantFuture
+                return (sport, nextDate)
+            }
+        )
+        let sortedWithGames = withGames.sorted { s1, s2 in
+            (nextGameBySport[s1] ?? Date.distantFuture) < (nextGameBySport[s2] ?? Date.distantFuture)
+        }
+        let sortedWithoutGames = withoutGames.sorted { $0.rawValue < $1.rawValue }
+        return [.All] + sortedWithGames + sortedWithoutGames
+    }
 }
 
 extension DataState: Equatable {

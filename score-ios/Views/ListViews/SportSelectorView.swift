@@ -16,7 +16,7 @@ struct SportSelectorView: View {
         ScrollViewReader { proxy in
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
-                    ForEach(Sport.allCases) { sport in
+                    ForEach(gamesVM.orderSportsByUpcoming(sports: Sport.allCases)) { sport in
                         Button {
                             highlightsVM.selectedSport = sport
                             gamesVM.selectedSport = sport

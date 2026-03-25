@@ -302,7 +302,7 @@ class GamesViewModel: ObservableObject
     }
     
     func orderSportsByUpcoming(sports: [Sport]) -> [Sport] {
-        let allOtherSports = Sport.allCases.filter { $0 != .All }
+        let allOtherSports = sports.filter { $0 != .All }
         let (withGames, withoutGames) = allOtherSports.reduce(into: ([Sport](), [Sport]())) { acc, sport in
             if allUpcomingGames.contains(where: { $0.sport == sport }) {
                 acc.0.append(sport)

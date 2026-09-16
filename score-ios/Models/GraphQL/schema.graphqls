@@ -39,6 +39,10 @@ type Query {
   gamesByGender(gender: String!): [GameType]
   gamesBySportGender(sport: String!, gender: String!): [GameType]
   gamesByDate(startDate: DateTime!, endDate: DateTime!): [GameType]
+  gamesByLocation(onCampus: Boolean!): [GameType]
+
+  """Current user's favorited games (requires auth)."""
+  myFavoritedGames: [GameType]
   teams: [TeamType]
   team(id: String!): TeamType
   teamByName(name: String!): TeamType
@@ -187,6 +191,48 @@ type Mutation {
 
   """Creates a new article."""
   createArticle(image: String, publishedAt: String!, slug: String!, sportsType: String!, title: String!, url: String!): CreateArticle
+
+  """Login by net_id; returns access_token and refresh_token."""
+  loginUser(
+    """User's net ID (e.g. Cornell netid)."""
+    netId: String!
+  ): LoginUser
+
+  """
+  Create a new user by net_id; returns access_token and refresh_token (no separate login needed).
+  """
+  signupUser(
+    """Email address."""
+    email: String
+
+    """Display name."""
+    name: String
+
+    """User's net ID (e.g. Cornell netid)."""
+    netId: String!
+  ): SignupUser
+
+  """
+  Exchange a valid refresh token (in Authorization header) for a new access_token.
+  """
+  refreshAccessToken: RefreshAccessToken
+
+  """
+  Revoke the current token (access or refresh). Send token in Authorization header.
+  """
+  logoutUser: LogoutUser
+
+  """Add a game to the current user's favorites (requires auth)."""
+  addFavoriteGame(
+    """ID of the game to add to favorites."""
+    gameId: String!
+  ): AddFavoriteGame
+
+  """Remove a game from the current user's favorites (requires auth)."""
+  removeFavoriteGame(
+    """ID of the game to remove from favorites."""
+    gameId: String!
+  ): RemoveFavoriteGame
 }
 
 type CreateGame {
@@ -203,4 +249,30 @@ type CreateYoutubeVideo {
 
 type CreateArticle {
   article: ArticleType
+}
+
+type LoginUser {
+  accessToken: String
+  refreshToken: String
+}
+
+type SignupUser {
+  accessToken: String
+  refreshToken: String
+}
+
+type RefreshAccessToken {
+  newAccessToken: String
+}
+
+type LogoutUser {
+  success: Boolean
+}
+
+type AddFavoriteGame {
+  success: Boolean
+}
+
+type RemoveFavoriteGame {
+  success: Boolean
 }

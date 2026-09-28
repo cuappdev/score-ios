@@ -44,7 +44,7 @@ class GamesViewModel: ObservableObject
 
     /// Starting ±15d load
     private var loadTask: Task<Void, Never>?
-    /// Disconnected ±1y month expand. 
+    /// Disconnected ±1y month expand.
     private var backgroundExpandTask: Task<Void, Never>?
 
     private static let initialWindowDays = 15
@@ -128,11 +128,8 @@ class GamesViewModel: ObservableObject
                     dataState = .error(error: .emptyData)
                     return
                 }
-            } else if preserveExistingUI {
-                removeGames(in: initialWindow)
-                processGames(mapped, replace: false)
             } else {
-                processGames(mapped, replace: true)
+                processGames(mapped, replace: !preserveExistingUI)
             }
 
             // Disconnected from the awaited load — UI spinner is already done.
@@ -227,16 +224,21 @@ class GamesViewModel: ObservableObject
         return ranges
     }
 
-    /// Drops cached games whose `date` falls in `range` (used to refresh the ±15d slice in place).
-    private func removeGames(in range: ClosedRange<Date>) {
-        privateUpcomingGames.removeAll { range.contains($0.date) }
-        privatePastGames.removeAll { range.contains($0.date) }
-    }
-
     private func processGames(_ incoming: [Game], replace: Bool) {
         if replace {
             privateUpcomingGames.removeAll()
             privatePastGames.removeAll()
+        } else {
+            // Incoming copy wins so a refresh updates games already on screen.
+            let incomingIds = Set(incoming.compactMap(\.serverId))
+            privateUpcomingGames.removeAll { game in
+                guard let id = game.serverId else { return false }
+                return incomingIds.contains(id)
+            }
+            privatePastGames.removeAll { game in
+                guard let id = game.serverId else { return false }
+                return incomingIds.contains(id)
+            }
         }
 
         for game in incoming {

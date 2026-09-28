@@ -26,7 +26,6 @@ class GamesViewModel: ObservableObject
     @Published var allPastGames: [Game] = []
 
     // private games data
-    private var privateGames: [Game] = []
     private var privateUpcomingGames: [Game] = []
     private var privatePastGames: [Game] = []
 

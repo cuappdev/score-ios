@@ -1,14 +1,15 @@
 //
-//  HighlightErrorView.swift
+//  RetryErrorView.swift
 //  score-ios
 //
-//  Created by Zain Bilal on 9/20/26.
+//  Created by Zain Bilal on 9/27/26.
 //
 
 import SwiftUI
 
-struct HighlightErrorView: View {
-    @EnvironmentObject var viewModel: HighlightsViewModel
+struct RetryErrorView: View {
+    let title: String
+    let retry: () async -> Void
 
     var body: some View {
         ZStack {
@@ -23,7 +24,7 @@ struct HighlightErrorView: View {
                     .frame(width: 64, height: 64)
                     .padding(.bottom, 16)
 
-                Text("Oops! Highlights failed to load.")
+                Text(title)
                     .font(Constants.Fonts.Header.h2)
                     .padding(.bottom, 8)
 
@@ -34,7 +35,7 @@ struct HighlightErrorView: View {
 
                 Button {
                     Task {
-                        await viewModel.loadHighlights(forceNetwork: true)
+                        await retry()
                     }
                 } label: {
                     HStack {
@@ -54,7 +55,26 @@ struct HighlightErrorView: View {
     }
 }
 
+struct GameErrorView: View {
+    @ObservedObject var viewModel: GamesViewModel
+
+    var body: some View {
+        RetryErrorView(title: "Oops! Schedules failed to load.") {
+            await viewModel.loadGames(forceNetwork: true)
+        }
+    }
+}
+
+struct HighlightErrorView: View {
+    @EnvironmentObject var viewModel: HighlightsViewModel
+
+    var body: some View {
+        RetryErrorView(title: "Oops! Highlights failed to load.") {
+            await viewModel.loadHighlights(forceNetwork: true)
+        }
+    }
+}
+
 #Preview {
-    HighlightErrorView()
-        .environmentObject(HighlightsViewModel.shared)
+    RetryErrorView(title: "Oops! Schedules failed to load.") {}
 }

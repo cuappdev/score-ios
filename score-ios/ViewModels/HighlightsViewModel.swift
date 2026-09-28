@@ -28,6 +28,9 @@ class HighlightsViewModel: ObservableObject {
     
     // MARK: - Private Properties
     private var privateAllHighlights: [Highlight] = []
+    /// In-flight highlights load. Owned by the view model so leaving the screen
+    /// does not cancel it; a newer load cancels this one.
+    private var loadTask: Task<Void, Never>?
 
     // MARK: - Singleton
     static let shared = HighlightsViewModel()
@@ -37,7 +40,20 @@ class HighlightsViewModel: ObservableObject {
     var hasNotFetchedYet: Bool { dataState == .idle }
 
     // MARK: - Loading
+    /// Returns when this fetch finishes. Work runs in `loadTask`, so SwiftUI
+    /// cancelling the caller (tab switch) does not abort it. A newer call cancels the previous one.
     func loadHighlights(forceNetwork: Bool = false) async {
+        loadTask?.cancel()
+
+        let task = Task { [weak self] in
+            guard let self else { return }
+            await self.fetchHighlights(forceNetwork: forceNetwork)
+        }
+        loadTask = task
+        await task.value
+    }
+
+    private func fetchHighlights(forceNetwork: Bool) async {
         // Soft refresh: if we already showed content, keep it on screen until a successful replace.
         let preserveExistingUI = (dataState == .success)
         if !preserveExistingUI {
@@ -48,13 +64,18 @@ class HighlightsViewModel: ObservableObject {
             async let articles = NetworkManager.shared.fetchArticles(forceNetwork: forceNetwork)
             async let videos = NetworkManager.shared.fetchYoutubeVideos(forceNetwork: forceNetwork)
             let (articleData, videoData) = try await (articles, videos)
+            if Task.isCancelled { return }
+            if articleData.isEmpty && videoData.isEmpty {
+                if preserveExistingUI {
+                    dataState = .success
+                } else {
+                    dataState = .error(error: .emptyData)
+                }
+                return
+            }
             processHighlights(articleData, videoData)
         } catch is CancellationError {
-            if preserveExistingUI {
-                dataState = .success
-            } else {
-                dataState = .idle
-            }
+            // Superseded by a newer load — leave dataState alone.
         } catch {
             if preserveExistingUI {
                 dataState = .success
@@ -64,22 +85,18 @@ class HighlightsViewModel: ObservableObject {
         }
     }
     
-    func retryFetch(isRefresh: Bool) async {
-        await loadHighlights(forceNetwork: true)
-    }
-    
     /**
      * Converts network data to local models, sorts, and filters.
      */
     private func processHighlights(_ articleDataArray: [ArticlesQuery.Data.Article], _ youTubeVideoDataArray: [YoutubeVideosQuery.Data.YoutubeVideo]) {
         let localArticles = articleDataArray.map { Article(from: $0) }
         let localYouTubeVideos = youTubeVideoDataArray.map {YouTubeVideo(from: $0)}
-        
+
         self.privateAllHighlights = localArticles.map { Highlight.article($0) } + localYouTubeVideos.map { Highlight.video($0) }
         self.allHighlights = self.uniqueHighlights(from: self.privateAllHighlights)
         self.allHighlights.sort(by: { $0.publishedAt > $1.publishedAt })
         self.filter()
-        
+
         self.dataState = .success
     }
     

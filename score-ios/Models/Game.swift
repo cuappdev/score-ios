@@ -43,10 +43,6 @@ struct Game : GameType, Identifiable {
         case id, city, state, date, sport, gender, location, opponentId, result, time, scoreBreakdown, boxScore, ticketLink
         case opponent = "team"
     }
-    
-    init(game: GamesQuery.Data.Game) {
-        self.init(fragment: game.fragments.gameFragment)
-    }
 
     init(game: GamesByDateQuery.Data.GamesByDate) {
         self.init(fragment: game.fragments.gameFragment)

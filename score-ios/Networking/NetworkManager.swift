@@ -17,6 +17,7 @@ class NetworkManager {
         forceNetwork ? .networkOnly : .cacheFirst
     }
 
+    /// Unused by the new system. 
     func fetchGames(limit: Int, offset: Int, forceNetwork: Bool = false) async throws -> [GamesQuery.Data.Game] {
         let response = try await apolloClient.fetch(
             query: GamesQuery(limit: Int32(limit), offset: Int32(offset)),

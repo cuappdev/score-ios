@@ -84,8 +84,8 @@ class GamesViewModel: ObservableObject
         }
     }
 
-    /// Loads the ±15d window, then kicks off a disconnected background expand to ±1y.
-    /// Returns when the ±15d fetch finishes (loading spinner / pull-to-refresh end here).
+    /// Loads the 30d window, then kicks off a disconnected background expand to 2y.
+    /// Returns when the 30d fetch finishes (loading spinner / pull-to-refresh end here).
     /// Expand keeps running afterward and is not part of this await.
     func loadGames(forceNetwork: Bool = false) async {
         loadTask?.cancel()
@@ -293,11 +293,6 @@ class GamesViewModel: ObservableObject
         }
 
         return uniqueGames
-    }
-
-    // Method to retry after an error
-    func retryFetch() async {
-        await loadGames(forceNetwork: true)
     }
 }
 

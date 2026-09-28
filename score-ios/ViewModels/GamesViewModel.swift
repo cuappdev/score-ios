@@ -147,6 +147,7 @@ class GamesViewModel: ObservableObject
         } catch is CancellationError {
             // Superseded by a newer load — leave dataState alone.
         } catch {
+            if Task.isCancelled { return }
             if preserveExistingUI {
                 dataState = .success
             } else {

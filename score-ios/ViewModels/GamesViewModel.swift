@@ -132,15 +132,7 @@ class GamesViewModel: ObservableObject
                 processGames(mapped, replace: !preserveExistingUI)
             }
 
-            // Disconnected from the awaited load — UI spinner is already done.
-            backgroundExpandTask = Task { [weak self] in
-                guard let self else { return }
-                await self.expandGamesInBackground(
-                    around: now,
-                    skipping: initialWindow,
-                    forceNetwork: forceNetwork
-                )
-            }
+            startBackgroundExpand(around: now, skipping: initialWindow, forceNetwork: forceNetwork)
         } catch is CancellationError {
             // Superseded by a newer load — leave dataState alone.
         } catch {
@@ -150,6 +142,21 @@ class GamesViewModel: ObservableObject
             } else {
                 dataState = .error(error: .networkError)
             }
+        }
+    }
+
+    private func startBackgroundExpand(
+        around now: Date,
+        skipping alreadyFetched: ClosedRange<Date>,
+        forceNetwork: Bool
+    ) {
+        backgroundExpandTask = Task { [weak self] in
+            guard let self else { return }
+            await self.expandGamesInBackground(
+                around: now,
+                skipping: alreadyFetched,
+                forceNetwork: forceNetwork
+            )
         }
     }
 

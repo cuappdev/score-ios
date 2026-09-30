@@ -6,6 +6,7 @@
 //
 import Foundation
 import Apollo
+import ApolloAPI
 import GameAPI
 
 class NetworkManager {
@@ -17,19 +18,34 @@ class NetworkManager {
         forceNetwork ? .networkOnly : .cacheFirst
     }
 
-    /// Unused by the new system. 
-    func fetchGames(limit: Int, offset: Int, forceNetwork: Bool = false) async throws -> [GamesQuery.Data.Game] {
+    /// Runs one query. A present `data` payload is returned as-is, including empty lists.
+    /// A missing payload throws the first GraphQL error, or `ScoreError.networkError` when there is none.
+    private func fetch<Query: GraphQLQuery, T>(
+        _ query: Query,
+        forceNetwork: Bool = false,
+        extract: (Query.Data) -> T
+    ) async throws -> T where Query.ResponseFormat == SingleResponseFormat {
         let response = try await apolloClient.fetch(
-            query: GamesQuery(limit: Int32(limit), offset: Int32(offset)),
+            query: query,
             cachePolicy: cachePolicy(forceNetwork: forceNetwork)
         )
-        if let games = response.data?.games?.compactMap({ $0 }) {
-            return games
+        if let data = response.data {
+            return extract(data)
         }
         if let first = response.errors?.first {
             throw first
         }
-        return []
+        throw ScoreError.networkError
+    }
+
+    /// Unused by the new system.
+    func fetchGames(limit: Int, offset: Int, forceNetwork: Bool = false) async throws -> [GamesQuery.Data.Game] {
+        try await fetch(
+            GamesQuery(limit: Int32(limit), offset: Int32(offset)),
+            forceNetwork: forceNetwork
+        ) { data in
+            data.games?.compactMap { $0 } ?? []
+        }
     }
 
     /// Fetches games whose `utc_date` falls between `startDate` and `endDate` (inclusive).
@@ -38,61 +54,35 @@ class NetworkManager {
         endDate: Date,
         forceNetwork: Bool = false
     ) async throws -> [GamesByDateQuery.Data.GamesByDate] {
-        let response = try await apolloClient.fetch(
-            query: GamesByDateQuery(
+        try await fetch(
+            GamesByDateQuery(
                 startDate: Date.dateToStringFull(date: startDate),
                 endDate: Date.dateToStringFull(date: endDate)
             ),
-            cachePolicy: cachePolicy(forceNetwork: forceNetwork)
-        )
-        if let games = response.data?.gamesByDate?.compactMap({ $0 }) {
-            return games
+            forceNetwork: forceNetwork
+        ) { data in
+            data.gamesByDate?.compactMap { $0 } ?? []
         }
-        if let first = response.errors?.first {
-            throw first
-        }
-        return []
     }
 
     func fetchTeamById(by id: String, forceNetwork: Bool = false) async throws -> GetTeamByIdQuery.Data.Team? {
-        let response = try await apolloClient.fetch(
-            query: GetTeamByIdQuery(id: id),
-            cachePolicy: cachePolicy(forceNetwork: forceNetwork)
-        )
-        if let team = response.data?.team {
-            return team
+        try await fetch(GetTeamByIdQuery(id: id), forceNetwork: forceNetwork) { data in
+            data.team
         }
-        if let first = response.errors?.first {
-            throw first
-        }
-        return nil
     }
 
     func fetchArticles(sportsType: String? = nil, forceNetwork: Bool = false) async throws -> [ArticlesQuery.Data.Article] {
-        let response = try await apolloClient.fetch(
-            query: ArticlesQuery(sportsType: sportsType.map { .some($0) } ?? .null),
-            cachePolicy: cachePolicy(forceNetwork: forceNetwork)
-        )
-        if let articles = response.data?.articles?.compactMap({ $0 }) {
-            return articles
+        try await fetch(
+            ArticlesQuery(sportsType: sportsType.map { .some($0) } ?? .null),
+            forceNetwork: forceNetwork
+        ) { data in
+            data.articles?.compactMap { $0 } ?? []
         }
-        if let first = response.errors?.first {
-            throw first
-        }
-        return []
     }
 
     func fetchYoutubeVideos(forceNetwork: Bool = false) async throws -> [YoutubeVideosQuery.Data.YoutubeVideo] {
-        let response = try await apolloClient.fetch(
-            query: YoutubeVideosQuery(),
-            cachePolicy: cachePolicy(forceNetwork: forceNetwork)
-        )
-        if let youtubeVideos = response.data?.youtubeVideos?.compactMap({ $0 }) {
-            return youtubeVideos
+        try await fetch(YoutubeVideosQuery(), forceNetwork: forceNetwork) { data in
+            data.youtubeVideos?.compactMap { $0 } ?? []
         }
-        if let first = response.errors?.first {
-            throw first
-        }
-        return []
     }
 }

@@ -15,10 +15,17 @@ extension Date {
     
     static let currentDate = Date()
     
-    static let fullDateFormatter = ISO8601DateFormatter() // eg 2016-04-14T10:44:00+0000
+    /// UTC ISO datetime for GraphQL `DateTime` / Mongo `utc_date`, e.g. `2026-09-06T17:00:00+00:00`
+    static let fullDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssxxx"
+        return formatter
+    }()
     
     static func dateToStringFull(date: Date) -> String {
-        return fullDateFormatter.string(from: date)
+        fullDateFormatter.string(from: date)
     }
     
     static func dateToString(date: Date) -> String {
@@ -63,6 +70,21 @@ extension Date {
         }
         
         return date >= pastDate && date < startOfToday
+    }
+
+    static func dateByAdding(days: Int, to date: Date = Date()) -> Date {
+        Calendar.current.date(byAdding: .day, value: days, to: date) ?? date
+    }
+
+    static func dateByAdding(years: Int, to date: Date = Date()) -> Date {
+        Calendar.current.date(byAdding: .year, value: years, to: date) ?? date
+    }
+
+    /// Start of the month containing `date` (calendar current).
+    static func startOfMonth(for date: Date) -> Date {
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.year, .month], from: date)
+        return calendar.date(from: components) ?? date
     }
     
     static func parseDate(dateString: String, timeString: String) -> Date {

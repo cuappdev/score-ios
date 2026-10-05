@@ -5,8 +5,8 @@
 //  Created by Hsia Lu wu on 11/22/24.
 //
 import Foundation
-import SwiftUI
 import Apollo
+import ApolloAPI
 import GameAPI
 
 class NetworkManager {
@@ -14,96 +14,75 @@ class NetworkManager {
     static let shared = NetworkManager()
     let apolloClient = ApolloClient(url: ScoreEnvironment.baseURL)
 
-    func fetchGames(limit: Int, offset: Int, completion: @escaping ([GamesQuery.Data.Game]?, Error?) -> Void) {
-        apolloClient.fetch(query: GamesQuery(limit: limit, offset: offset)) { result in
-            switch result {
-            case .success(let graphQLResult):
-                if let gamesData = graphQLResult.data?.games?.compactMap({ $0 }) {
-                    completion(gamesData, nil)
-                } else if let errors = graphQLResult.errors {
-                    let errorDescription = errors.map { $0.localizedDescription }.joined(separator: "\n")
-                    completion(nil, NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: errorDescription]))
-                }
-            case .failure(let error):
-                completion(nil, error)
-            }
+    private func cachePolicy(forceNetwork: Bool) -> CachePolicy.Query.SingleResponse {
+        forceNetwork ? .networkOnly : .cacheFirst
+    }
+
+    /// Runs one query. A present `data` payload is returned as-is, including empty lists.
+    /// A missing payload throws the first GraphQL error, or `ScoreError.networkError` when there is none.
+    private func fetch<Query: GraphQLQuery, T>(
+        _ query: Query,
+        forceNetwork: Bool = false,
+        extract: (Query.Data) -> T
+    ) async throws -> T where Query.ResponseFormat == SingleResponseFormat {
+        let response = try await apolloClient.fetch(
+            query: query,
+            cachePolicy: cachePolicy(forceNetwork: forceNetwork)
+        )
+        if let data = response.data {
+            return extract(data)
+        }
+        if let first = response.errors?.first {
+            throw first
+        }
+        throw ScoreError.networkError
+    }
+
+    /// Unused by the new system.
+    func fetchGames(limit: Int, offset: Int, forceNetwork: Bool = false) async throws -> [GamesQuery.Data.Game] {
+        try await fetch(
+            GamesQuery(limit: Int32(limit), offset: Int32(offset)),
+            forceNetwork: forceNetwork
+        ) { data in
+            data.games?.compactMap { $0 } ?? []
         }
     }
 
-    func fetchTeamById(by id: String, completion: @escaping (GetTeamByIdQuery.Data.Team?, Error?) -> Void) {
-        let query = GetTeamByIdQuery(id: id)
-
-        apolloClient.fetch(query: query) { result in
-            switch result {
-            case .success(let graphQLResult):
-                if let team = graphQLResult.data?.team {
-                    completion(team, nil)
-                } else if let errors = graphQLResult.errors {
-                    completion(nil, errors.first!)
-                }
-            case .failure(let error):
-                completion(nil, error)
-            }
-        }
-    }
-    
-    func fetchArticles(completion: @escaping ([ArticlesQuery.Data.Article]?, Error?) -> Void) {
-        let query = ArticlesQuery(sportsType: nil)
-        
-        apolloClient.fetch(query: query) { result in
-            switch result {
-            case .success(let graphQLResult):
-                if let articlesData = graphQLResult.data?.articles?.compactMap({ $0 }) {
-                    completion(articlesData, nil)
-                } else if let errors = graphQLResult.errors {
-                    let errorDescription = errors.map { $0.localizedDescription }.joined(separator: "\n")
-                    completion(nil, NSError(domain: "GraphQL", code: 0, userInfo: [NSLocalizedDescriptionKey: errorDescription]))
-                }
-            case .failure(let error):
-                completion(nil, error)
-            }
-        }
-    }
-    
-    func fetchYouTubeVideos(completion: @escaping ([YoutubeVideosQuery.Data.YoutubeVideo]?, Error?) -> Void) {
-        let query = YoutubeVideosQuery()
-        
-        apolloClient.fetch(query: query) { result in
-            switch result {
-            case .success(let graphQLResult):
-                if let youTubeVideoData = graphQLResult.data?.youtubeVideos?.compactMap({ $0 }) {
-                    completion(youTubeVideoData, nil)
-                } else if let errors = graphQLResult.errors {
-                    let errorDescription = errors.map { $0.localizedDescription }.joined(separator: "\n")
-                    completion(nil, NSError(domain: "GraphQL", code: 0, userInfo: [NSLocalizedDescriptionKey: errorDescription]))
-                }
-            case .failure(let error):
-                completion(nil, error)
-            }
-        }
-    }
-    
-    func fetchArticles() async throws -> [ArticlesQuery.Data.Article] {
-        try await withCheckedThrowingContinuation { continuation in
-            fetchArticles { articles, error in
-                if let error = error {
-                    continuation.resume(throwing: error)
-                } else {
-                    continuation.resume(returning: articles ?? [])
-                }
-            }
+    /// Fetches games whose `utc_date` falls between `startDate` and `endDate` (inclusive).
+    func fetchGamesByDate(
+        startDate: Date,
+        endDate: Date,
+        forceNetwork: Bool = false
+    ) async throws -> [GamesByDateQuery.Data.GamesByDate] {
+        try await fetch(
+            GamesByDateQuery(
+                startDate: Date.dateToStringFull(date: startDate),
+                endDate: Date.dateToStringFull(date: endDate)
+            ),
+            forceNetwork: forceNetwork
+        ) { data in
+            data.gamesByDate?.compactMap { $0 } ?? []
         }
     }
 
-    func fetchYouTubeVideos() async throws -> [YoutubeVideosQuery.Data.YoutubeVideo] {
-        try await withCheckedThrowingContinuation { continuation in
-            fetchYouTubeVideos { videos, error in
-                if let error = error {
-                    continuation.resume(throwing: error)
-                } else {
-                    continuation.resume(returning: videos ?? [])
-                }
-            }
+    func fetchTeamById(by id: String, forceNetwork: Bool = false) async throws -> GetTeamByIdQuery.Data.Team? {
+        try await fetch(GetTeamByIdQuery(id: id), forceNetwork: forceNetwork) { data in
+            data.team
+        }
+    }
+
+    func fetchArticles(sportsType: String? = nil, forceNetwork: Bool = false) async throws -> [ArticlesQuery.Data.Article] {
+        try await fetch(
+            ArticlesQuery(sportsType: sportsType.map { .some($0) } ?? .null),
+            forceNetwork: forceNetwork
+        ) { data in
+            data.articles?.compactMap { $0 } ?? []
+        }
+    }
+
+    func fetchYoutubeVideos(forceNetwork: Bool = false) async throws -> [YoutubeVideosQuery.Data.YoutubeVideo] {
+        try await fetch(YoutubeVideosQuery(), forceNetwork: forceNetwork) { data in
+            data.youtubeVideos?.compactMap { $0 } ?? []
         }
     }
 }

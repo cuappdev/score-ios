@@ -20,7 +20,7 @@ struct BoxScoreItem: Decodable {
     let corScore: Int
     let oppScore: Int
     
-    init(item: GamesQuery.Data.Game.BoxScore?) {
+    init(item: GameFragment.BoxScore?) {
         if let item = item {
             self.team = item.team ?? ""
             self.period = item.period ?? ""
@@ -45,7 +45,7 @@ struct BoxScoreItem: Decodable {
     }
 }
 
-func decodeBoxScoreArray(boxScores: [GamesQuery.Data.Game.BoxScore?]?) -> [BoxScoreItem] {
+func decodeBoxScoreArray(boxScores: [GameFragment.BoxScore?]?) -> [BoxScoreItem] {
     var result: [BoxScoreItem] = []
     if let boxScores = boxScores {
         for score in boxScores {

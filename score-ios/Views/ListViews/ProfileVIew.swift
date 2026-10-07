@@ -189,6 +189,10 @@ struct ProfileView: View {
             .task {
                    viewModel.loadHighlights()
                }
+                    .padding(.top, 24)
+                    .padding(.horizontal, 24)
+                    .font(Constants.Fonts.medium18)
+            }
         }
     }
 }

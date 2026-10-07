@@ -11,6 +11,7 @@ enum MainTab: String, CaseIterable, Identifiable {
     case schedule = "Schedule"
     case highlights = "Highlights"
     case scores = "Scores"
+    case profiles = "Profile"
     
     var id: Self { self }
 
@@ -27,6 +28,7 @@ enum MainTab: String, CaseIterable, Identifiable {
         case .schedule: return "schedule"
         case .highlights: return "highlight"
         case .scores: return "scoreboard"
+        case .profiles: return "schedule"
         }
     }
 }

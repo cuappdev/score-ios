@@ -28,6 +28,9 @@ struct MainTabView: View {
                     case .scores:
                         PastGamesView()
                             .environmentObject(gamesViewModel)
+                    case .profiles:
+                        PastGamesView()
+                            .environmentObject(gamesViewModel)
                 }
 
                 HStack {

@@ -28,6 +28,9 @@ struct MainTabView: View {
                     case .scores:
                         PastGamesView()
                             .environmentObject(gamesViewModel)
+                    case .profiles:
+                        PastGamesView()
+                            .environmentObject(gamesViewModel)
                 }
 
                 HStack {
@@ -35,7 +38,7 @@ struct MainTabView: View {
                         TabViewIcon(selectedTab: $selectedTab, tab: tab)
                             .frame(height: 45)
                             .padding(.top, 10)
-                        if tab != .scores { Spacer() }
+                        if tab != .profiles { Spacer() }
                     }
                 }
                 // Different paddings to balance text lengths

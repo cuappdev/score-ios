@@ -13,6 +13,7 @@ struct SignInView: View {
 
     // MARK: - Properties
 
+    @StateObject private var loginViewModel = LoginViewModel()
     @State private var showIntro = !SignInView.hasShownIntro
     @State private var showButtons = SignInView.hasShownIntro
     static var hasShownIntro = false
@@ -38,6 +39,9 @@ struct SignInView: View {
             if showIntro {
                 IntroAnimationView(onFinished: finishIntro)
             }
+        }
+        .alert(loginViewModel.errorText, isPresented: $loginViewModel.didPresentError) {
+            Button("OK", role: .cancel) {}
         }
     }
 
@@ -67,7 +71,7 @@ struct SignInView: View {
         VStack(spacing: buttonsSpacing) {
             VStack(spacing: primaryButtonsSpacing) {
                 Button {
-                    onSignUp?()
+                    signIn()
                 } label: {
                     Text("Sign Up")
                         .font(Constants.Fonts.Header.h3)
@@ -79,7 +83,7 @@ struct SignInView: View {
                 }
                 .fadeIn(isVisible: showButtons, order: 0)
                 Button {
-                    onLogIn?()
+                    signIn()
                 } label: {
                     Text("Log In")
                         .font(Constants.Fonts.Header.h3)
@@ -110,6 +114,22 @@ struct SignInView: View {
         SignInView.hasShownIntro = true
         showIntro = false
         showButtons = true
+    }
+
+    private func signIn() {
+        Task {
+            guard let idToken = await loginViewModel.signInWithGoogle() else { return }
+            do {
+                switch try await AuthManager.shared.authenticate(idToken: idToken) {
+                case .existingUser:
+                    onLogIn?()
+                case .newUser:
+                    onSignUp?()
+                }
+            } catch {
+                loginViewModel.showError("Couldn't sign in. Please try again.")
+            }
+        }
     }
 }
 

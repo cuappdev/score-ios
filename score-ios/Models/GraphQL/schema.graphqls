@@ -1,70 +1,9 @@
-"""
-A directive used by the Apollo iOS client to annotate operations or fragments that should be used exclusively for generating local cache mutations instead of as standard operations.
-"""
-directive @apollo_client_ios_localCacheMutation on QUERY | MUTATION | SUBSCRIPTION | FRAGMENT_DEFINITION
+type AddBookmarkedHighlight {
+  success: Boolean
+}
 
-"""
-A directive used by the Apollo iOS code generation engine to generate custom import statements in operation or fragment definition files. An import statement to import a module with the name provided in the `module` argument will be added to the generated definition file.
-"""
-directive @import(
-  """The name of the module to import."""
-  module: String!
-) repeatable on QUERY | MUTATION | SUBSCRIPTION | FRAGMENT_DEFINITION
-
-"""Attach extra information to a given type."""
-directive @typePolicy(
-  """
-  A selection set containing fields used to compute the cache key of an object. Referenced fields must have non-nullable scalar types. Order is important.
-  """
-  keyFields: String!
-) on OBJECT | INTERFACE
-
-"""
-A directive used by Apollo iOS to map query input data to cache keys of objects.
-"""
-directive @fieldPolicy(
-  """The field you are setting the @fieldPolicy for."""
-  forField: String!
-
-  """Set of fields used to compute the cache key."""
-  keyArgs: String!
-) repeatable on OBJECT | INTERFACE
-
-"""
-Directs the executor to defer this fragment when the `if` argument is true or undefined.
-"""
-directive @defer(
-  """Deferred when true or undefined."""
-  if: Boolean
-
-  """Unique name"""
-  label: String
-) on FRAGMENT_SPREAD | INLINE_FRAGMENT
-
-type Query {
-  articles(sportsType: String): [ArticleType]
-  youtubeVideos: [YoutubeVideoType]
-  youtubeVideo(id: String!): YoutubeVideoType
-  games(
-    """Number of games to return"""
-    limit: Int = 100
-
-    """Number of games to skip"""
-    offset: Int = 0
-  ): [GameType]
-  game(id: String!): GameType
-  gameByData(city: String!, date: String!, gender: String!, location: String, opponentId: String!, sport: String!, state: String!, time: String!): GameType
-  gamesBySport(sport: String!): [GameType]
-  gamesByGender(gender: String!): [GameType]
-  gamesBySportGender(sport: String!, gender: String!): [GameType]
-  gamesByDate(startDate: DateTime!, endDate: DateTime!): [GameType]
-  gamesByLocation(onCampus: Boolean!): [GameType]
-
-  """Current user's favorited games (requires auth)."""
-  myFavoritedGames: [GameType]
-  teams: [TeamType]
-  team(id: String!): TeamType
-  teamByName(name: String!): TeamType
+type AddFavoriteTeam {
+  success: Boolean
 }
 
 """
@@ -84,67 +23,6 @@ type ArticleType {
   sportsType: String!
   publishedAt: String!
   url: String!
-}
-
-"""
-A GraphQL type representing a YouTube video.
-
-Attributes:
-    - id: The YouTube video ID (optional).
-    - title: The title of the video.
-    - description: The description of the video.
-    - thumbnail: The URL of the video's thumbnail. (optional)
-    - url: The URL to the video.
-    - published_at: The date and time the video was published.
-    - duration: The duration of the video (optional).
-    - sportsType: The sport type extracted from the video title.
-"""
-type YoutubeVideoType {
-  id: String
-  title: String!
-  description: String!
-  thumbnail: String!
-  b64Thumbnail: String
-  url: String!
-  publishedAt: String!
-  duration: String
-  sportsType: String
-}
-
-"""
-A GraphQL type representing a game.
-
-Attributes:
-    - `id`: The ID of the game (optional).
-    - `city`: The city of the game.
-    - `date`: The date of the game.
-    - `gender`: The gender of the game.
-    - `location`: The location of the game. (optional)
-    - `opponent_id`: The id of the opposing team.
-    - `result`: The result of the game. (optional)
-    - `sport`: The sport of the game.
-    - `state`: The state of the game.
-    - `time`: The time of the game. (optional)
-    - `box_score`: The box score of the game.
-    - `score_breakdown`: The score breakdown of the game.
-    - `ticket_link`: The ticket link of the game. (optional)
-"""
-type GameType {
-  id: String
-  city: String!
-  date: String!
-  gender: String!
-  location: String
-  opponentId: String!
-  result: String
-  sport: String!
-  state: String!
-  time: String
-  boxScore: [BoxScoreEntryType]
-  scoreBreakdown: [[String]]
-  team: TeamType
-  utcDate: String
-  ticketLink: String
 }
 
 """
@@ -173,6 +51,211 @@ type BoxScoreEntryType {
   oppScore: Int
 }
 
+type CreateArticle {
+  article: ArticleType
+}
+
+type CreateGame {
+  game: GameType
+}
+
+type CreateTeam {
+  team: TeamType
+}
+
+type CreateYoutubeVideo {
+  youtubeVideo: YoutubeVideoType
+}
+
+"""
+The `DateTime` scalar type represents a DateTime
+value as specified by
+[iso8601](https://en.wikipedia.org/wiki/ISO_8601).
+"""
+scalar DateTime
+
+"""A Cornell team identified by its gender and sport."""
+type FavoriteTeamType {
+  gender: String!
+  sport: String!
+}
+
+"""
+A GraphQL type representing a game.
+
+Attributes:
+    - `id`: The ID of the game (optional).
+    - `city`: The city of the game.
+    - `date`: The date of the game.
+    - `gender`: The gender of the game.
+    - `location`: The location of the game. (optional)
+    - `opponent_id`: The id of the opposing team.
+    - `result`: The result of the game. (optional)
+    - `sport`: The sport of the game.
+    - `state`: The state of the game.
+    - `time`: The time of the game. (optional)
+    - `box_score`: The box score of the game.
+    - `score_breakdown`: The score breakdown of the game.
+    - `ticket_link`: The ticket link of the game. (optional)
+    - `recap_link`: The recap article link. (optional)
+    - `recap_article_title`: The recap article title. (optional)
+    - `recap_article_image`: The recap article image. (optional)
+    - `recap_published_at`: The recap article publication date. (optional)
+"""
+type GameType {
+  id: String
+  city: String!
+  date: String!
+  gender: String!
+  location: String
+  opponentId: String!
+  result: String
+  sport: String!
+  state: String!
+  time: String
+  boxScore: [BoxScoreEntryType]
+  scoreBreakdown: [[String]]
+  team: TeamType
+  utcDate: String
+  ticketLink: String
+  recapLink: String
+  recapArticleTitle: String
+  recapArticleImage: String
+  recapPublishedAt: String
+}
+
+type LoginUser {
+  accessToken: String
+  refreshToken: String
+  user: UserType!
+}
+
+type LogoutUser {
+  success: Boolean
+}
+
+type Mutation {
+  """Creates a new game."""
+  createGame(boxScore: String, city: String!, date: String!, gender: String!, location: String, opponentId: String!, recapArticleImage: String, recapArticleTitle: String, recapLink: String, recapPublishedAt: String, result: String, scoreBreakdown: String, sport: String!, state: String!, ticketLink: String, time: String, utcDate: String): CreateGame
+
+  """Creates a new team."""
+  createTeam(b64Image: String, color: String!, image: String, name: String!): CreateTeam
+
+  """Creates a new youtube video."""
+  createYoutubeVideo(b64Thumbnail: String, description: String!, duration: String!, id: String!, publishedAt: String!, thumbnail: String!, title: String!, url: String!): CreateYoutubeVideo
+
+  """Creates a new article."""
+  createArticle(image: String, publishedAt: String!, slug: String!, sportsType: String!, title: String!, url: String!): CreateArticle
+
+  """
+  Login with a Google Firebase ID token; returns access_token and refresh_token.
+  """
+  loginUser(
+    """Google Firebase ID token from the client."""
+    idToken: String!
+  ): LoginUser
+
+  """
+  Create a new user with a Google Firebase ID token; returns access_token and refresh_token.
+  """
+  signupUser(
+    """Google Firebase ID token from the client."""
+    idToken: String!
+  ): SignupUser
+
+  """
+  Exchange a valid refresh token (in Authorization header) for a new access_token.
+  """
+  refreshAccessToken: RefreshAccessToken
+
+  """
+  Revoke the current token (access or refresh). Send token in Authorization header.
+  """
+  logoutUser: LogoutUser
+
+  """
+  Add a team, identified by gender and sport, to the current user's favorites (requires auth).
+  """
+  addFavoriteTeam(
+    """Gender of the team, such as Mens or Womens."""
+    gender: String!
+
+    """Sport of the team"""
+    sport: String!
+  ): AddFavoriteTeam
+
+  """
+  Remove a team, identified by gender and sport, from the current user's favorites (requires auth).
+  """
+  removeFavoriteTeam(
+    """Gender of the team, such as Mens or Womens."""
+    gender: String!
+
+    """Sport of the team"""
+    sport: String!
+  ): RemoveFavoriteTeam
+
+  """Bookmark a highlight for the current user (requires auth)."""
+  addBookmarkedHighlight(
+    """ID of the highlight to bookmark."""
+    highlightId: String!
+  ): AddBookmarkedHighlight
+
+  """Remove a highlight bookmark for the current user (requires auth)."""
+  removeBookmarkedHighlight(
+    """ID of the highlight to remove from bookmarks."""
+    highlightId: String!
+  ): RemoveBookmarkedHighlight
+}
+
+type Query {
+  articles(sportsType: String): [ArticleType]
+  youtubeVideos: [YoutubeVideoType]
+  youtubeVideo(id: String!): YoutubeVideoType
+  myBookmarkedHighlights: [YoutubeVideoType]
+  games(
+    """Number of games to return"""
+    limit: Int = 100
+
+    """Number of games to skip"""
+    offset: Int = 0
+  ): [GameType]
+  game(id: String!): GameType
+  gameByData(city: String!, date: String!, gender: String!, location: String, opponentId: String!, sport: String!, state: String!, time: String!): GameType
+  gamesBySport(sport: String!): [GameType]
+  gamesByGender(gender: String!): [GameType]
+  gamesBySportGender(sport: String!, gender: String!): [GameType]
+  gamesByDate(startDate: DateTime!, endDate: DateTime!): [GameType]
+  gamesByLocation(onCampus: Boolean!): [GameType]
+
+  """
+  Current user's favorited teams, identified by gender and sport (requires auth).
+  """
+  myFavoritedTeams: [FavoriteTeamType]
+  teams: [TeamType]
+  team(id: String!): TeamType
+  teamByName(name: String!): TeamType
+  me: UserType!
+}
+
+type RefreshAccessToken {
+  newAccessToken: String
+}
+
+type RemoveBookmarkedHighlight {
+  success: Boolean
+}
+
+type RemoveFavoriteTeam {
+  success: Boolean
+}
+
+type SignupUser {
+  accessToken: String
+  refreshToken: String
+  user: UserType!
+}
+
 """
 A GraphQL type representing a team.
 
@@ -191,107 +274,37 @@ type TeamType {
   name: String!
 }
 
+"""Public application-user fields returned after authentication."""
+type UserType {
+  id: ID!
+  email: String
+  name: String
+  favoriteTeams: [FavoriteTeamType]!
+  bookmarkedHighlightIds: [String]!
+}
+
 """
-The `DateTime` scalar type represents a DateTime
-value as specified by
-[iso8601](https://en.wikipedia.org/wiki/ISO_8601).
+A GraphQL type representing a YouTube video.
+
+Attributes:
+    - id: The YouTube video ID (optional).
+    - title: The title of the video.
+    - description: The description of the video.
+    - thumbnail: The URL of the video's thumbnail. (optional)
+    - url: The URL to the video.
+    - published_at: The date and time the video was published.
+    - duration: The duration of the video (optional).
+    - sportsType: The sport type extracted from the video title.
 """
-scalar DateTime
-
-type Mutation {
-  """Creates a new game."""
-  createGame(boxScore: String, city: String!, date: String!, gender: String!, location: String, opponentId: String!, result: String, scoreBreakdown: String, sport: String!, state: String!, ticketLink: String, time: String!, utcDate: String): CreateGame
-
-  """Creates a new team."""
-  createTeam(b64Image: String, color: String!, image: String, name: String!): CreateTeam
-
-  """Creates a new youtube video."""
-  createYoutubeVideo(b64Thumbnail: String, description: String!, duration: String!, id: String!, publishedAt: String!, thumbnail: String!, title: String!, url: String!): CreateYoutubeVideo
-
-  """Creates a new article."""
-  createArticle(image: String, publishedAt: String!, slug: String!, sportsType: String!, title: String!, url: String!): CreateArticle
-
-  """Login by net_id; returns access_token and refresh_token."""
-  loginUser(
-    """User's net ID (e.g. Cornell netid)."""
-    netId: String!
-  ): LoginUser
-
-  """
-  Create a new user by net_id; returns access_token and refresh_token (no separate login needed).
-  """
-  signupUser(
-    """Email address."""
-    email: String
-
-    """Display name."""
-    name: String
-
-    """User's net ID (e.g. Cornell netid)."""
-    netId: String!
-  ): SignupUser
-
-  """
-  Exchange a valid refresh token (in Authorization header) for a new access_token.
-  """
-  refreshAccessToken: RefreshAccessToken
-
-  """
-  Revoke the current token (access or refresh). Send token in Authorization header.
-  """
-  logoutUser: LogoutUser
-
-  """Add a game to the current user's favorites (requires auth)."""
-  addFavoriteGame(
-    """ID of the game to add to favorites."""
-    gameId: String!
-  ): AddFavoriteGame
-
-  """Remove a game from the current user's favorites (requires auth)."""
-  removeFavoriteGame(
-    """ID of the game to remove from favorites."""
-    gameId: String!
-  ): RemoveFavoriteGame
+type YoutubeVideoType {
+  id: String
+  title: String!
+  description: String!
+  thumbnail: String!
+  b64Thumbnail: String
+  url: String!
+  publishedAt: String!
+  duration: String
+  sportsType: String
 }
 
-type CreateGame {
-  game: GameType
-}
-
-type CreateTeam {
-  team: TeamType
-}
-
-type CreateYoutubeVideo {
-  youtubeVideo: YoutubeVideoType
-}
-
-type CreateArticle {
-  article: ArticleType
-}
-
-type LoginUser {
-  accessToken: String
-  refreshToken: String
-}
-
-type SignupUser {
-  accessToken: String
-  refreshToken: String
-}
-
-type RefreshAccessToken {
-  newAccessToken: String
-}
-
-type LogoutUser {
-  success: Boolean
-}
-
-type AddFavoriteGame {
-  success: Boolean
-}
-
-type RemoveFavoriteGame {
-  success: Boolean
-}

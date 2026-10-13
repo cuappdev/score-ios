@@ -54,3 +54,15 @@ enum Sport : String, Identifiable, CaseIterable, CustomStringConvertible {
     }
 }
 
+extension Sport {
+    var genders: [Sex] {
+        switch self {
+        case .All: return []
+        case .Basketball, .IceHockey, .Lacrosse, .Soccer: return [.Women, .Men]
+        case .FieldHockey: return [.Women]
+        case .Baseball, .Football: return [.Men]
+        }
+    }
+    var iconName: String { "\(rawValue)-g" }
+}
+

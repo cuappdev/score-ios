@@ -7,15 +7,32 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		130DDDF5306B7BE20060C0E9 /* IntroAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130DDDF4306B7BDD0060C0E9 /* IntroAnimationView.swift */; };
+		130DDDF7306B7C3A0060C0E9 /* IntroAnimationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130DDDF6306B7C2E0060C0E9 /* IntroAnimationViewModel.swift */; };
+		130DDDF9306B7D180060C0E9 /* SportIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130DDDF8306B7D140060C0E9 /* SportIcon.swift */; };
+		130DDDFB306B81130060C0E9 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130DDDFA306B810F0060C0E9 /* SignInView.swift */; };
+		130DDDFF306B83770060C0E9 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130DDDFE306B83730060C0E9 /* LoginViewModel.swift */; };
+		130DDE02306B87560060C0E9 /* LoginUser.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 130DDE01306B874F0060C0E9 /* LoginUser.graphql */; };
+		130DDE04306B876C0060C0E9 /* SignupUser.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 130DDE03306B87650060C0E9 /* SignupUser.graphql */; };
+		130DDE06306B87CA0060C0E9 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130DDE05306B87C70060C0E9 /* KeychainHelper.swift */; };
+		130DDE08306B87E00060C0E9 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130DDE07306B87DC0060C0E9 /* AuthManager.swift */; };
+		130DDE0A306B895B0060C0E9 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 130DDE09306B895B0060C0E9 /* GoogleSignIn */; };
+		130DDE0C306B895B0060C0E9 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 130DDE0B306B895B0060C0E9 /* GoogleSignInSwift */; };
+		130DDE0E306B8A120060C0E9 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 130DDE0D306B8A120060C0E9 /* FirebaseAuth */; };
+		130DDE10306C5D2B0060C0E9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 130DDE0F306C5D2B0060C0E9 /* GoogleService-Info.plist */; };
+		130DDE11306C5D2B0060C0E9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 130DDE0F306C5D2B0060C0E9 /* GoogleService-Info.plist */; };
+		130DDE12306C5D2B0060C0E9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 130DDE0F306C5D2B0060C0E9 /* GoogleService-Info.plist */; };
+		130DDE14306C8DCA0060C0E9 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130DDE13306C8DC60060C0E9 /* EditProfileView.swift */; };
+		130DDE16306C94FF0060C0E9 /* EditFavSportsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130DDE15306C94F30060C0E9 /* EditFavSportsView.swift */; };
+		130DDE18306CC9A00060C0E9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130DDE17306CC99F0060C0E9 /* User.swift */; };
+		1355E87D307617550065920B /* FavoriteTeam.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 1355E87C307617490065920B /* FavoriteTeam.graphql */; };
+		1355E87F307617E40065920B /* AuthorizationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1355E87E307617DA0065920B /* AuthorizationHelper.swift */; };
+		1355E881307619CB0065920B /* EditFavSportsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1355E880307619C10065920B /* EditFavSportsViewModel.swift */; };
+		1355E8853076A47E0065920B /* AppSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1355E8843076A47B0065920B /* AppSession.swift */; };
 		13E348FB2F3D212D0014EC63 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E348FA2F3D21280014EC63 /* CalendarViewModel.swift */; };
-		13E3C66C307EF359009A6F22 /* SportIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E3C66B307EF359009A6F22 /* SportIcon.swift */; };
-		13E3C66E307EF369009A6F22 /* IntroAnimationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E3C66D307EF369009A6F22 /* IntroAnimationViewModel.swift */; };
-		13E3C670307EF37D009A6F22 /* IntroAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E3C66F307EF37D009A6F22 /* IntroAnimationView.swift */; };
-		13E3C672307EF38F009A6F22 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E3C671307EF38F009A6F22 /* SignInView.swift */; };
 		1C87865D2D8CD76900EBDF74 /* TrailingFadeGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C87865C2D8CD76900EBDF74 /* TrailingFadeGradient.swift */; };
 		1C87865F2D8CDADC00EBDF74 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C87865E2D8CDADC00EBDF74 /* String+Extension.swift */; };
 		2384C7B81B22428D94240957 /* Highlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840304A20FA141C291346BA8 /* Highlight.swift */; };
-		2C1375CB2E7233390089EBC7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C1375CA2E7233390089EBC7 /* GoogleService-Info.plist */; };
 		64005CCECEAC4FD4BA8F51D2 /* YouTubeVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F3E7BD70D304BE7A01DB499 /* YouTubeVideo.swift */; };
 		76101F6A2E981E3E006D6EDD /* DetailedHighlightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76101F692E981E37006D6EDD /* DetailedHighlightView.swift */; };
 		7626AD682E973D9B002149CD /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7626AD672E973D9B002149CD /* SearchView.swift */; };
@@ -127,14 +144,26 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		130DDDF4306B7BDD0060C0E9 /* IntroAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroAnimationView.swift; sourceTree = "<group>"; };
+		130DDDF6306B7C2E0060C0E9 /* IntroAnimationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroAnimationViewModel.swift; sourceTree = "<group>"; };
+		130DDDF8306B7D140060C0E9 /* SportIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportIcon.swift; sourceTree = "<group>"; };
+		130DDDFA306B810F0060C0E9 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
+		130DDDFE306B83730060C0E9 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		130DDE01306B874F0060C0E9 /* LoginUser.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = LoginUser.graphql; sourceTree = "<group>"; };
+		130DDE03306B87650060C0E9 /* SignupUser.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = SignupUser.graphql; sourceTree = "<group>"; };
+		130DDE05306B87C70060C0E9 /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
+		130DDE07306B87DC0060C0E9 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
+		130DDE0F306C5D2B0060C0E9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		130DDE13306C8DC60060C0E9 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
+		130DDE15306C94F30060C0E9 /* EditFavSportsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFavSportsView.swift; sourceTree = "<group>"; };
+		130DDE17306CC99F0060C0E9 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		1355E87C307617490065920B /* FavoriteTeam.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = FavoriteTeam.graphql; sourceTree = "<group>"; };
+		1355E87E307617DA0065920B /* AuthorizationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationHelper.swift; sourceTree = "<group>"; };
+		1355E880307619C10065920B /* EditFavSportsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFavSportsViewModel.swift; sourceTree = "<group>"; };
+		1355E8843076A47B0065920B /* AppSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSession.swift; sourceTree = "<group>"; };
 		13E348FA2F3D21280014EC63 /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
-		13E3C66B307EF359009A6F22 /* SportIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportIcon.swift; sourceTree = "<group>"; };
-		13E3C66D307EF369009A6F22 /* IntroAnimationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroAnimationViewModel.swift; sourceTree = "<group>"; };
-		13E3C66F307EF37D009A6F22 /* IntroAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroAnimationView.swift; sourceTree = "<group>"; };
-		13E3C671307EF38F009A6F22 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		1C87865C2D8CD76900EBDF74 /* TrailingFadeGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailingFadeGradient.swift; sourceTree = "<group>"; };
 		1C87865E2D8CDADC00EBDF74 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
-		2C1375CA2E7233390089EBC7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6CB4DBAE237D47AB882D4EBC /* Article.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Article.swift; sourceTree = "<group>"; };
 		6F3E7BD70D304BE7A01DB499 /* YouTubeVideo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeVideo.swift; sourceTree = "<group>"; };
 		76101F692E981E37006D6EDD /* DetailedHighlightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedHighlightView.swift; sourceTree = "<group>"; };
@@ -237,9 +266,12 @@
 			files = (
 				D89102042CED69EF004CE226 /* Apollo in Frameworks */,
 				D0A904F92E8DDD990008194B /* FirebaseCrashlytics in Frameworks */,
+				130DDE0C306B895B0060C0E9 /* GoogleSignInSwift in Frameworks */,
 				D0A904F72E8DDD990008194B /* FirebaseCore in Frameworks */,
 				D89102182CF151DD004CE226 /* GameAPI in Frameworks */,
 				D0A904F52E8DDD990008194B /* FirebaseAnalytics in Frameworks */,
+				130DDE0A306B895B0060C0E9 /* GoogleSignIn in Frameworks */,
+				130DDE0E306B8A120060C0E9 /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,7 +303,8 @@
 		CE335CCC2C9226F90037F572 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				13E3C66B307EF359009A6F22 /* SportIcon.swift */,
+				130DDE17306CC99F0060C0E9 /* User.swift */,
+				130DDDF8306B7D140060C0E9 /* SportIcon.swift */,
 				D89102052CED6A1E004CE226 /* GraphQL */,
 				CE335CD82C9244230037F572 /* Game.swift */,
 				CE8ED4F52D6BF35F00A274DE /* Team.swift */,
@@ -416,7 +449,9 @@
 		CE8ED50A2D6C385E00A274DE /* MainViews */ = {
 			isa = PBXGroup;
 			children = (
-				13E3C671307EF38F009A6F22 /* SignInView.swift */,
+				130DDE15306C94F30060C0E9 /* EditFavSportsView.swift */,
+				130DDE13306C8DC60060C0E9 /* EditProfileView.swift */,
+				130DDDFA306B810F0060C0E9 /* SignInView.swift */,
 				CE725D3D2C89120200386943 /* ScoreApp.swift */,
 				D86347DE2CE98B3C003DD8F6 /* MainTabView.swift */,
 				D86347E02CE98D37003DD8F6 /* TabViewIcon.swift */,
@@ -429,7 +464,7 @@
 		CE8ED50B2D6C386B00A274DE /* DetailedViews */ = {
 			isa = PBXGroup;
 			children = (
-				13E3C66F307EF37D009A6F22 /* IntroAnimationView.swift */,
+				130DDDF4306B7BDD0060C0E9 /* IntroAnimationView.swift */,
 				D858020F2D6C38670075B036 /* DynamicScoreBox.swift */,
 				D83EE8852CC9917C008B693C /* ScoreSummaryTile.swift */,
 				76101F692E981E37006D6EDD /* DetailedHighlightView.swift */,
@@ -482,7 +517,7 @@
 		CEA25A972D752C6F00B9837A /* ScoreSecrets */ = {
 			isa = PBXGroup;
 			children = (
-				2C1375CA2E7233390089EBC7 /* GoogleService-Info.plist */,
+				130DDE0F306C5D2B0060C0E9 /* GoogleService-Info.plist */,
 				CEA25A962D75292900B9837A /* Keys.xcconfig */,
 			);
 			path = ScoreSecrets;
@@ -499,7 +534,9 @@
 		D87787C62CFFAE3D00EA79E1 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				13E3C66D307EF369009A6F22 /* IntroAnimationViewModel.swift */,
+				1355E880307619C10065920B /* EditFavSportsViewModel.swift */,
+				130DDDFE306B83730060C0E9 /* LoginViewModel.swift */,
+				130DDDF6306B7C2E0060C0E9 /* IntroAnimationViewModel.swift */,
 				13E348FA2F3D21280014EC63 /* CalendarViewModel.swift */,
 				D87787C72CFFAE5200EA79E1 /* GamesViewModel.swift */,
 				7665A4062EB00528004A9903 /* HighlightsViewModel.swift */,
@@ -518,6 +555,9 @@
 		D89102052CED6A1E004CE226 /* GraphQL */ = {
 			isa = PBXGroup;
 			children = (
+				1355E87C307617490065920B /* FavoriteTeam.graphql */,
+				130DDE03306B87650060C0E9 /* SignupUser.graphql */,
+				130DDE01306B874F0060C0E9 /* LoginUser.graphql */,
 				D8DD4E632CFD48E400F2C46E /* Team.graphql */,
 				D891020A2CED6A86004CE226 /* Game.graphql */,
 				76AED8522EC50C2100694C0B /* Article.graphql */,
@@ -530,6 +570,10 @@
 		D891020D2CF0EB88004CE226 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				1355E8843076A47B0065920B /* AppSession.swift */,
+				1355E87E307617DA0065920B /* AuthorizationHelper.swift */,
+				130DDE07306B87DC0060C0E9 /* AuthManager.swift */,
+				130DDE05306B87C70060C0E9 /* KeychainHelper.swift */,
 				D89102122CF10CA5004CE226 /* NetworkManager.swift */,
 			);
 			path = Networking;
@@ -629,6 +673,7 @@
 				D89102012CED68D9004CE226 /* XCRemoteSwiftPackageReference "apollo-ios" */,
 				D0A904F32E8DDD990008194B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				761050E32EC50DCC00FD73F8 /* XCLocalSwiftPackageReference "gameAPI" */,
+				130DDE00306B83B50060C0E9 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			productRefGroup = CE725D392C89120200386943 /* Products */;
 			projectDirPath = "";
@@ -648,9 +693,9 @@
 			files = (
 				D8DD4E642CFD48ED00F2C46E /* Team.graphql in Resources */,
 				D891020B2CED6A8E004CE226 /* Game.graphql in Resources */,
-				2C1375CB2E7233390089EBC7 /* GoogleService-Info.plist in Resources */,
 				76AED8512EC50B7F00694C0B /* YoutubeVideo.graphql in Resources */,
 				CE528FE42C96A27500C238B5 /* Poppins-Light.ttf in Resources */,
+				130DDE10306C5D2B0060C0E9 /* GoogleService-Info.plist in Resources */,
 				CE528FEE2C96A27500C238B5 /* Poppins-Black.ttf in Resources */,
 				CE528FEC2C96A27500C238B5 /* Poppins-LightItalic.ttf in Resources */,
 				76AED8532EC50C2700694C0B /* Article.graphql in Resources */,
@@ -662,6 +707,7 @@
 				CE528FE22C96A27500C238B5 /* Poppins-ExtraLightItalic.ttf in Resources */,
 				CE528FE92C96A27500C238B5 /* Poppins-BlackItalic.ttf in Resources */,
 				D89102072CED6A39004CE226 /* schema.graphqls in Resources */,
+				1355E87D307617550065920B /* FavoriteTeam.graphql in Resources */,
 				CE528FE72C96A27500C238B5 /* Poppins-ExtraBoldItalic.ttf in Resources */,
 				CE528FE32C96A27500C238B5 /* Poppins-BoldItalic.ttf in Resources */,
 				CE528FE62C96A27500C238B5 /* Poppins-SemiBoldItalic.ttf in Resources */,
@@ -672,6 +718,8 @@
 				CE725D432C89120400386943 /* Preview Assets.xcassets in Resources */,
 				CE528FF12C96A27500C238B5 /* Poppins-Italic.ttf in Resources */,
 				CE528FF22C96A27500C238B5 /* Poppins-MediumItalic.ttf in Resources */,
+				130DDE04306B876C0060C0E9 /* SignupUser.graphql in Resources */,
+				130DDE02306B87560060C0E9 /* LoginUser.graphql in Resources */,
 				CE725D402C89120400386943 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -680,6 +728,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				130DDE11306C5D2B0060C0E9 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -687,6 +736,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				130DDE12306C5D2B0060C0E9 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -743,11 +793,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1355E881307619CB0065920B /* EditFavSportsViewModel.swift in Sources */,
 				CE3C9C432D011A23008BFB4C /* OrdinalSuffix.swift in Sources */,
 				CE8ED5022D6BF4E800A274DE /* TimeUpdate.swift in Sources */,
 				D89102132CF10CA9004CE226 /* NetworkManager.swift in Sources */,
 				CE725D3E2C89120200386943 /* ScoreApp.swift in Sources */,
-				13E3C66E307EF369009A6F22 /* IntroAnimationViewModel.swift in Sources */,
 				D836AD922CB62C8800BD1545 /* NoGameView.swift in Sources */,
 				7626AD682E973D9B002149CD /* SearchView.swift in Sources */,
 				7626AD692E973D9B002149CD /* HighlightView.swift in Sources */,
@@ -755,11 +805,15 @@
 				7626AD6A2E973D9B002149CD /* HighlightTile.swift in Sources */,
 				7626AD6B2E973D9B002149CD /* HighlightTileArticle.swift in Sources */,
 				7626AD6C2E973D9B002149CD /* HighlightTileVideo.swift in Sources */,
+				130DDE16306C94FF0060C0E9 /* EditFavSportsView.swift in Sources */,
 				CE528FF52C9798AC00C238B5 /* FilterTile.swift in Sources */,
 				CE7666872D5D108E00659A3B /* ScoringUpdateCell.swift in Sources */,
 				76D998E92E9F1AF900713EE5 /* SearchViewFullScreen.swift in Sources */,
+				1355E8853076A47E0065920B /* AppSession.swift in Sources */,
 				D85802102D6C38700075B036 /* DynamicScoreBox.swift in Sources */,
+				130DDDF5306B7BE20060C0E9 /* IntroAnimationView.swift in Sources */,
 				D8B1C9D32CD2D20A0095E563 /* PastGameTile.swift in Sources */,
+				130DDDF9306B7D180060C0E9 /* SportIcon.swift in Sources */,
 				7626AD6F2E973E08002149CD /* View+CornerRadius.swift in Sources */,
 				CE528FA22C9651C800C238B5 /* UpcomingGameTile.swift in Sources */,
 				FD5A38DD2D8F30CC00CF5E30 /* RetryErrorView.swift in Sources */,
@@ -771,6 +825,7 @@
 				2384C7B81B22428D94240957 /* Highlight.swift in Sources */,
 				CE8ED4FC2D6BF47C00A274DE /* DummyData.swift in Sources */,
 				CE335CD92C9244230037F572 /* Game.swift in Sources */,
+				130DDE08306B87E00060C0E9 /* AuthManager.swift in Sources */,
 				D87787C82CFFAE5A00EA79E1 /* GamesViewModel.swift in Sources */,
 				CE335CD72C922F390037F572 /* Dates.swift in Sources */,
 				D86347AF2CDBD2F4003DD8F6 /* PastGameCard.swift in Sources */,
@@ -785,29 +840,33 @@
 				D83EE8862CC9917C008B693C /* ScoreSummaryTile.swift in Sources */,
 				CE8ED5002D6BF4BE00A274DE /* BoxScoreUpdate.swift in Sources */,
 				D89461192CBF393B0010C532 /* UpcomingCard.swift in Sources */,
+				130DDDFF306B83770060C0E9 /* LoginViewModel.swift in Sources */,
 				CE8ED4F62D6BF35F00A274DE /* Team.swift in Sources */,
 				CE8ED4FA2D6BF46300A274DE /* Sex.swift in Sources */,
-				13E3C66C307EF359009A6F22 /* SportIcon.swift in Sources */,
 				D8B1C9D12CD2CE3D0095E563 /* PastGamesView.swift in Sources */,
 				CE335CD32C922E8D0037F572 /* PrimaryColors.swift in Sources */,
+				130DDDFB306B81130060C0E9 /* SignInView.swift in Sources */,
 				CE725D3C2C89120200386943 /* Home.swift in Sources */,
 				FD5A38DF2D8F3E1400CF5E30 /* ShimmerModifier.swift in Sources */,
 				CE528FA02C96420700C238B5 /* PickerView.swift in Sources */,
+				130DDDF7306B7C3A0060C0E9 /* IntroAnimationViewModel.swift in Sources */,
 				CE528FA42C9653C200C238B5 /* Error.swift in Sources */,
 				CE335CD52C922ECB0037F572 /* Constants.swift in Sources */,
 				CE8ED4FE2D6BF49E00A274DE /* GameUpdate.swift in Sources */,
+				130DDE14306C8DCA0060C0E9 /* EditProfileView.swift in Sources */,
+				130DDE18306CC9A00060C0E9 /* User.swift in Sources */,
 				7665A4072EB00531004A9903 /* HighlightsViewModel.swift in Sources */,
 				D86347E12CE98D37003DD8F6 /* TabViewIcon.swift in Sources */,
 				CE3C9C412D010177008BFB4C /* ScoringSummary.swift in Sources */,
 				CE8ED50E2D6C3B8000A274DE /* SportSelectorView.swift in Sources */,
 				CE8ED5082D6C36E200A274DE /* GameListView.swift in Sources */,
-				13E3C670307EF37D009A6F22 /* IntroAnimationView.swift in Sources */,
 				CE8ED5142D6C42D400A274DE /* GameSectionHeaderView.swift in Sources */,
 				7675D0932EBC0F1D00940292 /* NoHighlightView.swift in Sources */,
+				1355E87F307617E40065920B /* AuthorizationHelper.swift in Sources */,
 				D86347B12CDBFF7C003DD8F6 /* UpcomingGamesView.swift in Sources */,
 				D86347DF2CE98B3C003DD8F6 /* MainTabView.swift in Sources */,
+				130DDE06306B87CA0060C0E9 /* KeychainHelper.swift in Sources */,
 				1C87865F2D8CDADC00EBDF74 /* String+Extension.swift in Sources */,
-				13E3C672307EF38F009A6F22 /* SignInView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1158,6 +1217,14 @@
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		130DDE00306B83B50060C0E9 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.0.0;
+			};
+		};
 		D0A904F32E8DDD990008194B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -1177,6 +1244,21 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		130DDE09306B895B0060C0E9 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 130DDE00306B83B50060C0E9 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		130DDE0B306B895B0060C0E9 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 130DDE00306B83B50060C0E9 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
+		};
+		130DDE0D306B8A120060C0E9 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D0A904F32E8DDD990008194B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
 		D0A904F42E8DDD990008194B /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D0A904F32E8DDD990008194B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

@@ -292,6 +292,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		13A187833087E33A006EDBE8 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				130DDE15306C94F30060C0E9 /* EditFavSportsView.swift */,
+				130DDDF4306B7BDD0060C0E9 /* IntroAnimationView.swift */,
+				130DDDFA306B810F0060C0E9 /* SignInView.swift */,
+				130DDE13306C8DC60060C0E9 /* EditProfileView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
 		1C87865B2D8CD73C00EBDF74 /* ViewModifiers */ = {
 			isa = PBXGroup;
 			children = (
@@ -349,6 +360,7 @@
 		CE335CD12C9227170037F572 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				13A187833087E33A006EDBE8 /* Onboarding */,
 				CE8ED50C2D6C388E00A274DE /* ListViews */,
 				CE8ED50B2D6C386B00A274DE /* DetailedViews */,
 				CE8ED50A2D6C385E00A274DE /* MainViews */,
@@ -449,9 +461,6 @@
 		CE8ED50A2D6C385E00A274DE /* MainViews */ = {
 			isa = PBXGroup;
 			children = (
-				130DDE15306C94F30060C0E9 /* EditFavSportsView.swift */,
-				130DDE13306C8DC60060C0E9 /* EditProfileView.swift */,
-				130DDDFA306B810F0060C0E9 /* SignInView.swift */,
 				CE725D3D2C89120200386943 /* ScoreApp.swift */,
 				D86347DE2CE98B3C003DD8F6 /* MainTabView.swift */,
 				D86347E02CE98D37003DD8F6 /* TabViewIcon.swift */,
@@ -464,7 +473,6 @@
 		CE8ED50B2D6C386B00A274DE /* DetailedViews */ = {
 			isa = PBXGroup;
 			children = (
-				130DDDF4306B7BDD0060C0E9 /* IntroAnimationView.swift */,
 				D858020F2D6C38670075B036 /* DynamicScoreBox.swift */,
 				D83EE8852CC9917C008B693C /* ScoreSummaryTile.swift */,
 				76101F692E981E37006D6EDD /* DetailedHighlightView.swift */,

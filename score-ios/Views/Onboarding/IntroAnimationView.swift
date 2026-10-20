@@ -135,7 +135,7 @@ struct IntroAnimationView: View {
     }
 }
 
-// MARK: - Keyframes
+// MARK: - Constants
 
 private struct Wobble {
     var angle = 0.0

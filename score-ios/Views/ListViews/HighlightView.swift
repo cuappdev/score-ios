@@ -16,20 +16,18 @@ struct HighlightView: View {
             switch viewModel.dataState {
             case .idle, .loading:
                 HighlightLoadingView()
-
-            case .error:
-                HighlightErrorView()
-
-            case .success:
-                VStack {
+                
+            default:
+                VStack{
                     headerView
+                    
                     HighlightContentView()
                 }
             }
         }
-        .task {
+        .onAppear {
             if viewModel.dataState == .idle {
-                await viewModel.loadHighlights()
+                viewModel.loadHighlights()
             }
             viewModel.clearSearch()
         }
@@ -93,7 +91,7 @@ struct HighlightContentView: View {
             .padding(.bottom, MainTab.scrollClearance)
         }
         .refreshable {
-            await viewModel.loadHighlights(forceNetwork: true)
+            viewModel.loadHighlights()
         }
     }
 }

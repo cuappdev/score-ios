@@ -13,7 +13,7 @@ struct Team {
     var image: String
     var name: String
 
-    init(team: GameFragment.Team) {
+    init(team: GamesQuery.Data.Game.Team) {
         self.id = team.id ?? "N/A"
         self.color = team.color
         self.image = team.image ?? "DEFAULT IMAGE URL" // TODO: make a defualt image url

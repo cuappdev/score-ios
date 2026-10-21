@@ -11,7 +11,10 @@ import GameAPI
 /// Main View of the app
 struct ContentView: View {
     
-    @State private var selectedTab: MainTab = .schedule  
+    @State private var selectedTab: MainTab = .schedule
+    @State private var games: [GamesQuery.Data.Game] = []
+    @State private var errorMessage: String?
+    
     
     var body: some View {
         MainTabView(selectedTab: $selectedTab)

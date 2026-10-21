@@ -39,7 +39,7 @@ struct DetailedHighlightsView: View {
             }
             .background(Constants.Colors.white.ignoresSafeArea())
             .refreshable {
-                await viewModel.loadHighlights(forceNetwork: true)
+                viewModel.loadHighlights()
             }
             .safeAreaInset(edge: .bottom) {
                 Color.clear.frame(height: 200)
@@ -49,9 +49,9 @@ struct DetailedHighlightsView: View {
             .navigationBarTitleDisplayMode(.inline)
         }
         .environmentObject(viewModel)
-        .task {
+        .onAppear {
             if viewModel.hasNotFetchedYet {
-                await viewModel.loadHighlights()
+                viewModel.loadHighlights()
             }
             
             viewModel.clearSearch()

@@ -135,39 +135,48 @@ class HighlightsViewModel: ObservableObject {
             filteredBySport = allHighlights.filter { $0.sport == selectedSport }
         }
 
+        let query = searchQuery.trimmingCharacters(in: .whitespacesAndNewlines)
         let filteredBySearch: [Highlight]
-        if searchQuery.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+        if query.isEmpty {
             filteredBySearch = filteredBySport
         } else {
-            let query = searchQuery.lowercased()
+            let lowered = query.lowercased()
             filteredBySearch = filteredBySport.filter {
-                highlightTitle($0).lowercased().contains(query)
+                highlightTitle($0).lowercased().contains(lowered)
             }
         }
 
-        mainLastWeekHighlights = filteredBySport.filter {
-            guard let date = Date.highlightDateFormatter.date(from: $0.publishedAt) else { return false }
-            return Date.isInLastWeek(date)
-        }
+        let now = Date()
+        let mainBuckets = bucket(filteredBySport, now: now)
+        mainLastWeekHighlights = mainBuckets.lastWeek
+        mainRecentHighlights = mainBuckets.recent
 
-        mainRecentHighlights = filteredBySport.filter {
-            guard let date = Date.highlightDateFormatter.date(from: $0.publishedAt) else { return false }
-            return Date.isInRecentMonth(date) && !Date.isInLastWeek(date)
-        }
-
-        // --- Detailed Page Filters (by sport + search)
-        detailedLastWeekHighlights = filteredBySearch.filter {
-            guard let date = Date.highlightDateFormatter.date(from: $0.publishedAt) else { return false }
-            return Date.isInLastWeek(date)
-        }
-
-        detailedRecentHighlights = filteredBySearch.filter {
-            guard let date = Date.highlightDateFormatter.date(from: $0.publishedAt) else { return false }
-            return Date.isInRecentMonth(date) && !Date.isInLastWeek(date)
+        if query.isEmpty {
+            detailedLastWeekHighlights = mainBuckets.lastWeek
+            detailedRecentHighlights = mainBuckets.recent
+        } else {
+            let detailedBuckets = bucket(filteredBySearch, now: now)
+            detailedLastWeekHighlights = detailedBuckets.lastWeek
+            detailedRecentHighlights = detailedBuckets.recent
         }
 
         // --- “Search All” Page
         allHighlightsSearchResults = filteredBySearch
+    }
+
+    /// One parse per highlight. Last week wins, so Recent is the rest of the 30-day window.
+    private func bucket(_ highlights: [Highlight], now: Date) -> (lastWeek: [Highlight], recent: [Highlight]) {
+        var lastWeek: [Highlight] = []
+        var recent: [Highlight] = []
+        for highlight in highlights {
+            guard let date = Date.highlightDateFormatter.date(from: highlight.publishedAt) else { continue }
+            if Date.isInLastWeek(date, now: now) {
+                lastWeek.append(highlight)
+            } else if Date.isInRecentMonth(date, now: now) {
+                recent.append(highlight)
+            }
+        }
+        return (lastWeek, recent)
     }
 
     // MARK: - Search & Sport

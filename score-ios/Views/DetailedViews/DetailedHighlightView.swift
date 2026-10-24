@@ -82,11 +82,7 @@ struct DetailedHighlightsView: View {
                     .foregroundStyle(Constants.Colors.black)
                 
                 HStack {
-                    Button(action: { dismiss() }) {
-                        Image("arrow_back_ios")
-                            .resizable()
-                            .frame(width: 9.87, height: 18.57)
-                    }
+                    BackButton { dismiss() }
                     
                     Spacer()
                 }

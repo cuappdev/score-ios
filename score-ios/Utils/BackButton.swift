@@ -17,6 +17,7 @@ struct BackButton: View {
                 .contentShape(Circle())
         }
         .buttonStyle(.plain)
+        .accessibilityLabel("Back")
         .modifier(BackButtonCircle())
     }
 }

@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Kingfisher
 
 struct UpcomingGameTile: View {
 
@@ -19,11 +18,7 @@ struct UpcomingGameTile: View {
             // Opponent Logo, Opponent Name | Sport Icon, Sex Icon
             HStack(spacing: 8) {
                 HStack(spacing: 8) {
-                    KFImage(URL(string: game.opponent.image))
-                        .placeholder {
-                            Constants.Colors.gray_icons
-                        }
-                        .resizable()
+                    RemoteImage(url: URL(string: game.opponent.image))
                     .frame(width: 20, height: 20)
                     
                     ScrollView(.horizontal, showsIndicators: false){

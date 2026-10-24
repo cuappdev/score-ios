@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Kingfisher
 
 struct PastGameCard: View {
     var game: Game
@@ -70,11 +69,7 @@ extension PastGameCard {
             
             Spacer()
             
-            KFImage(URL(string: game.opponent.image))
-                .placeholder {
-                    Constants.Colors.gray_icons
-                }
-                .resizable()
+            RemoteImage(url: URL(string: game.opponent.image))
             .frame(width: 64, height: 64)
             
             Spacer()
@@ -89,11 +84,7 @@ extension PastGameCard {
     private var information: some View {
         VStack {
             HStack {
-                KFImage(URL(string: game.opponent.image))
-                    .placeholder {
-                        Constants.Colors.gray_icons
-                    }
-                    .resizable()
+                RemoteImage(url: URL(string: game.opponent.image))
                 .frame(width: 24, height: 24)
 
                 ScrollView(.horizontal, showsIndicators: false){

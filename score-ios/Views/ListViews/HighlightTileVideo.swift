@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Kingfisher
 
 struct HighlightTileVideo: View {
     var video: YouTubeVideo
@@ -17,19 +16,11 @@ struct HighlightTileVideo: View {
             Link(destination: url) {
                 VStack(alignment: .leading, spacing: 1) {
                     // Thumbnail
-                    KFImage(URL(string: video.thumbnail))
-                        .placeholder {
-                            Rectangle()
-                                .fill(Constants.Colors.gray_icons.opacity(0.2))
-                        }
-                        .onFailureView {
-                            Image(systemName: "photo")
-                                .resizable()
-                                .scaledToFit()
-                                .foregroundColor(.gray)
-                        }
-                        .resizable()
-                        .scaledToFill()
+                    RemoteImage(
+                        url: URL(string: video.thumbnail),
+                        fillsFrame: true,
+                        downsampleSize: CGSize(width: width, height: 117)
+                    )
                     .frame(width: width, height: 117)
                     .clipped()
                     .overlay(

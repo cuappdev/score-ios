@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Kingfisher
 
 struct ScoringUpdateCell : View {
     var update: GameUpdate
@@ -19,11 +18,7 @@ struct ScoringUpdateCell : View {
                     .resizable()
                     .frame(width: 32, height: 32)
             } else {
-                KFImage(URL(string: img))
-                    .placeholder {
-                        Constants.Colors.gray_icons
-                    }
-                    .resizable()
+                RemoteImage(url: URL(string: img))
                     .frame(width: 32, height: 32)
             }
             

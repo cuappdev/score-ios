@@ -34,6 +34,7 @@ struct HighlightLoadingView: View {
                     highlightSection(title: "Last Week")
                     highlightSection(title: "Recent")
                 }
+                .padding(.bottom, MainTab.scrollClearance)
                 .shimmer()
             }
         }

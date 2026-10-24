@@ -89,7 +89,7 @@ struct HighlightContentView: View {
                     )
                 }
             }
-            .padding(.bottom, MainTab.barHeight + 24)
+            .padding(.bottom, MainTab.scrollClearance)
         }
         .refreshable {
             await viewModel.loadHighlights(forceNetwork: true)

@@ -44,9 +44,7 @@ struct UpcomingGamesView: View {
                                 .background(Color.white)
                                 .edgesIgnoringSafeArea(.top)
                         }
-                        .safeAreaInset(edge: .bottom, content: {
-                            Color.clear.frame(height: 20)
-                        })
+                        .padding(.bottom, MainTab.scrollClearance)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                     }
                 }

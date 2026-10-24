@@ -33,16 +33,16 @@ struct MainTabView: View {
                 HStack {
                     ForEach(MainTab.allCases) { tab in
                         TabViewIcon(selectedTab: $selectedTab, tab: tab)
-                            .frame(height: 45)
-                            .padding(.top, 10)
+                            .frame(height: MainTab.iconHeight)
+                            .padding(.top, MainTab.iconTopPadding)
                         if tab != .scores { Spacer() }
                     }
                 }
                 // Different paddings to balance text lengths
                 .padding(.trailing, 48)
                 .padding(.leading, 38)
-                .padding(.bottom, 40)
-                .padding(.top, 8)
+                .padding(.bottom, MainTab.barBottomPadding)
+                .padding(.top, MainTab.barTopPadding)
                 .frame(maxWidth: .infinity)
                 .background(
                     Color.white

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct PastGameTile: View {
     var game: Game
@@ -42,9 +43,8 @@ struct PastGameTile: View {
 
     func oppRow(oppWon: Bool) -> some View {
         HStack {
-            AsyncImage(url: URL(string: game.opponent.image)) { image in
-                image.image?.resizable()
-            }
+            KFImage(URL(string: game.opponent.image))
+                .resizable()
             .frame(width: 20, height: 20)
 
             ScrollView(.horizontal, showsIndicators: false){

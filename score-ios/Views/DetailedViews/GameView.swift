@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct GameView : View {
     var game : Game
@@ -95,10 +96,8 @@ extension GameView {
                 .font(Constants.Fonts.bold40)
                 .foregroundColor(Constants.Colors.white)
             Spacer()
-            AsyncImage(url: URL(string: game.opponent.image)) {
-                image in
-                image.image?.resizable()
-            }
+            KFImage(URL(string: game.opponent.image))
+                .resizable()
             .frame(width: 72, height: 72)
             
             Spacer()

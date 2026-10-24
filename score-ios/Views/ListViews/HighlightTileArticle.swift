@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct HighlightTileArticle: View {
     var article: Article
@@ -16,18 +17,12 @@ struct HighlightTileArticle: View {
             Link(destination: url) {
                 ZStack(alignment: .topLeading) {
                     // Background Image with dark overlay
-                    AsyncImage(url: URL(string: article.image)) { phase in
-                        switch phase {
-                        case .empty:
+                    KFImage(URL(string: article.image))
+                        .placeholder {
                             Rectangle()
                                 .fill(Constants.Colors.gray_icons.opacity(0.2))
-                                .overlay(Color.black.opacity(0.60)) // dark tint
-                        case .success(let image):
-                            image
-                                .resizable()
-                                .scaledToFill()
-                                .overlay(Color.black.opacity(0.60)) // dark tint
-                        case .failure(_):
+                        }
+                        .onFailureView {
                             Rectangle()
                                 .fill(Constants.Colors.gray_icons.opacity(0.3))
                                 .overlay(
@@ -36,15 +31,14 @@ struct HighlightTileArticle: View {
                                         .scaledToFit()
                                         .foregroundColor(.white.opacity(0.7))
                                         .padding()
-                                        .overlay(Color.black.opacity(0.60)) // dark tint
                                 )
-                        @unknown default:
-                            EmptyView()
                         }
-                    }
-                    .frame(width: width, height: 192)
-                    .clipped()
-                    .cornerRadius(12)
+                        .resizable()
+                        .scaledToFill()
+                        .overlay(Color.black.opacity(0.60))
+                        .frame(width: width, height: 192)
+                        .clipped()
+                        .cornerRadius(12)
                     
                     // Text overlay
                     VStack(alignment: .leading, spacing: 0) {

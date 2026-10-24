@@ -13,6 +13,10 @@ enum MainTab: String, CaseIterable, Identifiable {
     case scores = "Scores"
     
     var id: Self { self }
+
+    /// Custom tab bar overlay. It ignores the bottom safe area, so scroll
+    /// content has to pad by this much to clear it.
+    static let barHeight: CGFloat = 8 + 10 + 45 + 40
     
     var imageName: String {
         switch self {

@@ -15,10 +15,10 @@ class HighlightsViewModel: ObservableObject {
     @Published var dataState: DataState = .idle
     
     @Published var allHighlights: [Highlight] = []
-    @Published var mainTodayHighlights: [Highlight] = []
-    @Published var mainPastThreeDaysHighlights: [Highlight] = []
-    @Published var detailedTodayHighlights: [Highlight] = []
-    @Published var detailedPastThreeDaysHighlights: [Highlight] = []
+    @Published var mainLastWeekHighlights: [Highlight] = []
+    @Published var mainRecentHighlights: [Highlight] = []
+    @Published var detailedLastWeekHighlights: [Highlight] = []
+    @Published var detailedRecentHighlights: [Highlight] = []
     @Published var allHighlightsSearchResults: [Highlight] = []
     
     @Published var searchQuery: String = ""
@@ -145,25 +145,25 @@ class HighlightsViewModel: ObservableObject {
             }
         }
 
-        mainTodayHighlights = filteredBySport.filter {
+        mainLastWeekHighlights = filteredBySport.filter {
             guard let date = Date.highlightDateFormatter.date(from: $0.publishedAt) else { return false }
-            return Date.isToday(date)
+            return Date.isInLastWeek(date)
         }
 
-        mainPastThreeDaysHighlights = filteredBySport.filter {
+        mainRecentHighlights = filteredBySport.filter {
             guard let date = Date.highlightDateFormatter.date(from: $0.publishedAt) else { return false }
-            return Date.isWithinPastDays(date, days: 3)
+            return Date.isInRecentMonth(date) && !Date.isInLastWeek(date)
         }
 
         // --- Detailed Page Filters (by sport + search)
-        detailedTodayHighlights = filteredBySearch.filter {
+        detailedLastWeekHighlights = filteredBySearch.filter {
             guard let date = Date.highlightDateFormatter.date(from: $0.publishedAt) else { return false }
-            return Date.isToday(date)
+            return Date.isInLastWeek(date)
         }
 
-        detailedPastThreeDaysHighlights = filteredBySearch.filter {
+        detailedRecentHighlights = filteredBySearch.filter {
             guard let date = Date.highlightDateFormatter.date(from: $0.publishedAt) else { return false }
-            return Date.isWithinPastDays(date, days: 3)
+            return Date.isInRecentMonth(date) && !Date.isInLastWeek(date)
         }
 
         // --- “Search All” Page
@@ -197,7 +197,7 @@ class HighlightsViewModel: ObservableObject {
 
 enum HighlightsScope {
     case main
-    case today
-    case pastThreeDays
+    case lastWeek
+    case recent
     case all
 }

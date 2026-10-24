@@ -60,6 +60,26 @@ extension Date {
         Calendar.current.isDateInToday(date)
     }
 
+    /// Last 7 calendar days, including today.
+    static func isInLastWeek(_ date: Date, now: Date = Date()) -> Bool {
+        let calendar = Calendar.current
+        let startOfToday = calendar.startOfDay(for: now)
+        guard let weekStart = calendar.date(byAdding: .day, value: -6, to: startOfToday) else {
+            return false
+        }
+        return date >= weekStart && date <= now
+    }
+
+    /// Last 30 calendar days, including today.
+    static func isInRecentMonth(_ date: Date, now: Date = Date()) -> Bool {
+        let calendar = Calendar.current
+        let startOfToday = calendar.startOfDay(for: now)
+        guard let monthStart = calendar.date(byAdding: .day, value: -29, to: startOfToday) else {
+            return false
+        }
+        return date >= monthStart && date <= now
+    }
+
     // Return true if 'date' is within 'days' from today
     static func isWithinPastDays(_ date: Date, days: Int) -> Bool {
         let calendar = Calendar.current

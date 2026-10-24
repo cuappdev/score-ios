@@ -64,10 +64,10 @@ struct DetailedHighlightsView: View {
     // MARK: - Helpers
     private var highlightsForScope: [Highlight] {
        switch highlightScope {
-       case .today:
-           return viewModel.detailedTodayHighlights
-       case .pastThreeDays:
-           return viewModel.detailedPastThreeDaysHighlights
+       case .lastWeek:
+           return viewModel.detailedLastWeekHighlights
+       case .recent:
+           return viewModel.detailedRecentHighlights
        default:
            return viewModel.allHighlights
        }
@@ -110,8 +110,8 @@ struct DetailedHighlightsView: View {
 
 #Preview {
     DetailedHighlightsView(
-        title: "Today",
-        highlightScope: .today
+        title: "Last Week",
+        highlightScope: .lastWeek
     )
     .environmentObject(HighlightsViewModel.shared)
 }

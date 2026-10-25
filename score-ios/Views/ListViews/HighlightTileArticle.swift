@@ -21,10 +21,10 @@ struct HighlightTileArticle: View {
                         fillsFrame: true,
                         downsampleSize: CGSize(width: width, height: 192)
                     )
-                        .overlay(Color.black.opacity(0.60))
-                        .frame(width: width, height: 192)
-                        .clipped()
-                        .cornerRadius(12)
+                    .overlay(Color.black.opacity(0.60))
+                    .frame(width: width, height: 192)
+                    .clipped()
+                    .cornerRadius(12)
                     
                     // Text overlay
                     VStack(alignment: .leading, spacing: 0) {

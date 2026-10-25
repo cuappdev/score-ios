@@ -71,8 +71,10 @@ extension Date {
     private static func dayBounds(daysBack: Int, now: Date) -> (start: Date, end: Date)? {
         let calendar = Calendar.current
         let startOfToday = calendar.startOfDay(for: now)
-        guard let start = calendar.date(byAdding: .day, value: -daysBack, to: startOfToday),
-              let end = calendar.date(byAdding: .day, value: 1, to: startOfToday) else {
+        guard 
+            let start = calendar.date(byAdding: .day, value: -daysBack, to: startOfToday),
+            let end = calendar.date(byAdding: .day, value: 1, to: startOfToday) 
+        else {
             return nil
         }
         return (start, end)

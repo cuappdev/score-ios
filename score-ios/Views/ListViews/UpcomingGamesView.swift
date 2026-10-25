@@ -71,6 +71,7 @@ struct UpcomingGamesView: View {
                 GameErrorView(viewModel: vm)
             }
         }
+        .trackScreen(.schedule)
     }
 }
 

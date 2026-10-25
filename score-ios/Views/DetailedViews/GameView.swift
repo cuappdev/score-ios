@@ -176,6 +176,7 @@ extension GameView {
                 if let link = game.ticketLink,
                    let url = URL(string: link) {
                     Button(action: {
+                        AnalyticsManager.log(.ticketingLinkClicked)
                         UIApplication.shared.open(url)
                     }) {
                         HStack (spacing: 9){
@@ -203,6 +204,7 @@ extension GameView {
                 
                 // Calendar Button
                 Button(action: {
+                    AnalyticsManager.log(.addToCalendarTapped)
                     calendarViewModel.requestAccessandAdd(event:game)
                 }) {
                     HStack (spacing: 8){

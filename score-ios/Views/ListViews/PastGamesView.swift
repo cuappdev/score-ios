@@ -68,6 +68,7 @@ struct PastGamesView: View {
                 GameErrorView(viewModel: vm)
             }
         }
+        .trackScreen(.scores)
     }
 }
 

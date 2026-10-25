@@ -36,6 +36,7 @@ struct HighlightView: View {
         .onChange(of: viewModel.selectedSport) { _, _ in
             viewModel.filter()
         }
+        .trackScreen(.highlights)
     }
     
     var headerView: some View {

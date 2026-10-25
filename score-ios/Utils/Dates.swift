@@ -55,21 +55,29 @@ extension Date {
         return formatter
     }()
     
-    /// Checks if a date is any time today.
-    static func isToday(_ date: Date) -> Bool {
-        Calendar.current.isDateInToday(date)
+    /// Last 7 calendar days, including all of today.
+    static func isInLastWeek(_ date: Date, now: Date) -> Bool {
+        guard let bounds = dayBounds(daysBack: 6, now: now) else { return false }
+        return date >= bounds.start && date < bounds.end
     }
 
-    // Return true if 'date' is within 'days' from today
-    static func isWithinPastDays(_ date: Date, days: Int) -> Bool {
+    /// Last 30 calendar days, including all of today.
+    static func isInRecentMonth(_ date: Date, now: Date) -> Bool {
+        guard let bounds = dayBounds(daysBack: 29, now: now) else { return false }
+        return date >= bounds.start && date < bounds.end
+    }
+
+    /// `start` is the beginning of the oldest included day. `end` is the start of tomorrow.
+    private static func dayBounds(daysBack: Int, now: Date) -> (start: Date, end: Date)? {
         let calendar = Calendar.current
-        let startOfToday = calendar.startOfDay(for: Date())
-        
-        guard let pastDate = calendar.date(byAdding: .day, value: -days, to: startOfToday) else {
-            return false
+        let startOfToday = calendar.startOfDay(for: now)
+        guard 
+            let start = calendar.date(byAdding: .day, value: -daysBack, to: startOfToday),
+            let end = calendar.date(byAdding: .day, value: 1, to: startOfToday) 
+        else {
+            return nil
         }
-        
-        return date >= pastDate && date < startOfToday
+        return (start, end)
     }
 
     static func dateByAdding(days: Int, to date: Date = Date()) -> Date {

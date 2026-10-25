@@ -40,14 +40,11 @@ struct GameView : View {
                         .font(Constants.Fonts.Header.h1)
                 }
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
+                    BackButton {
                         presentationMode.wrappedValue.dismiss()
-                    } label: {
-                        Image("arrow_back_ios")
-                            .resizable()
-                            .frame(width: 9.87, height: 18.57)
                     }
                 }
+                .backButtonToolbarChrome()
             }
             .navigationBarBackButtonHidden()
             .toolbarBackground(Color.white, for: .navigationBar)
@@ -98,10 +95,7 @@ extension GameView {
                 .font(Constants.Fonts.bold40)
                 .foregroundColor(Constants.Colors.white)
             Spacer()
-            AsyncImage(url: URL(string: game.opponent.image)) {
-                image in
-                image.image?.resizable()
-            }
+            RemoteImage(url: URL(string: game.opponent.image))
             .frame(width: 72, height: 72)
             
             Spacer()

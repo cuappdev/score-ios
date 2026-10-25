@@ -67,7 +67,7 @@ struct HighlightContentView: View {
     var body: some View {
         ScrollView(showsIndicators: false) {
             LazyVStack(alignment: .leading, spacing: 4) {
-                if viewModel.mainPastThreeDaysHighlights.isEmpty && viewModel.mainTodayHighlights.isEmpty {
+                if viewModel.mainRecentHighlights.isEmpty && viewModel.mainLastWeekHighlights.isEmpty {
                     NoHighlightView()
                         .frame(maxWidth: .infinity)
                         .frame(minHeight: UIScreen.main.bounds.height - 350)
@@ -75,20 +75,21 @@ struct HighlightContentView: View {
                     
                 }
                 
-                if !viewModel.mainTodayHighlights.isEmpty {
+                if !viewModel.mainLastWeekHighlights.isEmpty {
                     HighlightSectionView(
-                        title: "Today",
-                        scope: .today
+                        title: "Last Week",
+                        scope: .lastWeek
                     )
                 }
                 
-                if !viewModel.mainPastThreeDaysHighlights.isEmpty {
+                if !viewModel.mainRecentHighlights.isEmpty {
                     HighlightSectionView(
-                        title: "Past 3 Days",
-                        scope: .pastThreeDays
+                        title: "Recent",
+                        scope: .recent
                     )
                 }
             }
+            .padding(.bottom, MainTab.scrollClearance)
         }
         .refreshable {
             await viewModel.loadHighlights(forceNetwork: true)
@@ -104,10 +105,10 @@ struct HighlightSectionView: View {
     
     private var highlights: [Highlight] {
         switch scope {
-        case .today:
-            return viewModel.mainTodayHighlights
-        case .pastThreeDays:
-            return viewModel.mainPastThreeDaysHighlights
+        case .lastWeek:
+            return viewModel.mainLastWeekHighlights
+        case .recent:
+            return viewModel.mainRecentHighlights
         default:
             return [] // Should not happen on this screen
         }

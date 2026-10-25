@@ -16,32 +16,12 @@ struct HighlightTileArticle: View {
             Link(destination: url) {
                 ZStack(alignment: .topLeading) {
                     // Background Image with dark overlay
-                    AsyncImage(url: URL(string: article.image)) { phase in
-                        switch phase {
-                        case .empty:
-                            Rectangle()
-                                .fill(Constants.Colors.gray_icons.opacity(0.2))
-                                .overlay(Color.black.opacity(0.60)) // dark tint
-                        case .success(let image):
-                            image
-                                .resizable()
-                                .scaledToFill()
-                                .overlay(Color.black.opacity(0.60)) // dark tint
-                        case .failure(_):
-                            Rectangle()
-                                .fill(Constants.Colors.gray_icons.opacity(0.3))
-                                .overlay(
-                                    Image(systemName: "photo")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .foregroundColor(.white.opacity(0.7))
-                                        .padding()
-                                        .overlay(Color.black.opacity(0.60)) // dark tint
-                                )
-                        @unknown default:
-                            EmptyView()
-                        }
-                    }
+                    RemoteImage(
+                        url: URL(string: article.image),
+                        fillsFrame: true,
+                        downsampleSize: CGSize(width: width, height: 192)
+                    )
+                    .overlay(Color.black.opacity(0.60))
                     .frame(width: width, height: 192)
                     .clipped()
                     .cornerRadius(12)

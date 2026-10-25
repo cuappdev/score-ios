@@ -13,6 +13,14 @@ enum MainTab: String, CaseIterable, Identifiable {
     case scores = "Scores"
     
     var id: Self { self }
+
+    static let barTopPadding: CGFloat = 8
+    static let iconTopPadding: CGFloat = 10
+    static let iconHeight: CGFloat = 45
+    static let barBottomPadding: CGFloat = 40
+    static let barHeight = barTopPadding + iconTopPadding + iconHeight + barBottomPadding
+    /// Extra room so the last row clears the bar's shadow.
+    static let scrollClearance = barHeight + 24
     
     var imageName: String {
         switch self {

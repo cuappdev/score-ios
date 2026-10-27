@@ -20,6 +20,12 @@ struct ProfileView: View {
                 dividerView
                 bookmarkedHighlights
                 Spacer()
+<<<<<<< Updated upstream
+=======
+            }
+            .task{
+                viewModel.loadHighlights()
+>>>>>>> Stashed changes
             }
         }
     }
@@ -28,8 +34,13 @@ struct ProfileView: View {
     var dividerView: some View {
         Divider()
             .background(Constants.Colors.gray_liner)
+<<<<<<< Updated upstream
             .padding(.horizontal, 20)
             .padding(.vertical, 20)
+=======
+            .padding(.horizontal, 24)
+            .padding(.top, 16)
+>>>>>>> Stashed changes
     }
     
     var headerView: some View {
@@ -150,7 +161,11 @@ struct ProfileView: View {
                     .foregroundStyle(Constants.Colors.gray_text)
             }
         }
+<<<<<<< Updated upstream
         .frame(width: 96)
+=======
+        
+>>>>>>> Stashed changes
     }
     
     var bookmarkedHighlights: some View {

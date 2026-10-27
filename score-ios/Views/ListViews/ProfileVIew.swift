@@ -19,6 +19,7 @@ struct ProfileView: View {
                 favortiesView
                 dividerView
                 bookmarkedHighlights
+                Spacer()
             }
         }
     }
@@ -26,8 +27,9 @@ struct ProfileView: View {
     
     var dividerView: some View {
         Divider()
-               .background(Constants.Colors.gray_liner)
-               .frame(width: 345, height: 0)
+            .background(Constants.Colors.gray_liner)
+            .padding(.horizontal, 20)
+            .padding(.vertical, 20)
     }
     
     var headerView: some View {
@@ -39,8 +41,6 @@ struct ProfileView: View {
                         .font(Constants.Fonts.semibold24)
                         .foregroundStyle(Constants.Colors.black)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.top, 24)
-                        .padding(.horizontal, 24)
                     Button{
                         // do nothing rn
                     } label: {
@@ -54,16 +54,15 @@ struct ProfileView: View {
                         Image("Settings")
                             .resizable()
                             .frame(width: 24, height: 24)
-                            .padding(.horizontal, 20)
                     }
                 }
+                .padding(.top, 20)
+                .padding(.horizontal, 20)
             }
             HStack{
                 Image("Tennis Profile")
                     .resizable()
                     .frame(width: 70, height: 70)
-                    .padding(.horizontal, 20)
-                Spacer()
                 VStack{
                     Text("Zara Khan")
                         .font(Constants.Fonts.Header.h2)
@@ -77,8 +76,12 @@ struct ProfileView: View {
                             .foregroundStyle(Constants.Colors.crimson)
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
+                    .padding(.top,2)
                 }
+                .padding(.horizontal, 5)
             }
+            .padding(.horizontal, 20)
+            .padding(.top, 20)
         }
     }
     
@@ -89,68 +92,65 @@ struct ProfileView: View {
                     .font(Constants.Fonts.Header.h2)
                     .foregroundStyle(Constants.Colors.black)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal, 24)
-                    .padding(.top, 24)
                 Button{
                     // do nothing rn
                 } label: {
-                    HStack{
+                    HStack(spacing: 2){
                         Text("Edit")
                             .font(Constants.Fonts.Label.normal)
                             .foregroundStyle(Constants.Colors.crimson)
-                            .padding(.top, 24)
                         Image("Arrowhead")
                             .resizable()
-                            .frame(width: 8.23, height: 15.48)
-                            .padding(.top, 24)
+                            .frame(width: 15, height: 15)
                     }
-                    .padding(.horizontal, 20)
                 }
             }
+            .padding(.bottom, 20)
             ScrollViewReader{ proxy in
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
-                        ForEach(Sport.allCases) { sport in //will use the articles as filler?
+                        ForEach(Sport.allCases) { sport in //will use the articles as filler
                             makeSPortIcon(sport: sport)
-                            
                         }
                     }
                 }
             }
         }
+        .padding(.horizontal, 20)
     }
     
     private func makeSPortIcon(sport: Sport) -> some View {
-        VStack{
+        VStack(spacing: 8) {
             Image(sport.description + "-g")
                 .resizable()
-                        .scaledToFit()
-                        .frame(width: 40, height: 40)          // icon size
-                        .frame(width: 96, height: 96)          // card size
-                        .background(
-                            RoundedRectangle(cornerRadius: 28)
-                                .fill(Color.white)
-                        )
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 28)
-                                .stroke(Color.gray.opacity(0.2), lineWidth: 1.5)
-                        )
+                .scaledToFit()
+                .frame(width: 40, height: 40)
+                .frame(width: 96, height: 96)
+                .background(RoundedRectangle(cornerRadius: 28).fill(Color.white))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 28)
+                        .stroke(Color.gray.opacity(0.2), lineWidth: 1.5)
+                )
+
             Text(sport.description)
                 .font(Constants.Fonts.Body.medium)
                 .foregroundStyle(Constants.Colors.black)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.top, 24)
-            HStack{
-                Image("tabler_gender-female") //arb. genger
-                    .background(
-                        Circle()
-                            .fill(Constants.Colors.gray_border)
-                            .frame(width: 18, height: 18)
-                    )
+                .multilineTextAlignment(.center)
+
+            HStack(spacing: 4) {
+                Image("tabler_gender-female")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 10, height: 10)
+                    .frame(width: 18, height: 18)
+                    .background(Circle().fill(Constants.Colors.gray_border))
+
                 Text("W")
-                
+                    .font(Constants.Fonts.Label.normal)
+                    .foregroundStyle(Constants.Colors.gray_text)
             }
         }
+        .frame(width: 96)
     }
     
     var bookmarkedHighlights: some View {
@@ -160,8 +160,6 @@ struct ProfileView: View {
                     .font(Constants.Fonts.Header.h2)
                     .foregroundStyle(Constants.Colors.black)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal, 24)
-
                 Button{
                     // do nothing rn
                 } label: {
@@ -169,33 +167,31 @@ struct ProfileView: View {
                         Text("Show all")
                             .font(Constants.Fonts.Label.normal)
                             .foregroundStyle(Constants.Colors.crimson)
-                            .padding(.top, 24)
                         Image("Arrowhead")
                             .resizable()
                             .frame(width: 8.23, height: 15.48)
-                            .padding(.top, 24)
                     }
                 }
             }
+            .padding(.horizontal, 20)
             ScrollView(.horizontal, showsIndicators: false) {
-                LazyHStack(spacing: 24) {
+                LazyHStack(spacing: 20) {
                     ForEach(highlights) { highlight in
                         HighlightTile(highlight: highlight, isVertical: false)
                     }
                 }
-                .padding(.top, 20)
-                .padding(.horizontal, 24)
+                .padding(.horizontal, 20)
             }
+            .fixedSize(horizontal: false, vertical: true)
             .task {
                    viewModel.loadHighlights()
                }
-                    .padding(.top, 24)
-                    .padding(.horizontal, 24)
+                    .padding(.top, 20)
                     .font(Constants.Fonts.medium18)
             }
         }
     }
-}
+
 
 
 // MARK: - Preview

@@ -26,13 +26,8 @@ struct EmptyProfileView: View {
     var dividerView: some View {
         Divider()
             .background(Constants.Colors.gray_liner)
-<<<<<<< Updated upstream
             .padding(.horizontal, 20)
             .padding(.vertical, 20)
-=======
-            .padding(.horizontal, 24)
-            .padding(.top, 16)
->>>>>>> Stashed changes
     }
     
     var headerViewEmpty: some View {
@@ -95,7 +90,6 @@ struct EmptyProfileView: View {
                     .font(Constants.Fonts.Header.h2)
                     .foregroundStyle(Constants.Colors.black)
                     .frame(maxWidth: .infinity, alignment: .leading)
-<<<<<<< Updated upstream
                 HStack(spacing: 2) {
                     Text("Edit")
                         .font(Constants.Fonts.Label.normal)
@@ -107,17 +101,6 @@ struct EmptyProfileView: View {
             }
             .padding(.bottom, 20)
             
-=======
-                Text("Edit")
-                    .font(Constants.Fonts.Label.normal)
-                    .foregroundStyle(Constants.Colors.gray_liner)
-                Image("ArrowheadGray")
-                    .resizable()
-                    .frame(width: 8.23, height: 15.48)
-            }
-            .padding(.horizontal, 24)
-            .padding(.top, 24)
->>>>>>> Stashed changes
             Button {
                 // do nothing rn
             } label: {
@@ -125,40 +108,19 @@ struct EmptyProfileView: View {
                     Image("add")
                         .resizable()
                         .scaledToFit()
-<<<<<<< Updated upstream
                         .frame(width: 40, height: 40)
                         .frame(width: 96, height: 96)
                         .background(RoundedRectangle(cornerRadius: 28).fill(Color.white))
-=======
-                        .frame(width: 40, height: 40)   // icon size
-                        .frame(width: 96, height: 96)   // card size
-                        .background(
-                            RoundedRectangle(cornerRadius: 28)
-                                .fill(Color.white)
-                        )
->>>>>>> Stashed changes
                         .overlay(
                             RoundedRectangle(cornerRadius: 28)
                                 .stroke(Color.gray.opacity(0.2), lineWidth: 1.5)
                         )
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
                     Text("Add Sports")
                         .font(Constants.Fonts.Body.medium)
                         .foregroundStyle(Constants.Colors.black)
                         .multilineTextAlignment(.center)
-<<<<<<< Updated upstream
                 }
                 .frame(width: 96)
-=======
-                        .fixedSize()
-                }
-                .fixedSize()
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal, 24)
->>>>>>> Stashed changes
             }
             .buttonStyle(.plain)
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -167,17 +129,12 @@ struct EmptyProfileView: View {
     }
     
     var bookmarkedHighlightsEmpty: some View {
-<<<<<<< Updated upstream
         VStack {
-=======
-        VStack(spacing: 16) {
->>>>>>> Stashed changes
             HStack {
                 Text("Bookmarked Highlights")
                     .font(Constants.Fonts.Header.h2)
                     .foregroundStyle(Constants.Colors.black)
                     .frame(maxWidth: .infinity, alignment: .leading)
-<<<<<<< Updated upstream
                 HStack {
                     Text("Show all")
                         .font(Constants.Fonts.Label.normal)
@@ -208,35 +165,6 @@ struct EmptyProfileView: View {
             )
             .padding(.horizontal, 20)
             .padding(.top, 20)
-=======
-                Text("Show all")
-                    .font(Constants.Fonts.Label.normal)
-                    .foregroundStyle(Constants.Colors.gray_liner)
-                Image("ArrowheadGray")
-                    .resizable()
-                    .frame(width: 8.23, height: 15.48)
-            }
-            .padding(.horizontal, 24)
-            .padding(.top, 24)
-
-            VStack(spacing: 16) {
-                Image(systemName: "bookmark.fill")
-                    .font(.system(size: 20))
-                    .foregroundStyle(Color.gray.opacity(0.6))
-                    .frame(width: 60, height: 60)
-                    .background(Circle().fill(Color.gray.opacity(0.15)))
-                Text("No bookmarks yet")
-                    .font(Constants.Fonts.Body.medium)
-                    .foregroundStyle(Constants.Colors.black)
-            }
-            .frame(maxWidth: .infinity)
-            .frame(height: 234)
-            .overlay(
-                RoundedRectangle(cornerRadius: 16)
-                    .stroke(Color.gray.opacity(0.2), lineWidth: 1)
-            )
-            .padding(.horizontal, 24)
->>>>>>> Stashed changes
         }
     }
 }

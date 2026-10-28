@@ -184,7 +184,7 @@ struct ProfileView: View {
             }
             .fixedSize(horizontal: false, vertical: true)
             .task {
-                   viewModel.loadHighlights()
+                   await viewModel.loadHighlights()
                }
                     .padding(.top, 20)
                     .font(Constants.Fonts.medium18)

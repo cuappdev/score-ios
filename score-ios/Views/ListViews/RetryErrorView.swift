@@ -1,16 +1,15 @@
 //
-//  GameErrorView.swift
+//  RetryErrorView.swift
 //  score-ios
 //
-//  Created by Jayson Hahn on 3/22/25.
+//  Created by Zain Bilal on 9/27/26.
 //
 
-import Foundation
 import SwiftUI
 
-struct GameErrorView: View {
-
-    @ObservedObject var viewModel: GamesViewModel
+struct RetryErrorView: View {
+    let title: String
+    let retry: () async -> Void
 
     var body: some View {
         ZStack {
@@ -25,7 +24,7 @@ struct GameErrorView: View {
                     .frame(width: 64, height: 64)
                     .padding(.bottom, 16)
 
-                Text("Oops! Schedules failed to load.")
+                Text(title)
                     .font(Constants.Fonts.Header.h2)
                     .padding(.bottom, 8)
 
@@ -35,7 +34,9 @@ struct GameErrorView: View {
                 Spacer()
 
                 Button {
-                    viewModel.fetchGames()
+                    Task {
+                        await retry()
+                    }
                 } label: {
                     HStack {
                         Image(systemName: "arrow.trianglehead.2.clockwise")
@@ -52,5 +53,28 @@ struct GameErrorView: View {
             }
         }
     }
+}
 
+struct GameErrorView: View {
+    @ObservedObject var viewModel: GamesViewModel
+
+    var body: some View {
+        RetryErrorView(title: "Oops! Schedules failed to load.") {
+            await viewModel.loadGames(forceNetwork: true)
+        }
+    }
+}
+
+struct HighlightErrorView: View {
+    @EnvironmentObject var viewModel: HighlightsViewModel
+
+    var body: some View {
+        RetryErrorView(title: "Oops! Highlights failed to load.") {
+            await viewModel.loadHighlights(forceNetwork: true)
+        }
+    }
+}
+
+#Preview {
+    RetryErrorView(title: "Oops! Schedules failed to load.") {}
 }

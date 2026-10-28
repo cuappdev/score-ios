@@ -43,19 +43,27 @@ struct Game : GameType, Identifiable {
         case id, city, state, date, sport, gender, location, opponentId, result, time, scoreBreakdown, boxScore, ticketLink
         case opponent = "team"
     }
-    
-    init(game: GamesQuery.Data.Game) {
-        self.serverId = game.id
-        self.city = game.city
-        self.state = game.state
-        self.date = Date.parseDate(dateString: game.date, timeString: game.time ?? "12:00 p.m.")
-        self.sex = game.gender == "Mens" ? .Men : .Women
-        self.sport = Sport(normalizedValue: game.sport) ?? .All
-        self.opponent = Team(team: game.team!)
-        self.address = game.location ?? "N/A"
-        self.timeUpdates = parseScoreBreakdown(game.scoreBreakdown)
-        self.gameUpdates = parseBoxScore(decodeBoxScoreArray(boxScores: game.boxScore))
-        self.ticketLink = game.ticketLink
+
+    init(game: GamesByDateQuery.Data.GamesByDate) {
+        self.init(fragment: game.fragments.gameFragment)
+    }
+
+    init(fragment: GameFragment) {
+        self.serverId = fragment.id
+        self.city = fragment.city
+        self.state = fragment.state
+        self.date = Date.parseDate(dateString: fragment.date, timeString: fragment.time ?? "12:00 p.m.")
+        self.sex = fragment.gender == "Mens" ? .Men : .Women
+        self.sport = Sport(normalizedValue: fragment.sport) ?? .All
+        if let team = fragment.team {
+            self.opponent = Team(team: team)
+        } else {
+            self.opponent = .defaultTeam()
+        }
+        self.address = fragment.location ?? "N/A"
+        self.timeUpdates = parseScoreBreakdown(fragment.scoreBreakdown)
+        self.gameUpdates = parseBoxScore(decodeBoxScoreArray(boxScores: fragment.boxScore))
+        self.ticketLink = fragment.ticketLink
     }
     
     init(

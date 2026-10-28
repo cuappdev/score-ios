@@ -49,13 +49,12 @@ struct UpcomingGamesView: View {
                     }
                 }
             }
-            .onAppear {
-                if vm.hasNotFetchedYet {
-                    vm.fetchGames()
-                }
+            .task {
+                guard vm.hasNotFetchedYet else { return }
+                await vm.loadGames()
             }
             .refreshable {
-                vm.fetchGames()
+                await vm.loadGames(forceNetwork: true)
             }
             .onChange(of: vm.selectedSport) {
                 vm.filter()

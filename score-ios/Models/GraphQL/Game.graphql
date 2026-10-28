@@ -44,3 +44,9 @@ query Games($limit: Int!, $offset: Int!) {
     ...GameFragment
   }
 }
+
+query GamesByDate($startDate: DateTime!, $endDate: DateTime!) {
+  gamesByDate(startDate: $startDate, endDate: $endDate) {
+    ...GameFragment
+  }
+}

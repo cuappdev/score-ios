@@ -65,6 +65,7 @@ type Query {
   teams: [TeamType]
   team(id: String!): TeamType
   teamByName(name: String!): TeamType
+  me: UserType!
 }
 
 """
@@ -128,6 +129,10 @@ Attributes:
     - `box_score`: The box score of the game.
     - `score_breakdown`: The score breakdown of the game.
     - `ticket_link`: The ticket link of the game. (optional)
+    - `recap_link`: The recap article link. (optional)
+    - `recap_article_title`: The recap article title. (optional)
+    - `recap_article_image`: The recap article image. (optional)
+    - `recap_published_at`: The recap article publication date. (optional)
 """
 type GameType {
   id: String
@@ -145,6 +150,10 @@ type GameType {
   team: TeamType
   utcDate: String
   ticketLink: String
+  recapLink: String
+  recapArticleTitle: String
+  recapArticleImage: String
+  recapPublishedAt: String
 }
 
 """
@@ -198,9 +207,17 @@ value as specified by
 """
 scalar DateTime
 
+"""Public application-user fields returned after authentication."""
+type UserType {
+  id: ID!
+  email: String
+  name: String
+  favoriteGameIds: [String]!
+}
+
 type Mutation {
   """Creates a new game."""
-  createGame(boxScore: String, city: String!, date: String!, gender: String!, location: String, opponentId: String!, result: String, scoreBreakdown: String, sport: String!, state: String!, ticketLink: String, time: String!, utcDate: String): CreateGame
+  createGame(boxScore: String, city: String!, date: String!, gender: String!, location: String, opponentId: String!, recapArticleImage: String, recapArticleTitle: String, recapLink: String, recapPublishedAt: String, result: String, scoreBreakdown: String, sport: String!, state: String!, ticketLink: String, time: String, utcDate: String): CreateGame
 
   """Creates a new team."""
   createTeam(b64Image: String, color: String!, image: String, name: String!): CreateTeam
@@ -211,24 +228,20 @@ type Mutation {
   """Creates a new article."""
   createArticle(image: String, publishedAt: String!, slug: String!, sportsType: String!, title: String!, url: String!): CreateArticle
 
-  """Login by net_id; returns access_token and refresh_token."""
+  """
+  Login with a Google Firebase ID token; returns access_token and refresh_token.
+  """
   loginUser(
-    """User's net ID (e.g. Cornell netid)."""
-    netId: String!
+    """Google Firebase ID token from the client."""
+    idToken: String!
   ): LoginUser
 
   """
-  Create a new user by net_id; returns access_token and refresh_token (no separate login needed).
+  Create a new user with a Google Firebase ID token; returns access_token and refresh_token.
   """
   signupUser(
-    """Email address."""
-    email: String
-
-    """Display name."""
-    name: String
-
-    """User's net ID (e.g. Cornell netid)."""
-    netId: String!
+    """Google Firebase ID token from the client."""
+    idToken: String!
   ): SignupUser
 
   """
@@ -273,11 +286,13 @@ type CreateArticle {
 type LoginUser {
   accessToken: String
   refreshToken: String
+  user: UserType!
 }
 
 type SignupUser {
   accessToken: String
   refreshToken: String
+  user: UserType!
 }
 
 type RefreshAccessToken {

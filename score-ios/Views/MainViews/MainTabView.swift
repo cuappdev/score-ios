@@ -29,7 +29,7 @@ struct MainTabView: View {
                         PastGamesView()
                             .environmentObject(gamesViewModel)
                     case .profiles: //filler view model and image
-                        PastGamesView()
+                        EmptyProfileView()
                             .environmentObject(gamesViewModel)
                 }
 

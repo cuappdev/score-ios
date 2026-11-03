@@ -28,7 +28,7 @@ enum MainTab: String, CaseIterable, Identifiable {
         case .schedule: return "schedule"
         case .highlights: return "highlight"
         case .scores: return "scoreboard"
-        case .profiles: return "schedule"
+        case .profiles: return "profile"
         }
     }
 }

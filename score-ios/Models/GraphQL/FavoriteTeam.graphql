@@ -1,0 +1,18 @@
+mutation AddFavoriteTeam($sport: String!, $gender: String!) {
+  addFavoriteTeam(sport: $sport, gender: $gender) {
+    __typename
+  }
+}
+
+mutation RemoveFavoriteTeam($sport: String!, $gender: String!) {
+  removeFavoriteTeam(sport: $sport, gender: $gender) {
+    __typename
+  }
+}
+
+query MyFavoritedTeams {
+  myFavoritedTeams {
+    sport
+    gender
+  }
+}

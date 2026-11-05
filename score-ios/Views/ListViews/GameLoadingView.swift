@@ -33,6 +33,7 @@ enum GameLoadingPage: Equatable {
 struct GameLoadingView: View {
 
     let page: GameLoadingPage
+    var showsWelcome = false
 
     // Layout constants
     private enum Layout {
@@ -53,6 +54,9 @@ struct GameLoadingView: View {
 
             GeometryReader { geometry in
                 VStack(alignment: .center, spacing: Layout.verticalSpacing) {
+                    if showsWelcome {
+                        welcomeSection
+                    }
                     titleSection
                     carouselView
                     sexFilter
@@ -66,8 +70,8 @@ struct GameLoadingView: View {
 
                     Spacer(minLength: 0)
                 }
-                .frame(maxWidth: geometry.size.width, maxHeight: geometry.size.height)
-                .padding(.top, 50)
+                .frame(maxWidth: geometry.size.width, maxHeight: geometry.size.height, alignment: .top)
+                .padding(.top, showsWelcome ? 30 : 50)
                 .shimmer()
                 .clipped()
             }
@@ -76,6 +80,12 @@ struct GameLoadingView: View {
 
     // MARK: - Component Views
 
+    private var welcomeSection: some View {
+        RoundedRectangle(cornerRadius: 12)
+            .frame(height: 64)
+            .padding(.horizontal, Layout.horizontalPadding)
+    }
+    
     private var titleSection: some View {
         HStack(spacing: 30) {
             Text("Loading \(page.title)...")

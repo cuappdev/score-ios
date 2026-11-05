@@ -1,0 +1,15 @@
+mutation SignupUser($idToken: String!) {
+  signupUser(idToken: $idToken) {
+    accessToken
+    refreshToken
+    user {
+      id
+      email
+      name
+      favoriteTeams {
+        sport
+        gender
+      }
+    }
+  }
+}

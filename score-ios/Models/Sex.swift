@@ -41,3 +41,8 @@ enum Sex : Identifiable, CaseIterable, CustomStringConvertible {
         return allCases.firstIndex(of: sex)
     }
 }
+
+extension Sex {
+    var symbol: String { self == .Women ? "♀" : "♂" }
+    var letter: String { self == .Women ? "W" : "M" }
+}

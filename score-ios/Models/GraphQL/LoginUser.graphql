@@ -1,0 +1,15 @@
+mutation LoginUser($idToken: String!) {
+  loginUser(idToken: $idToken) {
+    accessToken
+    refreshToken
+    user {
+      id
+      email
+      name
+      favoriteTeams {
+        sport
+        gender
+      }
+    }
+  }
+}

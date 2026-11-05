@@ -28,21 +28,24 @@ struct MainTabView: View {
                     case .scores:
                         PastGamesView()
                             .environmentObject(gamesViewModel)
+                    case .profiles: //filler view model and image
+                        EmptyProfileView()
+                            .environmentObject(gamesViewModel)
                 }
 
                 HStack {
                     ForEach(MainTab.allCases) { tab in
                         TabViewIcon(selectedTab: $selectedTab, tab: tab)
-                            .frame(height: 45)
-                            .padding(.top, 10)
-                        if tab != .scores { Spacer() }
+                            .frame(height: MainTab.iconHeight)
+                            .padding(.top, MainTab.iconTopPadding)
+                        if tab != .profiles { Spacer() }
                     }
                 }
                 // Different paddings to balance text lengths
                 .padding(.trailing, 48)
                 .padding(.leading, 38)
-                .padding(.bottom, 40)
-                .padding(.top, 8)
+                .padding(.bottom, MainTab.barBottomPadding)
+                .padding(.top, MainTab.barTopPadding)
                 .frame(maxWidth: .infinity)
                 .background(
                     Color.white

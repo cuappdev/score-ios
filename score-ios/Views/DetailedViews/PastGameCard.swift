@@ -69,11 +69,7 @@ extension PastGameCard {
             
             Spacer()
             
-            AsyncImage(url: URL(string: game.opponent.image)) {image in
-                image.resizable()
-            } placeholder: {
-                Constants.Colors.gray_icons
-            }
+            RemoteImage(url: URL(string: game.opponent.image))
             .frame(width: 64, height: 64)
             
             Spacer()
@@ -88,11 +84,7 @@ extension PastGameCard {
     private var information: some View {
         VStack {
             HStack {
-                AsyncImage(url: URL(string: game.opponent.image)) {image in
-                    image.resizable()
-                } placeholder: {
-                    Constants.Colors.gray_icons
-                }
+                RemoteImage(url: URL(string: game.opponent.image))
                 .frame(width: 24, height: 24)
 
                 ScrollView(.horizontal, showsIndicators: false){

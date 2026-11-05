@@ -48,7 +48,13 @@
 		76AED8532EC50C2700694C0B /* Article.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 76AED8522EC50C2100694C0B /* Article.graphql */; };
 		76D998E92E9F1AF900713EE5 /* SearchViewFullScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D998E82E9F1AF300713EE5 /* SearchViewFullScreen.swift */; };
 		76FA3E2A2F243555003433ED /* HighlightLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FA3E292F24354D003433ED /* HighlightLoadingView.swift */; };
+		9BF9DA62306DBEB3001103C6 /* ProfileVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF9DA61306DBEB3001103C6 /* ProfileVIew.swift */; };
+		9BF9DB5130896772001103C6 /* EmptyProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF9DB5030896772001103C6 /* EmptyProfileView.swift */; };
+		A1B2C3D42E9F000000000002 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D42E9F000000000001 /* AnalyticsManager.swift */; };
 		B136701ECD164EE9AC64667F /* Article.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB4DBAE237D47AB882D4EBC /* Article.swift */; };
+		B4C8E1A22F3E4B0100A1C002 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C8E1A12F3E4B0100A1C001 /* BackButton.swift */; };
+		B4C8E1A42F3E4B0100A1C004 /* RemoteImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C8E1A32F3E4B0100A1C003 /* RemoteImage.swift */; };
+		C5D9F2B12F4E4B0100A1C010 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = C5D9F2B22F4E4B0100A1C011 /* Kingfisher */; };
 		CE335CD32C922E8D0037F572 /* PrimaryColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE335CD22C922E8D0037F572 /* PrimaryColors.swift */; };
 		CE335CD52C922ECB0037F572 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE335CD42C922ECB0037F572 /* Constants.swift */; };
 		CE335CD72C922F390037F572 /* Dates.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE335CD62C922F390037F572 /* Dates.swift */; };
@@ -181,6 +187,11 @@
 		76D998E82E9F1AF300713EE5 /* SearchViewFullScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewFullScreen.swift; sourceTree = "<group>"; };
 		76FA3E292F24354D003433ED /* HighlightLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightLoadingView.swift; sourceTree = "<group>"; };
 		840304A20FA141C291346BA8 /* Highlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Highlight.swift; sourceTree = "<group>"; };
+		9BF9DA61306DBEB3001103C6 /* ProfileVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVIew.swift; sourceTree = "<group>"; };
+		9BF9DB5030896772001103C6 /* EmptyProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyProfileView.swift; sourceTree = "<group>"; };
+		A1B2C3D42E9F000000000001 /* AnalyticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
+		B4C8E1A12F3E4B0100A1C001 /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
+		B4C8E1A32F3E4B0100A1C003 /* RemoteImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteImage.swift; sourceTree = "<group>"; };
 		CE335CD22C922E8D0037F572 /* PrimaryColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryColors.swift; sourceTree = "<group>"; };
 		CE335CD42C922ECB0037F572 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CE335CD62C922F390037F572 /* Dates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dates.swift; sourceTree = "<group>"; };
@@ -270,6 +281,7 @@
 				D0A904F72E8DDD990008194B /* FirebaseCore in Frameworks */,
 				D89102182CF151DD004CE226 /* GameAPI in Frameworks */,
 				D0A904F52E8DDD990008194B /* FirebaseAnalytics in Frameworks */,
+				C5D9F2B12F4E4B0100A1C010 /* Kingfisher in Frameworks */,
 				130DDE0A306B895B0060C0E9 /* GoogleSignIn in Frameworks */,
 				130DDE0E306B8A120060C0E9 /* FirebaseAuth in Frameworks */,
 			);
@@ -345,9 +357,12 @@
 			isa = PBXGroup;
 			children = (
 				1C87865B2D8CD73C00EBDF74 /* ViewModifiers */,
+				A1B2C3D42E9F000000000001 /* AnalyticsManager.swift */,
 				CE335CD22C922E8D0037F572 /* PrimaryColors.swift */,
 				CE335CD42C922ECB0037F572 /* Constants.swift */,
 				7626AD6E2E973E08002149CD /* View+CornerRadius.swift */,
+				B4C8E1A12F3E4B0100A1C001 /* BackButton.swift */,
+				B4C8E1A32F3E4B0100A1C003 /* RemoteImage.swift */,
 				CE335CD62C922F390037F572 /* Dates.swift */,
 				CE528FA32C9653C200C238B5 /* Error.swift */,
 				CE3C9C422D011A23008BFB4C /* OrdinalSuffix.swift */,
@@ -510,6 +525,8 @@
 				FD5A38DC2D8F30CC00CF5E30 /* RetryErrorView.swift */,
 				76FA3E292F24354D003433ED /* HighlightLoadingView.swift */,
 				7657DD532F2470E800AC4966 /* HighlightSearchLoadingView.swift */,
+				9BF9DA61306DBEB3001103C6 /* ProfileVIew.swift */,
+				9BF9DB5030896772001103C6 /* EmptyProfileView.swift */,
 			);
 			path = ListViews;
 			sourceTree = "<group>";
@@ -680,6 +697,7 @@
 			packageReferences = (
 				D89102012CED68D9004CE226 /* XCRemoteSwiftPackageReference "apollo-ios" */,
 				D0A904F32E8DDD990008194B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				C5D9F2B32F4E4B0100A1C012 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				761050E32EC50DCC00FD73F8 /* XCLocalSwiftPackageReference "gameAPI" */,
 				130DDE00306B83B50060C0E9 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
@@ -823,6 +841,8 @@
 				D8B1C9D32CD2D20A0095E563 /* PastGameTile.swift in Sources */,
 				130DDDF9306B7D180060C0E9 /* SportIcon.swift in Sources */,
 				7626AD6F2E973E08002149CD /* View+CornerRadius.swift in Sources */,
+				B4C8E1A22F3E4B0100A1C002 /* BackButton.swift in Sources */,
+				B4C8E1A42F3E4B0100A1C004 /* RemoteImage.swift in Sources */,
 				CE528FA22C9651C800C238B5 /* UpcomingGameTile.swift in Sources */,
 				FD5A38DD2D8F30CC00CF5E30 /* RetryErrorView.swift in Sources */,
 				CEA25A932D75279A00B9837A /* ScoreEnvironment.swift in Sources */,
@@ -846,6 +866,7 @@
 				D87882282CC060FC00421F67 /* GameDetailedScoreView.swift in Sources */,
 				D864B5AB2D793A7400A3A50E /* PastGameViewModel.swift in Sources */,
 				D83EE8862CC9917C008B693C /* ScoreSummaryTile.swift in Sources */,
+				9BF9DB5130896772001103C6 /* EmptyProfileView.swift in Sources */,
 				CE8ED5002D6BF4BE00A274DE /* BoxScoreUpdate.swift in Sources */,
 				D89461192CBF393B0010C532 /* UpcomingCard.swift in Sources */,
 				130DDDFF306B83770060C0E9 /* LoginViewModel.swift in Sources */,
@@ -860,12 +881,14 @@
 				130DDDF7306B7C3A0060C0E9 /* IntroAnimationViewModel.swift in Sources */,
 				CE528FA42C9653C200C238B5 /* Error.swift in Sources */,
 				CE335CD52C922ECB0037F572 /* Constants.swift in Sources */,
+				A1B2C3D42E9F000000000002 /* AnalyticsManager.swift in Sources */,
 				CE8ED4FE2D6BF49E00A274DE /* GameUpdate.swift in Sources */,
 				130DDE14306C8DCA0060C0E9 /* EditProfileView.swift in Sources */,
 				130DDE18306CC9A00060C0E9 /* User.swift in Sources */,
 				7665A4072EB00531004A9903 /* HighlightsViewModel.swift in Sources */,
 				D86347E12CE98D37003DD8F6 /* TabViewIcon.swift in Sources */,
 				CE3C9C412D010177008BFB4C /* ScoringSummary.swift in Sources */,
+				9BF9DA62306DBEB3001103C6 /* ProfileVIew.swift in Sources */,
 				CE8ED50E2D6C3B8000A274DE /* SportSelectorView.swift in Sources */,
 				CE8ED5082D6C36E200A274DE /* GameListView.swift in Sources */,
 				CE8ED5142D6C42D400A274DE /* GameSectionHeaderView.swift in Sources */,
@@ -1037,7 +1060,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 26;
+				CURRENT_PROJECT_VERSION = 27;
 				DEVELOPMENT_ASSET_PATHS = "\"score-ios/Preview Content\"";
 				DEVELOPMENT_TEAM = H5ZTDCQ89H;
 				ENABLE_PREVIEWS = YES;
@@ -1056,7 +1079,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 2.0.1;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cornellappdev.score-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1074,7 +1101,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 26;
+				CURRENT_PROJECT_VERSION = 27;
 				DEVELOPMENT_ASSET_PATHS = "\"score-ios/Preview Content\"";
 				DEVELOPMENT_TEAM = H5ZTDCQ89H;
 				ENABLE_PREVIEWS = YES;
@@ -1093,7 +1120,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 2.0.1;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cornellappdev.score-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1225,6 +1256,14 @@
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		C5D9F2B32F4E4B0100A1C012 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.4.0;
+			};
+		};
 		130DDE00306B83B50060C0E9 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
@@ -1252,6 +1291,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		C5D9F2B22F4E4B0100A1C011 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C5D9F2B32F4E4B0100A1C012 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
 		130DDE09306B895B0060C0E9 /* GoogleSignIn */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 130DDE00306B83B50060C0E9 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;

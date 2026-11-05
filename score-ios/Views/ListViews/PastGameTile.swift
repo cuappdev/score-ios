@@ -42,9 +42,7 @@ struct PastGameTile: View {
 
     func oppRow(oppWon: Bool) -> some View {
         HStack {
-            AsyncImage(url: URL(string: game.opponent.image)) { image in
-                image.image?.resizable()
-            }
+            RemoteImage(url: URL(string: game.opponent.image))
             .frame(width: 20, height: 20)
 
             ScrollView(.horizontal, showsIndicators: false){

@@ -18,14 +18,8 @@ struct ScoringUpdateCell : View {
                     .resizable()
                     .frame(width: 32, height: 32)
             } else {
-                AsyncImage(url: URL(string: img)) { image in
-                    image
-                        .resizable()
-                        .frame(width: 32, height: 32)
-                } placeholder: {
-                    Constants.Colors.gray_icons
-                        .frame(width: 32, height: 32)
-                }
+                RemoteImage(url: URL(string: img))
+                    .frame(width: 32, height: 32)
             }
             
             Spacer()

@@ -31,9 +31,10 @@ struct HighlightLoadingView: View {
                     searchBar
                     sportSelector
 
-                    highlightSection(title: "Today")
-                    highlightSection(title: "Past 3 Days")
+                    highlightSection(title: "Last Week")
+                    highlightSection(title: "Recent")
                 }
+                .padding(.bottom, MainTab.scrollClearance)
                 .shimmer()
             }
         }

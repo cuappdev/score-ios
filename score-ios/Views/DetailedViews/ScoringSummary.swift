@@ -34,14 +34,11 @@ struct ScoringSummary : View {
                 .font(.system(size: 27, weight: .regular))
             }
             ToolbarItem(placement: .navigationBarLeading) {
-                Button {
+                BackButton {
                     presentationMode.wrappedValue.dismiss()
-                } label: {
-                    Image("arrow_back_ios")
-                        .resizable()
-                        .frame(width: 9.87, height: 18.57)
                 }
             }
+            .backButtonToolbarChrome()
         }
         .navigationBarBackButtonHidden()
         .toolbarBackground(Color.white, for: .navigationBar)

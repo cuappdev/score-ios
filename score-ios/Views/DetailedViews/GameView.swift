@@ -40,14 +40,11 @@ struct GameView : View {
                         .font(Constants.Fonts.Header.h1)
                 }
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
+                    BackButton {
                         presentationMode.wrappedValue.dismiss()
-                    } label: {
-                        Image("arrow_back_ios")
-                            .resizable()
-                            .frame(width: 9.87, height: 18.57)
                     }
                 }
+                .backButtonToolbarChrome()
             }
             .navigationBarBackButtonHidden()
             .toolbarBackground(Color.white, for: .navigationBar)
@@ -98,10 +95,7 @@ extension GameView {
                 .font(Constants.Fonts.bold40)
                 .foregroundColor(Constants.Colors.white)
             Spacer()
-            AsyncImage(url: URL(string: game.opponent.image)) {
-                image in
-                image.image?.resizable()
-            }
+            RemoteImage(url: URL(string: game.opponent.image))
             .frame(width: 72, height: 72)
             
             Spacer()
@@ -182,6 +176,7 @@ extension GameView {
                 if let link = game.ticketLink,
                    let url = URL(string: link) {
                     Button(action: {
+                        AnalyticsManager.log(.ticketingLinkClicked)
                         UIApplication.shared.open(url)
                     }) {
                         HStack (spacing: 9){
@@ -209,6 +204,7 @@ extension GameView {
                 
                 // Calendar Button
                 Button(action: {
+                    AnalyticsManager.log(.addToCalendarTapped)
                     calendarViewModel.requestAccessandAdd(event:game)
                 }) {
                     HStack (spacing: 8){

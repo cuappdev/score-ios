@@ -26,10 +26,10 @@ struct SearchViewFullScreen: View {
         let model = viewModel // avoid dynamicMemberLookup confusion
         
         switch scope {
-        case .today:
-            return model.detailedTodayHighlights
-        case .pastThreeDays:
-            return model.detailedPastThreeDaysHighlights
+        case .lastWeek:
+            return model.detailedLastWeekHighlights
+        case .recent:
+            return model.detailedRecentHighlights
         default:
             return model.allHighlightsSearchResults
         }
@@ -170,6 +170,6 @@ struct SearchViewFullScreen: View {
 
 // MARK: - Preview
 #Preview {
-    SearchViewFullScreen(title: "Search All Highlights", scope: .pastThreeDays)
+    SearchViewFullScreen(title: "Search All Highlights", scope: .recent)
         .environmentObject(HighlightsViewModel.shared)
 }

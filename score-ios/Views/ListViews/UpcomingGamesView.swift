@@ -57,9 +57,7 @@ struct UpcomingGamesView: View {
                                 .edgesIgnoringSafeArea(.top)
                         }
                         .scrollTargetLayout()
-                        .safeAreaInset(edge: .bottom, content: {
-                            Color.clear.frame(height: 20)
-                        })
+                        .padding(.bottom, MainTab.scrollClearance)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                     }
                 }
@@ -91,6 +89,7 @@ struct UpcomingGamesView: View {
                 GameErrorView(viewModel: vm)
             }
         }
+        .trackScreen(.schedule)
     }
 
     private var welcomeBanner: some View {

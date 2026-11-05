@@ -64,10 +64,10 @@ struct DetailedHighlightsView: View {
     // MARK: - Helpers
     private var highlightsForScope: [Highlight] {
        switch highlightScope {
-       case .today:
-           return viewModel.detailedTodayHighlights
-       case .pastThreeDays:
-           return viewModel.detailedPastThreeDaysHighlights
+       case .lastWeek:
+           return viewModel.detailedLastWeekHighlights
+       case .recent:
+           return viewModel.detailedRecentHighlights
        default:
            return viewModel.allHighlights
        }
@@ -82,11 +82,7 @@ struct DetailedHighlightsView: View {
                     .foregroundStyle(Constants.Colors.black)
                 
                 HStack {
-                    Button(action: { dismiss() }) {
-                        Image("arrow_back_ios")
-                            .resizable()
-                            .frame(width: 9.87, height: 18.57)
-                    }
+                    BackButton { dismiss() }
                     
                     Spacer()
                 }
@@ -114,8 +110,8 @@ struct DetailedHighlightsView: View {
 
 #Preview {
     DetailedHighlightsView(
-        title: "Today",
-        highlightScope: .today
+        title: "Last Week",
+        highlightScope: .lastWeek
     )
     .environmentObject(HighlightsViewModel.shared)
 }

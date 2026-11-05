@@ -16,26 +16,11 @@ struct HighlightTileVideo: View {
             Link(destination: url) {
                 VStack(alignment: .leading, spacing: 1) {
                     // Thumbnail
-                    AsyncImage(url: URL(string: video.thumbnail)) { phase in
-                        switch phase {
-                        case .empty:
-                            // While loading
-                            Rectangle()
-                                .fill(Constants.Colors.gray_icons.opacity(0.2))
-                        case .success(let image):
-                            image
-                                .resizable()
-                                .scaledToFill()
-                        case .failure(_):
-                            // If loading fails
-                            Image(systemName: "photo")
-                                .resizable()
-                                .scaledToFit()
-                                .foregroundColor(.gray)
-                        @unknown default:
-                            EmptyView()
-                        }
-                    }
+                    RemoteImage(
+                        url: URL(string: video.thumbnail),
+                        fillsFrame: true,
+                        downsampleSize: CGSize(width: width, height: 117)
+                    )
                     .frame(width: width, height: 117)
                     .clipped()
                     .overlay(

@@ -13,13 +13,15 @@ final class EditFavSportsViewModel: ObservableObject {
     // MARK: - Properties
 
     @Published private(set) var selected: Set<FavoriteTeam> = []
+    @Published private(set) var savedFavorites: Set<FavoriteTeam> = []
     @Published private(set) var isSaving = false
     @Published var showError = false
 
     // MARK: - Selection
 
     func loadFavorites() {
-        selected = Set(AuthManager.shared.currentUser?.favoriteTeams ?? [])
+        savedFavorites = Set(AuthManager.shared.favoriteTeams)
+        selected = savedFavorites
     }
 
     func isSelected(_ team: FavoriteTeam) -> Bool {
@@ -37,6 +39,10 @@ final class EditFavSportsViewModel: ObservableObject {
     // MARK: - Saving
 
     func saveFavorites() async -> Bool {
+        guard AuthManager.shared.currentUser != nil else {
+            AuthManager.shared.saveLocalFavoriteTeams(Array(selected))
+            return true
+        }
         isSaving = true
         defer { isSaving = false }
         let original = Set(AuthManager.shared.currentUser?.favoriteTeams ?? [])

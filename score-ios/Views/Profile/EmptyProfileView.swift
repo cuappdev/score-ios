@@ -9,6 +9,7 @@ import SwiftUI
 
 struct EmptyProfileView: View {
     @EnvironmentObject var viewModel: HighlightsViewModel //will implement later
+    @State private var showSettings = false
     
     var body: some View {
         NavigationStack {
@@ -20,6 +21,9 @@ struct EmptyProfileView: View {
                 bookmarkedHighlightsEmpty
                 Spacer()
             }
+        }
+        .navigationDestination(isPresented: $showSettings) {
+            SettingsView(onReturnToProfile: { showSettings = false })
         }
     }
     
@@ -47,7 +51,7 @@ struct EmptyProfileView: View {
                             .frame(width: 30, height: 30)
                     }
                     Button {
-                        // do nothing rn
+                        showSettings = true
                     } label: {
                         Image("Settings")
                             .resizable()

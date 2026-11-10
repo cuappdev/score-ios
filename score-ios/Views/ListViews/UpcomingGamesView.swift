@@ -27,7 +27,6 @@ struct UpcomingGamesView: View {
                             Color.clear
                                 .frame(height: 0)
                                 .id("top")
-
                             if session.showWelcome {
                                 welcomeBanner
                                     .padding(.horizontal, paddingMain)
@@ -63,6 +62,7 @@ struct UpcomingGamesView: View {
                 }
                 .id(screenID)
                 .scrollPosition(id: $scrollPosition, anchor: .top)
+                .toolbar(.hidden, for: .navigationBar)
             }
             .task {
                 guard vm.hasNotFetchedYet else { return }
@@ -97,15 +97,24 @@ struct UpcomingGamesView: View {
             Image("speaker")
                 .resizable()
                 .renderingMode(.template)
-                .frame(width: 32, height: 32)
+                .frame(width: 50, height: 50)
                 .foregroundStyle(Constants.Colors.white)
-            Text("Welcome to Score \(Text(auth.currentUser?.name ?? "User").font(Constants.Fonts.bodyBold))")
-                .font(Constants.Fonts.medium14)
+            Text("Welcome to Score \(Text(firstName + "!").font(Constants.Fonts.semibold18))")
+                .font(Constants.Fonts.medium18)
                 .foregroundStyle(Constants.Colors.white)
         }
         .frame(maxWidth: .infinity)
         .padding(16)
-        .background(Constants.Colors.crimson)
+        .background(
+            LinearGradient(
+                colors: [
+                    Constants.Colors.light_red,
+                    Constants.Colors.dark_red
+                ],
+                startPoint: .leading,
+                endPoint: .trailing
+            )
+        )
         .cornerRadius(12)
         .shadow(color: .black.opacity(0.16), radius: 5, x: 0, y: 6)
     }
@@ -120,6 +129,10 @@ struct UpcomingGamesView: View {
     /// Changes when loading finishes or the app is reopened, giving a fresh scroll view at the top.
     private var screenID: String {
         "\(session.openCount)-\(isLoading)"
+    }
+    
+    private var firstName: String {
+        auth.currentUser?.name?.split(separator: " ").first.map(String.init) ?? "User"
     }
 }
 

@@ -71,7 +71,7 @@ struct GameLoadingView: View {
                     Spacer(minLength: 0)
                 }
                 .frame(maxWidth: geometry.size.width, maxHeight: geometry.size.height, alignment: .top)
-                .padding(.top, showsWelcome ? 30 : 50)
+                .padding(.top, showsWelcome ? 30 : 24)
                 .shimmer()
                 .clipped()
             }
@@ -82,8 +82,9 @@ struct GameLoadingView: View {
 
     private var welcomeSection: some View {
         RoundedRectangle(cornerRadius: 12)
-            .frame(height: 64)
+            .frame(height: 82)
             .padding(.horizontal, Layout.horizontalPadding)
+            .padding(.bottom, 14)
     }
     
     private var titleSection: some View {

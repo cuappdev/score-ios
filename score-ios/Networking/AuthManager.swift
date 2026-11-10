@@ -25,6 +25,7 @@ final class AuthManager: ObservableObject {
     var isSignedIn: Bool { accessToken != nil }
     var hasSkippedSignIn: Bool { UserDefaults.standard.bool(forKey: skippedSignInKey) }
     private let userKey = "currentUser"
+    private let localFavoritesKey = "localFavoriteTeams"
     private let skippedSignInKey = "hasSkippedSignIn"
 
     private init() {
@@ -47,6 +48,7 @@ final class AuthManager: ObservableObject {
                     FavoriteTeam(sport: $0.sport, gender: $0.gender)
                 }
             ))
+            await uploadLocalFavorites()
             return .existingUser
         } catch NetworkManager.NetworkError.graphQL(let message) where message.contains("User not found") {
             let signup = try await NetworkManager.shared.signupUser(idToken: idToken)
@@ -59,15 +61,14 @@ final class AuthManager: ObservableObject {
                     FavoriteTeam(sport: $0.sport, gender: $0.gender)
                 }
             ))
+            await uploadLocalFavorites()
             return .newUser
         }
     }
-
-    func signOut() {
-        KeychainHelper.delete(KeychainHelper.accessTokenKey)
-        KeychainHelper.delete(KeychainHelper.refreshTokenKey)
-        currentUser = nil
-        UserDefaults.standard.removeObject(forKey: userKey)
+    
+    func logOut() async {
+        try? await NetworkManager.shared.logoutUser()
+        clearSession()
     }
     
     func skipSignIn() {
@@ -79,6 +80,22 @@ final class AuthManager: ObservableObject {
     func updateFavoriteTeams(_ teams: [FavoriteTeam]) {
         guard let user = currentUser else { return }
         saveUser(User(id: user.id, email: user.email, name: user.name, favoriteTeams: teams))
+    }
+    
+    var favoriteTeams: [FavoriteTeam] {
+        currentUser?.favoriteTeams ?? localFavoriteTeams
+    }
+
+    private var localFavoriteTeams: [FavoriteTeam] {
+        guard let data = UserDefaults.standard.data(forKey: localFavoritesKey) else { return [] }
+        return (try? JSONDecoder().decode([FavoriteTeam].self, from: data)) ?? []
+    }
+
+    func saveLocalFavoriteTeams(_ teams: [FavoriteTeam]) {
+        if let data = try? JSONEncoder().encode(teams) {
+            UserDefaults.standard.set(data, forKey: localFavoritesKey)
+        }
+        objectWillChange.send()
     }
 
     // MARK: - Helpers
@@ -93,6 +110,34 @@ final class AuthManager: ObservableObject {
         currentUser = user
         if let data = try? JSONEncoder().encode(user) {
             UserDefaults.standard.set(data, forKey: userKey)
+        }
+    }
+    
+    private func clearSession() {
+        KeychainHelper.delete(KeychainHelper.accessTokenKey)
+        KeychainHelper.delete(KeychainHelper.refreshTokenKey)
+        currentUser = nil
+        UserDefaults.standard.removeObject(forKey: userKey)
+    }
+    
+    private func uploadLocalFavorites() async {
+        let local = Set(localFavoriteTeams)
+        guard !local.isEmpty, let user = currentUser else { return }
+        var teams = Set(user.favoriteTeams)
+        var failed: [FavoriteTeam] = []
+        for team in local.subtracting(teams) {
+            do {
+                try await NetworkManager.shared.addFavoriteTeam(sport: team.sport, gender: team.gender)
+                teams.insert(team)
+            } catch {
+                failed.append(team)
+            }
+        }
+        updateFavoriteTeams(Array(teams))
+        if failed.isEmpty {
+            UserDefaults.standard.removeObject(forKey: localFavoritesKey)
+        } else {
+            saveLocalFavoriteTeams(failed)
         }
     }
 }

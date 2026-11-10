@@ -37,6 +37,7 @@ struct score_iosApp: App {
     }
     @Environment(\.scenePhase) private var scenePhase
     @StateObject private var session = AppSession()
+    @ObservedObject private var auth = AuthManager.shared
     @State private var screen: Screen =
         AuthManager.shared.isSignedIn || AuthManager.shared.hasSkippedSignIn ? .main : .signIn
     @State private var onboardingStep: OnboardingStep = .profile
@@ -54,8 +55,8 @@ struct score_iosApp: App {
                         },
                         onSignUpLater: {
                             AuthManager.shared.skipSignIn()
-                            session.showWelcomeIfSignedIn()
-                            screen = .main
+                            onboardingStep = .favoriteSports
+                            screen = .onboarding
                         }
                     )
                 case .onboarding:
@@ -79,6 +80,9 @@ struct score_iosApp: App {
             .environmentObject(session)
             .onChange(of: scenePhase) { _, phase in
                 session.handleScenePhase(phase)
+            }
+            .onChange(of: auth.currentUser?.id) { _, id in
+                if id == nil { screen = .signIn }
             }
             .onOpenURL { url in
                 GIDSignIn.sharedInstance.handle(url)

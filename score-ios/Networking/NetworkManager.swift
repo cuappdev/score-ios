@@ -4,6 +4,7 @@
 //
 //  Created by Hsia Lu wu on 11/22/24.
 //
+
 import Foundation
 import Apollo
 import ApolloAPI
@@ -114,6 +115,10 @@ class NetworkManager {
             throw NetworkError.noData
         }
         return signup
+    }
+    
+    func logoutUser() async throws {
+        _ = try await perform(LogoutUserMutation())
     }
 
     // MARK: - Favorite Teams

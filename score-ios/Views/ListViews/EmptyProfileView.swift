@@ -13,11 +13,11 @@ struct EmptyProfileView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                headerViewEmpty
+                headerView
                 dividerView
-                favortiesViewEmpty
+                favortiesView
                 dividerView
-                bookmarkedHighlightsEmpty
+                bookmarkedHighlights
                 Spacer()
             }
         }
@@ -30,7 +30,7 @@ struct EmptyProfileView: View {
             .padding(.vertical, 20)
     }
     
-    var headerViewEmpty: some View {
+    private var headerView: some View {
         Group {
             VStack {
                 HStack {
@@ -83,7 +83,7 @@ struct EmptyProfileView: View {
         }
     }
     
-    var favortiesViewEmpty: some View {
+    private var favortiesView: some View {
         VStack {
             HStack {
                 Text("Favorite Sports")
@@ -128,7 +128,7 @@ struct EmptyProfileView: View {
         .padding(.horizontal, 20)
     }
     
-    var bookmarkedHighlightsEmpty: some View {
+    private var bookmarkedHighlights: some View {
         VStack {
             HStack {
                 Text("Bookmarked Highlights")

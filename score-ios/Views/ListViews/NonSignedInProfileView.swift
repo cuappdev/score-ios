@@ -18,21 +18,21 @@ struct NonSignedInProfileView: View {
                 headerView
                 favortiesView
                 dividerView
-                bookmarkedHighlightsEmpty
+                bookmarkedHighlights
                 Spacer()
             }
         }
     }
     
     
-    var dividerView: some View {
+    private var dividerView: some View {
         Divider()
             .background(Constants.Colors.gray_liner)
             .padding(.horizontal, 20)
             .padding(.vertical, 20)
     }
     
-    var headerView: some View {
+    private var headerView: some View {
         Group{
             VStack {
                 HStack{
@@ -62,7 +62,7 @@ struct NonSignedInProfileView: View {
         }
     }
     
-    var favortiesView: some View {
+    private var favortiesView: some View {
         VStack{
             HStack {
                 Text("Favorite Sports")
@@ -130,7 +130,7 @@ struct NonSignedInProfileView: View {
         .frame(width: 96)
     }
     
-    var bookmarkedHighlightsEmpty: some View {
+    private var bookmarkedHighlights: some View {
         VStack {
             HStack {
                 Text("Bookmarked Highlights")

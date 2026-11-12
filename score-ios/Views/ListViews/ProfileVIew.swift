@@ -97,7 +97,7 @@ struct ProfileView: View {
                 } label: {
                     HStack(spacing: 2){
                         Text("Edit")
-                            .font(Constants.Fonts.Label.normal)
+                            .font(Constants.Fonts.Body.medium)
                             .foregroundStyle(Constants.Colors.crimson)
                         Image("Arrowhead")
                             .resizable()
@@ -165,7 +165,7 @@ struct ProfileView: View {
                 } label: {
                     HStack{
                         Text("Show all")
-                            .font(Constants.Fonts.Label.normal)
+                            .font(Constants.Fonts.Body.medium)
                             .foregroundStyle(Constants.Colors.crimson)
                         Image("Arrowhead")
                             .resizable()

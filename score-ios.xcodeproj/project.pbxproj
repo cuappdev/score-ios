@@ -48,6 +48,7 @@
 		76AED8532EC50C2700694C0B /* Article.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 76AED8522EC50C2100694C0B /* Article.graphql */; };
 		76D998E92E9F1AF900713EE5 /* SearchViewFullScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D998E82E9F1AF300713EE5 /* SearchViewFullScreen.swift */; };
 		76FA3E2A2F243555003433ED /* HighlightLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FA3E292F24354D003433ED /* HighlightLoadingView.swift */; };
+		9B0B4BED30A4B1A60061A6B6 /* NonSignedInProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B0B4BEC30A4B1A60061A6B6 /* NonSignedInProfileView.swift */; };
 		9BF9DA62306DBEB3001103C6 /* ProfileVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF9DA61306DBEB3001103C6 /* ProfileVIew.swift */; };
 		9BF9DB5130896772001103C6 /* EmptyProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF9DB5030896772001103C6 /* EmptyProfileView.swift */; };
 		A1B2C3D42E9F000000000002 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D42E9F000000000001 /* AnalyticsManager.swift */; };
@@ -187,6 +188,7 @@
 		76D998E82E9F1AF300713EE5 /* SearchViewFullScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewFullScreen.swift; sourceTree = "<group>"; };
 		76FA3E292F24354D003433ED /* HighlightLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightLoadingView.swift; sourceTree = "<group>"; };
 		840304A20FA141C291346BA8 /* Highlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Highlight.swift; sourceTree = "<group>"; };
+		9B0B4BEC30A4B1A60061A6B6 /* NonSignedInProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonSignedInProfileView.swift; sourceTree = "<group>"; };
 		9BF9DA61306DBEB3001103C6 /* ProfileVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVIew.swift; sourceTree = "<group>"; };
 		9BF9DB5030896772001103C6 /* EmptyProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyProfileView.swift; sourceTree = "<group>"; };
 		A1B2C3D42E9F000000000001 /* AnalyticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
@@ -527,6 +529,7 @@
 				7657DD532F2470E800AC4966 /* HighlightSearchLoadingView.swift */,
 				9BF9DA61306DBEB3001103C6 /* ProfileVIew.swift */,
 				9BF9DB5030896772001103C6 /* EmptyProfileView.swift */,
+				9B0B4BEC30A4B1A60061A6B6 /* NonSignedInProfileView.swift */,
 			);
 			path = ListViews;
 			sourceTree = "<group>";
@@ -866,6 +869,7 @@
 				D87882282CC060FC00421F67 /* GameDetailedScoreView.swift in Sources */,
 				D864B5AB2D793A7400A3A50E /* PastGameViewModel.swift in Sources */,
 				D83EE8862CC9917C008B693C /* ScoreSummaryTile.swift in Sources */,
+				9B0B4BED30A4B1A60061A6B6 /* NonSignedInProfileView.swift in Sources */,
 				9BF9DB5130896772001103C6 /* EmptyProfileView.swift in Sources */,
 				CE8ED5002D6BF4BE00A274DE /* BoxScoreUpdate.swift in Sources */,
 				D89461192CBF393B0010C532 /* UpcomingCard.swift in Sources */,
@@ -1256,20 +1260,20 @@
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		C5D9F2B32F4E4B0100A1C012 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 8.4.0;
-			};
-		};
 		130DDE00306B83B50060C0E9 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 10.0.0;
+			};
+		};
+		C5D9F2B32F4E4B0100A1C012 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.4.0;
 			};
 		};
 		D0A904F32E8DDD990008194B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
@@ -1291,11 +1295,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		C5D9F2B22F4E4B0100A1C011 /* Kingfisher */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C5D9F2B32F4E4B0100A1C012 /* XCRemoteSwiftPackageReference "Kingfisher" */;
-			productName = Kingfisher;
-		};
 		130DDE09306B895B0060C0E9 /* GoogleSignIn */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 130DDE00306B83B50060C0E9 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
@@ -1310,6 +1309,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D0A904F32E8DDD990008194B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
+		};
+		C5D9F2B22F4E4B0100A1C011 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C5D9F2B32F4E4B0100A1C012 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 		D0A904F42E8DDD990008194B /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;

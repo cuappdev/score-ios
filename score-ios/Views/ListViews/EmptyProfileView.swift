@@ -70,7 +70,7 @@ struct EmptyProfileView: View {
                         // do nothing rn
                     } label: {
                         Text("Edit Profile Picture")
-                            .font(Constants.Fonts.Label.normal)
+                            .font(Constants.Fonts.Label.medium)
                             .foregroundStyle(Constants.Colors.crimson)
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
@@ -92,7 +92,7 @@ struct EmptyProfileView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                 HStack(spacing: 2) {
                     Text("Edit")
-                        .font(Constants.Fonts.Label.normal)
+                        .font(Constants.Fonts.Label.medium)
                         .foregroundStyle(Constants.Colors.gray_liner)
                     Image("ArrowheadGray")
                         .resizable()
@@ -137,7 +137,7 @@ struct EmptyProfileView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                 HStack {
                     Text("Show all")
-                        .font(Constants.Fonts.Label.normal)
+                        .font(Constants.Fonts.Body.medium)
                         .foregroundStyle(Constants.Colors.gray_liner)
                     Image("ArrowheadGray")
                         .resizable()
@@ -149,15 +149,25 @@ struct EmptyProfileView: View {
             VStack(spacing: 12) {
                 Image(systemName: "bookmark.fill")
                     .font(.system(size: 16))
-                    .foregroundStyle(Color(white: 0.75))           // darker bookmark
+                    .foregroundStyle(Color(white: 0.75))
                     .frame(width: 44, height: 44)
-                    .background(Circle().fill(Color(white: 0.91))) // light gray circle
-                Text("No bookmarks yet")
-                    .font(Constants.Fonts.Body.normal)
-                    .foregroundStyle(Constants.Colors.black)
+                    .background(Circle().fill(Color(white: 0.91)))
+
+                Text("No Bookmarks Yet")
+                    .font(Constants.Fonts.Body.semibold)
+                    .foregroundStyle(Color.gray)
+
+                (Text("Go to the ")
+                    .foregroundColor(Color.gray)
+                 + Text("Highlights")
+                    .foregroundColor(Constants.Colors.crimson)
+                 + Text(" page to\nbegin adding.")
+                    .foregroundColor(Color.gray))
+                    .font(Constants.Fonts.Label.normal)
+                    .multilineTextAlignment(.center)
             }
+            .padding(.vertical, 28)
             .frame(maxWidth: .infinity)
-            .frame(height: 175)
             .background(RoundedRectangle(cornerRadius: 20).fill(Color.white))
             .overlay(
                 RoundedRectangle(cornerRadius: 20)

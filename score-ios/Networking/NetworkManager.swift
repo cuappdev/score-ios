@@ -120,6 +120,16 @@ class NetworkManager {
     func logoutUser() async throws {
         _ = try await perform(LogoutUserMutation())
     }
+    
+    func deleteUser() async throws {
+        _ = try await perform(DeleteUserMutation())
+    }
+    
+    func refreshAccessToken() async throws -> String {
+        let data = try await perform(RefreshAccessTokenMutation(), retry: false)
+        guard let token = data.refreshAccessToken?.newAccessToken else { throw NetworkError.noData }
+        return token
+    }
 
     // MARK: - Favorite Teams
 
@@ -134,10 +144,16 @@ class NetworkManager {
     // MARK: - Helpers
 
     private func perform<Mutation: GraphQLMutation>(
-        _ mutation: Mutation
+        _ mutation: Mutation,
+        retry: Bool = true
     ) async throws -> Mutation.Data where Mutation.ResponseFormat == SingleResponseFormat {
         let response = try await apolloClient.perform(mutation: mutation)
         if let errors = response.errors, !errors.isEmpty {
+            let isUnauthenticated = errors.contains { $0.extensions?["code"] as? String == "UNAUTHENTICATED" }
+            if retry && isUnauthenticated {
+                try await AuthManager.shared.refreshAccessToken()
+                return try await perform(mutation, retry: false)
+            }
             throw NetworkError.graphQL(errors.map(\.localizedDescription).joined(separator: "\n"))
         }
         guard let data = response.data else { throw NetworkError.noData }

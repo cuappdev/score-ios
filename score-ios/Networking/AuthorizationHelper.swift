@@ -8,6 +8,7 @@
 import Apollo
 import ApolloAPI
 import Foundation
+import GameAPI
 
 struct AuthorizationInterceptor: GraphQLInterceptor {
     func intercept<Request: GraphQLRequest>(
@@ -15,7 +16,10 @@ struct AuthorizationInterceptor: GraphQLInterceptor {
         next: NextInterceptorFunction<Request>
     ) async throws -> InterceptorResultStream<Request> {
         var request = request
-        if let token = KeychainHelper.read(KeychainHelper.accessTokenKey) {
+        let key = Request.Operation.operationName == RefreshAccessTokenMutation.operationName
+            ? KeychainHelper.refreshTokenKey
+            : KeychainHelper.accessTokenKey
+        if let token = KeychainHelper.read(key) {
             request.additionalHeaders["Authorization"] = "Bearer \(token)"
         }
         return await next(request)

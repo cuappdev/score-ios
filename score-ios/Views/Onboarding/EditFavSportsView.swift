@@ -208,7 +208,7 @@ struct EditFavSportsView: View {
 
     private func save() {
         Task {
-            guard await viewModel.saveFavorites() else { return }
+            guard await viewModel.saveFavorites(allowOffline: isOnboarding) else { return }
             if let onDone {
                 onDone()
             } else {

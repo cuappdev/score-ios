@@ -1,5 +1,0 @@
-mutation LogoutUser {
-  logoutUser {
-    __typename
-  }
-}

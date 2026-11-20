@@ -12,6 +12,7 @@ struct PastGamesView: View {
 
     // State variables
     @StateObject private var vm = GamesViewModel.shared
+    @ObservedObject private var auth = AuthManager.shared
 
     var body: some View {
         ZStack {
@@ -28,7 +29,7 @@ struct PastGamesView: View {
                             })
                             .padding(.horizontal, paddingMain)
 
-                            Section(header: GameSectionHeaderView(headerTitle: "All Scores")
+                            Section(header: Section(header: GameSectionHeaderView(headerTitle: "All Scores", sortsByNextGame: true)
                                 .padding(.horizontal, paddingMain)) {
 
                                     // List of games
@@ -57,6 +58,12 @@ struct PastGamesView: View {
                 vm.filter()
             }
             .onChange(of: vm.selectedSex) {
+                vm.filter()
+            }
+            .onChange(of: auth.favoriteTeams) {
+                vm.filter()
+            }
+            .onAppear {
                 vm.filter()
             }
 

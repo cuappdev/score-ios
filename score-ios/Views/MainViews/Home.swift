@@ -80,9 +80,9 @@ struct score_iosApp: App {
             .environmentObject(session)
             .onChange(of: scenePhase) { _, phase in
                 session.handleScenePhase(phase)
-            }
-            .onChange(of: auth.currentUser?.id) { _, id in
-                if id == nil { screen = .signIn }
+                if phase == .active {
+                    Task { await AuthManager.shared.uploadLocalFavorites() }
+                }
             }
             .onOpenURL { url in
                 GIDSignIn.sharedInstance.handle(url)

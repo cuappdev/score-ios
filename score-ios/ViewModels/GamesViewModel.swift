@@ -62,7 +62,7 @@ class GamesViewModel: ObservableObject
     func filter() {
         self.selectedUpcomingGames = self.allUpcomingGames.filter{ game in
             // Filter by sex
-            let matchesSex = (selectedSex == .Both) || (game.sex == selectedSex)
+            let matchesSex = matchesTab(game)
 
             // Filter by sport
             let matchesSport = (selectedSport == .All) || (game.sport == selectedSport)
@@ -73,7 +73,7 @@ class GamesViewModel: ObservableObject
 
         self.selectedPastGames = self.allPastGames.filter{ game in
             // Filter by sex
-            let matchesSex = (selectedSex == .Both) || (game.sex == selectedSex)
+            let matchesSex = matchesTab(game)
 
             // Filter by sport
             let matchesSport = (selectedSport == .All) || (game.sport == selectedSport)
@@ -81,6 +81,35 @@ class GamesViewModel: ObservableObject
             // Return true if both filters are satisfied
             return matchesSex && matchesSport
         }
+    }
+    
+    /// Shows every game until the user has favorites, then only their favorite teams.
+    private func isFavorite(_ game: Game) -> Bool {
+        let favorites = AuthManager.shared.favoriteTeams
+        guard !favorites.isEmpty else { return true }
+        return favorites.contains { team in
+            Sport(normalizedValue: team.sport) == game.sport && team.sex == game.sex
+        }
+    }
+    
+    /// Whether a game matches the selected tab (Favorited, Men's or Women's).
+    private func matchesTab(_ game: Game) -> Bool {
+        selectedSex == .Both ? isFavorite(game) : game.sex == selectedSex
+    }
+
+    /// Sorts sports by their next upcoming game. Sports with no upcoming games go last.
+    func sortedByNextGame(_ sports: [Sport]) -> [Sport] {
+        var nextGameDate: [Sport: Date] = [:]
+        for game in allUpcomingGames where matchesTab(game) {
+            if nextGameDate[game.sport] == nil {
+                nextGameDate[game.sport] = game.date
+            }
+        }
+        let withGames = sports
+            .filter { nextGameDate[$0] != nil }
+            .sorted { nextGameDate[$0]! < nextGameDate[$1]! }
+        let withoutGames = sports.filter { nextGameDate[$0] == nil }
+        return withGames + withoutGames
     }
 
     /// Loads the 30d window, then kicks off a disconnected background expand to 2y.

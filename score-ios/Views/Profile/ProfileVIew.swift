@@ -9,8 +9,12 @@ import SwiftUI
 
 struct ProfileView: View {
     @EnvironmentObject var viewModel: HighlightsViewModel //will implement later
+    @AppStorage("selectedProfileImage") private var selectedImage = "Blank Profile"
     @State private var showSettings = false
-    private var highlights: [Highlight] { viewModel.allHighlights}
+    @State private var showEditSports = false
+    @State private var showEditProfileView = false
+    //private var highlights: [Highlight] { viewModel.allHighlights}
+    @ObservedObject private var auth = AuthManager.shared
     
     var body: some View {
         NavigationStack{
@@ -22,9 +26,15 @@ struct ProfileView: View {
                 bookmarkedHighlights
                 Spacer()
             }
-        }
-        .navigationDestination(isPresented: $showSettings) {
-            SettingsView(onReturnToProfile: { showSettings = false })
+            .navigationDestination(isPresented: $showSettings) {
+                SettingsView(onReturnToProfile: { showSettings = false })
+            }
+            .navigationDestination(isPresented: $showEditSports) {
+                EditFavSportsView(isOnboarding: false)
+            }
+            .navigationDestination(isPresented: $showEditProfileView) {
+                EditProfileView(isOnboarding: false)
+            }
         }
     }
     
@@ -45,13 +55,6 @@ struct ProfileView: View {
                         .font(Constants.Fonts.semibold24)
                         .foregroundStyle(Constants.Colors.black)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                    Button{
-                        // do nothing rn
-                    } label: {
-                        Image("Notifications")
-                            .resizable()
-                            .frame(width: 30, height: 30)
-                    }
                     Button {
                         showSettings = true
                     } label: {
@@ -64,16 +67,16 @@ struct ProfileView: View {
                 .padding(.horizontal, 20)
             }
             HStack{
-                Image("Tennis Profile")
+                Image(selectedImage)
                     .resizable()
                     .frame(width: 70, height: 70)
                 VStack{
-                    Text("Zara Khan")
+                    Text(auth.currentUser?.name ?? "User")
                         .font(Constants.Fonts.Header.h2)
-                        .foregroundStyle(Constants.Colors.gray_text)
+                        .foregroundStyle(Constants.Colors.primary_gray)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     Button{
-                        // do nothing rn
+                        showEditProfileView = true
                     } label: {
                         Text("Edit Profile Picture")
                             .font(Constants.Fonts.Label.normal)
@@ -97,14 +100,16 @@ struct ProfileView: View {
                     .foregroundStyle(Constants.Colors.black)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 Button{
-                    // do nothing rn
+                    showEditSports = true
                 } label: {
                     HStack(spacing: 2){
                         Text("Edit")
                             .font(Constants.Fonts.Label.normal)
-                            .foregroundStyle(Constants.Colors.crimson)
+                            .foregroundStyle(auth.favoriteTeams.isEmpty ? Constants.Colors.gray_liner : Constants.Colors.crimson)
                         Image("Arrowhead")
                             .resizable()
+                            .renderingMode(.template)
+                            .foregroundStyle(auth.favoriteTeams.isEmpty ? Constants.Colors.gray_liner : Constants.Colors.crimson)
                             .frame(width: 15, height: 15)
                     }
                 }
@@ -113,8 +118,36 @@ struct ProfileView: View {
             ScrollViewReader{ proxy in
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
-                        ForEach(Sport.allCases) { sport in //will use the articles as filler
-                            makeSPortIcon(sport: sport)
+                        if (auth.favoriteTeams.isEmpty) {
+                            Button {
+                                showEditSports = true
+                            } label: {
+                                VStack(spacing: 8) {
+                                    Image("add")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 40, height: 40)
+                                        .frame(width: 96, height: 96)
+                                        .background(RoundedRectangle(cornerRadius: 28).fill(Color.white))
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 28)
+                                                .stroke(Color.gray.opacity(0.2), lineWidth: 1.5)
+                                        )
+                                    Text("Add Sports")
+                                        .font(Constants.Fonts.Body.medium)
+                                        .foregroundStyle(Constants.Colors.black)
+                                        .multilineTextAlignment(.center)
+                                }
+                                .frame(width: 96)
+                            }
+                            .buttonStyle(.plain)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        } else {
+                            ForEach(auth.favoriteTeams, id: \.self) { team in //will use the articles as filler
+                                if let sport = Sport(normalizedValue: team.sport) {
+                                    makeSPortIcon(sport: sport, gender: team.gender)
+                                }
+                            }
                         }
                     }
                 }
@@ -123,11 +156,13 @@ struct ProfileView: View {
         .padding(.horizontal, 20)
     }
     
-    private func makeSPortIcon(sport: Sport) -> some View {
+    private func makeSPortIcon(sport: Sport, gender: String) -> some View {
         VStack(spacing: 8) {
-            Image(sport.description + "-g")
+            Image(sport.iconName)
+                .renderingMode(.template)
                 .resizable()
                 .scaledToFit()
+                .foregroundStyle(Constants.Colors.primary_gray)
                 .frame(width: 40, height: 40)
                 .frame(width: 96, height: 96)
                 .background(RoundedRectangle(cornerRadius: 28).fill(Color.white))
@@ -142,14 +177,14 @@ struct ProfileView: View {
                 .multilineTextAlignment(.center)
 
             HStack(spacing: 4) {
-                Image("tabler_gender-female")
+                Image(gender.capitalized == "Womens" ? "tabler_gender-female" : "tabler_gender-male")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 10, height: 10)
                     .frame(width: 18, height: 18)
                     .background(Circle().fill(Constants.Colors.gray_border))
 
-                Text("W")
+                Text(gender.capitalized == "Womens" ? "W" : "M")
                     .font(Constants.Fonts.Label.normal)
                     .foregroundStyle(Constants.Colors.gray_text)
             }
@@ -179,16 +214,16 @@ struct ProfileView: View {
             }
             .padding(.horizontal, 20)
             ScrollView(.horizontal, showsIndicators: false) {
-                LazyHStack(spacing: 20) {
-                    ForEach(highlights) { highlight in
-                        HighlightTile(highlight: highlight, isVertical: false)
-                    }
-                }
-                .padding(.horizontal, 20)
+                //LazyHStack(spacing: 20) {
+                    //ForEach(highlights) { highlight in
+                        //HighlightTile(highlight: highlight, isVertical: false)
+                    //}
+               // }
+                //.padding(.horizontal, 20)
             }
             .fixedSize(horizontal: false, vertical: true)
             .task {
-                   await viewModel.loadHighlights()
+                  // await viewModel.loadHighlights()
                }
                     .padding(.top, 20)
                     .font(Constants.Fonts.medium18)

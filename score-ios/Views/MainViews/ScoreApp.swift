@@ -11,10 +11,10 @@ import GameAPI
 /// Main View of the app
 struct ContentView: View {
     
-    @State private var selectedTab: MainTab = .schedule  
-    
+    @EnvironmentObject private var session: AppSession
+
     var body: some View {
-        MainTabView(selectedTab: $selectedTab)
+        MainTabView(selectedTab: $session.selectedTab)
     }
 }
 

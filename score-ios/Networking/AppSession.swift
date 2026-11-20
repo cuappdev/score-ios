@@ -14,6 +14,7 @@ final class AppSession: ObservableObject {
 
     @Published private(set) var openCount = 1
     @Published private(set) var showWelcome = AuthManager.shared.currentUser != nil
+    @Published var selectedTab: MainTab = .schedule
     private var wasInBackground = false
 
     // MARK: - App Lifecycle

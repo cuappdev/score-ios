@@ -17,6 +17,8 @@ struct SettingsView: View {
     @State private var showDeleteConfirmation = false
     @State private var showReport = false
     @State private var showAbout = false
+    @State private var isDeleting = false
+    @State private var showDeleteError = false
 
     // MARK: - Rows
 
@@ -32,7 +34,10 @@ struct SettingsView: View {
         if auth.currentUser != nil {
             rows += [
                 SettingsRow(icon: "logout", title: "Log Out", isDestructive: true) {
-                    Task { await auth.logOut() }
+                    Task {
+                        await auth.logOut()
+                        onReturnToProfile?()
+                    }
                 },
                 SettingsRow(icon: "delete_outline", title: "Delete Account", isDestructive: true) {
                     withAnimation(.easeInOut(duration: 0.2)) { showDeleteConfirmation = true }
@@ -65,6 +70,11 @@ struct SettingsView: View {
         }
         .navigationDestination(isPresented: $showAbout) {
             AboutView()
+        }
+        .alert("Couldn't delete your account", isPresented: $showDeleteError) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text("Please try again.")
         }
     }
 
@@ -178,7 +188,17 @@ struct SettingsView: View {
                             .overlay(Capsule().stroke(Constants.Colors.gray_border, lineWidth: 1))
                     }
                     Button {
-                        hideDeleteConfirmation()
+                        Task {
+                            isDeleting = true
+                            do {
+                                try await auth.deleteAccount()
+                                onReturnToProfile?()
+                            } catch {
+                                isDeleting = false
+                                showDeleteConfirmation = false
+                                showDeleteError = true
+                            }
+                        }
                     } label: {
                         Text("Delete")
                             .font(Constants.Fonts.Label.medium)
@@ -189,6 +209,7 @@ struct SettingsView: View {
                             .background(Constants.Colors.crimson)
                             .clipShape(Capsule())
                     }
+                    .disabled(isDeleting)
                 }
             }
             .padding(24)

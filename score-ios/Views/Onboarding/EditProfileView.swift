@@ -13,7 +13,10 @@ struct EditProfileView: View {
 
     @AppStorage("selectedProfileImage") private var selectedImage = "Blank Profile"
     @ObservedObject private var auth = AuthManager.shared
+    @Environment(\.dismiss) private var dismiss
     var onDone: (() -> Void)?
+    var isOnboarding = true
+    @State private var showBanner = false
     private let profileImages = [
         "Blank Profile",
         "Tennis Profile",
@@ -24,16 +27,44 @@ struct EditProfileView: View {
     // MARK: - UI
 
     var body: some View {
-        VStack(spacing: 60) {
-            header
-            info
-            picSelector
-            Spacer()
-            buttons
+        VStack(spacing: 0) {
+            if !isOnboarding {
+                settingsHeader
+            }
+            VStack(spacing: 60) {
+                if isOnboarding {
+                    header
+                }
+                info
+                picSelector
+                Spacer()
+                if isOnboarding {
+                    buttons
+                }
+            }
+            .padding(.horizontal, 24)
+            .padding(.bottom, 60)
+            .padding(.top, 32)
+            .overlay(alignment: .top) {
+                if showBanner {
+                    banner
+                        .padding(.top, 16)
+                        .padding(.horizontal, 24)
+                        .transition(.move(edge: .top).combined(with: .opacity))
+                }
+            }
         }
-        .padding(.horizontal, 24)
-        .padding(.bottom, 60)
-        .padding(.top, 32)
+        .toolbar(.hidden, for: .navigationBar)
+        .navigationBarBackButtonHidden(true)
+        .onChange(of: selectedImage) {
+            guard !isOnboarding else { return }
+            withAnimation { showBanner = true }
+        }
+        .task(id: showBanner) {
+            guard showBanner else { return }
+            try? await Task.sleep(for: .seconds(2))
+            withAnimation { showBanner = false }
+        }
     }
 
     // MARK: - Header
@@ -45,10 +76,33 @@ struct EditProfileView: View {
                 .foregroundStyle(Constants.Colors.primary_gray)
                 .frame(maxWidth: .infinity)
             Text("You can change this later in the profile page.")
-                .font(Constants.Fonts.medium14)
+                .font(Constants.Fonts.regular14)
                 .foregroundStyle(Constants.Colors.primary_gray)
                 .frame(maxWidth: .infinity)
         }
+    }
+    
+    private var settingsHeader: some View {
+        ZStack {
+            Text("Edit Profile")
+                .font(Constants.Fonts.medium18)
+                .foregroundStyle(Constants.Colors.black)
+            HStack {
+                Button {
+                    dismiss()
+                } label: {
+                    Image("arrow_back_ios")
+                        .resizable()
+                        .frame(width: 9.87, height: 18.57)
+                }
+                Spacer()
+            }
+        }
+        .padding(.horizontal, 24)
+        .padding(.vertical, 16)
+        .background(Constants.Colors.white)
+        .shadow(color: .black.opacity(0.08), radius: 8, x: 0, y: 4)
+        .zIndex(1)
     }
 
     // MARK: - Profile
@@ -58,10 +112,12 @@ struct EditProfileView: View {
             Image(selectedImage)
                 .resizable()
                 .frame(width: 100, height: 100)
-            Text(auth.currentUser?.name ?? "User")
-                .font(Constants.Fonts.Header.h3)
-                .foregroundStyle(Constants.Colors.black)
-                .frame(maxWidth: .infinity)
+            if isOnboarding {
+                Text(auth.currentUser?.name ?? "User")
+                    .font(Constants.Fonts.Header.h3)
+                    .foregroundStyle(Constants.Colors.black)
+                    .frame(maxWidth: .infinity)
+            }
         }
     }
 
@@ -114,6 +170,25 @@ struct EditProfileView: View {
                     .foregroundStyle(Constants.Colors.gray_liner)
             }
         }
+    }
+    
+    // MARK: - Success Banner
+    
+    private var banner: some View {
+        HStack (spacing: 8) {
+            Image("check_circle")
+                .resizable()
+                .frame(width: 32, height: 32)
+            Text("Your changes have been saved")
+                .font(Constants.Fonts.Body.medium)
+                .foregroundStyle(Constants.Colors.white)
+        }
+        .padding(16)
+        .frame(maxWidth: .infinity)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Constants.Colors.crimson)
+        )
     }
 }
 

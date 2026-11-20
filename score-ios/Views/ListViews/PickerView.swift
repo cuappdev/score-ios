@@ -44,7 +44,7 @@ struct PickerView: View {
                                 selectedIndex = index
                             }
                         }) {
-                            Text(sex.description)
+                            Text(sex == .Both ? "Favorited" : sex.description)
                                 .font(Constants.Fonts.gameTitle)
                                 .foregroundStyle(selectedIndex == index ? Constants.Colors.selectedText : Constants.Colors.unselectedText)
                                 .frame(width: segmentWidth, height: totalHeight - capsulePadding * 2)

@@ -43,7 +43,7 @@ struct UpcomingGamesView: View {
                                 .padding(.horizontal, paddingMain)
                             }
 
-                            Section(header: GameSectionHeaderView(headerTitle: "Game Schedule")
+                            Section(header: GameSectionHeaderView(headerTitle: "Game Schedule", sortsByNextGame: true)
                                 .padding(.horizontal, paddingMain)) {
 
                                     // List of games
@@ -75,6 +75,12 @@ struct UpcomingGamesView: View {
                 vm.filter()
             }
             .onChange(of: vm.selectedSex) {
+                vm.filter()
+            }
+            .onChange(of: auth.favoriteTeams) {
+                vm.filter()
+            }
+            .onAppear {
                 vm.filter()
             }
             .onDisappear {

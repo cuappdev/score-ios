@@ -18,3 +18,9 @@ struct User: Codable {
     let name: String?
     var favoriteTeams: [FavoriteTeam]
 }
+
+extension FavoriteTeam {
+    var sex: Sex {
+        gender == "Mens" ? .Men : .Women
+    }
+}

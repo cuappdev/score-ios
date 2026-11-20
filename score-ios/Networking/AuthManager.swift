@@ -27,6 +27,7 @@ final class AuthManager: ObservableObject {
     private let userKey = "currentUser"
     private let localFavoritesKey = "localFavoriteTeams"
     private let skippedSignInKey = "hasSkippedSignIn"
+    private var isUploadingFavorites = false
 
     private init() {
         if let data = UserDefaults.standard.data(forKey: userKey) {
@@ -69,10 +70,28 @@ final class AuthManager: ObservableObject {
     func logOut() async {
         try? await NetworkManager.shared.logoutUser()
         clearSession()
+        skipSignIn()
+    }
+    
+    func deleteAccount() async throws {
+        try await NetworkManager.shared.deleteUser()
+        UserDefaults.standard.removeObject(forKey: localFavoritesKey)
+        clearSession()
+        skipSignIn()
     }
     
     func skipSignIn() {
         UserDefaults.standard.set(true, forKey: skippedSignInKey)
+    }
+    
+    func refreshAccessToken() async throws {
+        do {
+            let token = try await NetworkManager.shared.refreshAccessToken()
+            KeychainHelper.save(token, for: KeychainHelper.accessTokenKey)
+        } catch {
+            clearSession()
+            throw error
+        }
     }
 
     // MARK: - User activities
@@ -83,7 +102,8 @@ final class AuthManager: ObservableObject {
     }
     
     var favoriteTeams: [FavoriteTeam] {
-        currentUser?.favoriteTeams ?? localFavoriteTeams
+        guard let user = currentUser else { return localFavoriteTeams }
+        return user.favoriteTeams + localFavoriteTeams.filter { !user.favoriteTeams.contains($0) }
     }
 
     private var localFavoriteTeams: [FavoriteTeam] {
@@ -118,9 +138,13 @@ final class AuthManager: ObservableObject {
         KeychainHelper.delete(KeychainHelper.refreshTokenKey)
         currentUser = nil
         UserDefaults.standard.removeObject(forKey: userKey)
+        UserDefaults.standard.removeObject(forKey: localFavoritesKey)
     }
     
-    private func uploadLocalFavorites() async {
+    func uploadLocalFavorites() async {
+        guard !isUploadingFavorites else { return }
+        isUploadingFavorites = true
+        defer { isUploadingFavorites = false }
         let local = Set(localFavoriteTeams)
         guard !local.isEmpty, let user = currentUser else { return }
         var teams = Set(user.favoriteTeams)

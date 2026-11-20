@@ -38,7 +38,7 @@ final class EditFavSportsViewModel: ObservableObject {
 
     // MARK: - Saving
 
-    func saveFavorites() async -> Bool {
+    func saveFavorites(allowOffline: Bool = false) async -> Bool {
         guard AuthManager.shared.currentUser != nil else {
             AuthManager.shared.saveLocalFavoriteTeams(Array(selected))
             return true
@@ -57,8 +57,13 @@ final class EditFavSportsViewModel: ObservableObject {
                 try await NetworkManager.shared.removeFavoriteTeam(sport: team.sport, gender: team.gender)
                 saved.remove(team)
             }
+            AuthManager.shared.saveLocalFavoriteTeams([])
             return true
         } catch {
+            if allowOffline {
+                AuthManager.shared.saveLocalFavoriteTeams(Array(selected.subtracting(saved)))
+                return true
+            }
             showError = true
             return false
         }

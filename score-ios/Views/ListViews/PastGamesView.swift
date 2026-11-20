@@ -29,7 +29,7 @@ struct PastGamesView: View {
                             })
                             .padding(.horizontal, paddingMain)
 
-                            Section(header: Section(header: GameSectionHeaderView(headerTitle: "All Scores", sortsByNextGame: true)
+                            Section(header: GameSectionHeaderView(headerTitle: "All Scores", sortsByNextGame: true)
                                 .padding(.horizontal, paddingMain)) {
 
                                     // List of games

@@ -39,14 +39,14 @@ struct ProfileView: View {
     }
     
     
-    var dividerView: some View {
+    private var dividerView: some View {
         Divider()
             .background(Constants.Colors.gray_liner)
             .padding(.horizontal, 20)
             .padding(.vertical, 20)
     }
     
-    var headerView: some View {
+    private var headerView: some View {
         Group{
             VStack {
                 HStack{
@@ -92,7 +92,7 @@ struct ProfileView: View {
         }
     }
     
-    var favortiesView: some View {
+    private var favortiesView: some View {
         VStack{
             HStack{
                 Text("Favorite Sports")
@@ -192,7 +192,7 @@ struct ProfileView: View {
         .frame(width: 96)
     }
     
-    var bookmarkedHighlights: some View {
+    private var bookmarkedHighlights: some View {
         VStack{
             HStack{
                 Text("Bookmarked Highlights")
@@ -204,7 +204,7 @@ struct ProfileView: View {
                 } label: {
                     HStack{
                         Text("Show all")
-                            .font(Constants.Fonts.Label.normal)
+                            .font(Constants.Fonts.Body.medium)
                             .foregroundStyle(Constants.Colors.crimson)
                         Image("Arrowhead")
                             .resizable()

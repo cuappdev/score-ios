@@ -16,6 +16,7 @@ struct PickerView: View {
     private let capsulePadding: CGFloat = 6
     private let borderWidth: CGFloat = 2
     private let highlightHeight: CGFloat = 37
+    var showsFavoritedTab = false
 
     var body: some View {
         GeometryReader { geometry in
@@ -44,7 +45,7 @@ struct PickerView: View {
                                 selectedIndex = index
                             }
                         }) {
-                            Text(sex == .Both ? "Favorited" : sex.description)
+                            Text(showsFavoritedTab && sex == .Both ? "Favorited" : sex.description)
                                 .font(Constants.Fonts.gameTitle)
                                 .foregroundStyle(selectedIndex == index ? Constants.Colors.selectedText : Constants.Colors.unselectedText)
                                 .frame(width: segmentWidth, height: totalHeight - capsulePadding * 2)

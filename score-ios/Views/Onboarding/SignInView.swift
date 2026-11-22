@@ -116,16 +116,13 @@ struct SignInView: View {
 
     private func signIn() {
         Task {
-            guard let idToken = await loginViewModel.signInWithGoogle() else { return }
-            do {
-                switch try await AuthManager.shared.authenticate(idToken: idToken) {
-                case .existingUser:
-                    onLogIn?()
-                case .newUser:
-                    onSignUp?()
-                }
-            } catch {
-                loginViewModel.showError("Couldn't sign in. Please try again.")
+            switch await loginViewModel.signIn() {
+            case .existingUser:
+                onLogIn?()
+            case .newUser:
+                onSignUp?()
+            case nil:
+                break
             }
         }
     }

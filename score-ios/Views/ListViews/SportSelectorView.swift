@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SportSelectorView: View {
-    var showsFavoritesOnly = false
+    var filtersByTab = false
     var sortsByNextGame = false
     @ObservedObject private var highlightsVM = HighlightsViewModel.shared
     @ObservedObject private var gamesVM = GamesViewModel.shared
@@ -46,7 +46,7 @@ struct SportSelectorView: View {
                     proxy.scrollTo(highlightsVM.selectedSport.id, anchor: .center)
                 }
             }
-            .onChange(of: sports) {
+            .onChange(of: sports, initial: true) {
                 if !sports.contains(gamesVM.selectedSport) {
                     highlightsVM.selectedSport = .All
                     gamesVM.selectedSport = .All
@@ -54,11 +54,12 @@ struct SportSelectorView: View {
             }
         }
     }
+    
     private var sports: [Sport] {
-        let favorites = auth.favoriteTeams.compactMap { Sport(normalizedValue: $0.sport) }
         var list = Sport.allCases.filter { $0 != .All }
-        if showsFavoritesOnly {
+        if filtersByTab {
             if gamesVM.selectedSex == .Both {
+                let favorites = auth.favoriteTeams.compactMap { Sport(normalizedValue: $0.sport) }
                 if !favorites.isEmpty {
                     list = list.filter { favorites.contains($0) }
                 }

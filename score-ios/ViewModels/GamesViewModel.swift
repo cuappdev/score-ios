@@ -61,7 +61,7 @@ class GamesViewModel: ObservableObject
     // Filtering the data
     func filter() {
         self.selectedUpcomingGames = self.allUpcomingGames.filter{ game in
-            // Filter by sex
+            // Filter by tab (favorites, men's or women's)
             let matchesSex = matchesTab(game)
 
             // Filter by sport
@@ -72,7 +72,7 @@ class GamesViewModel: ObservableObject
         }
 
         self.selectedPastGames = self.allPastGames.filter{ game in
-            // Filter by sex
+            // Filter by tab (favorites, men's or women's)
             let matchesSex = matchesTab(game)
 
             // Filter by sport
@@ -82,7 +82,7 @@ class GamesViewModel: ObservableObject
             return matchesSex && matchesSport
         }
     }
-    
+
     /// Shows every game until the user has favorites, then only their favorite teams.
     private func isFavorite(_ game: Game) -> Bool {
         let favorites = AuthManager.shared.favoriteTeams
@@ -91,7 +91,7 @@ class GamesViewModel: ObservableObject
             Sport(normalizedValue: team.sport) == game.sport && team.sex == game.sex
         }
     }
-    
+
     /// Whether a game matches the selected tab (Favorited, Men's or Women's).
     private func matchesTab(_ game: Game) -> Bool {
         selectedSex == .Both ? isFavorite(game) : game.sex == selectedSex

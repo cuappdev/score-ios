@@ -37,7 +37,6 @@ struct score_iosApp: App {
     }
     @Environment(\.scenePhase) private var scenePhase
     @StateObject private var session = AppSession()
-    @ObservedObject private var auth = AuthManager.shared
     @State private var screen: Screen =
         AuthManager.shared.isSignedIn || AuthManager.shared.hasSkippedSignIn ? .main : .signIn
     @State private var onboardingStep: OnboardingStep = .profile
@@ -48,7 +47,10 @@ struct score_iosApp: App {
                 switch screen {
                 case .signIn:
                     SignInView(
-                        onSignUp: { screen = .onboarding },
+                        onSignUp: {
+                            onboardingStep = .profile
+                            screen = .onboarding
+                        },
                         onLogIn: {
                             session.showWelcomeIfSignedIn()
                             screen = .main
@@ -82,6 +84,13 @@ struct score_iosApp: App {
                 session.handleScenePhase(phase)
                 if phase == .active {
                     Task { await AuthManager.shared.uploadLocalFavorites() }
+                }
+            }
+            .onChange(of: session.showOnboarding) { _, show in
+                if show {
+                    onboardingStep = .profile
+                    screen = .onboarding
+                    session.showOnboarding = false
                 }
             }
             .onOpenURL { url in

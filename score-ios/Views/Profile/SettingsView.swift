@@ -34,10 +34,7 @@ struct SettingsView: View {
         if auth.currentUser != nil {
             rows += [
                 SettingsRow(icon: "logout", title: "Log Out", isDestructive: true) {
-                    Task {
-                        await auth.logOut()
-                        onReturnToProfile?()
-                    }
+                    logOut()
                 },
                 SettingsRow(icon: "delete_outline", title: "Delete Account", isDestructive: true) {
                     withAnimation(.easeInOut(duration: 0.2)) { showDeleteConfirmation = true }
@@ -188,17 +185,7 @@ struct SettingsView: View {
                             .overlay(Capsule().stroke(Constants.Colors.gray_border, lineWidth: 1))
                     }
                     Button {
-                        Task {
-                            isDeleting = true
-                            do {
-                                try await auth.deleteAccount()
-                                onReturnToProfile?()
-                            } catch {
-                                isDeleting = false
-                                showDeleteConfirmation = false
-                                showDeleteError = true
-                            }
-                        }
+                        deleteAccount()
                     } label: {
                         Text("Delete")
                             .font(Constants.Fonts.Label.medium)
@@ -219,8 +206,32 @@ struct SettingsView: View {
         }
         .transition(.opacity)
     }
+
+    // MARK: - Helpers
+
     private func hideDeleteConfirmation() {
         withAnimation(.easeInOut(duration: 0.2)) { showDeleteConfirmation = false }
+    }
+
+    private func logOut() {
+        Task {
+            await auth.logOut()
+            onReturnToProfile?()
+        }
+    }
+
+    private func deleteAccount() {
+        Task {
+            isDeleting = true
+            do {
+                try await auth.deleteAccount()
+                onReturnToProfile?()
+            } catch {
+                isDeleting = false
+                hideDeleteConfirmation()
+                showDeleteError = true
+            }
+        }
     }
 }
 

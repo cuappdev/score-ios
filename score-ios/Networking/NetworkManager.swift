@@ -104,14 +104,14 @@ class NetworkManager {
     }
 
     func loginUser(idToken: String) async throws -> LoginUserMutation.Data.LoginUser {
-        guard let login = try await perform(LoginUserMutation(idToken: idToken)).loginUser else {
+        guard let login = try await perform(LoginUserMutation(idToken: idToken), retry: false).loginUser else {
             throw NetworkError.noData
         }
         return login
     }
 
     func signupUser(idToken: String) async throws -> SignupUserMutation.Data.SignupUser {
-        guard let signup = try await perform(SignupUserMutation(idToken: idToken)).signupUser else {
+        guard let signup = try await perform(SignupUserMutation(idToken: idToken), retry: false).signupUser else {
             throw NetworkError.noData
         }
         return signup

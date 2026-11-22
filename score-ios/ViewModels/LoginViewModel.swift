@@ -19,9 +19,19 @@ final class LoginViewModel: ObservableObject {
     @Published var errorText = ""
     private let cornellDomain = "@cornell.edu"
 
-    // MARK: - Sign in
+    // MARK: - Sign In
 
-    func signInWithGoogle() async -> String? {
+    func signIn() async -> AuthManager.AuthResult? {
+        guard let idToken = await signInWithGoogle() else { return nil }
+        do {
+            return try await AuthManager.shared.authenticate(idToken: idToken)
+        } catch {
+            showError("Couldn't sign in. Please try again.")
+            return nil
+        }
+    }
+
+    private func signInWithGoogle() async -> String? {
         guard let clientID = FirebaseApp.app()?.options.clientID,
               let rootViewController = (UIApplication.shared.connectedScenes.first as?
                 UIWindowScene)?.windows.first?.rootViewController else {
@@ -59,7 +69,7 @@ final class LoginViewModel: ObservableObject {
         email.hasSuffix(cornellDomain)
     }
 
-    func showError(_ message: String) {
+    private func showError(_ message: String) {
         errorText = message
         didPresentError = true
     }

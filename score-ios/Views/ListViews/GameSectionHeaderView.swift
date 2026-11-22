@@ -21,13 +21,13 @@ struct GameSectionHeaderView: View {
                     .font(Constants.Fonts.semibold24)
                     .foregroundStyle(Constants.Colors.black)
                     .frame(maxWidth: .infinity, alignment: .leading) // Align to the left
-                PickerView(selectedSex: $vm.selectedSex, selectedIndex: $vm.selectedSexIndex)
+                PickerView(selectedSex: $vm.selectedSex, selectedIndex: $vm.selectedSexIndex, showsFavoritedTab: true)
                     .padding(.bottom, 12)
                     .frame(maxWidth: .infinity, alignment: .center)
                 if vm.selectedSex == .Both && auth.favoriteTeams.isEmpty {
                     NoFavoritesBanner()
                 } else {
-                    SportSelectorView(showsFavoritesOnly: true, sortsByNextGame: sortsByNextGame)
+                    SportSelectorView(filtersByTab: true, sortsByNextGame: sortsByNextGame)
                 }
             }
             .padding(.bottom, 16)

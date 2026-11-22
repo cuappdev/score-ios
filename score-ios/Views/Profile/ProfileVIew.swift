@@ -8,19 +8,28 @@
 import SwiftUI
 
 struct ProfileView: View {
-    @EnvironmentObject var viewModel: HighlightsViewModel //will implement later
+    
+    // MARK: - Properties
+    
+    @EnvironmentObject private var session: AppSession
+    @ObservedObject private var auth = AuthManager.shared
+    @StateObject private var loginViewModel = LoginViewModel()
     @AppStorage("selectedProfileImage") private var selectedImage = "Blank Profile"
     @State private var showSettings = false
     @State private var showEditSports = false
     @State private var showEditProfileView = false
-    //private var highlights: [Highlight] { viewModel.allHighlights}
-    @ObservedObject private var auth = AuthManager.shared
+    private var isSignedIn: Bool { auth.currentUser != nil }
+    
+    // MARK: - UI
     
     var body: some View {
         NavigationStack{
             VStack{
                 headerView
-                dividerView
+                if isSignedIn {
+                    profileInfo
+                    dividerView
+                }
                 favortiesView
                 dividerView
                 bookmarkedHighlights
@@ -35,9 +44,13 @@ struct ProfileView: View {
             .navigationDestination(isPresented: $showEditProfileView) {
                 EditProfileView(isOnboarding: false)
             }
+            .alert(loginViewModel.errorText, isPresented: $loginViewModel.didPresentError) {
+                Button("OK", role: .cancel) {}
+            }
         }
     }
     
+    // MARK: - Header
     
     private var dividerView: some View {
         Divider()
@@ -47,50 +60,51 @@ struct ProfileView: View {
     }
     
     private var headerView: some View {
-        Group{
-            VStack {
-                HStack{
-                    Text("Profile")
-                        .font(Constants.Fonts.Header.h1)
-                        .font(Constants.Fonts.semibold24)
-                        .foregroundStyle(Constants.Colors.black)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    Button {
-                        showSettings = true
-                    } label: {
-                        Image("Settings")
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                    }
-                }
-                .padding(.top, 20)
-                .padding(.horizontal, 20)
-            }
-            HStack{
-                Image(selectedImage)
+        HStack {
+            Text("Profile")
+                .font(Constants.Fonts.Header.h1)
+                .font(Constants.Fonts.semibold24)
+                .foregroundStyle(Constants.Colors.black)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            Button {
+                showSettings = true
+            } label: {
+                Image("Settings")
                     .resizable()
-                    .frame(width: 70, height: 70)
-                VStack{
-                    Text(auth.currentUser?.name ?? "User")
-                        .font(Constants.Fonts.Header.h2)
-                        .foregroundStyle(Constants.Colors.primary_gray)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    Button{
-                        showEditProfileView = true
-                    } label: {
-                        Text("Edit Profile Picture")
-                            .font(Constants.Fonts.Label.normal)
-                            .foregroundStyle(Constants.Colors.crimson)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                    }
-                    .padding(.top,2)
-                }
-                .padding(.horizontal, 5)
+                    .frame(width: 24, height: 24)
             }
-            .padding(.horizontal, 20)
-            .padding(.top, 20)
         }
+        .padding(.top, 20)
+        .padding(.horizontal, 20)
     }
+
+    private var profileInfo: some View {
+        HStack {
+            Image(selectedImage)
+                .resizable()
+                .frame(width: 70, height: 70)
+            VStack {
+                Text(auth.currentUser?.name ?? "User")
+                    .font(Constants.Fonts.Header.h2)
+                    .foregroundStyle(Constants.Colors.primary_gray)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Button {
+                    showEditProfileView = true
+                } label: {
+                    Text("Edit Profile Picture")
+                        .font(Constants.Fonts.Label.normal)
+                        .foregroundStyle(Constants.Colors.crimson)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .padding(.top, 2)
+            }
+            .padding(.horizontal, 5)
+        }
+        .padding(.horizontal, 20)
+        .padding(.top, 20)
+    }
+    
+    // MARK: - Favorites
     
     private var favortiesView: some View {
         VStack{
@@ -170,12 +184,10 @@ struct ProfileView: View {
                     RoundedRectangle(cornerRadius: 28)
                         .stroke(Color.gray.opacity(0.2), lineWidth: 1.5)
                 )
-
             Text(sport.description)
                 .font(Constants.Fonts.Body.medium)
                 .foregroundStyle(Constants.Colors.black)
                 .multilineTextAlignment(.center)
-
             HStack(spacing: 4) {
                 Image(gender.capitalized == "Womens" ? "tabler_gender-female" : "tabler_gender-male")
                     .resizable()
@@ -183,7 +195,6 @@ struct ProfileView: View {
                     .frame(width: 10, height: 10)
                     .frame(width: 18, height: 18)
                     .background(Circle().fill(Constants.Colors.gray_border))
-
                 Text(gender.capitalized == "Womens" ? "W" : "M")
                     .font(Constants.Fonts.Label.normal)
                     .foregroundStyle(Constants.Colors.gray_text)
@@ -192,50 +203,123 @@ struct ProfileView: View {
         .frame(width: 96)
     }
     
+    // MARK: - Bookmarked Highlights
+    
     private var bookmarkedHighlights: some View {
-        VStack{
-            HStack{
+        VStack {
+            HStack {
                 Text("Bookmarked Highlights")
                     .font(Constants.Fonts.Header.h2)
                     .foregroundStyle(Constants.Colors.black)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                Button{
-                    // do nothing rn
+                Button {
+                    // TODO: show all bookmarked highlights
                 } label: {
-                    HStack{
+                    HStack {
                         Text("Show all")
                             .font(Constants.Fonts.Body.medium)
-                            .foregroundStyle(Constants.Colors.crimson)
-                        Image("Arrowhead")
+                            .foregroundStyle(isSignedIn ? Constants.Colors.crimson : Constants.Colors.gray_liner)
+                        Image(isSignedIn ? "Arrowhead" : "ArrowheadGray")
                             .resizable()
                             .frame(width: 8.23, height: 15.48)
                     }
                 }
+                .disabled(!isSignedIn)
             }
             .padding(.horizontal, 20)
-            ScrollView(.horizontal, showsIndicators: false) {
-                //LazyHStack(spacing: 20) {
-                    //ForEach(highlights) { highlight in
-                        //HighlightTile(highlight: highlight, isVertical: false)
-                    //}
-               // }
-                //.padding(.horizontal, 20)
-            }
-            .fixedSize(horizontal: false, vertical: true)
-            .task {
-                  // await viewModel.loadHighlights()
-               }
-                    .padding(.top, 20)
-                    .font(Constants.Fonts.medium18)
+            if isSignedIn {
+                // TODO: show bookmarked highlights
+                noBookmarksCard
+            } else {
+                unlockFeaturesCard
             }
         }
     }
 
+    private var unlockFeaturesCard: some View {
+        VStack(spacing: 12) {
+            Text("Unlock Features")
+                .font(Constants.Fonts.Body.semibold)
+                .foregroundStyle(Color.gray)
 
+            (Text("To access these additional features,\nplease ")
+                .foregroundColor(Color.gray)
+             + Text("log in.")
+                .foregroundColor(Constants.Colors.crimson))
+                .font(Constants.Fonts.Label.normal)
+                .multilineTextAlignment(.center)
+            Button {
+                logIn()
+            } label: {
+                Text("Log In")
+                    .font(Constants.Fonts.Label.medium)
+                    .foregroundStyle(Color.white)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 34)
+                    .background(Capsule().fill(Constants.Colors.crimson))
+            }
+            .buttonStyle(.plain)
+            .padding(.top, 4)
+        }
+        .padding(.vertical, 28)
+        .padding(.horizontal, 20)
+        .frame(maxWidth: .infinity)
+        .background(RoundedRectangle(cornerRadius: 28).fill(Color.white))
+        .overlay(
+            RoundedRectangle(cornerRadius: 28)
+                .stroke(Color.gray.opacity(0.2), lineWidth: 1.5)
+        )
+        .padding(.horizontal, 20)
+        .padding(.top, 20)
+    }
+    
+    private var noBookmarksCard: some View {
+        VStack(spacing: 12) {
+            Image(systemName: "bookmark.fill")
+                .font(.system(size: 16))
+                .foregroundStyle(Color(white: 0.75))
+                .frame(width: 44, height: 44)
+                .background(Circle().fill(Color(white: 0.91)))
+            Text("No Bookmarks Yet")
+                .font(Constants.Fonts.Body.semibold)
+                .foregroundStyle(Color.gray)
+            (Text("Go to the ")
+                .foregroundColor(Color.gray)
+             + Text("Highlights")
+                .foregroundColor(Constants.Colors.crimson)
+             + Text(" page to\nbegin adding.")
+                .foregroundColor(Color.gray))
+                .font(Constants.Fonts.Label.normal)
+                .multilineTextAlignment(.center)
+        }
+        .padding(.vertical, 28)
+        .frame(maxWidth: .infinity)
+        .background(RoundedRectangle(cornerRadius: 20).fill(Color.white))
+        .overlay(
+            RoundedRectangle(cornerRadius: 20)
+                .stroke(Color.gray.opacity(0.2), lineWidth: 1.5)
+        )
+        .padding(.horizontal, 20)
+        .padding(.top, 20)
+    }
+    
+    private func logIn() {
+        Task {
+            switch await loginViewModel.signIn() {
+            case .existingUser:
+                session.showWelcomeIfSignedIn()
+            case .newUser:
+                session.showOnboarding = true
+            case nil:
+                break
+            }
+        }
+    }
+}
 
 // MARK: - Preview
 
 #Preview {
     ProfileView()
-        .environmentObject(HighlightsViewModel.shared) //need to change vm
+        .environmentObject(AppSession())
 }

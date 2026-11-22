@@ -19,8 +19,8 @@ final class AuthManager: ObservableObject {
 
     // MARK: - Properties
 
-    @Published private(set) var currentUser: User?
     static let shared = AuthManager()
+    @Published private(set) var currentUser: User?
     var accessToken: String? { KeychainHelper.read(KeychainHelper.accessTokenKey) }
     var isSignedIn: Bool { accessToken != nil }
     var hasSkippedSignIn: Bool { UserDefaults.standard.bool(forKey: skippedSignInKey) }
@@ -75,7 +75,6 @@ final class AuthManager: ObservableObject {
     
     func deleteAccount() async throws {
         try await NetworkManager.shared.deleteUser()
-        UserDefaults.standard.removeObject(forKey: localFavoritesKey)
         clearSession()
         skipSignIn()
     }
@@ -117,29 +116,6 @@ final class AuthManager: ObservableObject {
         }
         objectWillChange.send()
     }
-
-    // MARK: - Helpers
-
-    private func saveTokens(access: String?, refresh: String?) throws {
-        guard let access, let refresh else { throw NetworkManager.NetworkError.noData }
-        KeychainHelper.save(access, for: KeychainHelper.accessTokenKey)
-        KeychainHelper.save(refresh, for: KeychainHelper.refreshTokenKey)
-    }
-
-    private func saveUser(_ user: User) {
-        currentUser = user
-        if let data = try? JSONEncoder().encode(user) {
-            UserDefaults.standard.set(data, forKey: userKey)
-        }
-    }
-    
-    private func clearSession() {
-        KeychainHelper.delete(KeychainHelper.accessTokenKey)
-        KeychainHelper.delete(KeychainHelper.refreshTokenKey)
-        currentUser = nil
-        UserDefaults.standard.removeObject(forKey: userKey)
-        UserDefaults.standard.removeObject(forKey: localFavoritesKey)
-    }
     
     func uploadLocalFavorites() async {
         guard !isUploadingFavorites else { return }
@@ -163,5 +139,28 @@ final class AuthManager: ObservableObject {
         } else {
             saveLocalFavoriteTeams(failed)
         }
+    }
+
+    // MARK: - Helpers
+
+    private func saveTokens(access: String?, refresh: String?) throws {
+        guard let access, let refresh else { throw NetworkManager.NetworkError.noData }
+        KeychainHelper.save(access, for: KeychainHelper.accessTokenKey)
+        KeychainHelper.save(refresh, for: KeychainHelper.refreshTokenKey)
+    }
+
+    private func saveUser(_ user: User) {
+        currentUser = user
+        if let data = try? JSONEncoder().encode(user) {
+            UserDefaults.standard.set(data, forKey: userKey)
+        }
+    }
+    
+    private func clearSession() {
+        KeychainHelper.delete(KeychainHelper.accessTokenKey)
+        KeychainHelper.delete(KeychainHelper.refreshTokenKey)
+        currentUser = nil
+        UserDefaults.standard.removeObject(forKey: userKey)
+        UserDefaults.standard.removeObject(forKey: localFavoritesKey)
     }
 }

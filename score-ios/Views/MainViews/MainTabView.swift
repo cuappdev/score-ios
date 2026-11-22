@@ -28,9 +28,8 @@ struct MainTabView: View {
                     case .scores:
                         PastGamesView()
                             .environmentObject(gamesViewModel)
-                    case .profiles: //filler view model and image
+                    case .profiles:
                         ProfileView()
-                            .environmentObject(gamesViewModel)
                 }
 
                 HStack {

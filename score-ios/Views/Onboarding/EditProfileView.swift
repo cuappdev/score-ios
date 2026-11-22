@@ -11,11 +11,11 @@ struct EditProfileView: View {
 
     // MARK: - Properties
 
+    var onDone: (() -> Void)?
+    var isOnboarding = true
     @AppStorage("selectedProfileImage") private var selectedImage = "Blank Profile"
     @ObservedObject private var auth = AuthManager.shared
     @Environment(\.dismiss) private var dismiss
-    var onDone: (() -> Void)?
-    var isOnboarding = true
     @State private var showBanner = false
     private let profileImages = [
         "Blank Profile",
@@ -29,7 +29,7 @@ struct EditProfileView: View {
     var body: some View {
         VStack(spacing: 0) {
             if !isOnboarding {
-                settingsHeader
+                navigationHeader
             }
             VStack(spacing: 60) {
                 if isOnboarding {
@@ -82,7 +82,7 @@ struct EditProfileView: View {
         }
     }
     
-    private var settingsHeader: some View {
+    private var navigationHeader: some View {
         ZStack {
             Text("Edit Profile")
                 .font(Constants.Fonts.medium18)
@@ -175,7 +175,7 @@ struct EditProfileView: View {
     // MARK: - Success Banner
     
     private var banner: some View {
-        HStack (spacing: 8) {
+        HStack(spacing: 8) {
             Image("check_circle")
                 .resizable()
                 .frame(width: 32, height: 32)

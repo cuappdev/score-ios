@@ -17,7 +17,7 @@ struct ProfileView: View {
     @AppStorage("selectedProfileImage") private var selectedImage = "Blank Profile"
     @State private var showSettings = false
     @State private var showEditSports = false
-    @State private var showEditProfileView = false
+    @State private var showEditProfile = false
     private var isSignedIn: Bool { auth.currentUser != nil }
     
     // MARK: - UI
@@ -30,7 +30,7 @@ struct ProfileView: View {
                     profileInfo
                     dividerView
                 }
-                favortiesView
+                favoritesView
                 dividerView
                 bookmarkedHighlights
                 Spacer()
@@ -41,7 +41,7 @@ struct ProfileView: View {
             .navigationDestination(isPresented: $showEditSports) {
                 EditFavSportsView(isOnboarding: false)
             }
-            .navigationDestination(isPresented: $showEditProfileView) {
+            .navigationDestination(isPresented: $showEditProfile) {
                 EditProfileView(isOnboarding: false)
             }
             .alert(loginViewModel.errorText, isPresented: $loginViewModel.didPresentError) {
@@ -89,7 +89,7 @@ struct ProfileView: View {
                     .foregroundStyle(Constants.Colors.primary_gray)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 Button {
-                    showEditProfileView = true
+                    showEditProfile = true
                 } label: {
                     Text("Edit Profile Picture")
                         .font(Constants.Fonts.Label.normal)
@@ -106,7 +106,7 @@ struct ProfileView: View {
     
     // MARK: - Favorites
     
-    private var favortiesView: some View {
+    private var favoritesView: some View {
         VStack{
             HStack{
                 Text("Favorite Sports")
@@ -159,7 +159,7 @@ struct ProfileView: View {
                         } else {
                             ForEach(auth.favoriteTeams, id: \.self) { team in //will use the articles as filler
                                 if let sport = Sport(normalizedValue: team.sport) {
-                                    makeSPortIcon(sport: sport, gender: team.gender)
+                                    sportIcon(sport: sport, gender: team.gender)
                                 }
                             }
                         }
@@ -170,7 +170,7 @@ struct ProfileView: View {
         .padding(.horizontal, 20)
     }
     
-    private func makeSPortIcon(sport: Sport, gender: String) -> some View {
+    private func sportIcon(sport: Sport, gender: String) -> some View {
         VStack(spacing: 8) {
             Image(sport.iconName)
                 .renderingMode(.template)

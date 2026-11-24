@@ -1,0 +1,25 @@
+mutation AddBookmarkedHighlight($highlightId: String!) {
+  addBookmarkedHighlight(highlightId: $highlightId) {
+    __typename
+  }
+}
+
+mutation RemoveBookmarkedHighlight($highlightId: String!) {
+  removeBookmarkedHighlight(highlightId: $highlightId) {
+    __typename
+  }
+}
+
+query MyBookmarkedHighlights {
+  myBookmarkedHighlights {
+    id
+    title
+    description
+    thumbnail
+    b64Thumbnail
+    url
+    publishedAt
+    duration
+    sportsType
+  }
+}

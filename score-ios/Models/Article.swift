@@ -8,14 +8,14 @@
 import Foundation
 import GameAPI
 
-struct Article: Identifiable {
+struct Article: Identifiable, Equatable {
     var id: String
     var title: String
     var image: String
     var url: String
     var publishedAt: String
     var sport: Sport
-    
+
     var formattedDate: String {
         if let date = ISO8601DateFormatter().date(from: publishedAt) {
             let formatter = DateFormatter()
@@ -24,9 +24,9 @@ struct Article: Identifiable {
         }
         return publishedAt
     }
-    
+
     init(from gqlArticle: ArticlesQuery.Data.Article) {
-        self.id = gqlArticle.id ?? UUID().uuidString
+        self.id = gqlArticle.id ?? "article:\(gqlArticle.url)"
         self.image = gqlArticle.image ?? ""
         self.title = gqlArticle.title
         self.url = gqlArticle.url

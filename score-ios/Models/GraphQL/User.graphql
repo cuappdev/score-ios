@@ -10,6 +10,7 @@ mutation SignupUser($idToken: String!) {
         sport
         gender
       }
+      bookmarkedHighlightIds
     }
   }
 }
@@ -26,6 +27,7 @@ mutation LoginUser($idToken: String!) {
         sport
         gender
       }
+      bookmarkedHighlightIds
     }
   }
 }
@@ -47,5 +49,3 @@ mutation DeleteUser {
     __typename
   }
 }
-
-

@@ -47,7 +47,8 @@ final class AuthManager: ObservableObject {
                 name: login.user.name,
                 favoriteTeams: login.user.favoriteTeams.compactMap { $0 }.map {
                     FavoriteTeam(sport: $0.sport, gender: $0.gender)
-                }
+                },
+                bookmarkedHighlightIds: login.user.bookmarkedHighlightIds.compactMap { $0 }
             ))
             await uploadLocalFavorites()
             return .existingUser
@@ -60,7 +61,8 @@ final class AuthManager: ObservableObject {
                 name: signup.user.name,
                 favoriteTeams: signup.user.favoriteTeams.compactMap { $0 }.map {
                     FavoriteTeam(sport: $0.sport, gender: $0.gender)
-                }
+                },
+                bookmarkedHighlightIds: signup.user.bookmarkedHighlightIds.compactMap { $0 }
             ))
             await uploadLocalFavorites()
             return .newUser
@@ -97,7 +99,24 @@ final class AuthManager: ObservableObject {
 
     func updateFavoriteTeams(_ teams: [FavoriteTeam]) {
         guard let user = currentUser else { return }
-        saveUser(User(id: user.id, email: user.email, name: user.name, favoriteTeams: teams))
+        saveUser(User(
+            id: user.id,
+            email: user.email,
+            name: user.name,
+            favoriteTeams: teams,
+            bookmarkedHighlightIds: user.bookmarkedHighlightIds
+        ))
+    }
+
+    func updateBookmarkedHighlightIds(_ ids: [String]) {
+        guard let user = currentUser else { return }
+        saveUser(User(
+            id: user.id,
+            email: user.email,
+            name: user.name,
+            favoriteTeams: user.favoriteTeams,
+            bookmarkedHighlightIds: ids
+        ))
     }
     
     var favoriteTeams: [FavoriteTeam] {

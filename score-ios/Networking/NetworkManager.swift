@@ -141,6 +141,24 @@ class NetworkManager {
         _ = try await perform(RemoveFavoriteTeamMutation(sport: sport, gender: gender))
     }
 
+    // MARK: - Bookmarked Highlights
+
+    func addBookmarkedHighlight(highlightId: String) async throws {
+        _ = try await perform(AddBookmarkedHighlightMutation(highlightId: highlightId))
+    }
+
+    func removeBookmarkedHighlight(highlightId: String) async throws {
+        _ = try await perform(RemoveBookmarkedHighlightMutation(highlightId: highlightId))
+    }
+
+    func fetchMyBookmarkedHighlights(
+        forceNetwork: Bool = false
+    ) async throws -> [MyBookmarkedHighlightsQuery.Data.MyBookmarkedHighlight] {
+        try await fetch(MyBookmarkedHighlightsQuery(), forceNetwork: forceNetwork) { data in
+            data.myBookmarkedHighlights?.compactMap { $0 } ?? []
+        }
+    }
+
     // MARK: - Helpers
 
     private func perform<Mutation: GraphQLMutation>(

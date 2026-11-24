@@ -13,27 +13,32 @@ struct ProfileView: View {
     
     @EnvironmentObject private var session: AppSession
     @ObservedObject private var auth = AuthManager.shared
+    @ObservedObject private var highlightsVM = HighlightsViewModel.shared
     @StateObject private var loginViewModel = LoginViewModel()
     @AppStorage("selectedProfileImage") private var selectedImage = "Blank Profile"
     @State private var showSettings = false
     @State private var showEditSports = false
     @State private var showEditProfile = false
     private var isSignedIn: Bool { auth.currentUser != nil }
+    private var bookmarked: [Highlight] { highlightsVM.bookmarkedHighlights }
+    private var canShowAllBookmarks: Bool { isSignedIn && !bookmarked.isEmpty }
     
     // MARK: - UI
     
     var body: some View {
-        NavigationStack{
-            VStack{
-                headerView
-                if isSignedIn {
-                    profileInfo
+        NavigationStack {
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack(spacing: 0) {
+                    headerView
+                    if isSignedIn {
+                        profileInfo
+                        dividerView
+                    }
+                    favoritesView
                     dividerView
+                    bookmarkedHighlights
                 }
-                favoritesView
-                dividerView
-                bookmarkedHighlights
-                Spacer()
+                .padding(.bottom, MainTab.scrollClearance)
             }
             .navigationDestination(isPresented: $showSettings) {
                 SettingsView(onReturnToProfile: { showSettings = false })
@@ -46,6 +51,13 @@ struct ProfileView: View {
             }
             .alert(loginViewModel.errorText, isPresented: $loginViewModel.didPresentError) {
                 Button("OK", role: .cancel) {}
+            }
+            .task(id: isSignedIn) {
+                guard isSignedIn else { return }
+                if highlightsVM.hasNotFetchedYet {
+                    await highlightsVM.loadHighlights()
+                }
+                await highlightsVM.refreshBookmarks()
             }
         }
     }
@@ -62,7 +74,6 @@ struct ProfileView: View {
     private var headerView: some View {
         HStack {
             Text("Profile")
-                .font(Constants.Fonts.Header.h1)
                 .font(Constants.Fonts.semibold24)
                 .foregroundStyle(Constants.Colors.black)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -212,26 +223,47 @@ struct ProfileView: View {
                     .font(Constants.Fonts.Header.h2)
                     .foregroundStyle(Constants.Colors.black)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                Button {
-                    // TODO: show all bookmarked highlights
+                NavigationLink {
+                    DetailedHighlightsView(
+                        title: "Bookmarked Highlights",
+                        highlightScope: .bookmarked
+                    )
+                    .environmentObject(highlightsVM)
                 } label: {
                     HStack {
                         Text("Show all")
                             .font(Constants.Fonts.Body.medium)
-                            .foregroundStyle(isSignedIn ? Constants.Colors.crimson : Constants.Colors.gray_liner)
-                        Image(isSignedIn ? "Arrowhead" : "ArrowheadGray")
+                            .foregroundStyle(canShowAllBookmarks ? Constants.Colors.crimson : Constants.Colors.gray_liner)
+                        Image(canShowAllBookmarks ? "Arrowhead" : "ArrowheadGray")
                             .resizable()
                             .frame(width: 8.23, height: 15.48)
                     }
                 }
-                .disabled(!isSignedIn)
+                .disabled(!canShowAllBookmarks)
             }
             .padding(.horizontal, 20)
-            if isSignedIn {
-                // TODO: show bookmarked highlights
+            if !isSignedIn {
+                unlockFeaturesCard
+            } else if bookmarked.isEmpty {
                 noBookmarksCard
             } else {
-                unlockFeaturesCard
+                ScrollView(.horizontal) {
+                    LazyHStack(spacing: 20) {
+                        ForEach(bookmarked) { highlight in
+                            HighlightTile(
+                                highlight: highlight,
+                                isVertical: false,
+                                isBookmarked: highlightsVM.isBookmarked(highlight),
+                                isBookmarkPending: highlightsVM.isBookmarkPending(highlight),
+                                onBookmarkToggle: { highlightsVM.toggleBookmark(for: highlight) }
+                            )
+                        }
+                    }
+                    .padding(.horizontal, 20)
+                }
+                .scrollIndicators(.hidden)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.top, 20)
             }
         }
     }

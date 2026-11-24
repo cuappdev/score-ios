@@ -78,12 +78,9 @@ struct DetailedHighlightsView: View {
         case .recent:
             return viewModel.detailedRecentHighlights
         case .bookmarked:
-            let teams = AuthManager.shared.currentUser?.favoriteTeams ?? []
-            return viewModel.bookmarkedHighlights.filter {
-                viewModel.selectedFilter.matches($0, favoriteTeams: teams)
-            }
+            return viewModel.filteredBookmarkedHighlights
         case .all:
-            return viewModel.allHighlights
+            return viewModel.applyingSelectedFilter(to: viewModel.allHighlights)
         }
     }
 

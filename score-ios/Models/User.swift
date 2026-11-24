@@ -49,6 +49,13 @@ struct User: Codable {
 
 extension FavoriteTeam {
     var sex: Sex {
-        gender == "Mens" ? .Men : .Women
+        switch gender.lowercased() {
+        case "mens", "men", "men's":
+            return .Men
+        case "womens", "women", "women's":
+            return .Women
+        default:
+            return .Both
+        }
     }
 }

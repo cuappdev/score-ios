@@ -254,6 +254,15 @@ class HighlightsViewModel: ObservableObject {
     }
 
     // MARK: - Bookmarks
+    var filteredBookmarkedHighlights: [Highlight] {
+        applyingSelectedFilter(to: bookmarkedHighlights)
+    }
+
+    func applyingSelectedFilter(to highlights: [Highlight]) -> [Highlight] {
+        let teams = AuthManager.shared.currentUser?.favoriteTeams ?? []
+        return highlights.filter { selectedFilter.matches($0, favoriteTeams: teams) }
+    }
+
     func isBookmarked(_ highlight: Highlight) -> Bool {
         bookmarkedIds.contains(highlight.id)
     }

@@ -37,10 +37,7 @@ struct SearchViewFullScreen: View {
     }
 
     private var bookmarkedSearchResults: [Highlight] {
-        let teams = AuthManager.shared.currentUser?.favoriteTeams ?? []
-        let bookmarks = viewModel.bookmarkedHighlights.filter {
-            viewModel.selectedFilter.matches($0, favoriteTeams: teams)
-        }
+        let bookmarks = viewModel.filteredBookmarkedHighlights
         let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !query.isEmpty else { return bookmarks }
         let lowered = query.lowercased()
@@ -95,6 +92,7 @@ struct SearchViewFullScreen: View {
                 }
             }
         }
+        .highlightBookmarkChrome(viewModel: viewModel)
         .task {
             if viewModel.hasNotFetchedYet {
                 await viewModel.loadHighlights()
@@ -103,6 +101,8 @@ struct SearchViewFullScreen: View {
             searchText = viewModel.searchQuery
         }
         .onDisappear {
+            debounceWorkItem?.cancel()
+            debounceWorkItem = nil
             viewModel.clearSearch()
         }
     }

@@ -10,51 +10,47 @@ import SwiftUI
 struct SportSelectorView: View {
     var filtersByTab = false
     var sortsByNextGame = false
-    @ObservedObject private var highlightsVM = HighlightsViewModel.shared
     @ObservedObject private var gamesVM = GamesViewModel.shared
     @ObservedObject private var auth = AuthManager.shared
-    @State private var scrollOffset: CGFloat = 0
-    
+
     var body: some View {
         ScrollViewReader { proxy in
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
                     ForEach(sports) { sport in
                         Button {
-                            highlightsVM.selectedSport = sport
                             gamesVM.selectedSport = sport
                             withAnimation {
                                 proxy.scrollTo(sport.id, anchor: .center)
                             }
                         } label: {
-                            FilterTile(sport: sport, selected: sport == highlightsVM.selectedSport)
+                            FilterTile(sport: sport, selected: sport == gamesVM.selectedSport)
                         }
                         .id(sport.id)
                     }
                 }
                 .animation(nil, value: sports)
-                .background(GeometryReader { geometry in
-                    Color.clear
-                        .preference(key: ScrollOffsetKey.self, value: geometry.frame(in: .global).minX)
-                })
+                .background {
+                    GeometryReader { geometry in
+                        Color.clear
+                            .preference(key: ScrollOffsetKey.self, value: geometry.frame(in: .global).minX)
+                    }
+                }
                 .onPreferenceChange(ScrollOffsetKey.self) { value in
-                    highlightsVM.sportSelectorOffset = value // Save scroll position in ViewModel
+                    gamesVM.sportSelectorOffset = value
                 }
             }
             .onAppear {
-                DispatchQueue.main.async {
-                    proxy.scrollTo(highlightsVM.selectedSport.id, anchor: .center)
-                }
+                proxy.scrollTo(gamesVM.selectedSport.id, anchor: .center)
             }
             .onChange(of: sports, initial: true) {
                 if !sports.contains(gamesVM.selectedSport) {
-                    highlightsVM.selectedSport = .All
                     gamesVM.selectedSport = .All
                 }
             }
         }
     }
-    
+
     private var sports: [Sport] {
         var list = Sport.allCases.filter { $0 != .All }
         if filtersByTab {

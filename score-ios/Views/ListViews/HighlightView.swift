@@ -9,10 +9,9 @@ import SwiftUI
 
 struct HighlightView: View {
     @EnvironmentObject var viewModel: HighlightsViewModel
-    
+
     var body: some View {
-        
-        Group{
+        Group {
             switch viewModel.dataState {
             case .idle, .loading:
                 HighlightLoadingView()
@@ -21,7 +20,7 @@ struct HighlightView: View {
                 HighlightErrorView()
 
             case .success:
-                VStack {
+                VStack(spacing: 0) {
                     headerView
                     HighlightContentView()
                 }
@@ -32,29 +31,27 @@ struct HighlightView: View {
                 await viewModel.loadHighlights()
             }
             viewModel.clearSearch()
-        }
-        .onChange(of: viewModel.selectedSport) { _, _ in
-            viewModel.filter()
+            viewModel.syncBookmarksFromAuth()
         }
         .trackScreen(.highlights)
     }
-    
-    var headerView: some View {
-        VStack {
-            Text("Highlights")
-                .font(Constants.Fonts.semibold24)
-                .foregroundStyle(Constants.Colors.black)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.top, 24)
-                .padding(.horizontal, 24)
-            
-            SearchView(title: "Search All Highlights", scope: .all)
+
+    private var headerView: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(alignment: .center) {
+                Text("Highlights")
+                    .font(Constants.Fonts.semibold24)
+                    .foregroundStyle(Constants.Colors.black)
+
+                Spacer()
+
+                HighlightsSearchButton(title: "Search All Highlights", scope: .all)
+            }
+            .padding(.top, 24)
+            .padding(.horizontal, 24)
+
+            HighlightsFilterBar()
                 .padding(.horizontal, 20)
-                .padding(.top, 12)
-            
-            SportSelectorView()
-                .padding(.horizontal, 20)
-                .padding(.top, 12)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.bottom, 12)
@@ -62,101 +59,9 @@ struct HighlightView: View {
     }
 }
 
-struct HighlightContentView: View {
-    @EnvironmentObject var viewModel: HighlightsViewModel
-    
-    var body: some View {
-        ScrollView(showsIndicators: false) {
-            LazyVStack(alignment: .leading, spacing: 4) {
-                if viewModel.mainRecentHighlights.isEmpty && viewModel.mainLastWeekHighlights.isEmpty {
-                    NoHighlightView()
-                        .frame(maxWidth: .infinity)
-                        .frame(minHeight: UIScreen.main.bounds.height - 350)
-                        // push view to the middle of the screen
-                    
-                }
-                
-                if !viewModel.mainLastWeekHighlights.isEmpty {
-                    HighlightSectionView(
-                        title: "Last Week",
-                        scope: .lastWeek
-                    )
-                }
-                
-                if !viewModel.mainRecentHighlights.isEmpty {
-                    HighlightSectionView(
-                        title: "Recent",
-                        scope: .recent
-                    )
-                }
-            }
-            .padding(.bottom, MainTab.scrollClearance)
-        }
-        .refreshable {
-            await viewModel.loadHighlights(forceNetwork: true)
-        }
-    }
-}
-
-struct HighlightSectionView: View {
-    @EnvironmentObject var viewModel: HighlightsViewModel
-    
-    let title: String
-    let scope: HighlightsScope
-    
-    private var highlights: [Highlight] {
-        switch scope {
-        case .lastWeek:
-            return viewModel.mainLastWeekHighlights
-        case .recent:
-            return viewModel.mainRecentHighlights
-        default:
-            return [] // Should not happen on this screen
-        }
-    }
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            NavigationLink(destination:
-                DetailedHighlightsView(title: title, highlightScope: scope)
-                .environmentObject(viewModel)) {
-                HStack {
-                    Text(title)
-                        .font(Constants.Fonts.subheader)
-                        .foregroundStyle(Constants.Colors.black)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    
-                    Spacer()
-                    
-                    Text("\(highlights.count) results")
-                        .font(Constants.Fonts.body)
-                        .foregroundStyle(Constants.Colors.gray_text)
-                    
-                    Image(systemName: "chevron.right")
-                        .font(Constants.Fonts.body)
-                        .foregroundStyle(Constants.Colors.gray_text)
-                }
-                .padding(.top, 20)
-                .padding(.horizontal, 24)
-            }
-            
-            ScrollView(.horizontal, showsIndicators: false) {
-                LazyHStack(spacing: 24) {
-                    ForEach(highlights) { highlight in
-                        HighlightTile(highlight: highlight, isVertical: false)
-                    }
-                }
-                .padding(.top, 20)
-                .padding(.horizontal, 24)
-            }
-        }
-    }
-}
-
-
-// MARK: - Preview
-
 #Preview {
-    HighlightView()
-        .environmentObject(HighlightsViewModel.shared)
+    NavigationStack {
+        HighlightView()
+            .environmentObject(HighlightsViewModel.shared)
+    }
 }

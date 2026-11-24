@@ -11,75 +11,96 @@ struct SearchViewFullScreen: View {
     @EnvironmentObject private var viewModel: HighlightsViewModel
     let title: String
     var scope: HighlightsScope
-    
+
     @Environment(\.dismiss) private var dismiss
-    
+
     @State private var searchText = ""
     @State private var debounceWorkItem: DispatchWorkItem?
     @State private var isLoading: Bool = false
-    
+
     @FocusState private var isSearchFieldFocused: Bool
-    
-    private let debounceDelay: TimeInterval = 0.8
-    
+
+    private let debounceDelay: TimeInterval = 0.25
+    private let topID = "search-highlights-scroll-top"
+
     private var searchResults: [Highlight] {
-        let model = viewModel // avoid dynamicMemberLookup confusion
-        
         switch scope {
         case .lastWeek:
-            return model.detailedLastWeekHighlights
+            return viewModel.detailedLastWeekHighlights
         case .recent:
-            return model.detailedRecentHighlights
-        default:
-            return model.allHighlightsSearchResults
+            return viewModel.detailedRecentHighlights
+        case .bookmarked:
+            return bookmarkedSearchResults
+        case .all:
+            return viewModel.allHighlightsSearchResults
         }
     }
 
-    
+    private var bookmarkedSearchResults: [Highlight] {
+        let teams = AuthManager.shared.currentUser?.favoriteTeams ?? []
+        let bookmarks = viewModel.bookmarkedHighlights.filter {
+            viewModel.selectedFilter.matches($0, favoriteTeams: teams)
+        }
+        let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !query.isEmpty else { return bookmarks }
+        let lowered = query.lowercased()
+        return bookmarks.filter { $0.title.lowercased().contains(lowered) }
+    }
+
     var body: some View {
-        VStack{
+        VStack {
             headerView
-            
-            ScrollView {
-                LazyVStack(alignment: .leading, spacing: 0) {
-                    // MARK: Results
-                    if isLoading {
-                        HighlightSearchLoadingView()
-                    } else if searchResults.isEmpty {
-                        NoHighlightView()
-                            .frame(maxWidth: .infinity)
-                            .frame(minHeight: UIScreen.main.bounds.height - 350)
-                        // push view to the middle of the screen
-                    } else {
-                        Text("\(searchResults.count) results")
-                        .padding(.horizontal, 20)
-                        .font(Constants.Fonts.subheader)
-                        .foregroundStyle(Constants.Colors.gray_text)
-                        .frame(maxWidth: .infinity, alignment: .leading)
 
+            ScrollViewReader { proxy in
+                ScrollView {
+                    LazyVStack(alignment: .leading, spacing: 0) {
+                        Color.clear
+                            .frame(height: 1)
+                            .id(topID)
 
-                        
-                        LazyVStack(alignment: .center, spacing: 24) {
-                            ForEach(searchResults) { highlight in
-                                HighlightTile(highlight: highlight, isVertical: true)
+                        if isLoading {
+                            HighlightSearchLoadingView()
+                        } else if searchResults.isEmpty {
+                            NoHighlightView()
+                                .frame(maxWidth: .infinity)
+                                .frame(minHeight: UIScreen.main.bounds.height - 350)
+                        } else {
+                            Text("\(searchResults.count) \(searchResults.count == 1 ? "result" : "results")")
+                                .padding(.horizontal, 20)
+                                .font(Constants.Fonts.subheader)
+                                .foregroundStyle(Constants.Colors.gray_text)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+
+                            LazyVStack(alignment: .center, spacing: 24) {
+                                ForEach(searchResults) { highlight in
+                                    HighlightTile(
+                                        highlight: highlight,
+                                        isVertical: true,
+                                        isBookmarked: viewModel.isBookmarked(highlight),
+                                        isBookmarkPending: viewModel.isBookmarkPending(highlight),
+                                        onBookmarkToggle: { viewModel.toggleBookmark(for: highlight) }
+                                    )
                                     .padding(.horizontal, 24)
+                                }
                             }
+                            .padding(.top, 12)
                         }
-                        .padding(.top, 12)
                     }
                 }
-            }
-            .refreshable {
-                await viewModel.loadHighlights(forceNetwork: true)
+                .refreshable {
+                    await viewModel.loadHighlights(forceNetwork: true)
+                }
+                .onChange(of: viewModel.selectedFilter) { _, _ in
+                    proxy.scrollToTopWithoutAnimation(id: topID)
+                }
             }
         }
         .task {
-            if viewModel.hasNotFetchedYet{
+            if viewModel.hasNotFetchedYet {
                 await viewModel.loadHighlights()
             }
             isSearchFieldFocused = true
             searchText = viewModel.searchQuery
-            viewModel.filter()
         }
         .onDisappear {
             viewModel.clearSearch()
@@ -88,24 +109,23 @@ struct SearchViewFullScreen: View {
 
     private var headerView: some View {
         VStack(spacing: 0) {
-            // MARK: Header
             HStack {
                 Text(title)
                     .padding(.top, 12)
                     .padding(.horizontal, 24)
                     .font(Constants.Fonts.subheader)
                     .foregroundStyle(Constants.Colors.black)
-                
+
                 Spacer()
             }
-            
+
             HStack {
                 HStack {
                     Image(systemName: "magnifyingglass")
-                        .foregroundColor(Constants.Colors.gray_text)
-                    
+                        .foregroundStyle(Constants.Colors.gray_text)
+
                     TextField("Search Highlights", text: $searchText)
-                        .foregroundColor(Constants.Colors.gray_text)
+                        .foregroundStyle(Constants.Colors.gray_text)
                         .autocorrectionDisabled()
                         .textInputAutocapitalization(.never)
                         .onChange(of: searchText) { _, newValue in
@@ -114,61 +134,57 @@ struct SearchViewFullScreen: View {
                         .focused($isSearchFieldFocused)
 
                     if !searchText.isEmpty {
-                        Button(action: { 
+                        Button {
                             searchText = ""
                             viewModel.clearSearch()
-                        }) {
+                        } label: {
                             Image(systemName: "xmark.circle.fill")
-                                .foregroundColor(Constants.Colors.gray_text)
+                                .foregroundStyle(Constants.Colors.gray_text)
                         }
+                        .accessibilityLabel("Clear search")
                     }
                 }
                 .padding(8)
-                .background(
-                    RoundedRectangle(cornerRadius: 30)
-                        .stroke(Constants.Colors.gray_border, lineWidth: 1)
-                )
-                
+                .overlay {
+                    Capsule()
+                        .strokeBorder(Constants.Colors.gray_border, lineWidth: 1)
+                }
+
                 Button("Cancel") {
                     dismiss()
                 }
-                .foregroundColor(Constants.Colors.gray_text)
+                .foregroundStyle(Constants.Colors.primary_red)
                 .padding(.horizontal, 6)
             }
             .padding()
             .padding(.horizontal, 6)
-            
-            SportSelectorView()
+
+            HighlightsFilterBar()
                 .padding(.horizontal, 20)
                 .padding(.top, 12)
-                .cornerRadius(12, corners: [.bottomLeft, .bottomRight])
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.bottom, 12)
         .background(Constants.Colors.white)
     }
 
-    
-    // MARK: - Debounce
     private func debounceSearch(_ text: String) {
         debounceWorkItem?.cancel()
         isLoading = true
-        
+
         let workItem = DispatchWorkItem {
             DispatchQueue.main.async {
                 let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
                 viewModel.filterBySearch(trimmed)
-                viewModel.filter()
                 isLoading = false
             }
         }
-        
+
         debounceWorkItem = workItem
         DispatchQueue.main.asyncAfter(deadline: .now() + debounceDelay, execute: workItem)
     }
 }
 
-// MARK: - Preview
 #Preview {
     SearchViewFullScreen(title: "Search All Highlights", scope: .recent)
         .environmentObject(HighlightsViewModel.shared)

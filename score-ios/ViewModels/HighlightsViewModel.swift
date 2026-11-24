@@ -5,6 +5,7 @@
 //  Created by Zain Bilal on 10/27/25.
 //
 
+import Combine
 import Foundation
 import SwiftUI
 import GameAPI
@@ -13,31 +14,66 @@ import GameAPI
 class HighlightsViewModel: ObservableObject {
     // MARK: - Published Properties
     @Published var dataState: DataState = .idle
-    
+
     @Published var allHighlights: [Highlight] = []
     @Published var mainLastWeekHighlights: [Highlight] = []
     @Published var mainRecentHighlights: [Highlight] = []
     @Published var detailedLastWeekHighlights: [Highlight] = []
     @Published var detailedRecentHighlights: [Highlight] = []
     @Published var allHighlightsSearchResults: [Highlight] = []
-    
+    @Published var favoritedSections: [FavoritedHighlightSection] = []
+    @Published var bookmarkedHighlights: [Highlight] = []
+
     @Published var searchQuery: String = ""
-    @Published var selectedSport: Sport = .All
-    @Published var sportSelectorOffset: CGFloat = 0
-    @Published var currentScope: HighlightsScope = .main
-    
+    @Published var selectedFilter: HighlightsFilter = .all
+
+    @Published var showSignInToSave = false
+    @Published private(set) var toastMessage: String?
+    @Published private(set) var toastIsError = false
+    @Published private(set) var bookmarkedIds: Set<String> = []
+    @Published private(set) var pendingBookmarkIds: Set<String> = []
+
     // MARK: - Private Properties
-    private var privateAllHighlights: [Highlight] = []
     /// In-flight highlights load. Owned by the view model so leaving the screen
     /// does not cancel it; a newer load cancels this one.
     private var loadTask: Task<Void, Never>?
+    private var toastDismissTask: Task<Void, Never>?
+    private var bookmarkTasks: [String: Task<Void, Never>] = [:]
+    private var pendingBookmarkHighlight: Highlight?
+    private var offFeedBookmarks: [Highlight] = []
+    private var cancellables = Set<AnyCancellable>()
 
     // MARK: - Singleton
     static let shared = HighlightsViewModel()
-    private init() {}
+    private init() {
+        syncBookmarksFromAuth()
+        AuthManager.shared.$currentUser
+            .receive(on: DispatchQueue.main)
+            .dropFirst()
+            .sink { [weak self] _ in
+                self?.syncBookmarksFromAuth()
+            }
+            .store(in: &cancellables)
+    }
 
     // MARK: - Computed
     var hasNotFetchedYet: Bool { dataState == .idle }
+
+    var hasFavoriteTeams: Bool {
+        !(AuthManager.shared.currentUser?.favoriteTeams.isEmpty ?? true)
+    }
+
+    /// Kept for call sites that still read a sport selection.
+    var selectedSport: Sport {
+        get {
+            if case .sport(let sport) = selectedFilter { return sport }
+            return .All
+        }
+        set {
+            selectedFilter = newValue == .All ? .all : .sport(newValue)
+            filter()
+        }
+    }
 
     // MARK: - Loading
     /// Returns when this fetch finishes. Work runs in `loadTask`, so SwiftUI
@@ -74,6 +110,7 @@ class HighlightsViewModel: ObservableObject {
                 return
             }
             processHighlights(articleData, videoData)
+            await refreshBookmarks(forceNetwork: forceNetwork)
         } catch is CancellationError {
             // Superseded by a newer load — leave dataState alone.
         } catch {
@@ -85,69 +122,47 @@ class HighlightsViewModel: ObservableObject {
             }
         }
     }
-    
-    /**
-     * Converts network data to local models, sorts, and filters.
-     */
-    private func processHighlights(_ articleDataArray: [ArticlesQuery.Data.Article], _ youTubeVideoDataArray: [YoutubeVideosQuery.Data.YoutubeVideo]) {
+
+    private func processHighlights(
+        _ articleDataArray: [ArticlesQuery.Data.Article],
+        _ youTubeVideoDataArray: [YoutubeVideosQuery.Data.YoutubeVideo]
+    ) {
         let localArticles = articleDataArray.map { Article(from: $0) }
-        let localYouTubeVideos = youTubeVideoDataArray.map {YouTubeVideo(from: $0)}
+        let localYouTubeVideos = youTubeVideoDataArray.map { YouTubeVideo(from: $0) }
+        let combined = localArticles.map { Highlight.article($0) }
+            + localYouTubeVideos.map { Highlight.video($0) }
 
-        self.privateAllHighlights = localArticles.map { Highlight.article($0) } + localYouTubeVideos.map { Highlight.video($0) }
-        self.allHighlights = self.uniqueHighlights(from: self.privateAllHighlights)
-        self.allHighlights.sort(by: { $0.publishedAt > $1.publishedAt })
-        self.filter()
-
-        self.dataState = .success
+        allHighlights = uniqueHighlights(from: combined)
+        allHighlights.sort(by: { $0.publishedAt > $1.publishedAt })
+        filter()
+        dataState = .success
     }
-    
-    /**
-     * Function to filter out duplicate highlights by ID.
-     */
-    private func uniqueHighlights(from highlights: [Highlight]) -> [Highlight] {
-        var uniqueHighlights: [Highlight] = []
-        var seenArticleIDs: Set<String> = []
-        var seenVideoIDs: Set<String> = []
 
-        for highlight in highlights {
-            if case .article(let article) = highlight {
-                if !seenArticleIDs.contains(article.id) {
-                    uniqueHighlights.append(highlight)
-                    seenArticleIDs.insert(article.id)
-                }
-            }
-            if case .video(let video) = highlight {
-                if !seenVideoIDs.contains(video.id) {
-                    uniqueHighlights.append(highlight)
-                    seenVideoIDs.insert(video.id)
-                }
-            }
-        }
-        return uniqueHighlights
+    private func uniqueHighlights(from highlights: [Highlight]) -> [Highlight] {
+        var seenIDs = Set<String>()
+        return highlights.filter { seenIDs.insert($0.id).inserted }
     }
 
     // MARK: - Filtering
     func filter() {
-        let filteredBySport: [Highlight]
-        if selectedSport == .All {
-            filteredBySport = allHighlights
-        } else {
-            filteredBySport = allHighlights.filter { $0.sport == selectedSport }
+        if selectedFilter == .favorited && !hasFavoriteTeams {
+            selectedFilter = .all
         }
 
+        let filteredByFilter = highlightsMatching(selectedFilter)
         let query = searchQuery.trimmingCharacters(in: .whitespacesAndNewlines)
         let filteredBySearch: [Highlight]
         if query.isEmpty {
-            filteredBySearch = filteredBySport
+            filteredBySearch = filteredByFilter
         } else {
             let lowered = query.lowercased()
-            filteredBySearch = filteredBySport.filter {
-                highlightTitle($0).lowercased().contains(lowered)
+            filteredBySearch = filteredByFilter.filter {
+                $0.title.lowercased().contains(lowered)
             }
         }
 
         let now = Date()
-        let mainBuckets = bucket(filteredBySport, now: now)
+        let mainBuckets = bucket(filteredByFilter, now: now)
         mainLastWeekHighlights = mainBuckets.lastWeek
         mainRecentHighlights = mainBuckets.recent
 
@@ -160,8 +175,51 @@ class HighlightsViewModel: ObservableObject {
             detailedRecentHighlights = detailedBuckets.recent
         }
 
-        // --- “Search All” Page
         allHighlightsSearchResults = filteredBySearch
+        favoritedSections = buildFavoritedSections(from: allHighlights)
+        rebuildBookmarkedHighlightsList()
+    }
+
+    private func highlightsMatching(_ filter: HighlightsFilter) -> [Highlight] {
+        let teams = AuthManager.shared.currentUser?.favoriteTeams ?? []
+        return allHighlights.filter { filter.matches($0, favoriteTeams: teams) }
+    }
+
+    private func buildFavoritedSections(from highlights: [Highlight]) -> [FavoritedHighlightSection] {
+        let teams = AuthManager.shared.currentUser?.favoriteTeams ?? []
+        var seen = Set<String>()
+        let sections = teams.compactMap { team -> FavoritedHighlightSection? in
+            let section = FavoritedHighlightSection(
+                team: team,
+                highlights: highlights.filter { $0.matchesFavoriteTeam(team) }
+            )
+            return seen.insert(section.id).inserted ? section : nil
+        }
+
+        return sections.sorted { lhs, rhs in
+            switch (lhs.highlights.isEmpty, rhs.highlights.isEmpty) {
+            case (false, true):
+                return true
+            case (true, false):
+                return false
+            default:
+                return lhs.title.localizedCaseInsensitiveCompare(rhs.title) == .orderedAscending
+            }
+        }
+    }
+
+    private func rebuildBookmarkedHighlightsList() {
+        let feedMatches = allHighlights.filter {
+            $0.isBookmarkable && bookmarkedIds.contains($0.id)
+        }
+        let feedIds = Set(feedMatches.map(\.id))
+        let offFeedMatches = offFeedBookmarks.filter { bookmark in
+            bookmark.isBookmarkable
+                && bookmarkedIds.contains(bookmark.id)
+                && !feedIds.contains(bookmark.id)
+        }
+        bookmarkedHighlights = (feedMatches + offFeedMatches)
+            .sorted { $0.publishedAt > $1.publishedAt }
     }
 
     /// One parse per highlight. Last week wins, so Recent is the rest of the 30-day window.
@@ -179,7 +237,7 @@ class HighlightsViewModel: ObservableObject {
         return (lastWeek, recent)
     }
 
-    // MARK: - Search & Sport
+    // MARK: - Search & Filter
     func filterBySearch(_ query: String) {
         searchQuery = query
         filter()
@@ -190,23 +248,147 @@ class HighlightsViewModel: ObservableObject {
         filter()
     }
 
-    func selectSport(_ sport: Sport) {
-        selectedSport = sport
+    func selectFilter(_ newFilter: HighlightsFilter) {
+        selectedFilter = newFilter
         filter()
     }
 
-    // MARK: - Helpers
-    private func highlightTitle(_ highlight: Highlight) -> String {
-        switch highlight {
-        case .video(let video): return video.title
-        case .article(let article): return article.title
+    // MARK: - Bookmarks
+    func isBookmarked(_ highlight: Highlight) -> Bool {
+        bookmarkedIds.contains(highlight.id)
+    }
+
+    func isBookmarkPending(_ highlight: Highlight) -> Bool {
+        pendingBookmarkIds.contains(highlight.id)
+    }
+
+    func toggleBookmark(for highlight: Highlight) {
+        guard highlight.isBookmarkable else { return }
+
+        guard AuthManager.shared.isSignedIn else {
+            pendingBookmarkHighlight = highlight
+            showSignInToSave = true
+            return
+        }
+
+        let id = highlight.id
+        guard !pendingBookmarkIds.contains(id) else { return }
+
+        pendingBookmarkIds.insert(id)
+        bookmarkTasks[id] = Task { [weak self] in
+            await self?.performBookmarkToggle(id: id)
         }
     }
-}
 
-enum HighlightsScope {
-    case main
-    case lastWeek
-    case recent
-    case all
+    func dismissSignInToSave() {
+        showSignInToSave = false
+        pendingBookmarkHighlight = nil
+    }
+
+    func handleSignInSuccess() {
+        showSignInToSave = false
+        let pending = pendingBookmarkHighlight
+        pendingBookmarkHighlight = nil
+        Task { [weak self] in
+            guard let self else { return }
+            await self.refreshBookmarks(forceNetwork: true)
+            if let pending, !self.isBookmarked(pending) {
+                self.toggleBookmark(for: pending)
+            }
+        }
+    }
+
+    func syncBookmarksFromAuth() {
+        guard AuthManager.shared.isSignedIn else {
+            bookmarkedIds = []
+            offFeedBookmarks = []
+            bookmarkedHighlights = []
+            favoritedSections = []
+            if selectedFilter == .favorited {
+                selectedFilter = .all
+            }
+            filter()
+            return
+        }
+        bookmarkedIds = Set(AuthManager.shared.currentUser?.bookmarkedHighlightIds ?? [])
+        filter()
+    }
+
+    /// Pulls remote bookmarked videos (including ones older than the feed).
+    func refreshBookmarks(forceNetwork: Bool = false) async {
+        guard AuthManager.shared.isSignedIn else {
+            bookmarkedIds = []
+            offFeedBookmarks = []
+            bookmarkedHighlights = []
+            return
+        }
+
+        syncBookmarksFromAuth()
+
+        do {
+            let remote = try await NetworkManager.shared.fetchMyBookmarkedHighlights(forceNetwork: forceNetwork)
+            if Task.isCancelled { return }
+            let videos = remote.map { YouTubeVideo(from: $0) }.map { Highlight.video($0) }
+            let remoteVideoIds = Set(videos.map(\.id))
+            // Backend bookmarks are video-only; drop any leftover article IDs.
+            bookmarkedIds = remoteVideoIds
+            AuthManager.shared.updateBookmarkedHighlightIds(Array(bookmarkedIds))
+
+            let fromFeed = allHighlights.filter { bookmarkedIds.contains($0.id) }
+            let fromFeedIds = Set(fromFeed.map(\.id))
+            offFeedBookmarks = videos.filter { !fromFeedIds.contains($0.id) }
+            rebuildBookmarkedHighlightsList()
+        } catch {
+            // Keep locally cached bookmark IDs if the remote refresh fails.
+        }
+    }
+
+    private func performBookmarkToggle(id: String) async {
+        defer {
+            bookmarkTasks.removeValue(forKey: id)
+            pendingBookmarkIds.remove(id)
+        }
+
+        let wasBookmarked = bookmarkedIds.contains(id)
+        if wasBookmarked {
+            bookmarkedIds.remove(id)
+        } else {
+            bookmarkedIds.insert(id)
+            presentToast("Highlight saved! Manage in Profile.")
+        }
+        AuthManager.shared.updateBookmarkedHighlightIds(Array(bookmarkedIds))
+        filter()
+
+        do {
+            if wasBookmarked {
+                try await NetworkManager.shared.removeBookmarkedHighlight(highlightId: id)
+            } else {
+                try await NetworkManager.shared.addBookmarkedHighlight(highlightId: id)
+            }
+        } catch is CancellationError {
+            return
+        } catch {
+            guard !Task.isCancelled else { return }
+            if wasBookmarked {
+                bookmarkedIds.insert(id)
+            } else {
+                bookmarkedIds.remove(id)
+            }
+            AuthManager.shared.updateBookmarkedHighlightIds(Array(bookmarkedIds))
+            filter()
+            presentToast("Couldn't update bookmark. Try again.", isError: true)
+        }
+    }
+
+    private func presentToast(_ message: String, isError: Bool = false) {
+        toastDismissTask?.cancel()
+        toastIsError = isError
+        toastMessage = message
+        toastDismissTask = Task {
+            try? await Task.sleep(for: .seconds(2.2))
+            guard !Task.isCancelled else { return }
+            toastMessage = nil
+            toastIsError = false
+        }
+    }
 }

@@ -110,6 +110,7 @@ final class AuthManager: ObservableObject {
 
     func updateBookmarkedHighlightIds(_ ids: [String]) {
         guard let user = currentUser else { return }
+        guard Set(user.bookmarkedHighlightIds) != Set(ids) else { return }
         saveUser(User(
             id: user.id,
             email: user.email,

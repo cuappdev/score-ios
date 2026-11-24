@@ -57,6 +57,9 @@ struct MainTabView: View {
             .toolbar(.hidden)
             .navigationBarHidden(true)
         }
+        // One sheet host for bookmark auth — avoid stacking `.sheet` on every highlights screen.
+        .highlightBookmarkChrome(viewModel: highlightViewModel)
+        .environmentObject(highlightViewModel)
     }
 }
 

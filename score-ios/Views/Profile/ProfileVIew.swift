@@ -57,7 +57,7 @@ struct ProfileView: View {
                 if highlightsVM.hasNotFetchedYet {
                     await highlightsVM.loadHighlights()
                 }
-                await highlightsVM.refreshBookmarks()
+                await highlightsVM.refreshBookmarks(forceNetwork: true)
             }
         }
     }
@@ -225,7 +225,7 @@ struct ProfileView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                 NavigationLink {
                     DetailedHighlightsView(
-                        title: "Bookmarked Highlights",
+                        title: "Bookmarked",
                         highlightScope: .bookmarked
                     )
                     .environmentObject(highlightsVM)

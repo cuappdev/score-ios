@@ -338,14 +338,12 @@ class HighlightsViewModel: ObservableObject {
             let remote = try await NetworkManager.shared.fetchMyBookmarkedHighlights(forceNetwork: forceNetwork)
             if Task.isCancelled { return }
             let videos = remote.map { YouTubeVideo(from: $0) }.map { Highlight.video($0) }
-            let remoteVideoIds = Set(videos.map(\.id))
-            // Backend bookmarks are video-only; drop any leftover article IDs.
-            bookmarkedIds = remoteVideoIds
-            AuthManager.shared.updateBookmarkedHighlightIds(Array(bookmarkedIds))
 
             let fromFeed = allHighlights.filter { bookmarkedIds.contains($0.id) }
             let fromFeedIds = Set(fromFeed.map(\.id))
-            offFeedBookmarks = videos.filter { !fromFeedIds.contains($0.id) }
+            offFeedBookmarks = videos.filter {
+                bookmarkedIds.contains($0.id) && !fromFeedIds.contains($0.id)
+            }
             rebuildBookmarkedHighlightsList()
         } catch {
             // Keep locally cached bookmark IDs if the remote refresh fails.
@@ -374,6 +372,8 @@ class HighlightsViewModel: ObservableObject {
             } else {
                 try await NetworkManager.shared.addBookmarkedHighlight(highlightId: id)
             }
+            // Refresh from network so Profile / Apollo cache stay in sync.
+            await refreshBookmarks(forceNetwork: true)
         } catch is CancellationError {
             return
         } catch {

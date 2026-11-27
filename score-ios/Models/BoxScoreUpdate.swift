@@ -43,6 +43,18 @@ struct BoxScoreItem: Decodable {
             self.oppScore = 0
         }
     }
+
+    init(live: LiveBoxScoreEntry) {
+        self.team = live.team
+        self.period = live.period
+        self.time = live.time
+        self.description = live.description
+        self.scorer = live.scorer
+        self.assist = live.assist
+        self.scoreBy = live.scoreBy
+        self.corScore = live.corScore
+        self.oppScore = live.oppScore
+    }
 }
 
 func decodeBoxScoreArray(boxScores: [GameFragment.BoxScore?]?) -> [BoxScoreItem] {

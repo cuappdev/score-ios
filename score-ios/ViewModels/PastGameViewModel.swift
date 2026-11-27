@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 class PastGameViewModel: ObservableObject {
-    let game: Game
+    @Published var game: Game
     
     var numberOfRounds: Int {
         switch game.sport {

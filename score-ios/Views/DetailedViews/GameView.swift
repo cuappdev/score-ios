@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct GameView : View {
-    var game : Game
-    @ObservedObject var viewModel: PastGameViewModel
+    @LiveGame var game : Game
+    @StateObject private var viewModel: PastGameViewModel
     @ObservedObject var calendarViewModel = CalendarViewModel.shared
     @State var viewState: Int = 0
     @State var dayFromNow: Int = 0
@@ -19,6 +19,11 @@ struct GameView : View {
     // 0: hasn't started
     // 1: game started (no updates yet)
     // 2: game in progress / game finished
+
+    init(game: Game) {
+        _game = LiveGame(wrappedValue: game)
+        _viewModel = StateObject(wrappedValue: PastGameViewModel(game: game))
+    }
     
     var body : some View {
         NavigationStack {
@@ -32,7 +37,9 @@ struct GameView : View {
             }
             .background(Color.white)
             .onAppear { computeTimeFromNow() }
-            .onAppear { updateViewState() }
+            .onAppear { syncLiveGame() }
+            .onChange(of: $game) { syncLiveGame() }
+            .liveScores(for: game)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .principal) {
@@ -55,6 +62,11 @@ struct GameView : View {
 
 // MARK: Functions
 extension GameView {
+    private func syncLiveGame() {
+        viewModel.game = game
+        updateViewState()
+    }
+
     private func computeTimeFromNow() {
         let now = Date()
         let calendar = Calendar.current
@@ -336,7 +348,7 @@ extension GameView {
                 .padding(.leading, 24)
                 .padding(.top, 24)
 
-            DynamicScoreBox(game: game, viewModel: PastGameViewModel(game: game))
+            DynamicScoreBox(game: game, viewModel: viewModel)
                 .padding(.horizontal, 24)
                 .padding(.top, 16)
 
@@ -364,7 +376,7 @@ extension GameView {
                 .padding(.leading, 24)
                 .padding(.top, 24)
             
-            DynamicScoreBox(game: game, viewModel: PastGameViewModel(game: game))
+            DynamicScoreBox(game: game, viewModel: viewModel)
                 .padding(.horizontal, 24)
                 .padding(.top, 16)
 
@@ -383,5 +395,5 @@ extension GameView {
 }
 
 #Preview {
-    GameView(game: Game.dummyData[0], viewModel: PastGameViewModel(game: Game.dummyData[0]))
+    GameView(game: Game.dummyData[0])
 }

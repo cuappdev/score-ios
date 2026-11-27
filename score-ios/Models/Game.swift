@@ -38,6 +38,10 @@ struct Game : GameType, Identifiable {
     var timeUpdates: [TimeUpdate] = []
     var gameUpdates: [GameUpdate] = []
     var ticketLink: String?
+    /// Live socket flag
+    var isLive: Bool = false
+    /// Final/current result string from live updates when present
+    var result: String? = nil
     
     enum CodingKeys: String, CodingKey {
         case id, city, state, date, sport, gender, location, opponentId, result, time, scoreBreakdown, boxScore, ticketLink
@@ -87,6 +91,16 @@ struct Game : GameType, Identifiable {
             self.timeUpdates = timeUpdates
             self.gameUpdates = gameUpdates
         }
+
+    /// Returns a copy with live box score / breakdown / status applied. Preserves `id` and other fields.
+    func applying(_ update: LiveGameUpdate) -> Game {
+        var updated = self
+        updated.gameUpdates = updated.parseBoxScore(update.boxScore.map(BoxScoreItem.init(live:)))
+        updated.timeUpdates = updated.parseScoreBreakdown(update.scoreBreakdown)
+        updated.isLive = update.isLive
+        updated.result = update.result
+        return updated
+    }
     
 }
 

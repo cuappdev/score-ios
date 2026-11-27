@@ -27,7 +27,7 @@ struct UpcomingGamesView: View {
                                     UpcomingGameCard(game: game)
                                 },
                                              gameView: { game in
-                                    GameView(game: game, viewModel: PastGameViewModel(game: game))
+                                    GameView(game: game)
                                 })
                                 .padding(.horizontal, paddingMain)
                             }

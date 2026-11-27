@@ -45,5 +45,25 @@ enum ScoreEnvironment {
         return baseURL
     }()
 
-    
+    /// Socket.IO origin for `baseURL`
+    static let socketURL = socketURL(from: baseURL)
+
+    static func socketURL(from baseURL: URL) -> URL {
+        guard var components = URLComponents(url: baseURL, resolvingAgainstBaseURL: false) else {
+            return baseURL
+        }
+        var path = components.path
+        while path.hasSuffix("/") {
+            path.removeLast()
+        }
+        let graphql = "/graphql"
+        if path.hasSuffix(graphql) {
+            path.removeLast(graphql.count)
+        }
+        while path.hasSuffix("/") {
+            path.removeLast()
+        }
+        components.path = path
+        return components.url ?? baseURL
+    }
 }

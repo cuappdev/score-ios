@@ -9,11 +9,17 @@ import SwiftUI
 
 struct UpcomingGameTile: View {
 
-    var game: Game
+    @LiveGame var game: Game
 
     var body: some View {
-        let liveNow: Bool = game.date == Date.currentDate
+        if LiveStatus.isLive(game) {
+            PastGameTile(game: game, viewModel: PastGameViewModel(game: game), showsLiveStatus: true)
+        } else {
+            upcomingTile
+        }
+    }
 
+    private var upcomingTile: some View {
         VStack(spacing: 16) {
             // Opponent Logo, Opponent Name | Sport Icon, Sex Icon
             HStack(spacing: 8) {
@@ -81,16 +87,11 @@ struct UpcomingGameTile: View {
                 
                 Spacer()
                 
-                // TODO: Live Status / Date
-                if (liveNow) {
-                    
-                } else {
-                    HStack {
-                        Text(Date.dateToString(date: game.date))
-                            .font(Constants.Fonts.gameDate)
-                            .foregroundStyle(Constants.Colors.gray_text)
-                            .padding(.trailing, 20)
-                    }
+                HStack {
+                    Text(Date.dateToString(date: game.date))
+                        .font(Constants.Fonts.gameDate)
+                        .foregroundStyle(Constants.Colors.gray_text)
+                        .padding(.trailing, 20)
                 }
             }
         }

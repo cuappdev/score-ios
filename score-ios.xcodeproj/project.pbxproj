@@ -31,6 +31,12 @@
 		B136701ECD164EE9AC64667F /* Article.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB4DBAE237D47AB882D4EBC /* Article.swift */; };
 		B4C8E1A22F3E4B0100A1C002 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C8E1A12F3E4B0100A1C001 /* BackButton.swift */; };
 		B4C8E1A42F3E4B0100A1C004 /* RemoteImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C8E1A32F3E4B0100A1C003 /* RemoteImage.swift */; };
+		A8F3C1D32F6A4B0100B2D003 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = A8F3C1D22F6A4B0100B2D002 /* SocketIO */; };
+		B7C2E4F22F6A4B0100B2D022 /* LiveScoreEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C2E4F12F6A4B0100B2D021 /* LiveScoreEvents.swift */; };
+		B7C2E4F42F6A4B0100B2D024 /* LiveScoreClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C2E4F32F6A4B0100B2D023 /* LiveScoreClient.swift */; };
+		B7C2E4F62F6A4B0100B2D026 /* LiveStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C2E4F52F6A4B0100B2D025 /* LiveStatus.swift */; };
+		B7C2E4F82F6A4B0100B2D028 /* LiveGameStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C2E4F72F6A4B0100B2D027 /* LiveGameStore.swift */; };
+		B7C2E4FA2F6A4B0100B2D02A /* LiveGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C2E4F92F6A4B0100B2D029 /* LiveGame.swift */; };
 		C5D9F2B12F4E4B0100A1C010 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = C5D9F2B22F4E4B0100A1C011 /* Kingfisher */; };
 		CE335CD32C922E8D0037F572 /* PrimaryColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE335CD22C922E8D0037F572 /* PrimaryColors.swift */; };
 		CE335CD52C922ECB0037F572 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE335CD42C922ECB0037F572 /* Constants.swift */; };
@@ -198,6 +204,11 @@
 		CE8ED4F92D6BF46300A274DE /* Sex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sex.swift; sourceTree = "<group>"; };
 		CE8ED4FB2D6BF47C00A274DE /* DummyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyData.swift; sourceTree = "<group>"; };
 		CE8ED4FD2D6BF49E00A274DE /* GameUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameUpdate.swift; sourceTree = "<group>"; };
+		B7C2E4F12F6A4B0100B2D021 /* LiveScoreEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveScoreEvents.swift; sourceTree = "<group>"; };
+		B7C2E4F32F6A4B0100B2D023 /* LiveScoreClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveScoreClient.swift; sourceTree = "<group>"; };
+		B7C2E4F52F6A4B0100B2D025 /* LiveStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveStatus.swift; sourceTree = "<group>"; };
+		B7C2E4F72F6A4B0100B2D027 /* LiveGameStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveGameStore.swift; sourceTree = "<group>"; };
+		B7C2E4F92F6A4B0100B2D029 /* LiveGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveGame.swift; sourceTree = "<group>"; };
 		CE8ED4FF2D6BF4BE00A274DE /* BoxScoreUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxScoreUpdate.swift; sourceTree = "<group>"; };
 		CE8ED5012D6BF4E800A274DE /* TimeUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeUpdate.swift; sourceTree = "<group>"; };
 		CE8ED5072D6C36E200A274DE /* GameListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameListView.swift; sourceTree = "<group>"; };
@@ -240,6 +251,7 @@
 				D89102182CF151DD004CE226 /* GameAPI in Frameworks */,
 				D0A904F52E8DDD990008194B /* FirebaseAnalytics in Frameworks */,
 				C5D9F2B12F4E4B0100A1C010 /* Kingfisher in Frameworks */,
+				A8F3C1D32F6A4B0100B2D003 /* SocketIO in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,6 +392,7 @@
 				CEA25A912D75278800B9837A /* Config */,
 				D87787C62CFFAE3D00EA79E1 /* ViewModels */,
 				D891020D2CF0EB88004CE226 /* Networking */,
+				B7C2E4FB2F6A4B0100B2D02B /* LiveScores */,
 				CE528FF32C96A50F00C238B5 /* Info.plist */,
 				CE725D412C89120400386943 /* Preview Content */,
 				CE335CD12C9227170037F572 /* Views */,
@@ -526,6 +539,18 @@
 			path = GraphQL;
 			sourceTree = "<group>";
 		};
+		B7C2E4FB2F6A4B0100B2D02B /* LiveScores */ = {
+			isa = PBXGroup;
+			children = (
+				B7C2E4F12F6A4B0100B2D021 /* LiveScoreEvents.swift */,
+				B7C2E4F32F6A4B0100B2D023 /* LiveScoreClient.swift */,
+				B7C2E4F52F6A4B0100B2D025 /* LiveStatus.swift */,
+				B7C2E4F72F6A4B0100B2D027 /* LiveGameStore.swift */,
+				B7C2E4F92F6A4B0100B2D029 /* LiveGame.swift */,
+			);
+			path = LiveScores;
+			sourceTree = "<group>";
+		};
 		D891020D2CF0EB88004CE226 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
@@ -628,6 +653,7 @@
 				D89102012CED68D9004CE226 /* XCRemoteSwiftPackageReference "apollo-ios" */,
 				D0A904F32E8DDD990008194B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				C5D9F2B32F4E4B0100A1C012 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				A8F3C1D12F6A4B0100B2D001 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */,
 				761050E32EC50DCC00FD73F8 /* XCLocalSwiftPackageReference "gameAPI" */,
 			);
 			productRefGroup = CE725D392C89120200386943 /* Products */;
@@ -746,6 +772,11 @@
 				CE3C9C432D011A23008BFB4C /* OrdinalSuffix.swift in Sources */,
 				CE8ED5022D6BF4E800A274DE /* TimeUpdate.swift in Sources */,
 				D89102132CF10CA9004CE226 /* NetworkManager.swift in Sources */,
+				B7C2E4F42F6A4B0100B2D024 /* LiveScoreClient.swift in Sources */,
+				B7C2E4F22F6A4B0100B2D022 /* LiveScoreEvents.swift in Sources */,
+				B7C2E4F62F6A4B0100B2D026 /* LiveStatus.swift in Sources */,
+				B7C2E4F82F6A4B0100B2D028 /* LiveGameStore.swift in Sources */,
+				B7C2E4FA2F6A4B0100B2D02A /* LiveGame.swift in Sources */,
 				CE725D3E2C89120200386943 /* ScoreApp.swift in Sources */,
 				D836AD922CB62C8800BD1545 /* NoGameView.swift in Sources */,
 				7626AD682E973D9B002149CD /* SearchView.swift in Sources */,
@@ -1165,6 +1196,14 @@
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		A8F3C1D12F6A4B0100B2D001 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/socketio/socket.io-client-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 16.1.0;
+			};
+		};
 		C5D9F2B32F4E4B0100A1C012 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
@@ -1192,6 +1231,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		A8F3C1D22F6A4B0100B2D002 /* SocketIO */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A8F3C1D12F6A4B0100B2D001 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */;
+			productName = SocketIO;
+		};
 		C5D9F2B22F4E4B0100A1C011 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C5D9F2B32F4E4B0100A1C012 /* XCRemoteSwiftPackageReference "Kingfisher" */;

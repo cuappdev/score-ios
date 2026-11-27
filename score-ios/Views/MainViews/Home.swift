@@ -25,10 +25,18 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct score_iosApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @Environment(\.scenePhase) private var scenePhase
     
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .onChange(of: scenePhase) { _, phase in
+                    switch phase {
+                    case .background: LiveGameStore.shared.suspend()
+                    case .active: LiveGameStore.shared.resume()
+                    default: break
+                    }
+                }
         }
     }
 }

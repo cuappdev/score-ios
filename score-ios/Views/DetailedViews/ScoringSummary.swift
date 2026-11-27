@@ -10,7 +10,7 @@ import SwiftUI
 struct ScoringSummary : View {
     
     @Environment(\.presentationMode) var presentationMode
-    var game: Game
+    @LiveGame var game: Game
     
     var body : some View {
         

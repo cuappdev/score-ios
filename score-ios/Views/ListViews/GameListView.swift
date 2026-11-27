@@ -29,7 +29,7 @@ struct GameListView<TileView: View>: View {
                         let isCellCovered = cellGeometry.frame(in: .global).minY < 100
                         if !isCellCovered {
                             NavigationLink {
-                                GameView(game: game, viewModel: PastGameViewModel(game: game))
+                                GameView(game: game)
                                     .navigationBarBackButtonHidden()
                             } label: {
                                 tileView(game)

@@ -251,10 +251,9 @@ class GamesViewModel: ObservableObject
         for game in incoming {
             if Sport.allCases.contains(game.sport) && game.sport != Sport.All {
                 let now = Date()
-                let twoHours: TimeInterval = 2 * 60 * 60 // TODO: How to decide if a game is live
                 let calendar = Calendar.current
                 let startOfToday = calendar.startOfDay(for: now)
-                let isLive = game.date < now && now.timeIntervalSince(game.date) <= twoHours
+                let isLive = LiveStatus.isLive(game, now: now)
                 let isUpcoming = game.date > now
                 let isFinishedToday = game.date < now && game.date >= startOfToday
                 let isFinishedByToday = game.date < startOfToday

@@ -10,6 +10,8 @@ import SwiftUI
 struct PastGameTile: View {
     var game: Game
     @ObservedObject var viewModel: PastGameViewModel
+    /// When true, shows the green Live now indicator instead of the game date.
+    var showsLiveStatus: Bool = false
 
     var body: some View {
         let corWon = viewModel.cornellTotalScore > viewModel.opponentTotalScore
@@ -144,12 +146,29 @@ struct PastGameTile: View {
                 }
             }
 
-            Text(Date.dateToString(date: game.date))
-                .font(Constants.Fonts.gameDate)
-                .foregroundStyle(Constants.Colors.gray_text)
-                .lineLimit(1)
+            if showsLiveStatus {
+                liveNowLabel
+            } else {
+                Text(Date.dateToString(date: game.date))
+                    .font(Constants.Fonts.gameDate)
+                    .foregroundStyle(Constants.Colors.gray_text)
+                    .lineLimit(1)
+            }
         }
-        .frame(width: 80)
+        .frame(width: showsLiveStatus ? 88 : 80)
+    }
+
+    private var liveNowLabel: some View {
+        HStack(spacing: 4) {
+            Circle()
+                .fill(Constants.Colors.live_green)
+                .frame(width: 6, height: 6)
+            Text("Live now")
+                .font(Constants.Fonts.gameDate)
+                .foregroundStyle(Constants.Colors.live_green)
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
+        }
     }
 
 }

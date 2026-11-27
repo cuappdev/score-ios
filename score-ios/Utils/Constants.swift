@@ -33,6 +33,8 @@ struct Constants {
         static let gradient_red = Color(red: 179 / 255, green: 27 / 255, blue: 27 / 255, opacity: 0.4)
         static let gradient_blue = Color(red: 1 / 255, green: 31 / 255, blue: 91 / 255, opacity: 0.4)
         static let crimson = Color(hex: 0xA5210D)
+        /// Live-now indicator from the game card design (~#55B63C).
+        static let live_green = Color(hex: 0x55B63C)
 
         // Customs
         static let selected = primary_red
